@@ -8,5 +8,6 @@ namespace health_index_app.Shared
 {
     internal class Food
     {
+
     }
 }
