@@ -16,7 +16,7 @@ namespace health_index_app.Shared
 
         public Meal(List<Food> foodItems, double healthIndex)
         {
-            this.food_items = foodItems;
+            this.foodItems = foodItems;
             this.healthIndex = healthIndex;
         }
 
