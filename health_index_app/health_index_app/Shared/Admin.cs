@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace health_index_app.Shared
 {
-    internal class Meal
+    internal class Admin
     {
-        public List<Food> FoodItems { get; set; }
-        public double HealthIndex { get; set; }
-
     }
 }
