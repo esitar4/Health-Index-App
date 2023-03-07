@@ -12,7 +12,7 @@ namespace health_index_app.Shared
         private double healthIndex;
 
         public List<Food> FoodItems { get; set; }
-        public double HealthIndex { get; set; };
+        public double HealthIndex { get; set; }
 
         public Meal(List<Food> foodItems, double healthIndex)
         {
