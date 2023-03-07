@@ -8,21 +8,8 @@ namespace health_index_app.Shared
 {
     internal class Meal
     {
-        private List<Food> foodItems;
-        private double healthIndex;
-
         public List<Food> FoodItems { get; set; }
         public double HealthIndex { get; set; }
 
-        public Meal(List<Food> foodItems, double healthIndex)
-        {
-            this.foodItems = foodItems;
-            this.healthIndex = healthIndex;
-        }
-
-        public Meal()
-        {
-
-        }
     }
 }
