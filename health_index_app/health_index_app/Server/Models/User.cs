@@ -23,7 +23,7 @@ namespace health_index_app.Shared
         [Required]
         //[MinLength(8, ErrorMessage = "Password must be at least 6 characters")]
         //[MaxLength(10, ErrorMessage = "Password must be no longer than 15 characters")]
-        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$", 
+        [RegularExpression("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$", 
             ErrorMessage = "Password must be a minimum of 8 characters, have at least 1 letter, 1 number and 1 special character")]
         public string Password { get; set; }
         [Required]
