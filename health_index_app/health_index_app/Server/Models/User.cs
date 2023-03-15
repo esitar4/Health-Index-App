@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace health_index_app.Shared
+namespace health_index_app.Server.Models
 {
     public class User
     {
