@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace health_index_app.Shared
+namespace health_index_app.Server.Models
 {
     public class User
     {
