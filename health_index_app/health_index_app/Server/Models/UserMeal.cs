@@ -11,7 +11,7 @@ namespace health_index_app.Server.Models
         public int Id { get; set; }
 
         [ForeignKey("User")]
-        public string Username { get; set; }
+        public string Username { get; set; } = null!;
 
         [ForeignKey("Meals")]
         public int MealId { get; set; }
