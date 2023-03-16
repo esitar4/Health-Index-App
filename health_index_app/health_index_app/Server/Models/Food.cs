@@ -11,7 +11,8 @@ namespace health_index_app.Server.Models
     public class Food
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        /*[DatabaseGenerated(DatabaseGeneratedOption.Identity)]*/
+        //use food_id from fatsecret api
         public int Id { get; set; }
 
         [Column(TypeName = "double")]
