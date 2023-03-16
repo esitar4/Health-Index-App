@@ -13,5 +13,6 @@ namespace health_index_app.Server.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+        public DbSet<health_index_app.Server.Models.User> User { get; set; }
     }
 }
