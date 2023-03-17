@@ -11,9 +11,27 @@ namespace health_index_app.Server.Models
     public class Food
     {
         [Key]
-        /*[DatabaseGenerated(DatabaseGeneratedOption.Identity)]*/
         //use food_id from fatsecret api
         public int Id { get; set; }
+        [Required]
+        public string FoodName { get; set; } = null!;
+        public string FoodType { get; set; } = null!;
+        public string BrandName { get; set; } = null!;
+        [Required]
+        public string FoodURL { get; set; } = null!;
+        public int ServingId { get; set; }
+        [Required]
+        public string ServingDescription { get; set; } = null!;
+        [Required]
+        public double ServingURL { get; set; }
+        [Required]
+        [Column(TypeName = "double")]
+        public double MetricServingAmount { get; set; }
+        [Required]
+        public string MetricServingUnit { get; set; } = null!;
+        public double NumberOfUnits { get; set; }
+        [Required]
+        public string MeasurementDescription { get; set; } = null!;
 
         [Column(TypeName = "double")]
         public double? Calories { get; set; }
