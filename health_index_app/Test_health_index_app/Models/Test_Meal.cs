@@ -2,7 +2,7 @@
 using System.Linq;
 using NUnit.Framework;
 using health_index_app.Shared.Models;
-using static Test_health_index_app.Validator;
+using static Test_health_index_app.Validater;
 
 namespace Test_health_index_app.Models
 {

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Test_health_index_app
 {
-    public class Validator
+    public class Validater
     {
         public static IList<ValidationResult> ValidateModel(object model)
         {
