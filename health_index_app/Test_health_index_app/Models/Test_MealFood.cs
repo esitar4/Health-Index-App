@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using health_index_app.Shared.Models;
 using System.Linq;
-using static Test_health_index_app.Validater;
+using static Test_health_index_app.Validator;
 
 namespace Test_health_index_app.Models
 {
