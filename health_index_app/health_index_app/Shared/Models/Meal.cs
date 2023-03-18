@@ -16,6 +16,7 @@ namespace health_index_app.Shared.Models
 
         [Required]
         [Column(TypeName = "decimal(3, 1)")]
+        [Range(0, 10, ErrorMessage = "Score must be between 0 and 10")]
         public double HealthIndex { get; set; } = -1;
 
     }
