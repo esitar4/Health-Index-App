@@ -13,6 +13,9 @@ namespace health_index_app.Server.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
-        public DbSet<health_index_app.Server.Models.User> User { get; set; }
+        public DbSet<health_index_app.Server.Models.ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<health_index_app.Server.Models.Food> Foods { get; set; }
+        public DbSet<health_index_app.Server.Models.Meal> Meals { get; set; }
+        public DbSet<health_index_app.Server.Models.UserMeal> UserMeals { get; set; }
     }
 }
