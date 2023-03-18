@@ -1,10 +1,8 @@
 ﻿using NUnit.Framework;
 using health_index_app.Server.Models;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using health_index_app.Shared.Models;
 using System.Linq;
 using System;
+using static Test_health_index_app.Validater;
 
 namespace Test_health_index_app.Models
 {
@@ -146,14 +144,6 @@ namespace Test_health_index_app.Models
                     v => v.MemberNames.Contains("Gender") &&
                          v.ErrorMessage.Contains("Invalid Gender Character")));
 
-        }
-
-        private IList<ValidationResult> ValidateModel(object model)
-        {
-            var validationResults = new List<ValidationResult>();
-            var ctx = new ValidationContext(model, null, null);
-            Validator.TryValidateObject(model, ctx, validationResults, true);
-            return validationResults;
         }
     }
 }

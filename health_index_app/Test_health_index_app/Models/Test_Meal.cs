@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 using NUnit.Framework;
 using health_index_app.Shared.Models;
+using static Test_health_index_app.Validater;
 
 namespace Test_health_index_app.Models
 {
@@ -98,14 +95,6 @@ namespace Test_health_index_app.Models
             Assert.IsTrue(ValidateModel(meal).Any(
                     v => v.MemberNames.Contains("HealthIndex") &&
                          v.ErrorMessage.Contains("Score must be between 0 and 10")));
-        }
-
-        private IList<ValidationResult> ValidateModel(object model)
-        {
-            var validationResults = new List<ValidationResult>();
-            var ctx = new ValidationContext(model, null, null);
-            Validator.TryValidateObject(model, ctx, validationResults, true);
-            return validationResults;
         }
     }
 }
