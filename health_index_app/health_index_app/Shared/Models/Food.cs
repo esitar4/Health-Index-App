@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace health_index_app.Server.Models
+namespace health_index_app.Shared.Models
 {
     public class Food
     {
