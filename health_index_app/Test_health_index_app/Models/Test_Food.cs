@@ -45,6 +45,9 @@ namespace Test_health_index_app.Models
             //Arrange
             food.FoodName = null;
 
+            //Act
+
+            //Assert
             Assert.IsTrue(ValidateModel(food).Count == 1);
             Assert.IsTrue(ValidateModel(food).Any(
                     v => v.MemberNames.Contains("FoodName") &&
@@ -58,6 +61,9 @@ namespace Test_health_index_app.Models
             //Arrange
             food.FoodURL = null;
 
+            //Act
+
+            //Assert
             Assert.IsTrue(ValidateModel(food).Count == 1);
             Assert.IsTrue(ValidateModel(food).Any(
                     v => v.MemberNames.Contains("FoodURL") &&
@@ -71,6 +77,9 @@ namespace Test_health_index_app.Models
             //Arrange
             food.ServingDescription = null;
 
+            //Act
+
+            //Assert
             Assert.IsTrue(ValidateModel(food).Count == 1);
             Assert.IsTrue(ValidateModel(food).Any(
                     v => v.MemberNames.Contains("ServingDescription") &&
@@ -86,6 +95,9 @@ namespace Test_health_index_app.Models
             //Arrange
             food.MetricServingAmount = metricServingAmount;
 
+            //Act
+
+            //Assert
             Assert.IsTrue(ValidateModel(food).Count == 1);
             Assert.IsTrue(ValidateModel(food).Any(
                     v => v.MemberNames.Contains("MetricServingAmount") &&
@@ -99,6 +111,9 @@ namespace Test_health_index_app.Models
             //Arrange
             food.MetricServingUnit = null;
 
+            //Act
+
+            //Assert
             Assert.IsTrue(ValidateModel(food).Count == 1);
             Assert.IsTrue(ValidateModel(food).Any(
                     v => v.MemberNames.Contains("MetricServingUnit") &&
@@ -112,6 +127,9 @@ namespace Test_health_index_app.Models
             //Arrange
             food.MeasurementDescription = null;
 
+            //Act
+
+            //Assert
             Assert.IsTrue(ValidateModel(food).Count == 1);
             Assert.IsTrue(ValidateModel(food).Any(
                     v => v.MemberNames.Contains("MeasurementDescription") &&
