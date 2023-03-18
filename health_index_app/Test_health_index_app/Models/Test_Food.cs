@@ -29,7 +29,7 @@ namespace Test_health_index_app.Models
 
 
         [Test]
-        public void ValidFood()
+        public void TestValidFood()
         {
             //Arrange
 

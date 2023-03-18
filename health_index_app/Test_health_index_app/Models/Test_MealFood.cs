@@ -18,7 +18,7 @@ namespace Test_health_index_app.Models
         }
 
         [Test]
-        public void CheckIdSetCorrectly()
+        public void TestIdSetCorrectly()
         {
             //Arrange
             mealfood.Id = 5;
@@ -30,7 +30,7 @@ namespace Test_health_index_app.Models
         }
 
         [Test]
-        public void CheckMealIdSetCorrectly()
+        public void TestMealIdSetCorrectly()
         {
             //Arrange
             mealfood.MealId = 5;
@@ -43,7 +43,7 @@ namespace Test_health_index_app.Models
         }
 
         [Test]
-        public void CheckFoodIdSetCorrectly()
+        public void TestFoodIdSetCorrectly()
         {
             //Arrange
             mealfood.FoodId = 5;
@@ -56,7 +56,7 @@ namespace Test_health_index_app.Models
         }
 
         [Test]
-        public void CheckServingSizeSetCorrectly()
+        public void TestServingSizeSetCorrectly()
         {
             //Arrange
             mealfood.FoodId = 0;
@@ -72,7 +72,7 @@ namespace Test_health_index_app.Models
         [Test]
         [TestCase(1, 1, 10.0)]
         [TestCase(3, 2, 5.0)]
-        public void ValidMealFood(int mealId, int foodId, double servingSize)
+        public void TestValidMealFood(int mealId, int foodId, double servingSize)
         {
             //Arrange
             mealfood.MealId = mealId;
@@ -88,7 +88,7 @@ namespace Test_health_index_app.Models
         [Test]
         [TestCase(0, 0, -5.0)]
         [TestCase(0, 0, -0.1)]
-        public void InValidMealFoodServingSize(int mealId, int foodId, double servingSize)
+        public void TestInValidMealFoodServingSize(int mealId, int foodId, double servingSize)
         {
             //Arrange
             mealfood.MealId = mealId;
@@ -105,7 +105,7 @@ namespace Test_health_index_app.Models
         }
 
         [Test]
-        public void DefaultConstructorServingSize()
+        public void TestDefaultConstructorServingSize()
         {
             //Arrange
 

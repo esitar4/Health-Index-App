@@ -23,7 +23,7 @@ namespace Test_health_index_app.Models
         [TestCase(0)]
         [TestCase(5)]
         [TestCase(10)]
-        public void CheckIdSetCorrectly(int id)
+        public void TestIdSetCorrectly(int id)
         {
             //Arrange
             meal.Id = id;
@@ -40,7 +40,7 @@ namespace Test_health_index_app.Models
         [TestCase(10)]
         [TestCase(-.5)]
         [TestCase(10.5)]
-        public void CheckHealthIndexSetCorrectly(double healthIndex)
+        public void TestHealthIndexSetCorrectly(double healthIndex)
         {
             //Arrange
             meal.HealthIndex = healthIndex;
@@ -55,7 +55,7 @@ namespace Test_health_index_app.Models
         [TestCase(0)]
         [TestCase(5)]
         [TestCase(10)]
-        public void ValidMeal(double healthIndex)
+        public void TestValidMeal(double healthIndex)
         {
             //Arrange
             meal.HealthIndex = healthIndex;
@@ -72,7 +72,7 @@ namespace Test_health_index_app.Models
         [TestCase(11)]
         [TestCase(-.5)]
         [TestCase(10.5)]
-        public void OutOfBoundsHealthIndex(double healthIndex)
+        public void TestInvalidHealthIndex(double healthIndex)
         {
             //Arrange
             meal.HealthIndex = healthIndex;
@@ -87,7 +87,7 @@ namespace Test_health_index_app.Models
         }
 
         [Test]
-        public void DefaultConsutructorHealthIndex()
+        public void TestDefaultConsutructorHealthIndex()
         {
             //Arrange
 
