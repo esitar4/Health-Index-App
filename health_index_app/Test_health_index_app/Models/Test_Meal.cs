@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using NUnit.Framework;
 using health_index_app.Shared.Models;
 
-namespace Test_health_index_app
+namespace Test_health_index_app.Models
 {
     public class Test_Meal
     {
@@ -16,30 +16,88 @@ namespace Test_health_index_app
         [SetUp]
         public void Setup()
         {
-            meal = new Meal
-            {
-            };
+            meal = new Meal();
         }
 
         [Test]
-        public void ValidMeal()
+        [TestCase(0)]
+        [TestCase(5)]
+        [TestCase(10)]
+        public void CheckIdSetCorrectly(int id)
         {
             //Arrange
+            meal.Id = id;
+
             //Act
+
             //Assert
+            Assert.IsTrue(meal.Id == id);
+        }
 
-            Console.WriteLine(ValidateModel(meal).Count);
+        [Test]
+        [TestCase(0)]
+        [TestCase(5)]
+        [TestCase(10)]
+        [TestCase(-.5)]
+        [TestCase(10.5)]
+        public void CheckHealthIndexSetCorrectly(double healthIndex)
+        {
+            //Arrange
+            meal.HealthIndex = healthIndex;
 
-            foreach (var x in ValidateModel(meal))
-            {
-                Console.WriteLine(x);
-                foreach (var v in x.MemberNames)
-                    Console.WriteLine(v);
-            }
-            Console.WriteLine("Lol");
+            //Act
+
+            //Assert
+            Assert.IsTrue(meal.HealthIndex == healthIndex);
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(5)]
+        [TestCase(10)]
+        public void ValidMeal(double healthIndex)
+        {
+            //Arrange
+            meal.HealthIndex = healthIndex;
+
+            //Act
+
+            //Assert
+            Assert.IsTrue(ValidateModel(meal).Count == 0);
+
+        }
+
+        [Test]
+        [TestCase(-1)]
+        [TestCase(11)]
+        [TestCase(-.5)]
+        [TestCase(10.5)]
+        public void OutOfBoundsHealthIndex(double healthIndex)
+        {
+            //Arrange
+            meal.HealthIndex = healthIndex;
+
+            //Act
+
+            //Assert
+            Assert.IsTrue(ValidateModel(meal).Count == 1);
             Assert.IsTrue(ValidateModel(meal).Any(
-                v => v.MemberNames.Contains("Email") &&
-                     v.ErrorMessage.Contains("required")));
+                    v => v.MemberNames.Contains("HealthIndex") &&
+                         v.ErrorMessage.Contains("Score must be between 0 and 10")));
+        }
+
+        [Test]
+        public void DefaultConsutructorHealthIndex()
+        {
+            //Arrange
+
+            //Act
+
+            //Assert
+            Assert.IsTrue(ValidateModel(meal).Count == 1);
+            Assert.IsTrue(ValidateModel(meal).Any(
+                    v => v.MemberNames.Contains("HealthIndex") &&
+                         v.ErrorMessage.Contains("Score must be between 0 and 10")));
         }
 
         private IList<ValidationResult> ValidateModel(object model)
