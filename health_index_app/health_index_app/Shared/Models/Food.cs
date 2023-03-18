@@ -22,9 +22,9 @@ namespace health_index_app.Shared.Models
         public int ServingId { get; set; }
         [Required]
         public string ServingDescription { get; set; } = null!;
+        public string ServingURL { get; set; } = null!;
         [Required]
-        public double ServingURL { get; set; }
-        [Required]
+        [Range(0.0, Double.MaxValue, ErrorMessage = "Metric Serving Amount must be larger than 0")]
         [Column(TypeName = "double")]
         public double MetricServingAmount { get; set; }
         [Required]
