@@ -19,7 +19,6 @@ namespace health_index_app.Shared.Models
         public int FoodId { get; set; }
 
         [Required]
-        [Column(TypeName = "double")]
         [Range(0.0001, Double.MaxValue, ErrorMessage = "Serving size must be greater than 0")]
         public double ServingSize { get; set; } = 1;
     }
