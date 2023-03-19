@@ -14,24 +14,24 @@ namespace health_index_app.Shared.Models
         //use food_id from fatsecret api
         public int Id { get; set; }
         [Required]
-        public string FoodName { get; set; } = null!;
-        public string FoodType { get; set; } = null!;
-        public string BrandName { get; set; } = null!;
+        public string FoodName { get; set; } = "";
+        public string FoodType { get; set; } = "";
+        public string BrandName { get; set; } = "";
         [Required]
-        public string FoodURL { get; set; } = null!;
+        public string FoodURL { get; set; } = "";
         public int ServingId { get; set; }
         [Required]
-        public string ServingDescription { get; set; } = null!;
-        public string ServingURL { get; set; } = null!;
+        public string ServingDescription { get; set; } = "";
+        public string ServingURL { get; set; } = "";
         [Required]
         [Range(0.0, Double.MaxValue, ErrorMessage = "Metric Serving Amount must be larger than 0")]
         [Column(TypeName = "double")]
         public double MetricServingAmount { get; set; }
         [Required]
-        public string MetricServingUnit { get; set; } = null!;
+        public string MetricServingUnit { get; set; } = "";
         public double NumberOfUnits { get; set; }
         [Required]
-        public string MeasurementDescription { get; set; } = null!;
+        public string MeasurementDescription { get; set; } = "";
 
         [Column(TypeName = "double")]
         public double? Calories { get; set; }
