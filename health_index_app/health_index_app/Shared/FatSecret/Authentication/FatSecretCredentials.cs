@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FatSecretAPICall.Authentication
+namespace health_index_app.Shared.FatSecret.Authentication
 {
     public class FatSecretCredentials
     {

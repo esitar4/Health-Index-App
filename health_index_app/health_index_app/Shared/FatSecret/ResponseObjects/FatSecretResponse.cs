@@ -1,4 +1,4 @@
-﻿namespace FatSecretAPICall.ResponseObjects
+﻿namespace health_index_app.Shared.FatSecret.ResponseObjects
 {
     public class FatSecretResponse
     {

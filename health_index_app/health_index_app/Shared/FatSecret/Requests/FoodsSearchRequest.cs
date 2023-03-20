@@ -1,4 +1,4 @@
-﻿namespace FatSecretAPICall.Requests
+﻿namespace health_index_app.Shared.FatSecret.Requests
 {
     public class FoodsSearchRequest : IFatSecretRequest
     {

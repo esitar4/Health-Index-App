@@ -1,8 +1,8 @@
-﻿using FatSecretAPICall.ResponseObjects;
+﻿using health_index_app.Shared.FatSecret.ResponseObjects;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace FatSecretAPICall.Authentication
+namespace health_index_app.Shared.FatSecret.Authentication
 {
     public class FatSecretAuthenticationManager
     {

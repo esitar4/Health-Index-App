@@ -1,23 +1,29 @@
-﻿using FatSecretAPICall.Authentication;
-using FatSecretAPICall.Requests;
-using FatSecretAPICall.ResponseObjects;
+﻿using health_index_app.Shared.FatSecret.Authentication;
+using health_index_app.Shared.FatSecret.Requests;
+using health_index_app.Shared.FatSecret.ResponseObjects;
 using Newtonsoft.Json;
 using RestSharp;
 
-namespace FatSecretAPICall
+namespace health_index_app.Shared.FatSecret
 {
     public class FatSecretClient : IFatSecretClient
     {
         private readonly FatSecretAuthenticationManager _authManager;
         private readonly RestClientOptions _options;
-        private readonly IRestClient _client;
+        private readonly RestClient _client;
         private readonly string _url = "https://platform.fatsecret.com/rest/server.api";
 
         public FatSecretClient(FatSecretCredentials credentials)
         {
             _authManager = new FatSecretAuthenticationManager(credentials);
             _options = new RestClientOptions(_url);
-            _client = new RestClient(_options);
+            try
+            {
+                _client = new RestClient(_options);
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.InnerException);
+            }
         }
 
         public async Task<GetFoodResponse> FoodGetAsync(FoodGetV2Request request)

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FatSecretAPICall.ResponseObjects;
+using health_index_app.Shared.FatSecret.ResponseObjects;
 
-namespace FatSecretAPICall.Authentication
+namespace health_index_app.Shared.FatSecret.Authentication
 {
     public class FatSecretAuthenticationToken
     {
