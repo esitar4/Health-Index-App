@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace health_index_app.Server.Models
+namespace health_index_app.Shared.Models
 {
     public class UserMeal
     {

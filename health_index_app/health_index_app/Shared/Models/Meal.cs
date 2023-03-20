@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace health_index_app.Server.Models
+namespace health_index_app.Shared.Models
 {
     public class Meal
     {
@@ -15,7 +15,8 @@ namespace health_index_app.Server.Models
         public int Id { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(3, 1)")]
+        [Column(TypeName = "double")]
+        [Range(0.0, 10.0, ErrorMessage = "Score must be between 0 and 10")]
         public double HealthIndex { get; set; } = -1;
 
     }

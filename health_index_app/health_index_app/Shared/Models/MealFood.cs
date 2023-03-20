@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace health_index_app.Server.Models
+namespace health_index_app.Shared.Models
 {
     public class MealFood
     {
@@ -10,13 +10,17 @@ namespace health_index_app.Server.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Required]
         [ForeignKey("Meal")]
         public int MealId { get; set; }
 
+        [Required]
         [ForeignKey("Food")]
         public int FoodId { get; set; }
 
-        [Column(TypeName = "decimal(6, 2)")]
-        public double ServingSize { get; set; }
+        [Required]
+        [Column(TypeName = "double")]
+        [Range(0.0001, Double.MaxValue, ErrorMessage = "Serving size must be greater than 0")]
+        public double ServingSize { get; set; } = 1;
     }
 }
