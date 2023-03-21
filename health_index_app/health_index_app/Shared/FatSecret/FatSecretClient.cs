@@ -12,18 +12,15 @@ namespace health_index_app.Shared.FatSecret
         private readonly RestClientOptions _options;
         private readonly RestClient _client;
         private readonly string _url = "https://platform.fatsecret.com/rest/server.api";
+        private readonly HttpClient _httpClient;
 
-        public FatSecretClient(FatSecretCredentials credentials)
+        public FatSecretClient(FatSecretCredentials credentials, HttpClient httpClient)
         {
             _authManager = new FatSecretAuthenticationManager(credentials);
+            _httpClient = httpClient;
             _options = new RestClientOptions(_url);
-            try
-            {
-                _client = new RestClient(_options);
-            } catch (Exception ex)
-            {
-                Console.WriteLine(ex.InnerException);
-            }
+            _client = new RestClient(_httpClient, _options);
+
         }
 
         public async Task<GetFoodResponse> FoodGetAsync(FoodGetV2Request request)
@@ -39,7 +36,7 @@ namespace health_index_app.Shared.FatSecret
         private async Task<T> FatSecretRequest<T>(IFatSecretRequest fatSecretRequest) where T : FatSecretResponse
         {
             var request = new RestRequest(_url, Method.Get);
-            var authToken = await _authManager.GetAuthHeaderAsync();
+            var authToken = await _authManager.GetAuthHeaderAsync(_httpClient);
             request.AddHeader("Authorization", authToken);
 
             foreach (var parameter in fatSecretRequest.GetParameters())

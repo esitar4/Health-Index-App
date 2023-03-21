@@ -16,7 +16,8 @@ namespace health_index_app.Client.Pages
                 {
                     ClientKey = "44a3ee4ca84b42ebb3234bc6bf66518c",
                     ClientSecret = "29c8029e8f1b4fdcae11abc7d1babfdd"
-                }
+                },
+                new HttpClient()
             );
 
         private async Task SearchFood()

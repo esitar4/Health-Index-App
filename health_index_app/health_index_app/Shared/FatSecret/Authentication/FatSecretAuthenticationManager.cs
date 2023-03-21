@@ -18,7 +18,7 @@ namespace health_index_app.Shared.FatSecret.Authentication
             _authToken = new FatSecretAuthenticationToken();
         }
 
-        private async Task GetNewTokenAsync()
+        private async Task GetNewTokenAsync(HttpClient httpClient)
         {
             HttpClient Http = new HttpClient();
             var byteArray = Encoding.ASCII.GetBytes($"{_credentials.ClientKey}:{_credentials.ClientSecret}");
@@ -40,12 +40,12 @@ namespace health_index_app.Shared.FatSecret.Authentication
             }
         }
 
-        public async Task<string> GetAuthHeaderAsync()
+        public async Task<string> GetAuthHeaderAsync(HttpClient httpClient)
         {
 
             if (_authToken.IsExpired)
             {
-                await GetNewTokenAsync();
+                await GetNewTokenAsync(httpClient);
             }
 
             return $"Bearer {_authToken.AccessToken}";
