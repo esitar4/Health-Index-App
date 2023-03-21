@@ -4,6 +4,7 @@ using health_index_app.Shared.FatSecret;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 string? CorsPolicy = "CorsPolicy";
 
