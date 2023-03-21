@@ -4,18 +4,19 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 
+string? CorsPolicy = "CorsPolicy";
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
+    options.AddPolicy(CorsPolicy,
                           policy =>
                           {
-                              policy.WithOrigins("https://localhost:7005",
-                                                 "http://localhost:5005",
-                                                 "https://oauth.fatsecret.com/connect/token")
+                              policy
                                                   .AllowAnyHeader()
-                                                  .AllowAnyMethod();
+                                                  .AllowAnyMethod()
+                                                  .AllowAnyOrigin();
                           });
 });
 
@@ -60,7 +61,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseCors();
+app.UseCors(CorsPolicy);
 
 app.UseIdentityServer();
 app.UseAuthentication();

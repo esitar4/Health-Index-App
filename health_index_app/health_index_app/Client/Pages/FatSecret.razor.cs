@@ -1,16 +1,18 @@
-﻿using health_index_app.Shared.FatSecret;
+﻿using health_index_app.Client.Services;
+using health_index_app.Shared.FatSecret;
 using health_index_app.Shared.FatSecret.Authentication;
 using health_index_app.Shared.FatSecret.Requests;
 using health_index_app.Shared.FatSecret.ResponseObjects;
 using Microsoft.AspNetCore.Components;
 
-
 namespace health_index_app.Client.Pages
 {
     public partial class FatSecret
     {
+        FatSecretAPIServices F { get; set; } = new();
         private string SearchExpression = String.Empty;
-        List<SearchedFood>? foods = new();
+        //List<SearchedFood>? foods = new();
+        FoodsSearchResponse json = null!;
         FatSecretClient client = new FatSecretClient( 
             new FatSecretCredentials
                 {
@@ -20,14 +22,11 @@ namespace health_index_app.Client.Pages
                 new HttpClient()
             );
 
+
         private async Task SearchFood()
         {
-            var foodSearch = await client.FoodsSearchAsync(new FoodsSearchRequest { SearchExpression = "apple", MaxResults = 10 });
-
-            if (foodSearch.Successful)
-            {
-                foods = foodSearch.Foods.Food;
-            }
+            //var foodSearch = await client.FoodsSearchAsync(new FoodsSearchRequest { SearchExpression = "apple", MaxResults = 10 });
+            json = await F.FoodsSearchAsync(new HttpClient(), "apple");
         }
     }
 
