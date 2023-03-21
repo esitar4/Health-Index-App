@@ -107,7 +107,7 @@ namespace Test_health_index_app.Models
             Assert.IsTrue(ValidateModel(applicationUser).Count == 1);
             Assert.IsTrue(ValidateModel(applicationUser).Any(
                     v => v.MemberNames.Contains("Height") &&
-                         v.ErrorMessage.Contains("Height must be in between 0 and less than 999.99")));
+                         v.ErrorMessage.Contains("Height must be in between 0 and 999.99")));
 
         }
 
