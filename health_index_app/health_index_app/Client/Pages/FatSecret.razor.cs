@@ -9,7 +9,7 @@ namespace health_index_app.Client.Pages
 {
     public partial class FatSecret
     {
-        [Inject]FatSecretAPIServices F { get; set; }
+        FatSecretAPIServices F { get; set; } = new(new HttpClient());
         private string SearchExpression = String.Empty;
         //List<SearchedFood>? foods = new();
         FoodsSearchResponse json = null!;
