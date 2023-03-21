@@ -9,7 +9,7 @@ namespace health_index_app.Client.Pages
 {
     public partial class FatSecret
     {
-        FatSecretAPIServices F { get; set; } = new();
+        [Inject]FatSecretAPIServices F { get; set; }
         private string SearchExpression = String.Empty;
         //List<SearchedFood>? foods = new();
         FoodsSearchResponse json = null!;
@@ -26,7 +26,7 @@ namespace health_index_app.Client.Pages
         private async Task SearchFood()
         {
             //var foodSearch = await client.FoodsSearchAsync(new FoodsSearchRequest { SearchExpression = "apple", MaxResults = 10 });
-            json = await F.FoodsSearchAsync(new HttpClient(), "apple");
+            json = await F.FoodsSearchAsync("apple");
         }
     }
 
