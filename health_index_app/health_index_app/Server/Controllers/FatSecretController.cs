@@ -10,20 +10,13 @@ namespace health_index_app.Server.Controllers
     [Route("api/fatsecret")]
     public class FatSecretController : Controller
     {
-        private readonly IFatSecretClient _fatSecretClient = new FatSecretClient(
-            new FatSecretCredentials
-            {
-                ClientKey = "44a3ee4ca84b42ebb3234bc6bf66518c",
-                ClientSecret = "29c8029e8f1b4fdcae11abc7d1babfdd"
-            },
-            new HttpClient()
-        );
+        private readonly IFatSecretSetup _fatSecretSetup;
         private readonly IConfiguration _config;
         private readonly ILogger<FatSecretController> _logger;
 
-        public FatSecretController(IConfiguration config, ILogger<FatSecretController> logger) 
+        public FatSecretController(IFatSecretSetup fatSecretSetup, IConfiguration config, ILogger<FatSecretController> logger) 
         {
-            //_fatSecretClient = fatSecretClient;
+            _fatSecretSetup = fatSecretSetup;
             _config = config;
             _logger = logger;
         }
@@ -40,7 +33,7 @@ namespace health_index_app.Server.Controllers
             //return GetDummyCurrentWeather();
             var request = new FoodsSearchRequest { SearchExpression = searchExpression, MaxResults = maxResults };
 
-            return await _fatSecretClient.FoodsSearchAsync(request);
+            return await _fatSecretSetup.client.FoodsSearchAsync(request);
         }
 
         [HttpGet]
@@ -50,7 +43,7 @@ namespace health_index_app.Server.Controllers
             //return GetDummyCurrentWeather();
             var request = new FoodGetV2Request { FoodId = Convert.ToInt32(foodId) };
 
-            return await _fatSecretClient.FoodGetAsync(request);
+            return await _fatSecretSetup.client.FoodGetAsync(request);
         }
     }
 }

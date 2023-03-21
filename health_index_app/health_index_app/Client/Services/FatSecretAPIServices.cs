@@ -1,5 +1,4 @@
-﻿using health_index_app.Shared.FatSecret.Requests;
-using health_index_app.Shared.FatSecret.ResponseObjects;
+﻿using health_index_app.Shared.FatSecret.ResponseObjects;
 using System.Net.Http.Json;
 
 namespace health_index_app.Client.Services
