@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "health_index_app.Client", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "health_index_app.Shared", "health_index_app\Shared\health_index_app.Shared.csproj", "{994FE706-3913-45B7-9BAC-56767D437333}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_health_index_app", "Test_health_index_app\Test_health_index_app.csproj", "{28B19183-5F11-4491-97F5-0879C97F04EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test_health_index_app", "Test_health_index_app\Test_health_index_app.csproj", "{28B19183-5F11-4491-97F5-0879C97F04EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
