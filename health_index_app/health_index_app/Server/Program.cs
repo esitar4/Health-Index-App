@@ -4,7 +4,22 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 
+string? CorsPolicy = "CorsPolicy";
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(CorsPolicy,
+                          policy =>
+                          {
+                              policy
+                                                  .AllowAnyHeader()
+                                                  .AllowAnyMethod()
+                                                  .AllowAnyOrigin();
+                          });
+});
+
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -45,6 +60,8 @@ app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseCors(CorsPolicy);
 
 app.UseIdentityServer();
 app.UseAuthentication();
