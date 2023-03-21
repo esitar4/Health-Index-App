@@ -1,5 +1,6 @@
 using health_index_app.Server.Data;
 using health_index_app.Server.Models;
+using health_index_app.Shared.FatSecret;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +40,9 @@ builder.Services.AddAuthentication()
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddSingleton<IFatSecretSetup, FatSecretSetup>();
+builder.Services.AddScoped(st => new HttpClient());
 
 var app = builder.Build();
 
