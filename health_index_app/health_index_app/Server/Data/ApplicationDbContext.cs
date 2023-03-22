@@ -19,5 +19,12 @@ namespace health_index_app.Server.Data
         public DbSet<health_index_app.Shared.Models.Meal> Meals { get; set; }
         public DbSet<health_index_app.Shared.Models.UserMeal> UserMeals { get; set; }
         public DbSet<health_index_app.Shared.Models.MealFood> MealFoods { get; set; }
+
+        //protected override void OnModelCreating(ModelBuilder builder)
+        //{
+        //    base.OnModelCreating(builder);
+        //    builder.Entity<ApplicationUser>().HasMany(u => u.Parent).HasForeignKey(ApplicationUser.Id);
+        //}
+
     }
 }
