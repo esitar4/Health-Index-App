@@ -10,13 +10,13 @@ namespace health_index_app.Server.Controllers
     [Route("api/fatsecret")]
     public class FatSecretController : Controller
     {
-        private readonly IFatSecretSetup _fatSecretSetup;
+        private readonly IFatSecretClient _fatSecretClient;
         private readonly IConfiguration _config;
         private readonly ILogger<FatSecretController> _logger;
 
-        public FatSecretController(IFatSecretSetup fatSecretSetup, IConfiguration config, ILogger<FatSecretController> logger) 
+        public FatSecretController(IFatSecretClient fatSecretClient, IConfiguration config, ILogger<FatSecretController> logger) 
         {
-            _fatSecretSetup = fatSecretSetup;
+            _fatSecretClient = fatSecretClient;
             _config = config;
             _logger = logger;
         }
@@ -33,7 +33,7 @@ namespace health_index_app.Server.Controllers
             //return GetDummyCurrentWeather();
             var request = new FoodsSearchRequest { SearchExpression = searchExpression, MaxResults = maxResults };
 
-            return await _fatSecretSetup.client.FoodsSearchAsync(request);
+            return await _fatSecretClient.FoodsSearchAsync(request);
         }
 
         [HttpGet]
@@ -43,7 +43,7 @@ namespace health_index_app.Server.Controllers
             //return GetDummyCurrentWeather();
             var request = new FoodGetV2Request { FoodId = Convert.ToInt32(foodId) };
 
-            return await _fatSecretSetup.client.FoodGetAsync(request);
+            return await _fatSecretClient.FoodGetAsync(request);
         }
     }
 }
