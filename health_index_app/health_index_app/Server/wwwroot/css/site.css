@@ -12,20 +12,20 @@ a {
 }
 
 .form-control:focus {
-    border-color: #0077cc;
-    box-shadow: 0 0 0 0.2rem #0077cc;
+    border-color: #073B4C;
+    box-shadow: 0 0 0 0.2rem #073B4C;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.btn-primary, .btn-primary:focus, .btn-primary:active, .btn-primary:hover {
+    color: #fff;
+    background-color: #073B4C;
+    border-color: #073B4C;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #073B4C;
+    border-color: #073B4C;
 }
 
 .btn-link.nav-link:focus {
@@ -90,4 +90,12 @@ div {
 
 .navbar {
     background-color: #C9EFC7;
+}
+
+.nav-link, .nav-link:hover {
+    color: #073B4C;
+}
+
+.external-link, .external-link:hover, .forgot-password-link, .register-link, .forgot-password-link:hover, .register-link:hover {
+    color: #073B4C;
 }
