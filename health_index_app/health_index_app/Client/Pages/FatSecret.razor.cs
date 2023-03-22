@@ -16,7 +16,7 @@ namespace health_index_app.Client.Pages
         private async Task SearchFood()
         {
             //var foodSearch = await client.FoodsSearchAsync(new FoodsSearchRequest { SearchExpression = "apple", MaxResults = 10 });
-            json = await ApiService.FoodsSearchAsync("apple");
+            json = await ApiService.FoodsSearchAsync(SearchExpression);
         }
     }
 
