@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace health_index_app.Client.Pages
 {
-    public partial class FatSecret
+    public partial class SearchFood
     {
         [Inject]
         protected IFatSecretAPIServices ApiService { get; set; }
@@ -13,7 +13,7 @@ namespace health_index_app.Client.Pages
         //List<SearchedFood>? foods = new();
         FoodsSearchResponse json = null!;
 
-        private async Task SearchFood()
+        private async Task SearchForFood()
         {
             //var foodSearch = await client.FoodsSearchAsync(new FoodsSearchRequest { SearchExpression = "apple", MaxResults = 10 });
             json = await ApiService.FoodsSearchAsync(SearchExpression);
