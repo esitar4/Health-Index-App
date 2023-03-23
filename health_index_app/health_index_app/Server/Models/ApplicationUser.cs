@@ -37,5 +37,8 @@ namespace health_index_app.Server.Models
         public double? Height { get; set; }
         [RegularExpression("[MFO]", ErrorMessage = "Invalid Gender Character")]   //character for internal use - parsed from dropdown menu on frontend
         public char? Gender { get; set; }
+
+        //Navigation Property
+        public ApplicationUser Parent { get; set; }
     }
 }

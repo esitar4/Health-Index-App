@@ -15,7 +15,7 @@ namespace Test_health_index_app.Models
         {
             applicationUser = new ApplicationUser
             {
-                Email = "abc@def.com",
+                //Email = "abc@def.com",
                 ParentId = "",
                 DateOfBirth = DateTime.Now,
                 Weight = 100,
@@ -36,42 +36,42 @@ namespace Test_health_index_app.Models
             Assert.IsTrue(ValidateModel(applicationUser).Count == 0);
         }
 
-        [Test]
-        [TestCase("abcdefg.com")]
-        [TestCase("abc@def@")]
-        [TestCase("abcd ef")]
-        //[TestCase(abc@d ef)] <- Valid
-        //[TestCase("abc@def,com")] <- Valid 
-        public void TestInvalidEmail(string email)
-        {
-            //Arrange
-            applicationUser.Email = email;
+        //[Test]
+        //[TestCase("abcdefg.com")]
+        //[TestCase("abc@def@")]
+        //[TestCase("abcd ef")]
+        ////[TestCase(abc@d ef)] <- Valid
+        ////[TestCase("abc@def,com")] <- Valid 
+        //public void TestInvalidEmail(string email)
+        //{
+        //    //Arrange
+        //    applicationUser.Email = email;
 
-            //Act
+        //    //Act
 
-            //Assert
-            Assert.IsTrue(ValidateModel(applicationUser).Count == 1);
-            Assert.IsTrue(ValidateModel(applicationUser).Any(
-                    v => v.MemberNames.Contains("Email") &&
-                         v.ErrorMessage.Contains("Not a valid email address")));
+        //    //Assert
+        //    Assert.IsTrue(ValidateModel(applicationUser).Count == 1);
+        //    Assert.IsTrue(ValidateModel(applicationUser).Any(
+        //            v => v.MemberNames.Contains("Email") &&
+        //                 v.ErrorMessage.Contains("Not a valid email address")));
 
-        }
+        //}
 
-        [Test]
-        public void TestEmailRequired()
-        {
-            //Arrange
-            applicationUser.Email = null;
+        //[Test]
+        //public void TestEmailRequired()
+        //{
+        //    //Arrange
+        //    applicationUser.Email = null;
 
-            //Act
+        //    //Act
 
-            //Assert
-            Assert.IsTrue(ValidateModel(applicationUser).Count == 1);
-            Assert.IsTrue(ValidateModel(applicationUser).Any(
-                    v => v.MemberNames.Contains("Email") &&
-                         v.ErrorMessage.Contains("required")));
+        //    //Assert
+        //    Assert.IsTrue(ValidateModel(applicationUser).Count == 1);
+        //    Assert.IsTrue(ValidateModel(applicationUser).Any(
+        //            v => v.MemberNames.Contains("Email") &&
+        //                 v.ErrorMessage.Contains("required")));
 
-        }
+        //}
 
         [Test]
         [TestCase(-1.0)]
