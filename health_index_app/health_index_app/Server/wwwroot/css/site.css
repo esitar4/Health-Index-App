@@ -2,9 +2,9 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 a {
@@ -12,20 +12,20 @@ a {
 }
 
 .form-control:focus {
-    border-color: #0077cc;
-    box-shadow: 0 0 0 0.2rem #0077cc;
+    border-color: #073B4C;
+    box-shadow: 0 0 0 0.2rem #073B4C;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.btn-primary, .btn-primary:focus, .btn-primary:active, .btn-primary:hover {
+    color: #fff;
+    background-color: #073B4C;
+    border-color: #073B4C;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #073B4C;
+    border-color: #073B4C;
 }
 
 .btn-link.nav-link:focus {
@@ -66,12 +66,14 @@ button.accept-policy {
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
+    background-color: #C9EFC7;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #C9EFC7;
 }
 .footer {
   position: absolute;
@@ -80,4 +82,20 @@ body {
   overflow: scroll;
   white-space: nowrap;
   line-height: 60px;
+}
+
+div {
+    background-color: #C9EFC7;
+}
+
+.navbar {
+    background-color: #C9EFC7;
+}
+
+.nav-link, .nav-link:hover {
+    color: #073B4C;
+}
+
+.external-link, .external-link:hover, .forgot-password-link, .register-link, .forgot-password-link:hover, .register-link:hover {
+    color: #073B4C;
 }
