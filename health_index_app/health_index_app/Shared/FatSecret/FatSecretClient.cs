@@ -11,8 +11,10 @@ namespace health_index_app.Shared.FatSecret
         private readonly FatSecretAuthenticationManager _authManager;
         private readonly RestClientOptions _options;
         private readonly RestClient _client;
-        private readonly string _url = "https://platform.fatsecret.com/rest/server.api";
         private readonly HttpClient _httpClient;
+
+        private readonly string _url = "https://platform.fatsecret.com/rest/server.api";
+        
 
         public FatSecretClient(FatSecretCredentials credentials, HttpClient httpClient)
         {
