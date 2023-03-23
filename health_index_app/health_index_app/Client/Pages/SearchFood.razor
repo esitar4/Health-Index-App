@@ -1,17 +1,7 @@
-﻿@page "/search"
+﻿@page "/searchFood"
 @using System.Text.RegularExpressions
 
 <label>Search</label>
-@*<div class="container-fluid mb-5">
-    <div class="row">
-        <div class="col-9">
-            <input type="text" />
-        </div>
-        <div class="col-3">
-            <button @onclick="SearchFood">Submit</button>
-        </div>
-    </div>
-</div>*@
 
 <br/>
 
@@ -20,7 +10,7 @@
         <input type="text" class="form-control" @bind-value="SearchExpression" />
     </div>
     <div class="col-auto">
-        <button type="button" class="btn btn-light" @onclick="SearchFood">Submit</button>
+        <button type="submit" class="btn btn-light" @onclick="SearchForFood">Submit</button>
     </div>
 </div>
 
@@ -59,5 +49,5 @@
         </tbody>
     </table>
 } else{
-    <h4>Something went very wrong</h4>
+    <h4>Enter a food to search!</h4>
 }
