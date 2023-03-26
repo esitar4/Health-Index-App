@@ -78,7 +78,7 @@ namespace Test_health_index_app.Services
 
 
         [Test]
-        public async Task TestFoodSearchAsyncErrorMessage()
+        public async Task TestFoodSearchAsyncError()
         {
             //Arrange
             var mockHttp = new MockHttpMessageHandler();
@@ -104,7 +104,7 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
-        public async Task TestFoodGetAsyncErrorMessage()
+        public async Task TestFoodGetAsyncError()
         {
             //Arrange
             var mockHttp = new MockHttpMessageHandler();
