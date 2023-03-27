@@ -60,7 +60,8 @@ namespace health_index_app.Shared.FatSecret
             else
             {
                 var json = response.Content;
-                if (json.Contains("serving"))
+                
+                if (typeof(T) == typeof(GetFoodResponse))
                 {
                     json = json.Replace("{\"serving\": ", "{\"serving\": [");
                     json = json.Insert(json.IndexOf("}") + 1, "]");

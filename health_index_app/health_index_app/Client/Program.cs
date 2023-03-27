@@ -16,7 +16,8 @@ builder.Services.AddHttpClient("health_index_app.ServerAPI", client => client.Ba
 // Supply HttpClient instances that include access tokens when making requests to the server project
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("health_index_app.ServerAPI"));
 
-builder.Services.AddScoped(st => new HttpClient());
+builder.Services.AddScoped(sp =>
+    new HttpClient { BaseAddress = new Uri("https://localhost:7005") });
 builder.Services.AddScoped<IFatSecretAPIServices, FatSecretAPIServices>();
 
 builder.Services.AddApiAuthorization();
