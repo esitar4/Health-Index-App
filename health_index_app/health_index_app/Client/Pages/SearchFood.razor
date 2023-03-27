@@ -1,0 +1,53 @@
+﻿@page "/searchFood"
+@using System.Text.RegularExpressions
+
+<label>Search</label>
+
+<br/>
+
+<div class="row">
+    <div class="col-auto">
+        <input type="text" class="form-control" @bind-value="SearchExpression" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-light" @onclick="SearchForFood">Submit</button>
+    </div>
+</div>
+
+<br/>
+
+*
+*@if (json is not null)
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Food Name:</th>
+            <th>Serving Size:</th>
+            <th>Calorie Count:</th>
+        </tr>
+        </thead>
+
+        <tbody>
+            
+                @foreach (var food in json.Foods.Food)
+                {
+
+                    var description_list = @food.Food_Description;
+
+                    var serving_size = description_list.Split('|')[0].Split(':')[1].Trim();
+                    Console.WriteLine(serving_size);
+                    var calorie_count = description_list.Split('|')[0].Split('-')[0][4..].Trim();
+                    Console.WriteLine(calorie_count);
+
+                    <tr>
+                        <td>@food.Food_Name</td>
+                        <td>@calorie_count</td>
+                        <td>@serving_size</td>
+                    </tr>
+                }
+        </tbody>
+    </table>
+} else{
+    <h4>Enter a food to search!</h4>
+}
