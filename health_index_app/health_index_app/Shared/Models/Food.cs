@@ -86,5 +86,10 @@ namespace health_index_app.Shared.Models
 
         
         public double? Iron { get; set; }
+
+
+        //Navigation Property
+        [ForeignKey("FoodId")]
+        public virtual ICollection<MealFood> MealFoods { get; set; }
     }
 }
