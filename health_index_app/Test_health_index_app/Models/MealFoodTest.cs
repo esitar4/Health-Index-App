@@ -5,7 +5,7 @@ using static Test_health_index_app.ModelValidator;
 
 namespace Test_health_index_app.Models
 {
-    public class Test_MealFood
+    public class MealFoodTest
     {
         private MealFood mealfood;
 
