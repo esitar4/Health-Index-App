@@ -35,7 +35,7 @@ namespace health_index_app.Shared.FatSecret
             return await FatSecretRequest<FoodsSearchResponse>(request);
         }
 
-        private async Task<T> FatSecretRequest<T>(IFatSecretRequest fatSecretRequest) where T : FatSecretResponse
+        private async Task<T> FatSecretRequest<T>(IFatSecretRequest fatSecretRequest) where T : FatSecretResponse, new()
         {
             var request = new RestRequest(_url, Method.Get);
             var authToken = await _authManager.GetAuthHeaderAsync(_httpClient);
@@ -60,14 +60,24 @@ namespace health_index_app.Shared.FatSecret
             else
             {
                 var json = response.Content;
-                
-                if (typeof(T) == typeof(GetFoodResponse))
+                try
                 {
-                    json = json.Replace("{\"serving\": ", "{\"serving\": [");
-                    json = json.Insert(json.IndexOf("}") + 1, "]");
+                    fatSecretResponse = JsonConvert.DeserializeObject<T>(json);
                 }
-
-                fatSecretResponse = JsonConvert.DeserializeObject<T>(json);
+                catch
+                {
+                    if (typeof(T) == typeof(GetFoodResponse))
+                    {
+                        json = json.Replace("{\"serving\": ", "{\"serving\": [");
+                        json = json.Insert(json.IndexOf("}") + 1, "]");
+                        fatSecretResponse = JsonConvert.DeserializeObject<T>(json);
+                    }
+                    else
+                    {
+                        fatSecretResponse = new() { Error = new FatSecretError { Code = -1, Message = "Json could not be converted to existing response objects!"} };
+                    }
+                }
+                
             }
 
             var fatSecretErrorResponse = JsonConvert.DeserializeObject<FatSecretErrorResponse>(response.Content);
