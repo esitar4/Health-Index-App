@@ -49,7 +49,25 @@ namespace health_index_app.Shared.FatSecret
             request.AddParameter("format", "json");
 
             var response = await _client.ExecuteAsync<T>(request);
-            var fatSecretResponse = response.Data;
+
+            T fatSecretResponse;
+            // FatSecret Servings List Response
+            if (response.Data != null)
+            {
+                fatSecretResponse = response.Data;
+            }
+            // Parse Servings non list response to list
+            else
+            {
+                var json = response.Content;
+                if (json.Contains("serving"))
+                {
+                    json = json.Replace("{\"serving\": ", "{\"serving\": [");
+                    json = json.Insert(json.IndexOf("}") + 1, "]");
+                }
+
+                fatSecretResponse = JsonConvert.DeserializeObject<T>(json);
+            }
 
             var fatSecretErrorResponse = JsonConvert.DeserializeObject<FatSecretErrorResponse>(response.Content);
             if (fatSecretErrorResponse.Error != null)
