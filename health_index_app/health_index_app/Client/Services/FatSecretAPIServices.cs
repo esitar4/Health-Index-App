@@ -20,13 +20,13 @@ namespace health_index_app.Client.Services
 
         public async Task<FoodsSearchResponse> FoodsSearchAsync(string searchExpression)
         {
-            var url = $"https://localhost:7005/api/fatsecret/foodsearch?searchExpression={searchExpression}";
+            var url = $"/api/fatsecret/foodsearch?searchExpression={searchExpression}";
             return await _client.GetFromJsonAsync<FoodsSearchResponse>(url);
         }
 
         public async Task<GetFoodResponse> FoodGetAsync(int foodId)
         {
-            var url = $"https://localhost:7005/api/fatsecret/foodget?foodId={foodId}";
+            var url = $"/api/fatsecret/foodget?foodId={foodId}";
             return await _client.GetFromJsonAsync<GetFoodResponse>(url);
         }
     }
