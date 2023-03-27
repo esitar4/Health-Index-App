@@ -11,11 +11,9 @@ namespace health_index_app.Shared.Models
         public int Id { get; set; }
 
         [Required]
-        [ForeignKey("Meal")]
         public int MealId { get; set; }
 
         [Required]
-        [ForeignKey("Food")]
         public int FoodId { get; set; }
 
         [Required]

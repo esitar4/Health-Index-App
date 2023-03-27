@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using health_index_app.Shared.Models;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -26,7 +27,7 @@ namespace health_index_app.Server.Models
         public bool IsLocked { get; set; } = false;
         [Required]
         public bool IsAdmin { get; set; } = false;*/
-        [ForeignKey("ApplicationUser")]
+
         public string? ParentId { get; set; }
         public DateTime? DateOfBirth { get; set; }
         [Column(TypeName = "decimal(6,2)")]
@@ -39,6 +40,10 @@ namespace health_index_app.Server.Models
         public char? Gender { get; set; }
 
         //Navigation Property
+        [ForeignKey("ParentId")]
         public ApplicationUser Parent { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual ICollection<UserMeal> UserMeals { get; set; }
     }
 }

@@ -18,5 +18,12 @@ namespace health_index_app.Shared.Models
         [Range(0.0, 10.0, ErrorMessage = "Score must be between 0 and 10")]
         public double HealthIndex { get; set; } = -1;
 
+
+        //Navigation Property
+        [ForeignKey("MealId")]
+        public virtual ICollection<MealFood> MealFoods { get; set; }
+
+        [ForeignKey("MealId")]
+        public virtual ICollection<UserMeal> UserMeals { get; set; }
     }
 }
