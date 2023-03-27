@@ -40,16 +40,14 @@ builder.Services.AddAuthentication()
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-builder.Services.AddScoped(st => new HttpClient());
-builder.Services.AddSingleton<IFatSecretClient>(client => new FatSecretClient(
-    new FatSecretCredentials
+builder.Services.AddSingleton<FatSecretCredentials>(client => new FatSecretCredentials
     {
         ClientKey = builder.Configuration["ClientKey"],
         ClientSecret = builder.Configuration["ClientSecret"]
-    },
-    new HttpClient()
-    )
+    }
 );
+
+builder.Services.AddSingleton<IFatSecretClient, FatSecretClient>();
 
 var app = builder.Build();
 
