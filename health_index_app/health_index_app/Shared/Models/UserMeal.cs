@@ -10,8 +10,10 @@ namespace health_index_app.Shared.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public string UserId { get; set; } = null!;
+        [Required]
+        public string UserId { get; set; }
 
+        [Required]
         public int MealId { get; set; }
 
         [MaxLength(15,ErrorMessage = "Name length shouldn't be longer than 15 letters")]
