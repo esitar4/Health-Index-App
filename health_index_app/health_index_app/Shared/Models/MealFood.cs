@@ -10,14 +10,14 @@ namespace health_index_app.Shared.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
-        public int MealId { get; set; }
+        [ForeignKey("Id")]
+        public virtual Meal Meal { get; set; }
+
+        [ForeignKey("Id")]
+        public virtual Food Food { get; set; }
 
         [Required]
-        public int FoodId { get; set; }
-
-        [Required]
-        [Range(0.0001, Double.MaxValue, ErrorMessage = "Serving size must be greater than 0")]
-        public double ServingSize { get; set; } = 1;
+        [Range(0.0001, Double.MaxValue, ErrorMessage = "Amount must be greater than 0")]
+        public double Amount { get; set; } = 1;
     }
 }
