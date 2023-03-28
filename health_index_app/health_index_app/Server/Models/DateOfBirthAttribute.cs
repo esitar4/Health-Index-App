@@ -11,7 +11,7 @@ namespace health_index_app.Server.Models
             else
             {
                 var val = (DateTime)value;
-                return (val <= DateTime.Now && val >= new DateTime(1900,1,1));
+                return val <= DateTime.Now;
             }
                 
         }
