@@ -1,5 +1,9 @@
 ﻿@page "/searchFood"
 @using System.Text.RegularExpressions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using health_index_app.Shared
+@attribute [Authorize]
 
 <label>Search</label>
 

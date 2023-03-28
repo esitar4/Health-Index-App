@@ -20,7 +20,7 @@ namespace health_index_app.Client.Pages
 
         private string SearchExpression = String.Empty;
         private int currMealId;
-        private List<ResponseFood> currFoodList;
+        private List<ResponseFood> currFoodList = new List<ResponseFood>();
         //List<SearchedFood>? foods = new();
         FoodsSearchResponse json = null!;
         GetFoodResponse getFood = null!;
