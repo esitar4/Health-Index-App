@@ -10,10 +10,13 @@ namespace health_index_app.Client.Pages
         [Inject]
         protected IFatSecretAPIServices ApiService { get; set; }
 
+
         private string SearchExpression = String.Empty;
         //List<SearchedFood>? foods = new();
         FoodsSearchResponse json = null!;
         GetFoodResponse getFood = null!;
+
+        public MealAPI mealAPI {get; set;} = new (new HttpClient());
 
         private async Task SearchForFood()
         {
@@ -29,6 +32,10 @@ namespace health_index_app.Client.Pages
             int parsedFoodId = Convert.ToInt32(foodId);
             getFood = await ApiService.FoodGetAsync(parsedFoodId);
         }
-    }
 
+        private async Task CreateMeal()
+        {
+            await mealAPI.createMeal();
+        }
+    }
 }

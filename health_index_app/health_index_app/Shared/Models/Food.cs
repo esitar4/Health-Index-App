@@ -11,8 +11,11 @@ namespace health_index_app.Shared.Models
     public class Food
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //use food_id from fatsecret api
         public int Id { get; set; }
+        [Required]
+        public int FoodId { get; set; }
         [Required]
         public string FoodName { get; set; } = "";
         public string FoodType { get; set; } = "";
