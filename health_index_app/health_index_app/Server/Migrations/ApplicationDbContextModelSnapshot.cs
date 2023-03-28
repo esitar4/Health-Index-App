@@ -3,19 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using health_index_app.Server.Data;
 
 #nullable disable
 
-namespace health_index_app.Server.Data.Migrations
+namespace health_index_app.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230328150907_DateOfBirthVlidation_2")]
-    partial class DateOfBirthVlidation_2
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,6 +245,32 @@ namespace health_index_app.Server.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("health_index_app.Server.Models.UserMeal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("UserMeals");
+                });
+
             modelBuilder.Entity("health_index_app.Shared.Models.Food", b =>
                 {
                     b.Property<int>("Id")
@@ -377,53 +401,12 @@ namespace health_index_app.Server.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("FoodId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MealId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("ServingSize")
+                    b.Property<double>("Amount")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FoodId");
-
-                    b.HasIndex("MealId");
-
                     b.ToTable("MealFoods");
-                });
-
-            modelBuilder.Entity("health_index_app.Shared.Models.UserMeal", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("MealId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MealId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserMeals");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -572,34 +555,42 @@ namespace health_index_app.Server.Data.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("health_index_app.Shared.Models.MealFood", b =>
+            modelBuilder.Entity("health_index_app.Server.Models.UserMeal", b =>
                 {
-                    b.HasOne("health_index_app.Shared.Models.Food", null)
-                        .WithMany("MealFoods")
-                        .HasForeignKey("FoodId")
+                    b.HasOne("health_index_app.Server.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("health_index_app.Shared.Models.Meal", null)
-                        .WithMany("MealFoods")
-                        .HasForeignKey("MealId")
+                    b.HasOne("health_index_app.Shared.Models.Meal", "Meal")
+                        .WithMany()
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Meal");
                 });
 
-            modelBuilder.Entity("health_index_app.Shared.Models.UserMeal", b =>
+            modelBuilder.Entity("health_index_app.Shared.Models.MealFood", b =>
                 {
-                    b.HasOne("health_index_app.Shared.Models.Meal", null)
-                        .WithMany("UserMeals")
-                        .HasForeignKey("MealId")
+                    b.HasOne("health_index_app.Shared.Models.Food", "Food")
+                        .WithMany()
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("health_index_app.Server.Models.ApplicationUser", null)
-                        .WithMany("UserMeals")
-                        .HasForeignKey("UserId")
+                    b.HasOne("health_index_app.Shared.Models.Meal", "Meal")
+                        .WithMany()
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Food");
+
+                    b.Navigation("Meal");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -651,23 +642,6 @@ namespace health_index_app.Server.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("health_index_app.Server.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("UserMeals");
-                });
-
-            modelBuilder.Entity("health_index_app.Shared.Models.Food", b =>
-                {
-                    b.Navigation("MealFoods");
-                });
-
-            modelBuilder.Entity("health_index_app.Shared.Models.Meal", b =>
-                {
-                    b.Navigation("MealFoods");
-
-                    b.Navigation("UserMeals");
                 });
 #pragma warning restore 612, 618
         }
