@@ -1,6 +1,7 @@
 ﻿using health_index_app.Client.Services;
 using Food = health_index_app.Shared.Models.Food;
 using Meal = health_index_app.Shared.Models.Meal;
+using UserMeal = health_index_app.Shared.Models.UserMeal;
 using Microsoft.AspNetCore.Components;
 using ResponseFood = health_index_app.Shared.FatSecret.ResponseObjects.SearchedFood;
 using health_index_app.Shared.FatSecret.ResponseObjects;
@@ -17,10 +18,13 @@ namespace health_index_app.Client.Pages
         protected IMealFoodAPIServices MealFoodAPIServices { get; set; }
         [Inject]
         protected IMealsAPIServices MealAPIServices { get; set; }
+        [Inject]
+        protected IUserMealsAPIServices UserMealsAPIServices { get; set; }
 
         private string SearchExpression = String.Empty;
         private int currMealId;
         private List<ResponseFood> currFoodList = new List<ResponseFood>();
+        private List<UserMeal> currUserMeals = new List<UserMeal>();
         //List<SearchedFood>? foods = new();
         FoodsSearchResponse json = null!;
         GetFoodResponse getFood = null!;
@@ -42,17 +46,30 @@ namespace health_index_app.Client.Pages
             getFood = await ApiService.FoodGetAsync(parsedFoodId);
         }
 
-        private async Task AddFoodIdToMeal(ResponseFood food)
+        private async Task AddFoodToMeal(ResponseFood food)
         {
             currFoodList.Add(food);
             StateHasChanged();
+        }
 
+        private async Task RemoveFoodFromMeal(ResponseFood food)
+        {
+            currFoodList.Remove(food);
+            StateHasChanged();
         }
 
         private async Task CreateMeal()
         {
-            //currMealId = await MealFoodAPIServices.createMealFood(currFoodList);
+            var foodList = new List<Food>();
 
+            foreach (var foodResponse in currFoodList)
+            {
+                foodList.Add(FoodAPIServices.createFood(Convert.ToInt32(foodResponse.Food_Id)).Result);
+            }
+
+            currMealId = await MealFoodAPIServices.createMealFood(foodList);
+
+            /*currUserMeals.Add(UserMealsAPIServices.createUserMeal(MealName, currMealId).Result);*/
 
 
 

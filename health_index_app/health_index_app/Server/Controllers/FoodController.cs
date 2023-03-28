@@ -22,8 +22,6 @@ namespace health_index_app.Server.Controllers
         private readonly ILogger<FatSecretController> _logger;
         private readonly FatSecretAPIServices _fatSecretClient;
 
-        private Task<AuthenticationState> authenticationStateTask { get; set; }
-
         public FoodController(ApplicationDbContext context, IConfiguration config, ILogger<FatSecretController> logger, FatSecretAPIServices fatSecretClient)
         {
             _context = context;

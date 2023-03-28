@@ -50,7 +50,7 @@
                             <td>@food.Food_Name</td>
                             <td>@calorie_count</td>
                             <td>@serving_size</td>
-                            <td><button class="btn btn-primary btn-lg" type="button" @onclick="() => AddFoodIdToMeal(food)">Add</button></td>
+                            <td><button class="btn btn-primary btn-sm" type="button" @onclick="() => AddFoodToMeal(food)">Add</button></td>
                         </tr>
                         @if (getFood != null)
                         {
@@ -94,7 +94,7 @@
                             <td>@food.Food_Name</td>
                             <td>@calorie_count</td>
                             <td>@serving_size</td>
-                            <td><button class="btn btn-primary btn-lg" type="button" @onclick="() => AddFoodIdToMeal(food)">Add</button></td>
+                            <td><button class="btn btn-Danger btn-sm" type="button" @onclick="() => RemoveFoodFromMeal(food)">Remove</button></td>
                         </tr>
                     }
                 } else {
@@ -116,6 +116,7 @@
                         </tbody>
                     </table>
                 }
+                <button class="btn btn-success" type="button" @onclick="CreateMeal">Create Meal</button>
             </tbody>
         </table>
     </div>

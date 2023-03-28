@@ -56,55 +56,5 @@ namespace health_index_app.Server.Controllers
 
             return Ok(meal);
         }
-        /*        [HttpPost]
-                [Route("createmeal")]
-                public async Task<HttpStatusCode> createMeal(Meal mealId)
-                {
-                    var sqlMeals = _context.Meals;
-
-                    sqlMeals.Add(mealId);
-
-                    _context.SaveChanges();
-
-                    return HttpStatusCode.OK;
-                }*/
-
-        /*        async Task<string> getUserId()
-                {
-                    var user = (await authenticationStateTask).User;
-                    var userid = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
-                    return userid;
-                }*/
-
-        /*        private Dictionary<Shared.Models.Food, Double> convertResponseToFoodDictionary(Dictionary<int, double> responseFoods)
-                {
-                    var foods = new Dictionary<Shared.Models.Food, Double>();
-
-                    foreach( var foodResponse in responseFoods.Values )
-                    {
-                        var food = convertResponseToFood( _fatSecretClient.FoodGetAsync(new FoodGetV2Request { FoodId = Convert.ToInt32(foodResponse) }).Result.Food);
-                    }
-                    return foods;
-                }
-
-                private static Shared.Models.Food convertResponseToFood( Shared.FatSecret.ResponseObjects.Food responseFood)
-                {
-                    var food = new Shared.Models.Food();
-
-                    //Add all of the food attributes from responseFood to food
-
-                    food.Id = Convert.ToInt32(responseFood.Food_Id);
-                    food.FoodName = responseFood.Food_Name;
-                    food.FoodType = responseFood.Food_Type;
-                    food.BrandName = responseFood.Brand_Name;
-                    food.FoodURL = responseFood.Food_Url;
-
-                    food.ServingId = responseFood.Servings.Serving
-
-
-
-
-                    return food;
-                }*/
     }
 }
