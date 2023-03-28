@@ -1,7 +1,9 @@
 ﻿using health_index_app.Client.Services;
-using health_index_app.Shared.FatSecret.ResponseObjects;
-using health_index_app.Shared.Models;
+using Food = health_index_app.Shared.Models.Food;
+using Meal = health_index_app.Shared.Models.Meal;
 using Microsoft.AspNetCore.Components;
+using ResponseFood = health_index_app.Shared.FatSecret.ResponseObjects.SearchedFood;
+using health_index_app.Shared.FatSecret.ResponseObjects;
 
 namespace health_index_app.Client.Pages
 {
@@ -9,15 +11,21 @@ namespace health_index_app.Client.Pages
     {
         [Inject]
         protected IFatSecretAPIServices ApiService { get; set; }
-
+        [Inject]
+        protected IFoodAPIServices FoodAPIServices { get; set; }
+        [Inject]
+        protected IMealFoodAPIServices MealFoodAPIServices { get; set; }
+        [Inject]
+        protected IMealsAPIServices MealAPIServices { get; set; }
 
         private string SearchExpression = String.Empty;
-        private Meal? currMeal;
+        private int currMealId;
+        private List<ResponseFood> currFoodList;
         //List<SearchedFood>? foods = new();
         FoodsSearchResponse json = null!;
         GetFoodResponse getFood = null!;
 
-        public MealAPI mealAPI { get; set; } = new(new HttpClient());
+        public MealsAPIServices mealAPI { get; set; } = new(new HttpClient());
 
         private async Task SearchForFood()
         {
@@ -34,11 +42,18 @@ namespace health_index_app.Client.Pages
             getFood = await ApiService.FoodGetAsync(parsedFoodId);
         }
 
+        private async Task AddFoodIdToMeal(ResponseFood food)
+        {
+            currFoodList.Add(food);
+            StateHasChanged();
+
+        }
+
         private async Task CreateMeal()
         {
-            var currMealId = await mealAPI.createMeal();
+            //currMealId = await MealFoodAPIServices.createMealFood(currFoodList);
 
-            currMeal = await mealAPI.readMeal(currMealId);
+
 
 
         }

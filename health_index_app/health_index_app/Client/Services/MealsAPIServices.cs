@@ -1,44 +1,40 @@
-﻿using health_index_app.Shared.Models;
+﻿using health_index_app.Client.Pages;
+using health_index_app.Shared.Models;
 using System.Net;
 using System.Net.Http.Json;
 
 namespace health_index_app.Client.Services
 {
-    public interface IMealAPI
+    public interface IMealsAPIServices
     {
-        Task<int> createMeal();
+        Task<Meal> createMeal(Meal meal);
         Task<bool> deleteMeal(int mealId);
         Task<bool> updateMeal(Meal meal);
         Task<Meal> readMeal(int mealId);
     }
 
-    public class MealAPI : IMealAPI
+    public class MealsAPIServices : IMealsAPIServices
     {
         private readonly HttpClient _client;
 
-        public MealAPI(HttpClient client)
+        public MealsAPIServices(HttpClient client)
         {
             _client = client;
         }
 
-        public async Task<int> createMeal()
+        public async Task<Meal> createMeal(Meal meal)
         {
-            Meal meal;
-
-            meal = new Meal();
-
-            var response = await _client.PostAsJsonAsync("https://localhost:7005/meals/create", meal);
-
+            Meal updatedMeal;
             try
             {
-                /*meal = new Meal();
-
-                var response = await _client.PostAsJsonAsync("meals/create", meal);*/
+                var response = await _client.PostAsJsonAsync("meals/create", meal);
+                updatedMeal = response.Content.ReadFromJsonAsync<Meal>().Result;
             } catch
             {
+                throw;
                 throw new Exception("Unable to create meal");
             }
-            return meal.Id;
+            return updatedMeal;
         }
 
         public async Task<bool> deleteMeal(int mealId)

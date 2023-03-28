@@ -17,5 +17,8 @@ builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().Cre
 builder.Services.AddApiAuthorization();
 
 builder.Services.AddScoped<IFatSecretAPIServices, FatSecretAPIServices>();
+builder.Services.AddScoped<IMealFoodAPIServices, MealFoodAPIServices>();
+builder.Services.AddScoped<IFoodAPIServices, FoodAPIServices>();
+builder.Services.AddScoped<IMealsAPIServices, MealsAPIServices>();
 
 await builder.Build().RunAsync();

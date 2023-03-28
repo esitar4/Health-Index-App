@@ -42,9 +42,9 @@ namespace health_index_app.Server.Controllers
             //return GetDummyCurrentWeather();
             _context.Meals.Add(meal);
             await _context.SaveChangesAsync();
-            Meal newMeal = await _context.Meals.FindAsync(meal);
+            _context.Entry(meal).Reload();
 
-            return Ok(newMeal);
+            return Ok(meal);
         }
 
         [HttpGet]

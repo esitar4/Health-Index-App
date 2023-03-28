@@ -59,12 +59,12 @@ namespace Test_health_index_app.Models
             //Arrange
             mealfood.FoodId = 0;
             mealfood.MealId = 0;
-            mealfood.ServingSize = 5.5;
+            mealfood.Amount = 5.5;
 
             //Act
 
             //Assert
-            Assert.IsTrue(mealfood.ServingSize == 5.5);
+            Assert.IsTrue(mealfood.Amount == 5.5);
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace Test_health_index_app.Models
             //Arrange
             mealfood.MealId = mealId;
             mealfood.FoodId = foodId;
-            mealfood.ServingSize = servingSize;
+            mealfood.Amount = servingSize;
 
             //Act
 
@@ -91,7 +91,7 @@ namespace Test_health_index_app.Models
             //Arrange
             mealfood.MealId = mealId;
             mealfood.FoodId = foodId;
-            mealfood.ServingSize = servingSize;
+            mealfood.Amount = servingSize;
 
             //Act
 
@@ -111,7 +111,7 @@ namespace Test_health_index_app.Models
 
             //Assert
             Assert.IsTrue(ValidateModel(mealfood).Count == 0);
-            Assert.IsTrue(mealfood.ServingSize == 1);
+            Assert.IsTrue(mealfood.Amount == 1);
         }
     }
 }

@@ -33,30 +33,30 @@
 
     public class Serving
     {
-        public string Calcium { get; set; }
-        public string Calories { get; set; }
-        public string Carbohydrate { get; set; }
-        public string Cholesterol { get; set; }
-        public string Fat { get; set; }
-        public string Fiber { get; set; }
-        public string Iron { get; set; }
-        public string Measurement_Description { get; set; }
-        public string Metric_Serving_Amount { get; set; }
-        public string Metric_Serving_Unit { get; set; }
-        public string Monounsaturated_Fat { get; set; }
-        public string Number_Of_Units { get; set; }
-        public string Polyunsaturated_Fat { get; set; }
-        public string Potassium { get; set; }
-        public string Protein { get; set; }
-        public string Saturated_Fat { get; set; }
-        public string Serving_Description { get; set; }
-        public string Serving_Id { get; set; }
-        public string Serving_Url { get; set; }
-        public string Sodium { get; set; }
-        public string Sugar { get; set; }
-        public string Vitamin_A { get; set; }
-        public string Vitamin_C { get; set; }
-        public string Vitamin_D { get; set; }
+        public string? Calcium { get; set; }
+        public string? Calories { get; set; }
+        public string? Carbohydrate { get; set; }
+        public string? Cholesterol { get; set; }
+        public string? Fat { get; set; }
+        public string? Fiber { get; set; }
+        public string? Iron { get; set; }
+        public string? Measurement_Description { get; set; }
+        public string? Metric_Serving_Amount { get; set; }
+        public string? Metric_Serving_Unit { get; set; }
+        public string? Monounsaturated_Fat { get; set; }
+        public string? Number_Of_Units { get; set; }
+        public string? Polyunsaturated_Fat { get; set; }
+        public string? Potassium { get; set; }
+        public string? Protein { get; set; }
+        public string? Saturated_Fat { get; set; }
+        public string? Serving_Description { get; set; }
+        public string? Serving_Id { get; set; }
+        public string? Serving_Url { get; set; }
+        public string? Sodium { get; set; }
+        public string? Sugar { get; set; }
+        public string? Vitamin_A { get; set; }
+        public string? Vitamin_C { get; set; }
+        public string? Vitamin_D { get; set; }
 
         public override string ToString()
         {
