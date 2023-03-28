@@ -1,8 +1,9 @@
 ﻿using NUnit.Framework;
-using health_index_app.Shared.Models;
 using System.Linq;
 using System;
 using static Test_health_index_app.ModelValidator;
+using health_index_app.Server.Models;
+using health_index_app.Shared.Models;
 
 namespace Test_health_index_app.Models
 {
@@ -12,7 +13,7 @@ namespace Test_health_index_app.Models
         [SetUp]
         public void SetUp()
         {
-            userMeal = new UserMeal { Id = 1, UserId = "1", MealId = 1, Name = "chickfila" };           
+            userMeal = new UserMeal { Id = 1, UserId = "1", Meal = new Meal { Id = 1 }, Name = "chickfila" };           
         }
 
         [Test]
