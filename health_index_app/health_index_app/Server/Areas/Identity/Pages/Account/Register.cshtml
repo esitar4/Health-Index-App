@@ -14,6 +14,26 @@
             <h2>Create a new account.</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+               <div class="form-floating">
+                <input asp-for="Input.DateOfBirth" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.DateOfBirth"></label>
+                <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+            </div>
+               <div class="form-floating">
+                <input asp-for="Input.Weight" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.Weight"></label>
+                <span asp-validation-for="Input.Weight" class="text-danger"></span>
+            </div>
+               <div class="form-floating">
+                <input asp-for="Input.Height" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.Height"></label>
+                <span asp-validation-for="Input.Height" class="text-danger"></span>
+            </div>
+               <div class="form-floating">
+                <input asp-for="Input.Gender" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.Gender"></label>
+                <span asp-validation-for="Input.Gender" class="text-danger"></span>
+            </div>
             <div class="form-floating">
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
                 <label asp-for="Input.Email"></label>
