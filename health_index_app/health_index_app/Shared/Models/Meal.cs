@@ -11,7 +11,7 @@ namespace health_index_app.Shared.Models
 
         [Required]
         [Range(0.0, 10.0, ErrorMessage = "Score must be between 0 and 10")]
-        public double HealthIndex { get; set; } = -1;
+        public double HealthIndex { get; set; } = 0;
 
     }
 }
