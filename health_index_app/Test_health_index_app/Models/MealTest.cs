@@ -6,7 +6,7 @@ using static Test_health_index_app.ModelValidator;
 
 namespace Test_health_index_app.Models
 {
-    public class Test_Meal
+    public class MealTest
     {
         private Meal meal;
 

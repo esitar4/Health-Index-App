@@ -4,7 +4,6 @@ using health_index_app.Shared.FatSecret;
 using health_index_app.Shared.FatSecret.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 
 string? CorsPolicy = "CorsPolicy";
 
@@ -41,16 +40,14 @@ builder.Services.AddAuthentication()
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-builder.Services.AddScoped(st => new HttpClient());
-builder.Services.AddSingleton<IFatSecretClient>(client => new FatSecretClient(
-    new FatSecretCredentials
+builder.Services.AddSingleton<FatSecretCredentials>(client => new FatSecretCredentials
     {
-        ClientKey = "44a3ee4ca84b42ebb3234bc6bf66518c",
-        ClientSecret = "29c8029e8f1b4fdcae11abc7d1babfdd"
-    },
-    new HttpClient()
-    )
+        ClientKey = builder.Configuration["ClientKey"],
+        ClientSecret = builder.Configuration["ClientSecret"]
+    }
 );
+
+builder.Services.AddSingleton<IFatSecretClient, FatSecretClient>();
 
 var app = builder.Build();
 
