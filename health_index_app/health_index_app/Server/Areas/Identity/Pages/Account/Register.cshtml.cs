@@ -72,6 +72,7 @@ namespace health_index_app.Server.Areas.Identity.Pages.Account
         public class InputModel
         {
             //public string? ParentId { get; set; }
+            [DateOfBirth(ErrorMessage = "Date of Birth must be in the past")]
             [Display(Name = "Date of Birth (Optional)")]
             public DateTime? DateOfBirth { get; set; }
             [Display(Name = "Weight (Optional - pounds)")]
