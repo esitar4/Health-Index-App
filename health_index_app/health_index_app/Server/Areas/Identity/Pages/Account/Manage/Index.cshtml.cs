@@ -31,11 +31,18 @@ namespace health_index_app.Server.Areas.Identity.Pages.Account.Manage
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string Username { get; set; }
+        [Display(Name ="Phone Number")]
         public string PhoneNumber { get; set; }
+        [Display(Name = "Date of Birth")]
 
         public DateTime? DateOfBirth { get; set; }
+        [Display(Name = "Date of Birth")]
+        public string? dob { get; set; }
+        [Display(Name = "Weight")]
         public double? Weight { get; set; }
+        [Display(Name = "Height")]
         public double? Height { get; set; }
+        [Display(Name = "Gender")]
         public char? Gender { get; set; }
 
         /// <summary>
@@ -67,7 +74,7 @@ namespace health_index_app.Server.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
 
             [DateOfBirth(ErrorMessage = "Date of Birth must be in the past")]
-            [Display(Name = "Date of Birth")]
+            [Display(Name = "Update Date of Birth")]
             public DateTime? DateOfBirth { get; set; }
             [Display(Name = "Update Weight (pounds)")]
             [Range(0.001, 9999.99, ErrorMessage = "Weight must be in between 0 and 9999.99")]
@@ -86,7 +93,10 @@ namespace health_index_app.Server.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             if(user.DateOfBirth is not null)
+            {
                 this.DateOfBirth = user.DateOfBirth.Value.Date;
+                this.dob = this.DateOfBirth.Value.ToShortDateString();
+            }
             if (user.Weight is not null) 
                 this.Weight = user.Weight;
             if(user.Height is not null)
@@ -126,10 +136,16 @@ namespace health_index_app.Server.Areas.Identity.Pages.Account.Manage
             }
 
             Console.WriteLine($"Old phone number: {this.PhoneNumber} old height: {this.Height} old weight: {this.Weight}");
-            user.PhoneNumber = Input.PhoneNumber;
-            user.Weight = Input.Weight;
-            user.Height = Input.Height;
-            user.Gender = Input.Gender;
+            if(Input.PhoneNumber is not null)
+                user.PhoneNumber = Input.PhoneNumber;
+            if(Input.DateOfBirth is not null)
+                user.DateOfBirth = Input.DateOfBirth.Value.Date;
+            if(Input.Weight is not null)
+                user.Weight = Input.Weight;
+            if(Input.Height is not null)
+                user.Height = Input.Height;
+            if(Input.Gender is not null)
+                user.Gender = Input.Gender;
             var updateSuccess = await _userManager.UpdateAsync(user);
             Console.WriteLine($"new height: {user.Height} new weight: {user.Weight}");
 

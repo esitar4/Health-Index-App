@@ -34,8 +34,13 @@
             *@
 
             <div class="form-floating">
-                <input asp-for="DateOfBirth" class="form-control" autocomplete="DateOfBirth" disabled/>
-                <label asp-for="DateOfBirth" class="form-label"></label>
+                <input asp-for="dob" class="form-control" autocomplete="dob" disabled/>
+                <label asp-for="dob" class="form-label"></label>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.DateOfBirth" type="date" class="form-control"/>
+                <label asp-for="Input.DateOfBirth"></label>
+                <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
             </div>
 
             <div class="form-floating">
