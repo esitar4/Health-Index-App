@@ -274,7 +274,7 @@ namespace health_index_app.Server.Migrations
             modelBuilder.Entity("health_index_app.Shared.Models.Food", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                        //.ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
