@@ -10,10 +10,14 @@ namespace health_index_app.Shared.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [ForeignKey("Id")]
+        [ForeignKey("Meal")]
+        public int MealId { get; set; }
+        
         public virtual Meal Meal { get; set; }
 
         [ForeignKey("Id")]
+        public int FoodId { get; set; }
+        
         public virtual Food Food { get; set; }
 
         [Required]

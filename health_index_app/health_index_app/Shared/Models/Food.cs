@@ -1,15 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace health_index_app.Shared.Models
 {
     public class Food
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         //use food_id from fatsecret api
         public int Id { get; set; }
-        [Required]
-        public int FoodId { get; set; }
         [Required]
         public string FoodName { get; set; } = "";
         public string FoodType { get; set; } = "";
