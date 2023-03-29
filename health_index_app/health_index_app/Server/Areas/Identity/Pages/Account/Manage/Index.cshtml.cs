@@ -85,10 +85,14 @@ namespace health_index_app.Server.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
-            this.DateOfBirth = user.DateOfBirth.Value.Date;
-            this.Weight = user.Weight;
-            this.Height = user.Height;
-            this.Gender = user.Gender;
+            if(user.DateOfBirth is not null)
+                this.DateOfBirth = user.DateOfBirth.Value.Date;
+            if (user.Weight is not null) 
+                this.Weight = user.Weight;
+            if(user.Height is not null)
+                this.Height = user.Height;
+            if(user.Gender is not null)
+                this.Gender = user.Gender;
 
             Username = userName;
             PhoneNumber = phoneNumber;
