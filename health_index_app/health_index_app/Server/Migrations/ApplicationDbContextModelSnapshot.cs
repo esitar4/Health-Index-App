@@ -251,9 +251,10 @@ namespace health_index_app.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("MealId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -262,11 +263,13 @@ namespace health_index_app.Server.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("MealId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserMeals");
                 });
@@ -398,10 +401,22 @@ namespace health_index_app.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
+                    b.Property<int>("FoodId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MealId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("FoodId");
+
+                    b.HasIndex("MealId");
 
                     b.ToTable("MealFoods");
                 });
@@ -554,15 +569,15 @@ namespace health_index_app.Server.Migrations
 
             modelBuilder.Entity("health_index_app.Server.Models.UserMeal", b =>
                 {
-                    b.HasOne("health_index_app.Server.Models.ApplicationUser", "ApplicationUser")
+                    b.HasOne("health_index_app.Shared.Models.Meal", "Meal")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("MealId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("health_index_app.Shared.Models.Meal", "Meal")
+                    b.HasOne("health_index_app.Server.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -575,13 +590,13 @@ namespace health_index_app.Server.Migrations
                 {
                     b.HasOne("health_index_app.Shared.Models.Food", "Food")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("FoodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("health_index_app.Shared.Models.Meal", "Meal")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("MealId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
