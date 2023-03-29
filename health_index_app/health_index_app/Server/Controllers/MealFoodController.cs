@@ -59,10 +59,10 @@ namespace health_index_app.Server.Controllers
 
         [HttpPost]
         [Route("update")]
-        public async Task<ActionResult<MealFood>> updateMealFood([FromBody] int FoodIdToUpdate, [FromBody] MealFood NewMealFood)
+        public async Task<ActionResult<MealFood>> updateMealFood([FromBody] MealFood NewMealFood)
         {
             //return GetDummyCurrentWeather();
-            var updatedMealFood = await _context.MealFoods.Where(m => m.Id == FoodIdToUpdate).FirstOrDefaultAsync();
+            var updatedMealFood = await _context.MealFoods.Where(m => m.Id == NewMealFood.Id).FirstOrDefaultAsync();
             await _context.SaveChangesAsync();
             _context.Entry(NewMealFood).Reload();
 

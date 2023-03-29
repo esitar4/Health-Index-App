@@ -6,9 +6,9 @@ namespace health_index_app.Client.Services
 {
     public interface IUserMealsAPIServices
     {
-        Task<int> createUserMeal(string MealName, int MealId);
+        Task<int> createUserMeal(UserMeal UserMeal);
         Task<bool> deleteUserMeal(int UserMealId);
-        Task<bool> updateUserMeal(int UserMealIdToUpdate, UserMeal UserMeal);
+        Task<bool> updateUserMeal(UserMeal UserMeal);
         Task<UserMeal> readUserMeal(int UserMealId);
     }
 
@@ -21,13 +21,13 @@ namespace health_index_app.Client.Services
             _client = client;
         }
 
-        public async Task<int> createUserMeal(string MealName, int MealId)
+        public async Task<int> createUserMeal(UserMeal UserMeal)
         {
             int userMealId;
             try
             {
-                var PostBody = new { MealName, MealId };
-                var response = await _client.PostAsJsonAsync("UserMeals/create", PostBody);
+                //var PostBody = new { MealName, MealId };
+                var response = await _client.PostAsJsonAsync("UserMeals/create", UserMeal);
                 userMealId = response.Content.ReadFromJsonAsync<UserMeal>().Result.MealId;
             }
             catch
@@ -65,12 +65,12 @@ namespace health_index_app.Client.Services
             return response;
         }
 
-        public async Task<bool> updateUserMeal(int UserMealToUpdate, UserMeal UserMeal)
+        public async Task<bool> updateUserMeal(UserMeal UserMeal)
         {
             try
             {
-                var PostBody = new { UserMealToUpdate, UserMeal };
-                var response = await _client.PostAsJsonAsync("UserMeals/update", PostBody);
+                //var PostBody = new { UserMealToUpdate, UserMeal };
+                var response = await _client.PostAsJsonAsync("UserMeals/update", UserMeal);
             }
             catch
             {

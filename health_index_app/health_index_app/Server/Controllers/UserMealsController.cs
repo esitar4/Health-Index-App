@@ -1,4 +1,5 @@
 ﻿using AutoMapper.Internal;
+using health_index_app.Client.Pages;
 using health_index_app.Server.Data;
 using health_index_app.Shared.FatSecret;
 using health_index_app.Shared.FatSecret.Authentication;
@@ -37,17 +38,18 @@ namespace health_index_app.Server.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<UserMeal>> createUserMeal([FromBody] string MealName, [FromBody] int MealId)
+        public async Task<ActionResult<UserMeal>> createUserMeal([FromBody] UserMeal userMeal)
         {
             //return GetDummyCurrentWeather();
 
-            UserMeal userMeal = new UserMeal();
-            userMeal.MealId = MealId;
-            userMeal.Name = MealName;
-            userMeal.UserId = getUserId().Result;
+            //UserMeal userMeal = new UserMeal();
+            //userMeal.MealId = MealId;
+            //userMeal.Name = MealName;
+            //userMeal.UserId = getUserId().Result;
 
             _context.UserMeals.Add(userMeal);
             await _context.SaveChangesAsync();
+            _context.Entry(userMeal).Reload();
 
             return Ok(userMeal);
         }
@@ -64,10 +66,10 @@ namespace health_index_app.Server.Controllers
 
         [HttpPost]
         [Route("update")]
-        public async Task<ActionResult<UserMeal>> updateUserMeal([FromBody] int UserMealIdToUpdate, [FromBody] UserMeal NewUserMeal)
+        public async Task<ActionResult<UserMeal>> updateUserMeal([FromBody] UserMeal NewUserMeal)
         {
             //return GetDummyCurrentWeather();
-            var updatedUserMeal = await _context.UserMeals.Where(m => m.Id == UserMealIdToUpdate).FirstOrDefaultAsync();
+            var updatedUserMeal = await _context.UserMeals.Where(m => m.Id == NewUserMeal.Id).FirstOrDefaultAsync();
             await _context.SaveChangesAsync();
             _context.Entry(NewUserMeal).Reload();
 
