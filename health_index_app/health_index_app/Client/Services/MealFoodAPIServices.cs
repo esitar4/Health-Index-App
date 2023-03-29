@@ -6,10 +6,10 @@ namespace health_index_app.Client.Services
 {
     public interface IMealFoodAPIServices
     {
-        Task<MealFood> createMealFood(MealFood mealFood);
-        Task<bool> deleteMealFood(int mealFoodId);
-        Task<bool> updateMealFood(MealFood mealFood);
-        Task<MealFood> readMealFood(int mealFoodId);
+        Task<MealFood> CreateMealFood(MealFood mealFood);
+        Task<bool> DeleteMealFood(int mealFoodId);
+        Task<bool> UpdateMealFood(MealFood mealFood);
+        Task<MealFood> ReadMealFood(int mealFoodId);
     }
 
     public class MealFoodAPIServices : IMealFoodAPIServices
@@ -21,7 +21,7 @@ namespace health_index_app.Client.Services
             _client = client;
         }
 
-        public async Task<MealFood> createMealFood(MealFood mealFood)
+        public async Task<MealFood> CreateMealFood(MealFood mealFood)
         {
             MealFood MealFood;
             try
@@ -35,7 +35,7 @@ namespace health_index_app.Client.Services
             return MealFood;
         }
 
-        public async Task<bool> deleteMealFood(int MealFoodId)
+        public async Task<bool> DeleteMealFood(int MealFoodId)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace health_index_app.Client.Services
             return true;
         }
 
-        public async Task<MealFood> readMealFood(int MealFoodId)
+        public async Task<MealFood> ReadMealFood(int MealFoodId)
         {
             MealFood response;
             try
@@ -61,7 +61,7 @@ namespace health_index_app.Client.Services
             return response;
         }
 
-        public async Task<bool> updateMealFood(MealFood MealFood)
+        public async Task<bool> UpdateMealFood(MealFood MealFood)
         {
             try
             {

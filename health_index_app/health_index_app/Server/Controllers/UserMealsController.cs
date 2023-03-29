@@ -31,13 +31,13 @@ namespace health_index_app.Server.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<int>> createUserMeal([FromBody] dynamic PostBody)
+        public async Task<ActionResult<int>> CreateUserMeal([FromBody] dynamic PostBody)
         {
             UserMeal userMeal = new UserMeal();
 
             userMeal.Meal = PostBody.meal;
             userMeal.Name = PostBody;
-            userMeal.UserId = await getUserId();
+            userMeal.UserId = await GetUserId();
 
             _context.UserMeals.Add(userMeal);
             await _context.SaveChangesAsync();
@@ -48,7 +48,7 @@ namespace health_index_app.Server.Controllers
 
         [HttpGet]
         [Route("read")]
-        public async Task<ActionResult<Meal>> readUserMeal(int UserMealId)
+        public async Task<ActionResult<Meal>> ReadUserMeal(int UserMealId)
         {
             //return GetDummyCurrentWeather();
             var userMeal = await _context.UserMeals.Where(m => m.Id == UserMealId).FirstOrDefaultAsync();
@@ -74,7 +74,7 @@ namespace health_index_app.Server.Controllers
 
         [HttpPost]
         [Route("delete")]
-        public async Task<ActionResult<bool>> deleteUserMeal([FromBody] int UserMealId)
+        public async Task<ActionResult<bool>> DeleteUserMeal([FromBody] int UserMealId)
         {
             //return GetDummyCurrentWeather();
             var deletedUserMeal = await _context.UserMeals.Where(m => m.Id == UserMealId).FirstOrDefaultAsync();
@@ -84,7 +84,7 @@ namespace health_index_app.Server.Controllers
             return Ok(true);
         }
 
-        private async Task<string> getUserId()
+        private async Task<string> GetUserId()
         {
             var user = (await authenticationStateTask).User;
             var userid = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;

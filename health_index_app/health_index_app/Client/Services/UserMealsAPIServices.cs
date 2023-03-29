@@ -6,10 +6,10 @@ namespace health_index_app.Client.Services
 {
     public interface IUserMealsAPIServices
     {
-        Task<int> createUserMeal(Meal meal, string mealName);
-        Task<bool> deleteUserMeal(int mealId);
-        Task<bool> updateUserMeal(int userMealId, int mealId);
-        Task<List<int>> readUserMeal();
+        Task<int> CreateUserMeal(Meal meal, string mealName);
+        Task<bool> DeleteUserMeal(int mealId);
+        Task<bool> UpdateUserMeal(int userMealId, int mealId);
+        Task<List<int>> ReadUserMeal();
     }
 
     public class UserMealsAPIServices : IUserMealsAPIServices
@@ -21,7 +21,7 @@ namespace health_index_app.Client.Services
             _client = client;
         }
 
-        public async Task<int> createUserMeal(Meal meal, string mealName)
+        public async Task<int> CreateUserMeal(Meal meal, string mealName)
         {
             int userMealId;
             try
@@ -37,7 +37,7 @@ namespace health_index_app.Client.Services
             return userMealId;
         }
 
-        public async Task<bool> deleteUserMeal(int mealId)
+        public async Task<bool> DeleteUserMeal(int mealId)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace health_index_app.Client.Services
             return true;
         }
 
-        public async Task<List<int>> readUserMeal()
+        public async Task<List<int>> ReadUserMeal()
         {
             List<int> mealIds;
             try
@@ -65,7 +65,7 @@ namespace health_index_app.Client.Services
             return mealIds;
         }
 
-        public async Task<bool> updateUserMeal(int userMealId, int mealId)
+        public async Task<bool> UpdateUserMeal(int userMealId, int mealId)
         {
             try
             {

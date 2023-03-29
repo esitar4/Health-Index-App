@@ -32,7 +32,6 @@ namespace health_index_app.Client.Pages
 
         private async Task SearchForFood()
         {
-            //var foodSearch = await client.FoodsSearchAsync(new FoodsSearchRequest { SearchExpression = "apple", MaxResults = 10 });
             if (SearchExpression != String.Empty)
             {
                 json = await ApiService.FoodsSearchAsync(SearchExpression);
@@ -60,13 +59,13 @@ namespace health_index_app.Client.Pages
         private async Task CreateMeal()
         {
             string MealName = "example";
-            var meal = await MealAPIServices.createMeal(new Meal());
+            var meal = await MealAPIServices.CreateMeal(new Meal());
 
             foreach (var foodResponse in currFoodList)
             {
-                var food = await FoodAPIServices.createFood(Convert.ToInt32(foodResponse.Food_Id));
+                var food = await FoodAPIServices.CreateFood(Convert.ToInt32(foodResponse.Food_Id));
 
-                await MealFoodAPIServices.createMealFood( new MealFood { MealId = meal.Id, FoodId = food.Id});
+                await MealFoodAPIServices.CreateMealFood( new MealFood { MealId = meal.Id, FoodId = food.Id});
             }
 
             //currUserMeals.Add(await UserMealsAPIServices.createUserMeal(MealId, MealName));

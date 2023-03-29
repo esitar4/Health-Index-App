@@ -1,15 +1,10 @@
-﻿using AutoMapper.Internal;
-using health_index_app.Client.Services;
+﻿using health_index_app.Client.Pages;
 using health_index_app.Server.Data;
 using health_index_app.Shared.FatSecret;
-using health_index_app.Shared.FatSecret.Authentication;
 using health_index_app.Shared.FatSecret.Requests;
 using health_index_app.Shared.Models;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Net;
 
 namespace health_index_app.Server.Controllers
 {
@@ -20,85 +15,28 @@ namespace health_index_app.Server.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IConfiguration _config;
         private readonly ILogger<FatSecretController> _logger;
-        private readonly IFatSecretClient _fatSecretClient;
 
-        public FoodController(ApplicationDbContext context, IConfiguration config, ILogger<FatSecretController> logger, IFatSecretClient fatSecretClient)
+        public FoodController(ApplicationDbContext context, IConfiguration config, ILogger<FatSecretController> logger)
         {
             _context = context;
             _config = config;
             _logger = logger;
-            _fatSecretClient = fatSecretClient;
-        }
-
-        public IActionResult Index()
-        {
-            return Ok();
         }
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<Food>> createFood([FromBody] int foodId)
+        public async Task<ActionResult<Food>> CreateFood([FromBody] Food food)
         {
-            //return GetDummyCurrentWeather();
-            await Console.Out.WriteLineAsync("You're at createFood in FoodController.cs");
+            _context.Foods.Add(food);
+            await _context.SaveChangesAsync();
+            _context.Entry(food).Reload();
 
-            Food food;
-
-            try
-            {
-                food = new Food();
-                var request = new FoodGetV2Request { FoodId = Convert.ToInt32(foodId) };
-
-                var response = await _fatSecretClient.FoodGetAsync(request);
-                var responseFood = response.Food;
-
-                //Add all of the food attributes from responseFood to food
-
-                food.Id = Convert.ToInt32(responseFood.Food_Id);
-                food.FoodName = responseFood.Food_Name ??= "";
-                food.FoodType = responseFood.Food_Type ??= "";
-                food.BrandName = responseFood.Brand_Name ??= "";
-                food.FoodURL = responseFood.Food_Url ??= "";
-
-                food.ServingId = Convert.ToInt32(responseFood.Servings.Serving[0].Serving_Id);
-                food.ServingURL = responseFood.Food_Url ??= "";
-                food.ServingDescription = responseFood.Servings.Serving[0].Serving_Description ??= "";
-                food.MetricServingAmount = Convert.ToDouble(responseFood.Servings.Serving[0].Metric_Serving_Amount);
-                food.MetricServingUnit = responseFood.Servings.Serving[0].Metric_Serving_Unit;
-                food.MeasurementDescription = responseFood.Servings.Serving[0].Measurement_Description ??= "";
-
-                food.Calories = Convert.ToDouble(responseFood.Servings.Serving[0].Calories);
-                food.Calcium = Convert.ToDouble(responseFood.Servings.Serving[0].Calcium);
-                food.CarboHydrate = Convert.ToDouble(responseFood.Servings.Serving[0].Carbohydrate);
-                food.Cholesterol = Convert.ToDouble(responseFood.Servings.Serving[0].Cholesterol);
-                food.Fat = Convert.ToDouble(responseFood.Servings.Serving[0].Fat);
-                food.Fiber = Convert.ToDouble(responseFood.Servings.Serving[0].Fiber);
-                food.Iron = Convert.ToDouble(responseFood.Servings.Serving[0].Iron);
-                food.PolyunsaturatedFat = Convert.ToDouble(responseFood.Servings.Serving[0].Polyunsaturated_Fat);
-                food.Potassium = Convert.ToDouble(responseFood.Servings.Serving[0].Potassium);
-                food.Protein = Convert.ToDouble(responseFood.Servings.Serving[0].Protein);
-                food.SaturatedFat = Convert.ToDouble(responseFood.Servings.Serving[0].Saturated_Fat);
-                food.Sodium = Convert.ToDouble(responseFood.Servings.Serving[0].Sodium);
-                food.Sugar = Convert.ToDouble(responseFood.Servings.Serving[0].Sugar);
-                food.VitaminA = Convert.ToDouble(responseFood.Servings.Serving[0].Vitamin_A);
-                food.VitaminC = Convert.ToDouble(responseFood.Servings.Serving[0].Vitamin_C);
-                food.VitaminD = Convert.ToDouble(responseFood.Servings.Serving[0].Vitamin_D);
-
-                _context.Foods.Add(food);
-                await _context.SaveChangesAsync();
-
-                return Ok(food);
-            }
-            catch
-            {
-                throw;
-                throw new Exception("Unable to create Food");
-            }
+            return Ok(food);
         }
 
         [HttpGet]
         [Route("read")]
-        public async Task<ActionResult<Food>> readFood(int FoodId)
+        public async Task<ActionResult<Food>> ReadFood(int FoodId)
         {
             //return GetDummyCurrentWeather();
             var Food = await _context.Foods.Where(m => m.Id == FoodId).FirstOrDefaultAsync();

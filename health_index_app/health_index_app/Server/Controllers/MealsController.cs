@@ -37,7 +37,7 @@ namespace health_index_app.Server.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<Meal>> createMeal([FromBody] Meal meal)
+        public async Task<ActionResult<Meal>> CreateMeal([FromBody] Meal meal)
         {
             //return GetDummyCurrentWeather();
             _context.Meals.Add(meal);
@@ -49,7 +49,7 @@ namespace health_index_app.Server.Controllers
 
         [HttpGet]
         [Route("read")]
-        public async Task<ActionResult<Meal>> readMeal(int mealId)
+        public async Task<ActionResult<Meal>> ReadMeal(int mealId)
         {
             //return GetDummyCurrentWeather();
             var meal = await _context.Meals.Where(m => m.Id == mealId).FirstOrDefaultAsync();

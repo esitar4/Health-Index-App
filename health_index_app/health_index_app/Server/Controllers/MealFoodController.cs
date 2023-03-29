@@ -37,7 +37,7 @@ namespace health_index_app.Server.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<MealFood>> createMealFood([FromBody] MealFood MealFood)
+        public async Task<ActionResult<MealFood>> CreateMealFood([FromBody] MealFood MealFood)
         {
             //return GetDummyCurrentWeather();
             _context.MealFoods.Add(MealFood);
@@ -49,7 +49,7 @@ namespace health_index_app.Server.Controllers
 
         [HttpGet]
         [Route("read")]
-        public async Task<ActionResult<MealFood>> readMealFood(int MealFoodId)
+        public async Task<ActionResult<MealFood>> ReadMealFood(int MealFoodId)
         {
             //return GetDummyCurrentWeather();
             var MealFood = await _context.MealFoods.Where(m => m.Id == MealFoodId).FirstOrDefaultAsync();
@@ -59,7 +59,7 @@ namespace health_index_app.Server.Controllers
 
         [HttpPost]
         [Route("update")]
-        public async Task<ActionResult<MealFood>> updateMealFood([FromBody] MealFood NewMealFood)
+        public async Task<ActionResult<MealFood>> UpdateMealFood([FromBody] MealFood NewMealFood)
         {
             //return GetDummyCurrentWeather();
             var updatedMealFood = await _context.MealFoods.Where(m => m.Id == NewMealFood.Id).FirstOrDefaultAsync();
@@ -72,7 +72,7 @@ namespace health_index_app.Server.Controllers
 
         [HttpPost]
         [Route("delete")]
-        public async Task<ActionResult<MealFood>> deleteMealFood([FromBody] MealFood MealFood)
+        public async Task<ActionResult<MealFood>> DeleteMealFood([FromBody] MealFood MealFood)
         {
             //return GetDummyCurrentWeather();
             _context.MealFoods.Remove(MealFood);
