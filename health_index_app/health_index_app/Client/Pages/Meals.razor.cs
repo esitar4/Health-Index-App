@@ -60,13 +60,13 @@ namespace health_index_app.Client.Pages
         private async Task CreateMeal()
         {
             string MealName = "example";
-            var MealId = await MealAPIServices.createMeal(new Meal());
+            var meal = await MealAPIServices.createMeal(new Meal());
 
             foreach (var foodResponse in currFoodList)
             {
                 var food = await FoodAPIServices.createFood(Convert.ToInt32(foodResponse.Food_Id));
 
-                await MealFoodAPIServices.createMealFood( new MealFood { Meal = new Meal(), Food = new Food { Id = 1018271, FoodName = "x", FoodURL = "x", ServingDescription = "x", MetricServingAmount = 100, MetricServingUnit = "g", MeasurementDescription = "x"} });
+                await MealFoodAPIServices.createMealFood( new MealFood { MealId = meal.Id, FoodId = food.Id});
             }
 
             //currUserMeals.Add(await UserMealsAPIServices.createUserMeal(MealId, MealName));
