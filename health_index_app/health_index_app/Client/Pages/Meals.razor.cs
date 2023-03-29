@@ -2,7 +2,6 @@
 using Food = health_index_app.Shared.Models.Food;
 using Meal = health_index_app.Shared.Models.Meal;
 using MealFood = health_index_app.Shared.Models.MealFood;
-using UserMeal = health_index_app.Shared.Models.UserMeal;
 using Microsoft.AspNetCore.Components;
 using ResponseFood = health_index_app.Shared.FatSecret.ResponseObjects.SearchedFood;
 using health_index_app.Shared.FatSecret.ResponseObjects;
@@ -25,7 +24,6 @@ namespace health_index_app.Client.Pages
         private string SearchExpression = String.Empty;
         private int currMealId;
         private List<ResponseFood> currFoodList = new List<ResponseFood>();
-        private List<UserMeal> currUserMeals = new List<UserMeal>();
         //List<SearchedFood>? foods = new();
         FoodsSearchResponse json = null!;
         GetFoodResponse getFood = null!;
@@ -68,10 +66,10 @@ namespace health_index_app.Client.Pages
             {
                 var food = await FoodAPIServices.createFood(Convert.ToInt32(foodResponse.Food_Id));
 
-                await MealFoodAPIServices.createMealFood( new MealFood {MealId = MealId, FoodId = food.Id});
+                await MealFoodAPIServices.createMealFood( new MealFood {Meal = new Meal(), Food = food});
             }
 
-            currUserMeals.Add(await UserMealsAPIServices.createUserMeal(MealId, MealName));
+            //currUserMeals.Add(await UserMealsAPIServices.createUserMeal(MealId, MealName));
         }
     }
 }
