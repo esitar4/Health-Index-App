@@ -82,7 +82,7 @@ namespace health_index_app.Server.Areas.Identity.Pages.Account
             [Range(0.001, 999.99, ErrorMessage = "Height must be in between 0 and 999.99")]
             public double? Height { get; set; }
             [RegularExpression("[MFO]", ErrorMessage = "Invalid Gender Character")]   //character for internal use - parsed from dropdown menu on frontend
-            [Display(Name = "Gender (Optional - \'M\', \'F\', or \'O\')")]
+            [Display(Name = "Gender (Optional")]
             public char? Gender { get; set; }
 
 
