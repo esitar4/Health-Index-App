@@ -31,6 +31,12 @@ namespace health_index_app.Server.Areas.Identity.Pages.Account.Manage
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string Username { get; set; }
+        public string PhoneNumber { get; set; }
+
+        public DateTime? DateOfBirth { get; set; }
+        public double? Weight { get; set; }
+        public double? Height { get; set; }
+        public char? Gender { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -59,6 +65,19 @@ namespace health_index_app.Server.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [DateOfBirth(ErrorMessage = "Date of Birth must be in the past")]
+            [Display(Name = "Date of Birth (Optional)")]
+            public DateTime? DateOfBirth { get; set; }
+            [Display(Name = "Weight (Optional - pounds)")]
+            [Range(0.001, 9999.99, ErrorMessage = "Weight must be in between 0 and 9999.99")]
+            public double? Weight { get; set; }
+            [Display(Name = "Height (Optional - inches)")]
+            [Range(0.001, 999.99, ErrorMessage = "Height must be in between 0 and 999.99")]
+            public double? Height { get; set; }
+            [RegularExpression("[MFO]", ErrorMessage = "Invalid Gender Character")]   //character for internal use - parsed from dropdown menu on frontend
+            [Display(Name = "Gender (Optional")]
+            public char? Gender { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -66,17 +85,19 @@ namespace health_index_app.Server.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
-            Username = userName;
+            this.DateOfBirth = user.DateOfBirth.Value.Date;
+            this.Weight = user.Weight;
+            this.Height = user.Height;
+            this.Gender = user.Gender;
 
-            Input = new InputModel
-            {
-                PhoneNumber = phoneNumber
-            };
+            Username = userName;
+            PhoneNumber = phoneNumber;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
