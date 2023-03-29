@@ -20,9 +20,9 @@ namespace health_index_app.Server.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IConfiguration _config;
         private readonly ILogger<FatSecretController> _logger;
-        private readonly FatSecretAPIServices _fatSecretClient;
+        private readonly IFatSecretClient _fatSecretClient;
 
-        public FoodController(ApplicationDbContext context, IConfiguration config, ILogger<FatSecretController> logger, FatSecretAPIServices fatSecretClient)
+        public FoodController(ApplicationDbContext context, IConfiguration config, ILogger<FatSecretController> logger, IFatSecretClient fatSecretClient)
         {
             _context = context;
             _config = config;
@@ -47,23 +47,25 @@ namespace health_index_app.Server.Controllers
             try
             {
                 food = new Food();
+                var request = new FoodGetV2Request { FoodId = Convert.ToInt32(foodId) };
 
-                var responseFood = _fatSecretClient.FoodGetAsync(foodId).Result.Food;
+                var response = await _fatSecretClient.FoodGetAsync(request);
+                var responseFood = response.Food;
 
                 //Add all of the food attributes from responseFood to food
 
                 food.Id = Convert.ToInt32(responseFood.Food_Id);
-                food.FoodName = responseFood.Food_Name;
-                food.FoodType = responseFood.Food_Type;
-                food.BrandName = responseFood.Brand_Name;
-                food.FoodURL = responseFood.Food_Url;
+                food.FoodName = responseFood.Food_Name ??= "";
+                food.FoodType = responseFood.Food_Type ??= "";
+                food.BrandName = responseFood.Brand_Name ??= "";
+                food.FoodURL = responseFood.Food_Url ??= "";
 
                 food.ServingId = Convert.ToInt32(responseFood.Servings.Serving[0].Serving_Id);
-                food.ServingURL = responseFood.Food_Url;
-                food.ServingDescription = responseFood.Servings.Serving[0].Serving_Description;
+                food.ServingURL = responseFood.Food_Url ??= "";
+                food.ServingDescription = responseFood.Servings.Serving[0].Serving_Description ??= "";
                 food.MetricServingAmount = Convert.ToDouble(responseFood.Servings.Serving[0].Metric_Serving_Amount);
                 food.MetricServingUnit = responseFood.Servings.Serving[0].Metric_Serving_Unit;
-                food.MeasurementDescription = responseFood.Servings.Serving[0].Measurement_Description;
+                food.MeasurementDescription = responseFood.Servings.Serving[0].Measurement_Description ??= "";
 
                 food.Calories = Convert.ToDouble(responseFood.Servings.Serving[0].Calories);
                 food.Calcium = Convert.ToDouble(responseFood.Servings.Serving[0].Calcium);

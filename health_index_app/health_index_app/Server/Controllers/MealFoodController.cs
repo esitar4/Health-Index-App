@@ -14,7 +14,7 @@ using System.Net;
 namespace health_index_app.Server.Controllers
 {
     [ApiController]
-    [Route("MealFood")]
+    [Route("mealfoods")]
     public class MealFoodsController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -66,7 +66,7 @@ namespace health_index_app.Client.Pages
             {
                 var food = await FoodAPIServices.createFood(Convert.ToInt32(foodResponse.Food_Id));
 
-                await MealFoodAPIServices.createMealFood( new MealFood {Meal = new Meal(), Food = food});
+                await MealFoodAPIServices.createMealFood( new MealFood { Meal = new Meal(), Food = new Food { Id = 1018271, FoodName = "x", FoodURL = "x", ServingDescription = "x", MetricServingAmount = 100, MetricServingUnit = "g", MeasurementDescription = "x"} });
             }
 
             //currUserMeals.Add(await UserMealsAPIServices.createUserMeal(MealId, MealName));

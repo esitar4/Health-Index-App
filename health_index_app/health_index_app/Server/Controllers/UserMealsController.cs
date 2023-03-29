@@ -1,16 +1,9 @@
-﻿using AutoMapper.Internal;
-using health_index_app.Client.Pages;
-using health_index_app.Server.Data;
-using health_index_app.Shared.FatSecret;
-using health_index_app.Shared.FatSecret.Authentication;
-using health_index_app.Shared.FatSecret.Requests;
-using health_index_app.Shared.FatSecret.ResponseObjects;
+﻿using health_index_app.Server.Data;
+using health_index_app.Server.Models;
 using health_index_app.Shared.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Net;
 
 namespace health_index_app.Server.Controllers
 {
@@ -38,11 +31,11 @@ namespace health_index_app.Server.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<UserMeal>> createUserMeal([FromBody] dynamic PostBody)
+        public async Task<ActionResult<int>> createUserMeal([FromBody] dynamic PostBody)
         {
             UserMeal userMeal = new UserMeal();
 
-            userMeal.MealId = PostBody.MealId;
+            userMeal.Meal = PostBody.meal;
             userMeal.Name = PostBody;
             userMeal.UserId = await getUserId();
 
@@ -50,31 +43,34 @@ namespace health_index_app.Server.Controllers
             await _context.SaveChangesAsync();
             _context.Entry(userMeal).Reload();
 
-            return Ok(userMeal);
+            return Ok(userMeal.Id);
         }
 
         [HttpGet]
         [Route("read")]
-        public async Task<ActionResult<UserMeal>> readUserMeal(int UserMealId)
+        public async Task<ActionResult<Meal>> readUserMeal(int UserMealId)
         {
             //return GetDummyCurrentWeather();
-            var UserMeal = await _context.UserMeals.Where(m => m.Id == UserMealId).FirstOrDefaultAsync();
-
-            return Ok(UserMeal);
+            var userMeal = await _context.UserMeals.Where(m => m.Id == UserMealId).FirstOrDefaultAsync();
+            var meal = userMeal.Meal;
+            return Ok(meal);
         }
 
-        [HttpPost]
-        [Route("update")]
-        public async Task<ActionResult<UserMeal>> updateUserMeal([FromBody] UserMeal NewUserMeal)
-        {
-            //return GetDummyCurrentWeather();
-            var updatedUserMeal = await _context.UserMeals.Where(m => m.Id == NewUserMeal.Id).FirstOrDefaultAsync();
-            await _context.SaveChangesAsync();
-            _context.Entry(NewUserMeal).Reload();
+        //[HttpPost]
+        //[Route("update")]
+        //public async Task<ActionResult<UserMeal>> updateUserMeal([FromBody] List<int> newUserMealVariables)
+        //{
+        //    //return GetDummyCurrentWeather();
+        //    //int userMealId = newUserMeal[0];
+        //    //int mealId = newUserMeal[1];
+        //    //UserMeal newUserMeal = new UserMeal { Id = newUserMeal[0], Meal =}
+        //    var updatedUserMeal = await _context.UserMeals.Where(m => m.Id == userMealId).FirstOrDefaultAsync();
+        //    await _context.SaveChangesAsync();
+        //    _context.Entry(NewUserMeal).Reload();
 
 
-            return Ok(NewUserMeal);
-        }
+        //    return Ok(NewUserMeal);
+        //}
 
         [HttpPost]
         [Route("delete")]

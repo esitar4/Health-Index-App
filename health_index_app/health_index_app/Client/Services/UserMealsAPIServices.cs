@@ -6,10 +6,10 @@ namespace health_index_app.Client.Services
 {
     public interface IUserMealsAPIServices
     {
-        Task<UserMeal> createUserMeal(int MealId, string MealName);
-        Task<bool> deleteUserMeal(int UserMealId);
-        Task<bool> updateUserMeal(UserMeal UserMeal);
-        Task<UserMeal> readUserMeal(int UserMealId);
+        Task<int> createUserMeal(Meal meal, string mealName);
+        Task<bool> deleteUserMeal(int mealId);
+        Task<bool> updateUserMeal(int userMealId, int mealId);
+        Task<List<int>> readUserMeal();
     }
 
     public class UserMealsAPIServices : IUserMealsAPIServices
@@ -21,27 +21,27 @@ namespace health_index_app.Client.Services
             _client = client;
         }
 
-        public async Task<UserMeal> createUserMeal(int MealId, string MealName)
+        public async Task<int> createUserMeal(Meal meal, string mealName)
         {
-            UserMeal userMeal;
+            int userMealId;
             try
             {
-                var PostBody = new { MealName, MealId };
+                var PostBody = new { mealName, meal };
                 var response = await _client.PostAsJsonAsync("UserMeals/create", PostBody);
-                userMeal = await response.Content.ReadFromJsonAsync<UserMeal>();
+                userMealId = await response.Content.ReadFromJsonAsync<int>();
             }
             catch
             {
                 throw new Exception("Unable to create UserMeal");
             }
-            return userMeal;
+            return userMealId;
         }
 
-        public async Task<bool> deleteUserMeal(int UserMealId)
+        public async Task<bool> deleteUserMeal(int mealId)
         {
             try
             {
-                var response = await _client.PostAsJsonAsync("UserMeals/delete", UserMealId);
+                var response = await _client.PostAsJsonAsync("UserMeals/delete", mealId);
             }
             catch
             {
@@ -50,27 +50,27 @@ namespace health_index_app.Client.Services
             return true;
         }
 
-        public async Task<UserMeal> readUserMeal(int UserMealId)
+        public async Task<List<int>> readUserMeal()
         {
-            UserMeal response;
+            List<int> mealIds;
             try
             {
-                var url = $"/UserMeals/read?UserMealId={UserMealId}";
-                response = await _client.GetFromJsonAsync<UserMeal>(url);
+                var url = $"/UserMeals/read";
+                mealIds = await _client.GetFromJsonAsync<List<int>>(url);
             }
             catch
             {
                 throw new Exception("UserMeal not found");
             }
-            return response;
+            return mealIds;
         }
 
-        public async Task<bool> updateUserMeal(UserMeal UserMeal)
+        public async Task<bool> updateUserMeal(int userMealId, int mealId)
         {
             try
             {
-                //var PostBody = new { UserMealToUpdate, UserMeal };
-                var response = await _client.PostAsJsonAsync("UserMeals/update", UserMeal);
+                List<int> Postbody = new List<int> { userMealId, mealId };
+                var response = await _client.PostAsJsonAsync("UserMeals/update", Postbody);
             }
             catch
             {
