@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace health_index_app.Shared.Models
 {
@@ -16,14 +11,7 @@ namespace health_index_app.Shared.Models
 
         [Required]
         [Range(0.0, 10.0, ErrorMessage = "Score must be between 0 and 10")]
-        public double HealthIndex { get; set; } = -1;
+        public double HealthIndex { get; set; } = 0;
 
-
-        //Navigation Property
-        [ForeignKey("MealId")]
-        public virtual ICollection<MealFood> MealFoods { get; set; }
-
-        [ForeignKey("MealId")]
-        public virtual ICollection<UserMeal> UserMeals { get; set; }
     }
 }
