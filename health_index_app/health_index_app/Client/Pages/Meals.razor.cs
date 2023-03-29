@@ -1,6 +1,7 @@
 ﻿using health_index_app.Client.Services;
 using Food = health_index_app.Shared.Models.Food;
 using Meal = health_index_app.Shared.Models.Meal;
+using MealFood = health_index_app.Shared.Models.MealFood;
 using UserMeal = health_index_app.Shared.Models.UserMeal;
 using Microsoft.AspNetCore.Components;
 using ResponseFood = health_index_app.Shared.FatSecret.ResponseObjects.SearchedFood;
@@ -60,19 +61,17 @@ namespace health_index_app.Client.Pages
 
         private async Task CreateMeal()
         {
-            var foodList = new List<Food>();
+            string MealName = "example";
+            var MealId = await MealAPIServices.createMeal(new Meal());
 
             foreach (var foodResponse in currFoodList)
             {
-                foodList.Add(FoodAPIServices.createFood(Convert.ToInt32(foodResponse.Food_Id)).Result);
+                var food = await FoodAPIServices.createFood(Convert.ToInt32(foodResponse.Food_Id));
+
+                await MealFoodAPIServices.createMealFood( new MealFood {MealId = MealId, FoodId = food.Id});
             }
 
-            currMealId = await MealFoodAPIServices.createMealFood(foodList);
-
-            /*currUserMeals.Add(UserMealsAPIServices.createUserMeal(MealName, currMealId).Result);*/
-
-
-
+            currUserMeals.Add(await UserMealsAPIServices.createUserMeal(MealId, MealName));
         }
     }
 }

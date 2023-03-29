@@ -6,7 +6,7 @@ namespace health_index_app.Client.Services
 {
     public interface IMealFoodAPIServices
     {
-        Task<int> createMealFood(List<Food> foods);
+        Task<int> createMealFood(MealFood mealFood);
         Task<bool> deleteMealFood(int mealFoodId);
         Task<bool> updateMealFood(MealFood mealFood);
         Task<MealFood> readMealFood(int mealFoodId);
@@ -21,19 +21,18 @@ namespace health_index_app.Client.Services
             _client = client;
         }
 
-        public async Task<int> createMealFood(List<Food> foods)
+        public async Task<int> createMealFood(MealFood mealFood)
         {
-            int mealId;
+            int mealFoodId;
             try
             {
-
-                var response = await _client.PostAsJsonAsync("MealFoods/create", foods);
-                mealId = response.Content.ReadFromJsonAsync<MealFood>().Result.MealId;
+                var response = await _client.PostAsJsonAsync("MealFoods/create", mealFood);
+                mealFoodId =  (await response.Content.ReadFromJsonAsync<MealFood>()).Id;
             } catch
             {
                 throw new Exception("Unable to create MealFood");
             }
-            return mealId;
+            return mealFoodId;
         }
 
         public async Task<bool> deleteMealFood(int MealFoodId)

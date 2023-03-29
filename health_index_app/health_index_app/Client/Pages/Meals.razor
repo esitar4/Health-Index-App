@@ -12,132 +12,138 @@
 
 <br />
 
-<div class="d-flex">
-    <div>
-        <div class="row">
-            <div class="col-auto">
-                <input type="text" class="form-control" @bind-value="SearchExpression" />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm">
+            <div class="row">
+                <div class="col-auto">
+                    <input type="text" class="form-control" @bind-value="SearchExpression" />
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-light" @onclick="SearchForFood">Submit</button>
+                </div>
             </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-light" @onclick="SearchForFood">Submit</button>
+            @if (json is not null)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Food Name:</th>
+                            <th>Serving Size:</th>
+                            <th>Calorie Count:</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var food in json.Foods.Food)
+                        {
+
+                            var description_list = @food.Food_Description;
+
+                            var serving_size = description_list.Split('|')[0].Split(':')[1].Trim();
+                            Console.WriteLine(serving_size);
+                            var calorie_count = description_list.Split('|')[0].Split('-')[0][4..].Trim();
+                            Console.WriteLine(calorie_count);
+
+                            <tr>
+                                <td>@food.Food_Name</td>
+                                <td>@calorie_count</td>
+                                <td>@serving_size</td>
+                                <td><button class="btn btn-primary btn-sm" type="button" @onclick="() => AddFoodToMeal(food)">Add</button></td>
+                            </tr>
+                            @if (getFood != null)
+                            {
+                                <tr>
+                                    <td>@getFood.Food.Food_Id</td>
+                                    <td>Serving@(getFood.Food.Servings.Serving.Count)</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h4>Enter a food to search!</h4>
+            }
+        </div>
+        <div class="col-sm">
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Meal Food Name:</th>
+                            <th>Serving Size:</th>
+                            <th>Calorie Count:</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (currFoodList is not null)
+                        {
+                            @foreach (var food in currFoodList)
+                            {
+                                var description_list = @food.Food_Description;
+
+                                var serving_size = description_list.Split('|')[0].Split(':')[1].Trim();
+                                Console.WriteLine(serving_size);
+                                var calorie_count = description_list.Split('|')[0].Split('-')[0][4..].Trim();
+                                Console.WriteLine(calorie_count);
+
+                                <tr>
+                                    <td>@food.Food_Name</td>
+                                    <td>@calorie_count</td>
+                                    <td>@serving_size</td>
+                                    <td><button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromMeal(food)">Remove</button></td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Food Name:</th>
+                                        <th>Serving Size:</th>
+                                        <th>Calorie Count:</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td>Example_name</td>
+                                        <td>100 Calories</td>
+                                        <td>2 servings</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                        <button class="btn btn-success" type="button" @onclick="() => CreateMeal()">Create Meal</button>
+                    </tbody>
+                </table>
             </div>
         </div>
-
-        @if (json is not null)
-        {
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Food Name:</th>
-                        <th>Serving Size:</th>
-                        <th>Calorie Count:</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    @foreach (var food in json.Foods.Food)
-                    {
-
-                        var description_list = @food.Food_Description;
-
-                        var serving_size = description_list.Split('|')[0].Split(':')[1].Trim();
-                        Console.WriteLine(serving_size);
-                        var calorie_count = description_list.Split('|')[0].Split('-')[0][4..].Trim();
-                        Console.WriteLine(calorie_count);
-
+        <div class="col-sm">
+            <div>
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>@food.Food_Name</td>
-                            <td>@calorie_count</td>
-                            <td>@serving_size</td>
-                            <td><button class="btn btn-primary btn-sm" type="button" @onclick="() => AddFoodToMeal(food)">Add</button></td>
+                            <th>Food Name:</th>
+                            <th>Serving Size:</th>
+                            <th>Calorie Count:</th>
                         </tr>
-                        @if (getFood != null)
-                        {
-                            <tr>
-                                <td>@getFood.Food.Food_Id</td>
-                                <td>Serving@(getFood.Food.Servings.Serving.Count)</td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <h4>Enter a food to search!</h4>
-        }
-    </div>
-    <div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Meal Food Name:</th>
-                    <th>Serving Size:</th>
-                    <th>Calorie Count:</th>
-                </tr>
-            </thead>
+                    </thead>
 
-            <tbody>
-                @if (currFoodList is not null)
-                {
-                    @foreach (var food in currFoodList)
-                    {
-                        var description_list = @food.Food_Description;
-
-                        var serving_size = description_list.Split('|')[0].Split(':')[1].Trim();
-                        Console.WriteLine(serving_size);
-                        var calorie_count = description_list.Split('|')[0].Split('-')[0][4..].Trim();
-                        Console.WriteLine(calorie_count);
-
+                    <tbody>
                         <tr>
-                            <td>@food.Food_Name</td>
-                            <td>@calorie_count</td>
-                            <td>@serving_size</td>
-                            <td><button class="btn btn-Danger btn-sm" type="button" @onclick="() => RemoveFoodFromMeal(food)">Remove</button></td>
+                            <td>Example_name</td>
+                            <td>100 Calories</td>
+                            <td>2 servings</td>
                         </tr>
-                    }
-                } else {
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Food Name:</th>
-                                <th>Serving Size:</th>
-                                <th>Calorie Count:</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td>Example_name</td>
-                                <td>100 Calories</td>
-                                <td>2 servings</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                }
-                <button class="btn btn-success" type="button" @onclick="CreateMeal">Create Meal</button>
-            </tbody>
-        </table>
-    </div>
-    <div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Food Name:</th>
-                    <th>Serving Size:</th>
-                    <th>Calorie Count:</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td>Example_name</td>
-                    <td>100 Calories</td>
-                    <td>2 servings</td>
-                </tr>
-            </tbody>
-        </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
-

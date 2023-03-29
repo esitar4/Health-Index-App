@@ -12,7 +12,13 @@ namespace Test_health_index_app.Models
         [SetUp]
         public void Setup()
         {
-            mealfood = new MealFood();
+            mealfood = new MealFood()
+            {
+                Id = 1,
+                Meal = new Meal(),
+                Food = new Food(),
+                Amount = 1.0
+            };
         }
 
         [Test]
@@ -31,34 +37,34 @@ namespace Test_health_index_app.Models
         public void TestMealIdSetCorrectly()
         {
             //Arrange
-            mealfood.MealId = 5;
-            mealfood.FoodId = 0;
+            mealfood.Meal.Id = 5;
+            mealfood.Food.Id = 0;
 
             //Act
 
             //Assert
-            Assert.IsTrue(mealfood.MealId == 5);
+            Assert.IsTrue(mealfood.Meal.Id == 5);
         }
 
         [Test]
         public void TestFoodIdSetCorrectly()
         {
             //Arrange
-            mealfood.FoodId = 5;
-            mealfood.MealId = 0;
+            mealfood.Food.Id = 5;
+            mealfood.Meal.Id = 0;
             
             //Act
 
             //Assert
-            Assert.IsTrue(mealfood.FoodId == 5);
+            Assert.IsTrue(mealfood.Food.Id == 5);
         }
 
         [Test]
         public void TestServingSizeSetCorrectly()
         {
             //Arrange
-            mealfood.FoodId = 0;
-            mealfood.MealId = 0;
+            mealfood.Food.Id = 0;
+            mealfood.Meal.Id = 0;
             mealfood.Amount = 5.5;
 
             //Act
@@ -70,12 +76,12 @@ namespace Test_health_index_app.Models
         [Test]
         [TestCase(1, 1, 10.0)]
         [TestCase(3, 2, 5.0)]
-        public void TestValidMealFood(int mealId, int foodId, double servingSize)
+        public void TestValidMealFood(int mealId, int foodId, double amount)
         {
             //Arrange
-            mealfood.MealId = mealId;
-            mealfood.FoodId = foodId;
-            mealfood.Amount = servingSize;
+            mealfood.Meal.Id = mealId;
+            mealfood.Food.Id = foodId;
+            mealfood.Amount = amount;
 
             //Act
 
@@ -86,20 +92,20 @@ namespace Test_health_index_app.Models
         [Test]
         [TestCase(0, 0, -5.0)]
         [TestCase(0, 0, -0.1)]
-        public void TestInValidMealFoodServingSize(int mealId, int foodId, double servingSize)
+        public void TestInValidMealFoodServingSize(int mealId, int foodId, double amount)
         {
             //Arrange
-            mealfood.MealId = mealId;
-            mealfood.FoodId = foodId;
-            mealfood.Amount = servingSize;
+            mealfood.Meal.Id = mealId;
+            mealfood.Food.Id = foodId;
+            mealfood.Amount = amount;
 
             //Act
 
             //Assert
             Assert.IsTrue(ValidateModel(mealfood).Count == 1);
             Assert.IsTrue(ValidateModel(mealfood).Any(
-                    v => v.MemberNames.Contains("ServingSize") &&
-                         v.ErrorMessage.Contains("Serving size must be greater than 0")));
+                    v => v.MemberNames.Contains("Amount") &&
+                         v.ErrorMessage.Contains("Amount must be greater than 0")));
         }
 
         [Test]

@@ -30,7 +30,7 @@ namespace health_index_app.Client.Services
             {
                 var response = await _client.PostAsJsonAsync("Food/create", foodId);
 
-                food = response.Content.ReadFromJsonAsync<Food>().Result;
+                food = await response.Content.ReadFromJsonAsync<Food>();
             }
             catch
             {

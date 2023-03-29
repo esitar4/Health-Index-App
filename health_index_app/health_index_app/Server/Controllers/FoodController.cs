@@ -40,6 +40,7 @@ namespace health_index_app.Server.Controllers
         public async Task<ActionResult<Food>> createFood([FromBody] int foodId)
         {
             //return GetDummyCurrentWeather();
+            await Console.Out.WriteLineAsync("You're at createFood in FoodController.cs");
 
             Food food;
 

@@ -38,14 +38,13 @@ namespace health_index_app.Server.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<UserMeal>> createUserMeal([FromBody] UserMeal userMeal)
+        public async Task<ActionResult<UserMeal>> createUserMeal([FromBody] dynamic PostBody)
         {
-            //return GetDummyCurrentWeather();
+            UserMeal userMeal = new UserMeal();
 
-            //UserMeal userMeal = new UserMeal();
-            //userMeal.MealId = MealId;
-            //userMeal.Name = MealName;
-            //userMeal.UserId = getUserId().Result;
+            userMeal.MealId = PostBody.MealId;
+            userMeal.Name = PostBody;
+            userMeal.UserId = await getUserId();
 
             _context.UserMeals.Add(userMeal);
             await _context.SaveChangesAsync();
@@ -79,16 +78,17 @@ namespace health_index_app.Server.Controllers
 
         [HttpPost]
         [Route("delete")]
-        public async Task<ActionResult<UserMeal>> deleteUserMeal([FromBody] UserMeal UserMeal)
+        public async Task<ActionResult<bool>> deleteUserMeal([FromBody] int UserMealId)
         {
             //return GetDummyCurrentWeather();
-            _context.UserMeals.Remove(UserMeal);
+            var deletedUserMeal = await _context.UserMeals.Where(m => m.Id == UserMealId).FirstOrDefaultAsync();
+            _context.UserMeals.Remove(deletedUserMeal);
             await _context.SaveChangesAsync();
 
-            return Ok(UserMeal);
+            return Ok(true);
         }
 
-        async Task<string> getUserId()
+        private async Task<string> getUserId()
         {
             var user = (await authenticationStateTask).User;
             var userid = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;

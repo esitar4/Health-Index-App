@@ -1,5 +1,4 @@
-﻿using health_index_app.Shared.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -44,7 +43,5 @@ namespace health_index_app.Server.Models
         [ForeignKey("ParentId")]
         public ApplicationUser Parent { get; set; }
 
-        [ForeignKey("UserId")]
-        public virtual ICollection<UserMeal> UserMeals { get; set; }
     }
 }
