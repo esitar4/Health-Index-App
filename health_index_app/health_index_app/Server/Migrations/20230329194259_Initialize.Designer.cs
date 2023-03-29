@@ -12,7 +12,7 @@ using health_index_app.Server.Data;
 namespace health_index_app.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230328193750_Initialize")]
+    [Migration("20230329194259_Initialize")]
     partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -276,10 +276,7 @@ namespace health_index_app.Server.Migrations
             modelBuilder.Entity("health_index_app.Shared.Models.Food", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<double?>("AddedSugar")
                         .HasColumnType("float");

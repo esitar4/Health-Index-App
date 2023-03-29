@@ -81,8 +81,7 @@ namespace health_index_app.Server.Migrations
                 name: "Foods",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     FoodName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FoodType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BrandName = table.Column<string>(type: "nvarchar(max)", nullable: false),
