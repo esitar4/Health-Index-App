@@ -1,4 +1,6 @@
-﻿using health_index_app.Shared.Models;
+﻿using health_index_app.Client.Pages;
+using health_index_app.Shared.Models;
+using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Json;
 
@@ -6,10 +8,11 @@ namespace health_index_app.Client.Services
 {
     public interface IUserMealsAPIServices
     {
-        Task<int> CreateUserMeal(Meal meal, string mealName);
+        Task<UserMealDTO> CreateUserMeal(UserMealDTO userMealDTO);
+        Task<UserMealDTO> ReadUserMeal(int mealId);
+        Task<bool> UpdateUserMeal(UserMealDTO userMealDTO);
         Task<bool> DeleteUserMeal(int mealId);
-        Task<bool> UpdateUserMeal(int userMealId, int mealId);
-        Task<List<int>> ReadUserMeal();
+        Task<List<int>> GetAllUserMealId();
     }
 
     public class UserMealsAPIServices : IUserMealsAPIServices
@@ -21,27 +24,55 @@ namespace health_index_app.Client.Services
             _client = client;
         }
 
-        public async Task<int> CreateUserMeal(Meal meal, string mealName)
+        public async Task<UserMealDTO> CreateUserMeal(UserMealDTO userMealDTO)
         {
-            int userMealId;
+            UserMealDTO result;
             try
             {
-                var PostBody = new { mealName, meal };
-                var response = await _client.PostAsJsonAsync("UserMeals/create", PostBody);
-                userMealId = await response.Content.ReadFromJsonAsync<int>();
+                var response = await _client.PostAsJsonAsync("usermeals/create", userMealDTO);
+                result  = await response.Content.ReadFromJsonAsync<UserMealDTO>();
             }
             catch
             {
                 throw new Exception("Unable to create UserMeal");
             }
-            return userMealId;
+            return result;
         }
+
+        public async Task<UserMealDTO> ReadUserMeal(int mealId)
+        {
+            UserMealDTO userMealDTO;
+            try
+            {
+                var url = $"/usermeals/read?mealId={mealId}";
+                userMealDTO = await _client.GetFromJsonAsync<UserMealDTO>(url);
+            }
+            catch
+            {
+                throw new Exception("UserMeal not found");
+            }
+            return userMealDTO;
+        }
+
+        public async Task<bool> UpdateUserMeal(UserMealDTO userMealDTO)
+        {
+            try
+            {
+                var response = await _client.PostAsJsonAsync("usermeals/update", userMealDTO);
+            }
+            catch
+            {
+                throw new Exception("UserMeal not found");
+            }
+            return true;
+        }
+
 
         public async Task<bool> DeleteUserMeal(int mealId)
         {
             try
             {
-                var response = await _client.PostAsJsonAsync("UserMeals/delete", mealId);
+                var response = await _client.PostAsJsonAsync("usermeals/delete", mealId);
             }
             catch
             {
@@ -50,33 +81,20 @@ namespace health_index_app.Client.Services
             return true;
         }
 
-        public async Task<List<int>> ReadUserMeal()
+        public async Task<List<int>> GetAllUserMealId()
         {
             List<int> mealIds;
             try
             {
-                var url = $"/UserMeals/read";
+                var url = $"/usermeals/get-all-meal-ids";
                 mealIds = await _client.GetFromJsonAsync<List<int>>(url);
             }
             catch
             {
-                throw new Exception("UserMeal not found");
+                throw;
+                throw new Exception("No meals found for user");
             }
             return mealIds;
-        }
-
-        public async Task<bool> UpdateUserMeal(int userMealId, int mealId)
-        {
-            try
-            {
-                List<int> Postbody = new List<int> { userMealId, mealId };
-                var response = await _client.PostAsJsonAsync("UserMeals/update", Postbody);
-            }
-            catch
-            {
-                throw new Exception("UserMeal not found");
-            }
-            return true;
         }
     }
 }
