@@ -3,6 +3,7 @@ using health_index_app.Server.Models;
 using health_index_app.Shared.FatSecret;
 using health_index_app.Shared.FatSecret.Authentication;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 string? CorsPolicy = "CorsPolicy";
@@ -29,12 +30,22 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
+    .AddRoleManager<RoleManager<IdentityRole>>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddIdentityServer()
-    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
+    {
+        options.IdentityResources["openid"].UserClaims.Add("role");
+        options.ApiResources.Single().UserClaims.Add("role");
+    });
 
-builder.Services.AddAuthentication()
+builder.Services.AddAuthentication(options => 
+{ options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme; 
+    options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme; 
+    options.DefaultSignInScheme = IdentityConstants.ExternalScheme; 
+})
     .AddIdentityServerJwt();
 
 builder.Services.AddControllersWithViews();

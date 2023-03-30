@@ -18,4 +18,6 @@ builder.Services.AddApiAuthorization();
 
 builder.Services.AddScoped<IFatSecretAPIServices, FatSecretAPIServices>();
 
+builder.Services.AddScoped<IAdminAPIServices, AdminAPIServices>();
+
 await builder.Build().RunAsync();
