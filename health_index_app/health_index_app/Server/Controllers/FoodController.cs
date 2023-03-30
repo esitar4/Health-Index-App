@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace health_index_app.Server.Controllers
 {
     [ApiController]
-    [Route("Food")]
+    [Route("food")]
     public class FoodController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -36,64 +36,47 @@ namespace health_index_app.Server.Controllers
 
         [HttpGet]
         [Route("read")]
-        public async Task<ActionResult<Food>> ReadFood(int FoodId)
+        public async Task<ActionResult<Food>> ReadFood(int foodId)
         {
-            //return GetDummyCurrentWeather();
-            var Food = await _context.Foods.Where(m => m.Id == FoodId).FirstOrDefaultAsync();
+            var food = await _context.Foods.Where(m => m.Id == foodId).FirstOrDefaultAsync();
 
-            return Ok(Food);
+            if (food == null)
+                return NotFound();
+
+            return Ok(food);
         }
-        /*        [HttpPost]
-                [Route("createmeal")]
-                public async Task<HttpStatusCode> createMeal(Meal mealId)
-                {
-                    var sqlMeals = _context.Meals;
 
-                    sqlMeals.Add(mealId);
+        [HttpPost]
+        [Route("update")]
+        public async Task<ActionResult<bool>> UpdateFood([FromBody] Food food)
+        {
+            try
+            {
+                _context.Foods.Update(food);
+                await _context.SaveChangesAsync();
+            } catch (Exception ex)
+            {
+                return NotFound(false);
+            }
 
-                    _context.SaveChanges();
+            return Ok(true);
+        }
 
-                    return HttpStatusCode.OK;
-                }*/
+        [HttpPost]
+        [Route("delete")]
+        public async Task<ActionResult<bool>> DeleteFood([FromBody] Food food)
+        {
+            try
+            {
+                _context.Foods.Remove(food);
+                await _context.SaveChangesAsync();
+            } catch (Exception ex)
+            {
+                return NotFound(false);
+            }
 
-        /*        async Task<string> getUserId()
-                {
-                    var user = (await authenticationStateTask).User;
-                    var userid = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
-                    return userid;
-                }*/
-
-        /*        private Dictionary<Shared.Models.Food, Double> convertResponseToFoodDictionary(Dictionary<int, double> responseFoods)
-                {
-                    var foods = new Dictionary<Shared.Models.Food, Double>();
-
-                    foreach( var foodResponse in responseFoods.Values )
-                    {
-                        var food = convertResponseToFood( _fatSecretClient.FoodGetAsync(new FoodGetV2Request { FoodId = Convert.ToInt32(foodResponse) }).Result.Food);
-                    }
-                    return foods;
-                }
-
-                private static Shared.Models.Food convertResponseToFood( Shared.FatSecret.ResponseObjects.Food responseFood)
-                {
-                    var food = new Shared.Models.Food();
-
-                    //Add all of the food attributes from responseFood to food
-
-                    food.Id = Convert.ToInt32(responseFood.Food_Id);
-                    food.FoodName = responseFood.Food_Name;
-                    food.FoodType = responseFood.Food_Type;
-                    food.BrandName = responseFood.Brand_Name;
-                    food.FoodURL = responseFood.Food_Url;
-
-                    food.ServingId = responseFood.Servings.Serving
-
-
-
-
-                    return food;
-                }*/
+            return Ok(true);
+        }
     }
 }
 
-/**/

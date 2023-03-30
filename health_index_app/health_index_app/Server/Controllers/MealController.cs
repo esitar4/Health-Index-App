@@ -14,8 +14,6 @@ namespace health_index_app.Server.Controllers
         private readonly IConfiguration _config;
         private readonly ILogger<FatSecretController> _logger;
 
-        private Task<AuthenticationState> authenticationStateTask { get; set; }
-
         public MealController(ApplicationDbContext context, IConfiguration config, ILogger<FatSecretController> logger)
         {
             _context = context;
@@ -38,7 +36,11 @@ namespace health_index_app.Server.Controllers
         [Route("read")]
         public async Task<ActionResult<Meal>> ReadMeal(int mealId)
         {
-            var meal = await _context.Meals.Where(m => m.Id == mealId).FirstOrDefaultAsync();
+            Meal meal = await _context.Meals.Where(m => m.Id == mealId).FirstOrDefaultAsync();
+            if (meal == null)
+            {
+                return NotFound();
+            }
 
             return Ok(meal);
         }
@@ -47,8 +49,15 @@ namespace health_index_app.Server.Controllers
         [Route("update")]
         public async Task<ActionResult<bool>> UpdateMeal([FromBody] Meal meal)
         {
-            _context.Meals.Update(meal);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Meals.Update(meal);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(false);
+            }
 
             return Ok(true);
         }
@@ -57,8 +66,15 @@ namespace health_index_app.Server.Controllers
         [Route("delete")]
         public async Task<ActionResult<bool>> DeleteMeal([FromBody] Meal meal)
         {
-            _context.Meals.Remove(meal);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Meals.Remove(meal);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(false);
+            }
 
             return Ok(true);
         }

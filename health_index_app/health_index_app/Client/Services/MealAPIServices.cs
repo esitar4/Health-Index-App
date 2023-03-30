@@ -27,9 +27,10 @@ namespace health_index_app.Client.Services
             {
                 var response = await _client.PostAsJsonAsync("meal/create", meal);
                 meal = (await response.Content.ReadFromJsonAsync<Meal>());
-            } catch
+            } 
+            catch
             {
-                throw new Exception("Unable to create meal");
+                throw new Exception("Unable to create Meal");
             }
             return meal;
         }
@@ -44,7 +45,7 @@ namespace health_index_app.Client.Services
             }
             catch
             {
-                throw new Exception("Unable to read meal, Meal not found");
+                throw new Exception("Unable to read Meal, Meal not found");
             }
             return response;
         }
@@ -57,7 +58,7 @@ namespace health_index_app.Client.Services
             }
             catch
             {
-                throw new Exception("Unable to update meal, Meal not found");
+                throw new Exception("Unable to update Meal, Meal not found");
             }
             return true;
         }
@@ -67,8 +68,9 @@ namespace health_index_app.Client.Services
             try
             {
                 var response = await _client.PostAsJsonAsync("meal/delete", meal);
-            } catch {
-                throw new Exception("Unable to delete meal, Meal not found");
+            } 
+            catch {
+                throw new Exception("Unable to delete Meal, Meal not found");
             }
             return true;
         }

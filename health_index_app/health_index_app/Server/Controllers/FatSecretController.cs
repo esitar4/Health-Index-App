@@ -26,7 +26,6 @@ namespace health_index_app.Server.Controllers
         [Route("foodsearch")]
         public async Task<FatSecretResponse> Get(string searchExpression, int maxResults = 10)
         {
-            //return GetDummyCurrentWeather();
             var request = new FoodsSearchRequest { SearchExpression = searchExpression, MaxResults = maxResults };
 
             return await _fatSecretClient.FoodsSearchAsync(request);
@@ -36,7 +35,6 @@ namespace health_index_app.Server.Controllers
         [Route("foodget")]
         public async Task<FatSecretResponse> Get(string foodId)
         {
-            //return GetDummyCurrentWeather();
             var request = new FoodGetV2Request { FoodId = Convert.ToInt32(foodId) };
 
             return await _fatSecretClient.FoodGetAsync(request);

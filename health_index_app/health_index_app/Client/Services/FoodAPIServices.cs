@@ -13,9 +13,10 @@ namespace health_index_app.Client.Services
     public interface IFoodAPIServices
     {
         Task<Food> CreateFood(int foodId);
-        Task<bool> DeleteFood(int FoodId);
-        Task<bool> UpdateFood(Food Food);
         Task<Food> ReadFood(int FoodId);
+        Task<bool> UpdateFood(Food Food);
+        Task<bool> DeleteFood(Food food);
+        Task<Food> CreateFoodHelper(int foodId);
     }
 
     public class FoodAPIServices : IFoodAPIServices
@@ -37,30 +38,15 @@ namespace health_index_app.Client.Services
             {
                 food = await CreateFoodHelper(foodId);
 
-                var response = await _client.PostAsJsonAsync("Food/create", food);
+                var response = await _client.PostAsJsonAsync("food/create", food);
 
                 food = await response.Content.ReadFromJsonAsync<Food>();
             }
             catch
             {
-                throw;
                 throw new Exception("Unable to create Food");
             }
             return food;
-        }
-
-        public async Task<bool> DeleteFood(int FoodId)
-        {
-            try
-            {
-                var response = await _client.PostAsJsonAsync("Food/delete", FoodId);
-            }
-            catch
-            {
-                throw;
-                throw new Exception("Food not found");
-            }
-            return true;
         }
 
         public async Task<Food> ReadFood(int FoodId)
@@ -68,32 +54,44 @@ namespace health_index_app.Client.Services
             Food response;
             try
             {
-                var url = $"/Food/read?FoodId={FoodId}";
+                var url = $"/food/read?FoodId={FoodId}";
                 response = await _client.GetFromJsonAsync<Food>(url);
             }
             catch
             {
-                throw;
-                throw new Exception("Food not found");
+                throw new Exception("Unable to read Food, Food not found");
             }
             return response;
         }
 
-        public async Task<bool> UpdateFood(Food Food)
+        public async Task<bool> UpdateFood(Food food)
         {
             try
             {
-                var response = await _client.PostAsJsonAsync("Food/update", Food);
+                var response = await _client.PostAsJsonAsync("Food/update", food);
             }
             catch
             {
-                throw;
-                throw new Exception("Food not found");
+                throw new Exception("Unable to update Food, Food not found");
             }
             return true;
         }
 
-        private async Task<Food> CreateFoodHelper(int foodId)
+        public async Task<bool> DeleteFood(Food food)
+        {
+            try
+            {
+                var response = await _client.PostAsJsonAsync("food/delete", food);
+            }
+            catch
+            {
+                throw new Exception("Unable to delete Food, Food not found");
+            }
+            return true;
+        }
+
+
+        public async Task<Food> CreateFoodHelper(int foodId)
         {
             Food food;
             try
@@ -137,8 +135,7 @@ namespace health_index_app.Client.Services
             }
             catch
             {
-                throw;
-                throw new Exception("Unable to create Food");
+                throw new Exception("Unable to convert Food");
             }
 
             return food;
