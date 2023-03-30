@@ -1,27 +1,24 @@
-﻿using health_index_app.Client.Pages;
-using health_index_app.Server.Data;
+﻿using health_index_app.Server.Data;
 using health_index_app.Server.Models;
 using health_index_app.Shared.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using System.Security.Claims;
 
 namespace health_index_app.Server.Controllers
 {
     [ApiController]
-    [Route("usermeals")]
-    public class UserMealsController : Controller
+    [Route("usermeal")]
+    public class UserMealController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _config;
         private readonly ILogger<FatSecretController> _logger;
 
-        public UserMealsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration config, ILogger<FatSecretController> logger)
+        public UserMealController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration config, ILogger<FatSecretController> logger)
         {
             _context = context;
             _userManager = userManager;

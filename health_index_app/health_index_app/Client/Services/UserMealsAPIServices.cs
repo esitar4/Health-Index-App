@@ -1,7 +1,4 @@
-﻿using health_index_app.Client.Pages;
-using health_index_app.Shared.Models;
-using Newtonsoft.Json;
-using System.Net;
+﻿using health_index_app.Shared.Models;
 using System.Net.Http.Json;
 
 namespace health_index_app.Client.Services
@@ -29,7 +26,7 @@ namespace health_index_app.Client.Services
             UserMealDTO result;
             try
             {
-                var response = await _client.PostAsJsonAsync("usermeals/create", userMealDTO);
+                var response = await _client.PostAsJsonAsync("usermeal/create", userMealDTO);
                 result  = await response.Content.ReadFromJsonAsync<UserMealDTO>();
             }
             catch
@@ -44,12 +41,12 @@ namespace health_index_app.Client.Services
             UserMealDTO userMealDTO;
             try
             {
-                var url = $"/usermeals/read?mealId={mealId}";
+                var url = $"/usermeal/read?mealId={mealId}";
                 userMealDTO = await _client.GetFromJsonAsync<UserMealDTO>(url);
             }
             catch
             {
-                throw new Exception("UserMeal not found");
+                throw new Exception("Unable to read UserMeal, UserMeal not found");
             }
             return userMealDTO;
         }
@@ -58,11 +55,11 @@ namespace health_index_app.Client.Services
         {
             try
             {
-                var response = await _client.PostAsJsonAsync("usermeals/update", userMealDTO);
+                var response = await _client.PostAsJsonAsync("usermeal/update", userMealDTO);
             }
             catch
             {
-                throw new Exception("UserMeal not found");
+                throw new Exception("Unable to update UserMeal, UserMeal not found");
             }
             return true;
         }
@@ -72,11 +69,11 @@ namespace health_index_app.Client.Services
         {
             try
             {
-                var response = await _client.PostAsJsonAsync("usermeals/delete", mealId);
+                var response = await _client.PostAsJsonAsync("usermeal/delete", mealId);
             }
             catch
             {
-                throw new Exception("UserMeal not found");
+                throw new Exception("Unable to delete UserMeal, UserMeal not found");
             }
             return true;
         }
@@ -86,13 +83,12 @@ namespace health_index_app.Client.Services
             List<int> mealIds;
             try
             {
-                var url = $"/usermeals/get-all-meal-ids";
+                var url = $"/usermeal/get-all-meal-ids";
                 mealIds = await _client.GetFromJsonAsync<List<int>>(url);
             }
             catch
             {
-                throw;
-                throw new Exception("No meals found for user");
+                throw new Exception("Something went very wrong");
             }
             return mealIds;
         }

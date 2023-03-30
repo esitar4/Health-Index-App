@@ -29,7 +29,7 @@ namespace health_index_app.Client.Pages
         FoodsSearchResponse json = null!;
         GetFoodResponse getFood = null!;
 
-        public MealsAPIServices mealAPI { get; set; } = new(new HttpClient());
+        public MealAPIServices mealAPI { get; set; } = new(new HttpClient());
 
         private async Task SearchForFood()
         {
@@ -74,9 +74,10 @@ namespace health_index_app.Client.Pages
 
         private async Task Click()
         {
-            await UserMealsAPIServices.GetAllUserMealId();
-            await UserMealsAPIServices.UpdateUserMeal(new UserMealDTO { MealId = 14, Name = "lol"});
-            await UserMealsAPIServices.GetAllUserMealId();
+            await MealAPIServices.ReadMeal(10);
+            await MealAPIServices.CreateMeal(new Meal());
+            await MealAPIServices.UpdateMeal(new Meal { Id = 10, HealthIndex = 5 });
+            await MealAPIServices.DeleteMeal(new Meal { Id = 12 });
         }
     }
 }

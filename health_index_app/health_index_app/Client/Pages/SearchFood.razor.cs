@@ -16,7 +16,7 @@ namespace health_index_app.Client.Pages
         FoodsSearchResponse json = null!;
         GetFoodResponse getFood = null!;
 
-        public MealsAPIServices mealAPI {get; set;} = new (new HttpClient());
+        public MealAPIServices mealAPI {get; set;} = new (new HttpClient());
 
         private async Task SearchForFood()
         {

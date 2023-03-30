@@ -19,7 +19,7 @@ builder.Services.AddApiAuthorization();
 builder.Services.AddScoped<IFatSecretAPIServices, FatSecretAPIServices>();
 builder.Services.AddScoped<IMealFoodAPIServices, MealFoodAPIServices>();
 builder.Services.AddScoped<IFoodAPIServices, FoodAPIServices>();
-builder.Services.AddScoped<IMealsAPIServices, MealsAPIServices>();
+builder.Services.AddScoped<IMealsAPIServices, MealAPIServices>();
 builder.Services.AddScoped<IUserMealsAPIServices, UserMealsAPIServices>();
 
 await builder.Build().RunAsync();
