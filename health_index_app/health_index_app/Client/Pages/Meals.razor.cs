@@ -23,16 +23,26 @@ namespace health_index_app.Client.Pages
         protected IUserMealsAPIServices UserMealsAPIServices { get; set; }
 
         private string SearchExpression = String.Empty;
+        private string MealName = String.Empty;
         private int currMealId;
+
+
         private List<ResponseFood> currFoodList = new List<ResponseFood>();
         //List<SearchedFood>? foods = new();
         FoodsSearchResponse json = null!;
         GetFoodResponse getFood = null!;
 
+        string[,] SearchTable = new string[10,2];
+        string calorie_count = "";
+        string serving_size = "";
+        string serving_description = "";
+        string foodId_toUpdate = "";
+
         public MealAPIServices mealAPI { get; set; } = new(new HttpClient());
 
         private async Task SearchForFood()
         {
+            Array.Clear(SearchTable);
             if (SearchExpression != String.Empty)
             {
                 json = await ApiService.FoodsSearchAsync(SearchExpression);
@@ -59,7 +69,6 @@ namespace health_index_app.Client.Pages
 
         private async Task CreateMeal()
         {
-            string MealName = "example";
             Meal meal = await MealAPIServices.CreateMeal(new Meal());
 
             foreach (var foodResponse in currFoodList)
