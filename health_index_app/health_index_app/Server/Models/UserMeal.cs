@@ -11,13 +11,15 @@ namespace health_index_app.Server.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [ForeignKey("ApplicationUserId")]
+        [ForeignKey("ApplicationUser")]
         public string UserId { get; set; }
 
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public virtual ApplicationUser? ApplicationUser { get; set; }
 
-        [ForeignKey("Id")]
-        public virtual Meal Meal { get; set; }
+        [ForeignKey("Meal")]
+        public int MealId { get; set; }
+
+        public virtual Meal? Meal { get; set; }
 
         [MaxLength(15, ErrorMessage = "Name length shouldn't be longer than 15 letters")]
         [Required(ErrorMessage = "Name is a required field")]
