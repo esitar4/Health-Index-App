@@ -96,6 +96,9 @@ namespace health_index_app.Server.Areas.Identity.Pages.Account.Manage
             var r = roles.FirstOrDefault();
             Console.WriteLine(r);
 
+            var userInRole = await _userManager.IsInRoleAsync(user, "Admin");
+            Console.WriteLine($"User is Admin: {userInRole}");
+
             if(user.DateOfBirth is not null)
             {
                 this.DateOfBirth = user.DateOfBirth.Value.Date;

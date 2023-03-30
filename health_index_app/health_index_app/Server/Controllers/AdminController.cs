@@ -6,8 +6,8 @@ using health_index_app.Server.Data;
 
 namespace health_index_app.Server.Controllers
 {
-    [ApiController]
-    [Route("api/admin")]
+    //[ApiController]
+    [Route("api/admin")]    
     public class AdminController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -19,10 +19,10 @@ namespace health_index_app.Server.Controllers
             _userManager = userManager;
         }
 
-        
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [Route("adduser")]
-       // [Authorize(Roles = "Admin")]
         public async Task<ActionResult<string>> AddUserToAdmin([FromBody] string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
