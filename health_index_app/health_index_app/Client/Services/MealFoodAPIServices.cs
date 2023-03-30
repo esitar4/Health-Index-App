@@ -1,5 +1,4 @@
 ﻿using health_index_app.Shared.Models;
-using System.Net;
 using System.Net.Http.Json;
 
 namespace health_index_app.Client.Services
@@ -7,9 +6,9 @@ namespace health_index_app.Client.Services
     public interface IMealFoodAPIServices
     {
         Task<MealFood> CreateMealFood(MealFood mealFood);
-        Task<bool> DeleteMealFood(int mealFoodId);
-        Task<bool> UpdateMealFood(MealFood mealFood);
         Task<MealFood> ReadMealFood(int mealFoodId);
+        Task<bool> UpdateMealFood(MealFood mealFood);
+        Task<bool> DeleteMealFood(MealFood mealFood);
     }
 
     public class MealFoodAPIServices : IMealFoodAPIServices
@@ -26,37 +25,26 @@ namespace health_index_app.Client.Services
             MealFood MealFood;
             try
             {
-                var response = await _client.PostAsJsonAsync("mealfoods/create", mealFood);
+                var response = await _client.PostAsJsonAsync("mealfood/create", mealFood);
                 MealFood =  await response.Content.ReadFromJsonAsync<MealFood>();
-            } catch
+            } 
+            catch
             {
                 throw new Exception("Unable to create MealFood");
             }
             return MealFood;
         }
-
-        public async Task<bool> DeleteMealFood(int MealFoodId)
-        {
-            try
-            {
-                var response = await _client.PostAsJsonAsync("MealFoods/delete", MealFoodId);
-            } catch {
-                throw new Exception("MealFood not found");
-            }
-            return true;
-        }
-
-        public async Task<MealFood> ReadMealFood(int MealFoodId)
+        public async Task<MealFood> ReadMealFood(int mealFoodId)
         {
             MealFood response;
             try
             {
-                var url = $"/MealFoods/read?MealFoodId={MealFoodId}";
+                var url = $"/mealfood/read?mealFoodId={mealFoodId}";
                 response = await _client.GetFromJsonAsync<MealFood>(url);
             }
             catch
             {
-                throw new Exception("MealFood not found");
+                throw new Exception("Unable to read MealFood, MealFood not found");
             }
             return response;
         }
@@ -65,13 +53,27 @@ namespace health_index_app.Client.Services
         {
             try
             {
-                var response = await _client.PostAsJsonAsync("MealFoods/update", MealFood);
+                var response = await _client.PostAsJsonAsync("mealfood/update", MealFood);
             }
             catch
             {
-                throw new Exception("MealFood not found");
+                throw new Exception("Unable to update MealFood, MealFood not found");
             }
             return true;
         }
+
+        public async Task<bool> DeleteMealFood(MealFood mealFood)
+        {
+            try
+            {
+                var response = await _client.PostAsJsonAsync("mealfood/delete", mealFood);
+            } 
+            catch {
+                throw new Exception("Unable to delete MealFood, MealFood not found");
+            }
+            return true;
+        }
+
+
     }
 }

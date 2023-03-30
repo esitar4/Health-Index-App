@@ -12,9 +12,9 @@ namespace health_index_app.Server.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IConfiguration _config;
-        private readonly ILogger<FatSecretController> _logger;
+        private readonly ILogger<MealController> _logger;
 
-        public MealController(ApplicationDbContext context, IConfiguration config, ILogger<FatSecretController> logger)
+        public MealController(ApplicationDbContext context, IConfiguration config, ILogger<MealController> logger)
         {
             _context = context;
             _config = config;

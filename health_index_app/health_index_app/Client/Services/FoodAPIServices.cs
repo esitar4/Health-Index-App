@@ -1,9 +1,4 @@
-﻿using health_index_app.Shared.FatSecret.Requests;
-using health_index_app.Shared.FatSecret.ResponseObjects;
-using health_index_app.Shared.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Net;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 
 using Food = health_index_app.Shared.Models.Food;
 

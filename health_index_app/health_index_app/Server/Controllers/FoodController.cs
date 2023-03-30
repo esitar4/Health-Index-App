@@ -1,7 +1,4 @@
-﻿using health_index_app.Client.Pages;
-using health_index_app.Server.Data;
-using health_index_app.Shared.FatSecret;
-using health_index_app.Shared.FatSecret.Requests;
+﻿using health_index_app.Server.Data;
 using health_index_app.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,9 +11,9 @@ namespace health_index_app.Server.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IConfiguration _config;
-        private readonly ILogger<FatSecretController> _logger;
+        private readonly ILogger<FoodController> _logger;
 
-        public FoodController(ApplicationDbContext context, IConfiguration config, ILogger<FatSecretController> logger)
+        public FoodController(ApplicationDbContext context, IConfiguration config, ILogger<FoodController> logger)
         {
             _context = context;
             _config = config;

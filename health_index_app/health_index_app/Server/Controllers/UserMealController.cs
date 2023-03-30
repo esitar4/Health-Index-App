@@ -16,9 +16,9 @@ namespace health_index_app.Server.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _config;
-        private readonly ILogger<FatSecretController> _logger;
+        private readonly ILogger<UserMealController> _logger;
 
-        public UserMealController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration config, ILogger<FatSecretController> logger)
+        public UserMealController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration config, ILogger<UserMealController> logger)
         {
             _context = context;
             _userManager = userManager;

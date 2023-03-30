@@ -14,71 +14,80 @@ using System.Net;
 namespace health_index_app.Server.Controllers
 {
     [ApiController]
-    [Route("mealfoods")]
-    public class MealFoodsController : Controller
+    [Route("mealfood")]
+    public class MealFoodController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IConfiguration _config;
-        private readonly ILogger<FatSecretController> _logger;
+        private readonly ILogger<MealFoodController> _logger;
 
-        private Task<AuthenticationState> authenticationStateTask { get; set; }
 
-        public MealFoodsController(ApplicationDbContext context, IConfiguration config, ILogger<FatSecretController> logger)
+        public MealFoodController(ApplicationDbContext context, IConfiguration config, ILogger<MealFoodController> logger)
         {
             _context = context;
             _config = config;
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
-            return Ok();
-        }
-
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<MealFood>> CreateMealFood([FromBody] MealFood MealFood)
+        public async Task<ActionResult<MealFood>> CreateMealFood([FromBody] MealFood mealFood)
         {
-            //return GetDummyCurrentWeather();
-            _context.MealFoods.Add(MealFood);
-            await _context.SaveChangesAsync();
-            _context.Entry(MealFood).Reload();
 
-            return Ok(MealFood);
+            _context.MealFoods.Add(mealFood);
+            await _context.SaveChangesAsync();
+            _context.Entry(mealFood).Reload();
+
+            return Ok(mealFood);
         }
 
         [HttpGet]
         [Route("read")]
-        public async Task<ActionResult<MealFood>> ReadMealFood(int MealFoodId)
+        public async Task<ActionResult<MealFood>> ReadMealFood(int mealFoodId)
         {
-            //return GetDummyCurrentWeather();
-            var MealFood = await _context.MealFoods.Where(m => m.Id == MealFoodId).FirstOrDefaultAsync();
+
+            var MealFood = await _context.MealFoods.Where(m => m.Id == mealFoodId).FirstOrDefaultAsync();
+
+            if (MealFood == null)
+            {
+                return NotFound();
+            }
 
             return Ok(MealFood);
         }
 
         [HttpPost]
         [Route("update")]
-        public async Task<ActionResult<MealFood>> UpdateMealFood([FromBody] MealFood NewMealFood)
+        public async Task<ActionResult<bool>> UpdateMealFood([FromBody] MealFood mealFood)
         {
-            //return GetDummyCurrentWeather();
-            var updatedMealFood = await _context.MealFoods.Where(m => m.Id == NewMealFood.Id).FirstOrDefaultAsync();
-            await _context.SaveChangesAsync();
-            _context.Entry(NewMealFood).Reload();
+            try
+            {
+                _context.MealFoods.Update(mealFood);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(false);
+            }
 
-
-            return Ok(NewMealFood);
+            return Ok(true);
         }
 
         [HttpPost]
         [Route("delete")]
-        public async Task<ActionResult<MealFood>> DeleteMealFood([FromBody] MealFood MealFood)
+        public async Task<ActionResult<MealFood>> DeleteMealFood([FromBody] MealFood mealFood)
         {
-            //return GetDummyCurrentWeather();
-            _context.MealFoods.Remove(MealFood);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.MealFoods.Remove(mealFood);
+                await _context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                return NotFound(false);
+            }
 
-            return Ok(MealFood);
+            return Ok(mealFood);
         }
     }
 }

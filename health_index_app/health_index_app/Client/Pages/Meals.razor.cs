@@ -74,9 +74,7 @@ namespace health_index_app.Client.Pages
 
         private async Task Click()
         {
-            Food food = await FoodAPIServices.CreateFoodHelper(35917);
-            food.FoodURL = "lol";
-            await FoodAPIServices.UpdateFood(food);
+            await MealFoodAPIServices.UpdateMealFood(new MealFood { Id = 18, MealId = 3, FoodId = 1538, Amount = 50 });
         }
     }
 }
