@@ -46,44 +46,41 @@
 
                             if ((SearchTable[i, 0] == null && SearchTable[i, 1] == null))
                             {
-                                serving_size = description_list.Split('|')[0].Split('-')[0][4..].Trim();
+                                serving_description = description_list.Split('|')[0].Split('-')[0][4..].Trim();
                                 calorie_count = description_list.Split('|')[0].Split(':')[1].Trim();
 
-                                SearchTable[i, 0] = serving_size;
-                                SearchTable[i, 1] = calorie_count;
+                                SearchTable[i, 0] = food.Food_Id;
+                                SearchTable[i, 1] = serving_description;
+                                SearchTable[i, 2] = calorie_count;
                             }
-
-                            Console.WriteLine("food.Food_Id == foodId_toUpdate: ''" + food.Food_Id + "' '" + foodId_toUpdate + "'");
 
                             if (food.Food_Id == foodId_toUpdate)
                             {
-                                SearchTable[i, 0] = serving_size ?? "";
-                                SearchTable[i, 1] = calorie_count + " kcal" ?? "";
+                                SearchTable[i, 1] = serving_description ?? "";
+
+                                SearchTable[i, 2] = calorie_count + " kcal" ?? "";
                             }
 
                             <tr>
                                 <td>@food.Food_Name</td>
-                                <td>@SearchTable[i,0]</td>
                                 <td>@SearchTable[i,1]</td>
+                                <td>@SearchTable[i,2]</td>
                                 <div class="btn-group dropend">
                                     <button type="button" class="btn btn-primary btn-sm" @onclick="() => AddFoodToMeal(food)">Add</button>
                                     <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" @onclick="async () => await GetFood(food.Food_Id)">
                                         @* <span class="visually-hidden"></span>*@
-                                        Servings
                                     </button>
                                     <ul class="dropdown-menu">
                                         @if (getFood != null)
                                         {
                                             @foreach (var serving in getFood.Food.Servings.Serving)
                                             {
-                                                if (serving != null)
+                                                if (serving.Metric_Serving_Amount != null)
                                                 {
-                                                    <li><button class="dropdown-item" type="button" @onclick="() => { foodId_toUpdate = food.Food_Id;
-                                                                                                                      calorie_count = serving.Calories;
-                                                                                                                      serving_description = serving.Serving_Description;
-                                                                                                                      serving_size = serving.Measurement_Description;
-                                                                                                                      StateHasChanged();
-                                                                            }">@serving.Metric_Serving_Amount.Split('.')[0]@serving.Metric_Serving_Unit</button></li>
+                                                    <li><button class="dropdown-item" type="button" @onclick="() => UpdateFoodRow(food.Food_Id, serving)">@serving.Serving_Description or @serving.Metric_Serving_Amount.Split('.')[0]@serving.Metric_Serving_Unit</button></li>
+                                                } else
+                                                {
+                                                    
                                                 }
                                             }
                                         }
