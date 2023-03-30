@@ -81,8 +81,7 @@ namespace health_index_app.Server.Migrations
                 name: "Foods",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     FoodName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FoodType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BrandName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -279,21 +278,24 @@ namespace health_index_app.Server.Migrations
                 name: "MealFoods",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MealId = table.Column<int>(type: "int", nullable: false),
+                    FoodId = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MealFoods", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MealFoods_Foods_Id",
-                        column: x => x.Id,
+                        name: "FK_MealFoods_Foods_FoodId",
+                        column: x => x.FoodId,
                         principalTable: "Foods",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MealFoods_Meals_Id",
-                        column: x => x.Id,
+                        name: "FK_MealFoods_Meals_MealId",
+                        column: x => x.MealId,
                         principalTable: "Meals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -303,23 +305,24 @@ namespace health_index_app.Server.Migrations
                 name: "UserMeals",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MealId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserMeals", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserMeals_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_UserMeals_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserMeals_Meals_Id",
-                        column: x => x.Id,
+                        name: "FK_UserMeals_Meals_MealId",
+                        column: x => x.MealId,
                         principalTable: "Meals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -386,6 +389,16 @@ namespace health_index_app.Server.Migrations
                 column: "Use");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MealFoods_FoodId",
+                table: "MealFoods",
+                column: "FoodId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MealFoods_MealId",
+                table: "MealFoods",
+                column: "MealId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_ConsumedTime",
                 table: "PersistedGrants",
                 column: "ConsumedTime");
@@ -406,9 +419,14 @@ namespace health_index_app.Server.Migrations
                 columns: new[] { "SubjectId", "SessionId", "Type" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserMeals_ApplicationUserId",
+                name: "IX_UserMeals_MealId",
                 table: "UserMeals",
-                column: "ApplicationUserId");
+                column: "MealId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserMeals_UserId",
+                table: "UserMeals",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
