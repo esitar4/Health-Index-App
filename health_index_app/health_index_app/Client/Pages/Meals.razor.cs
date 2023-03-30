@@ -71,10 +71,5 @@ namespace health_index_app.Client.Pages
 
             await UserMealsAPIServices.CreateUserMeal(new UserMealDTO { MealId = meal.Id, Name = MealName });
         }
-
-        private async Task Click()
-        {
-            await MealFoodAPIServices.UpdateMealFood(new MealFood { Id = 18, MealId = 3, FoodId = 1538, Amount = 50 });
-        }
     }
 }
