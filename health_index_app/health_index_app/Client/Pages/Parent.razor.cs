@@ -10,12 +10,6 @@ namespace health_index_app.Client.Pages
         [Inject]
         public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Inject]
-        protected IFoodAPIServices FoodAPIServices { get; set; }
-        [Inject]
-        protected IMealFoodAPIServices MealFoodAPIServices { get; set; }
-        [Inject]
-        protected IMealsAPIServices MealAPIServices { get; set; }
-        [Inject]
         protected IUserMealsAPIServices UserMealsAPIServices { get; set; }
         protected ParentAPIServices parentAPIServices { get; set; } = new( new HttpClient());
 
@@ -32,6 +26,8 @@ namespace health_index_app.Client.Pages
 
         [Parameter]
         public bool? AddChildStatus { get; set; } = true;
+        [Parameter]
+        public bool? DeleteChildStatus { get; set; } = true;
 
         protected override async Task OnInitializedAsync()
         {
@@ -57,14 +53,22 @@ namespace health_index_app.Client.Pages
 
         private async Task AddNewChild()
         {
+            ResetStatus();
             AddChildStatus = await parentAPIServices.AddChild(newChildUserName);
-            navigationManager.NavigateTo($"refresh/parent/{AddChildStatus}");
+            navigationManager.NavigateTo($"refresh/parent/{AddChildStatus}/{DeleteChildStatus}");
         }
 
         private async Task DeleteChild(string username)
         {
-            await parentAPIServices.DeleteChild(username);
-            navigationManager.NavigateTo($"refresh/parent/");
+            ResetStatus();
+            DeleteChildStatus = await parentAPIServices.DeleteChild(username);
+            navigationManager.NavigateTo($"refresh/parent/{AddChildStatus}/{DeleteChildStatus}");
+        }
+
+        private void ResetStatus()
+        {
+            AddChildStatus = true;
+            DeleteChildStatus = true;
         }
 
     }

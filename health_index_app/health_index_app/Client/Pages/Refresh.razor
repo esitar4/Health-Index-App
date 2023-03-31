@@ -1,6 +1,6 @@
 ﻿@page "/refresh"
 @page "/refresh/{text}"
-@page "/refresh/{text}/{addchildstatus:bool}"
+@page "/refresh/{text}/{addchildstatus:bool?}/{deletechildstatus:bool?}"
 @inject NavigationManager NavigationManager
 
 <h4>Page is refreshing please wait...</h4>
@@ -9,7 +9,9 @@
     [Parameter]
     public string Text { get; set; }
     [Parameter]
-    public bool? AddChildStatus { get; set; } = true;
+    public bool? AddChildStatus { get; set; }
+    [Parameter]
+    public bool? DeleteChildStatus { get; set; }
 
     protected override void OnInitialized()
     {
