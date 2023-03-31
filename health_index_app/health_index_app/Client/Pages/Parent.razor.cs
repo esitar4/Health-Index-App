@@ -24,6 +24,7 @@ namespace health_index_app.Client.Pages
         List<string> childUsernames = null!;
         List<ChildMealDTO> childMeals = null!;
         Dictionary<int, List<ChildMealFoodDTO>> childMealFoods = new();
+
         Dictionary<int, bool> isHidden = new();
 
         protected override async Task OnInitializedAsync()
@@ -37,12 +38,13 @@ namespace health_index_app.Client.Pages
                 {
                     List<ChildMealFoodDTO> foodList = await parentAPIServices.GetChildFoods(meal.MealId);
                     childMealFoods.Add(meal.MealId, foodList);
+
                     isHidden.Add(meal.MealId, true);
                 }
             }
         }
 
-        private async void Show(int mealId)
+        private void Show(int mealId)
         {
             isHidden[mealId] = !isHidden[mealId];
         }

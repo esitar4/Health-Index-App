@@ -36,6 +36,11 @@
         background-color: peachpuff;
     }
 
+    .table {
+        border: 1px solid;
+        border-color: black;
+    }
+
 </style>
 
 @if (childUsernames == null)
@@ -44,7 +49,36 @@
 }
 else
 {
-        <table class="table table-bordered table-hover">
+    <table class="table table-bordered" style="width:200px">
+        <caption style="caption-side:top">Child Account Overview</caption>
+        <thead>
+            <tr>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (childUsernames.Count == 0)
+            {
+                <tr>
+                    <td>
+                        No Records to display
+                    </td>
+                </tr>
+            } else
+            {
+                foreach(string name in childUsernames)
+                {
+                    <tr>
+                        <td>@name</td>
+                    </tr>
+                }
+                <tr align="center">Total Children: @childUsernames.Count</tr>
+            }
+        </tbody>
+    </table>
+
+    <table class="table table-bordered table-hover">
+        <caption style="caption-side:top">Child Meal Overview</caption>
         <thead>
             <tr>
                 <th>Child Username</th>
@@ -53,7 +87,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @if (childUsernames.Count == 0)
+            @if (childMeals.Count == 0)
             {
                 <tr>
                     <td colspan="3">
@@ -75,7 +109,7 @@ else
                             </tr>
                             <tr hidden="@isHidden[meal.MealId]">
                                 <td colspan="3">
-                                    <table class="table table-bordered table-hover">
+                                    <table class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>Food Name</th>
