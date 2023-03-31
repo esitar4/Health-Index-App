@@ -11,6 +11,8 @@ namespace health_index_app.Client.Pages
         private string userIdUnlock = String.Empty;
         private string userIdAddAdmin = String.Empty;
         private string userIdDelete = String.Empty;
+        private string userIdChild = String.Empty;
+        private string userIdParent = String.Empty;
 
         public async void PostAdminUser()
         {
@@ -25,6 +27,11 @@ namespace health_index_app.Client.Pages
         public async void PostDeleteAccount()
         {
             await adminApiService.PostDeleteAccount(userIdDelete);
+        }
+
+        public async void PostAddParentChildRelationship()
+        {
+            await adminApiService.PostAddParentChildRelationship(userIdChild+userIdParent);
         }
     }
 }

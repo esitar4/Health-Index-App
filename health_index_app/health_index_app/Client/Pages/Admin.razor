@@ -42,3 +42,17 @@
         <button type="submit" class="btn btn-light" @onclick="PostDeleteAccount">Delete Account</button>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-auto">
+        <label> Child user id</label>
+        <input type="text" class="form-control" @bind-value="userIdChild"/>
+    </div>
+    <div class="col-auto"> 
+         <label> Parent user id</label>
+         <input type="text" class="form-control" @bind-value="userIdParent"/>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-light" @onclick="PostAddParentChildRelationship">Submit</button>
+    </div>
+</div>
