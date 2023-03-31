@@ -130,10 +130,8 @@ namespace health_index_app.Server.Controllers
         public async Task<ActionResult<List<int>>> GetAllUserMealIds()
         {
             var user = await _userManager.GetUserAsync(User);
-            var userId = user.Id;
-
             List<int> mealIds = await _context.UserMeals
-                .Where(um => um.UserId == userId)
+                .Where(um => um.UserId == user.Id)
                 .Select(um => um.MealId)
                 .ToListAsync();
                 

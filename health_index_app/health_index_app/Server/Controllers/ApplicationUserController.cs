@@ -30,9 +30,8 @@ namespace health_index_app.Server.Controllers
         public async Task<ActionResult<List<string>>> getChildUsernames()
         {
             var user = await _userManager.GetUserAsync(User);
-            var userId = user.Id;
             List<string> childUsernames = await _context.Users
-                .Where(u => u.ParentId == userId)
+                .Where(u => u.ParentId == user.Id)
                 .Select(u => u.UserName)
                 .ToListAsync();
 
@@ -44,11 +43,10 @@ namespace health_index_app.Server.Controllers
         public async Task<ActionResult<List<ChildMealDTO>>> getChildMeals()
         {
             var user = await _userManager.GetUserAsync(User);
-            var userId = user.Id;
             List<ChildMealDTO> childMealFoods = await (from u in _context.Users
                                         join um in _context.UserMeals on u.Id equals um.UserId
                                         join m in _context.Meals on um.MealId equals m.Id
-                                        where u.ParentId == userId
+                                        where u.ParentId == user.Id
                                         select new ChildMealDTO
                                         {
                                             childUsername = u.UserName,
