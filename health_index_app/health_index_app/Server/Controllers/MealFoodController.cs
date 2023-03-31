@@ -33,6 +33,15 @@ namespace health_index_app.Server.Controllers
         [Route("create")]
         public async Task<ActionResult<MealFood>> CreateMealFood([FromBody] MealFood mealFood)
         {
+            // Check whether object exists in table
+            if (_context.MealFoods.Any(mf => mf.MealId == mealFood.MealId && mf.FoodId == mealFood.FoodId))
+            {
+                mealFood.Id = await _context.MealFoods
+                    .Where(mf => mf.MealId == mealFood.MealId && mf.FoodId == mealFood.FoodId)
+                    .Select(mf => mf.Id)
+                    .FirstOrDefaultAsync();
+                return Ok(mealFood);
+            }
 
             _context.MealFoods.Add(mealFood);
             await _context.SaveChangesAsync();
@@ -46,7 +55,7 @@ namespace health_index_app.Server.Controllers
         public async Task<ActionResult<MealFood>> ReadMealFood(int mealFoodId)
         {
 
-            var MealFood = await _context.MealFoods.Where(m => m.Id == mealFoodId).FirstOrDefaultAsync();
+            var MealFood = await _context.MealFoods.Where(mf => mf.Id == mealFoodId).FirstOrDefaultAsync();
 
             if (MealFood == null)
             {
