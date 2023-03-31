@@ -1,0 +1,36 @@
+﻿@page "/parent"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using health_index_app.Shared
+
+@attribute [Authorize] 
+@*attribute [Authrize(Roles = "Parent")]*@
+
+<h3>Parent</h3>
+<button @onclick="GetChildUsernames">Click</button>
+
+@if(childUsernames != null)
+{
+    foreach(string name in childUsernames)
+    {
+        <p>@name</p><br />
+        @if(childMeals != null)
+        {
+            foreach(var meal in childMeals)
+            {
+                <p>@meal.MealId, @meal.Name, @meal.HealthIndex</p>
+@*                @if(childMealFoods != null)
+                {
+                    foreach(var food in childMealFoods[meal.MealId])
+                    {
+                        <p>@food.FoodName, @food.Calories</p>
+                    }
+                }*@
+            }
+        }
+    }
+}
+
+
+@code {
+}    

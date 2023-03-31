@@ -13,15 +13,15 @@ namespace health_index_app.Server.Controllers
     [Route("usermeal")]
     public class UserMealController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _context;
         private readonly IConfiguration _config;
         private readonly ILogger<UserMealController> _logger;
 
-        public UserMealController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration config, ILogger<UserMealController> logger)
+        public UserMealController(UserManager<ApplicationUser> userManager, ApplicationDbContext context, IConfiguration config, ILogger<UserMealController> logger)
         {
-            _context = context;
             _userManager = userManager;
+            _context = context;
             _config = config;
             _logger = logger;
         }
@@ -30,11 +30,14 @@ namespace health_index_app.Server.Controllers
         [Route("create")]
         public async Task<ActionResult<UserMealDTO>> CreateUserMeal([FromBody] UserMealDTO userMealDTO)
         {
+            var user = await _userManager.GetUserAsync(User);
+            var userId = user.Id;
+
             // Check whether object exists in table
-            if (_context.UserMeals.Any(um => um.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier) && um.MealId == userMealDTO.MealId))
+            if (_context.UserMeals.Any(um => um.UserId == userId && um.MealId == userMealDTO.MealId))
             {
                 userMealDTO.Id = await _context.UserMeals
-                    .Where(um => um.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier) && um.MealId == userMealDTO.MealId)
+                    .Where(um => um.UserId == userId && um.MealId == userMealDTO.MealId)
                     .Select(um => um.Id)
                     .FirstOrDefaultAsync();
                 return Ok(userMealDTO);
@@ -42,7 +45,7 @@ namespace health_index_app.Server.Controllers
 
             UserMeal userMeal = new UserMeal()
             {
-                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                UserId = userId,
                 MealId = userMealDTO.MealId,
                 Name = userMealDTO.Name,
             };
@@ -79,8 +82,11 @@ namespace health_index_app.Server.Controllers
         [Route("update")]
         public async Task<ActionResult<bool>> UpdateUserMeal([FromBody] UserMealDTO userMealDTO)
         {
+            var user = await _userManager.GetUserAsync(User);
+            var userId = user.Id;
+
             UserMeal userMeal = await _context.UserMeals
-                .Where(um => um.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier) && um.MealId == userMealDTO.MealId)
+                .Where(um => um.UserId == userId && um.MealId == userMealDTO.MealId)
                 .FirstOrDefaultAsync();
 
             if (userMeal == null) 
@@ -100,9 +106,11 @@ namespace health_index_app.Server.Controllers
         [Route("delete")]
         public async Task<ActionResult<bool>> DeleteUserMeal([FromBody] int mealId)
         {
-            //return GetDummyCurrentWeather();
+            var user = await _userManager.GetUserAsync(User);
+            var userId = user.Id;
+
             UserMeal userMeal = await _context.UserMeals
-                .Where(um => um.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier) && um.MealId == mealId)
+                .Where(um => um.UserId == userId && um.MealId == mealId)
                 .FirstOrDefaultAsync();
 
             if (userMeal == null)
@@ -121,8 +129,11 @@ namespace health_index_app.Server.Controllers
         [Route("get-all-meal-ids")]
         public async Task<ActionResult<List<int>>> GetAllUserMealIds()
         {
+            var user = await _userManager.GetUserAsync(User);
+            var userId = user.Id;
+
             List<int> mealIds = await _context.UserMeals
-                .Where(um => um.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                .Where(um => um.UserId == userId)
                 .Select(um => um.MealId)
                 .ToListAsync();
                 
