@@ -47,36 +47,34 @@ else
         <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th style="width:60%">Child Username</th>
+                <th>Child Username</th>
                 <th>Meal Name</th>
                 <th>Health Index</th>
             </tr>
         </thead>
         <tbody>
+            @if (childUsernames.Count == 0)
+            {
+                <tr>
+                    <td colspan="3">
+                        No Records to display
+                    </td>
+                </tr>
+            }
             @foreach(string name in childUsernames)
             {
-
-                @if (name == null)
-                {
-                    <tr>
-                        <td colspan="3">
-                            No Records to display
-                        </td>
-                    </tr>
-                }
-                else
                 {
                     foreach (var meal in childMeals)
                     {
                         if (meal.childUsername == name)
                         {
                             <tr @onclick="() => Show(meal.MealId)" class="bg-@isHidden[meal.MealId]">
-                                <td style="width:60%">@meal.childUsername</td>
+                                <td>@meal.childUsername</td>
                                 <td>@meal.Name</td>
                                 <td>@meal.HealthIndex</td>
                             </tr>
                             <tr hidden="@isHidden[meal.MealId]">
-                                <td>
+                                <td colspan="3">
                                     <table class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
