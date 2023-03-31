@@ -8,11 +8,17 @@ namespace health_index_app.Client.Pages
     {
         [Inject]
         protected IAdminAPIServices adminApiService { get; set; }
-        private string userId = String.Empty;
+        private string userIdUnlock = String.Empty;
+        private string userIdAddAdmin = String.Empty;
 
         public async void PostAdminUser()
         {
-            await adminApiService.Post(userId);
+            await adminApiService.PostAdminUser(userIdAddAdmin);
+        }
+
+        public async void PostUnlockAccount()
+        {
+            await adminApiService.PostUnlockAccount(userIdUnlock);
         }
     }
 }

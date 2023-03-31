@@ -14,9 +14,21 @@
 
 <div class="row">
     <div class="col-auto">
-        <input type="text" class="form-control" @bind-value="userId" />
+        <label> Add user to admin</label>
+        <input type="text" class="form-control" @bind-value="userIdAddAdmin"/>
+        
     </div>
     <div class="col-auto">
         <button type="submit" class="btn btn-light" @onclick="PostAdminUser">Submit</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-auto">
+        <input type="text" class="form-control" @bind-value="userIdUnlock"/>
+        <label> Unlock user account</label>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-light" @onclick="PostUnlockAccount">Submit</button>
     </div>
 </div>

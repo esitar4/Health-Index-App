@@ -41,5 +41,23 @@ namespace health_index_app.Server.Controllers
                 return
                     BadRequest(result.Errors);
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [Route("unlockAccount")]
+        public async Task<ActionResult<string>> UnlockUserAccount([FromBody] string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+                return NotFound($"User with the given id was not found");
+            user.LockoutEnd = null;
+            var updateSuccess = await _userManager.UpdateAsync(user);
+            if (updateSuccess.Succeeded)
+                return Ok($"Successfully unlocked user {user.Id}'s account");
+            else
+                return
+                    BadRequest(updateSuccess.Errors);
+        }
     }
 }

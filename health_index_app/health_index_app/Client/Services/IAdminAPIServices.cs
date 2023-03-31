@@ -2,6 +2,7 @@
 {
     public interface IAdminAPIServices
     {
-        Task<string> Post(string userId);
+        Task<string> PostAdminUser(string userId);
+        Task<string> PostUnlockAccount(string userId);
     }
 }
