@@ -19,7 +19,6 @@ namespace health_index_app.Client.Services
         private readonly HttpClient _client;
         private readonly IFatSecretAPIServices _fatSecretAPIServices;
 
-
         public FoodAPIServices(HttpClient client, IFatSecretAPIServices fatSecretAPIServices)
         {
             _client = client;

@@ -34,29 +34,60 @@
 
                     <tbody>
 
+                        @{
+                            int i = 0;
+                        }
+
                         @foreach (var food in json.Foods.Food)
                         {
-
                             var description_list = @food.Food_Description;
 
-                            var serving_size = description_list.Split('|')[0].Split(':')[1].Trim();
-                            Console.WriteLine(serving_size);
-                            var calorie_count = description_list.Split('|')[0].Split('-')[0][4..].Trim();
-                            Console.WriteLine(calorie_count);
+                            Console.WriteLine(description_list);
+
+                            if ((SearchTable[i, 0] == null && SearchTable[i, 1] == null))
+                            {
+                                serving_description = description_list.Split('|')[0].Split('-')[0][4..].Trim();
+                                calorie_count = description_list.Split('|')[0].Split(':')[1].Trim();
+
+                                SearchTable[i, 0] = food.Food_Id;
+                                SearchTable[i, 1] = serving_description;
+                                SearchTable[i, 2] = calorie_count;
+                            }
+
+                            if (food.Food_Id == foodId_toUpdate)
+                            {
+                                SearchTable[i, 1] = serving_description ?? "";
+
+                                SearchTable[i, 2] = calorie_count + " kcal" ?? "";
+                            }
 
                             <tr>
                                 <td>@food.Food_Name</td>
-                                <td>@calorie_count</td>
-                                <td>@serving_size</td>
-                                <td><button class="btn btn-primary btn-sm" type="button" @onclick="() => AddFoodToMeal(food)">Add</button></td>
+                                <td>@SearchTable[i,1]</td>
+                                <td>@SearchTable[i,2]</td>
+                                <div class="btn-group dropend">
+                                    <button type="button" class="btn btn-primary btn-sm" @onclick="() => AddFoodToMeal(food)">Add</button>
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" @onclick="async () => await GetFood(food.Food_Id)">
+                                        @* <span class="visually-hidden"></span>*@
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        @if (getFood != null)
+                                        {
+                                            @foreach (var serving in getFood.Food.Servings.Serving)
+                                            {
+                                                if (serving.Metric_Serving_Amount != null)
+                                                {
+                                                    <li><button class="dropdown-item" type="button" @onclick="() => UpdateFoodRow(food.Food_Id, serving)">@serving.Serving_Description or @serving.Metric_Serving_Amount.Split('.')[0]@serving.Metric_Serving_Unit</button></li>
+                                                } else
+                                                {
+                                                    
+                                                }
+                                            }
+                                        }
+                                    </ul>
+                                </div>
                             </tr>
-                            @if (getFood != null)
-                            {
-                                <tr>
-                                    <td>@getFood.Food.Food_Id</td>
-                                    <td>Serving@(getFood.Food.Servings.Serving.Count)</td>
-                                </tr>
-                            }
+                            i += 1;
                         }
                     </tbody>
                 </table>
@@ -117,6 +148,9 @@
                                 </tbody>
                             </table>
                         }
+                        <div class="col-auto">
+                            <input type="text" class="form-control" @bind-value="MealName" />
+                        </div>
                         <button class="btn btn-success" type="button" @onclick="() => CreateMeal()">Create Meal</button>
                     </tbody>
                 </table>
