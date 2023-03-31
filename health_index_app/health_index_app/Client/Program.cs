@@ -1,7 +1,5 @@
 using health_index_app.Client;
 using health_index_app.Client.Services;
-using health_index_app.Shared.FatSecret;
-using health_index_app.Shared.FatSecret.Authentication;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -16,9 +14,10 @@ builder.Services.AddHttpClient("health_index_app.ServerAPI", client => client.Ba
 // Supply HttpClient instances that include access tokens when making requests to the server project
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("health_index_app.ServerAPI"));
 
-builder.Services.AddScoped(st => new HttpClient());
+builder.Services.AddApiAuthorization();
+
 builder.Services.AddScoped<IFatSecretAPIServices, FatSecretAPIServices>();
 
-builder.Services.AddApiAuthorization();
+builder.Services.AddScoped<IAdminAPIServices, AdminAPIServices>();
 
 await builder.Build().RunAsync();

@@ -69,3 +69,10 @@ a:hover {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.center-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}

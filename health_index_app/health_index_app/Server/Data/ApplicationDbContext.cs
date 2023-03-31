@@ -14,11 +14,11 @@ namespace health_index_app.Server.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
-        public DbSet<health_index_app.Server.Models.ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<health_index_app.Shared.Models.Food> Foods { get; set; }
-        public DbSet<health_index_app.Shared.Models.Meal> Meals { get; set; }
-        public DbSet<health_index_app.Shared.Models.UserMeal> UserMeals { get; set; }
-        public DbSet<health_index_app.Shared.Models.MealFood> MealFoods { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Food> Foods { get; set; }
+        public DbSet<Meal> Meals { get; set; }
+        public DbSet<UserMeal> UserMeals { get; set; }
+        public DbSet<MealFood> MealFoods { get; set; }
 
         //protected override void OnModelCreating(ModelBuilder builder)
         //{

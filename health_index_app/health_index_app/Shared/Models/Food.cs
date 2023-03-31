@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace health_index_app.Shared.Models
 {
     public class Food
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         //use food_id from fatsecret api
         public int Id { get; set; }
         [Required]
@@ -33,58 +29,59 @@ namespace health_index_app.Shared.Models
         [Required]
         public string MeasurementDescription { get; set; } = "";
 
-        
+
         public double? Calories { get; set; }
 
-        
+
         public double? CarboHydrate { get; set; }
 
-        
+
         public double? Protein { get; set; }
 
-        
+
         public double? Fat { get; set; }
 
-        
+
         public double? SaturatedFat { get; set; }
 
-        
+
         public double? PolyunsaturatedFat { get; set; }
 
-        
+
         public double? MonounsaturatedFat { get; set; }
 
-        
+
         public double? Cholesterol { get; set; }
 
-        
+
         public double? Sodium { get; set; }
 
-        
+
         public double? Potassium { get; set; }
 
-        
+
         public double? Fiber { get; set; }
 
-        
+
         public double? Sugar { get; set; }
 
-        
+
         public double? AddedSugar { get; set; }
 
-        
+
         public double? VitaminD { get; set; }
 
-        
+
         public double? VitaminA { get; set; }
 
-        
+
         public double? VitaminC { get; set; }
 
-        
+
         public double? Calcium { get; set; }
 
-        
+
         public double? Iron { get; set; }
+
     }
 }

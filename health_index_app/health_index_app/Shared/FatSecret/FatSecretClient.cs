@@ -11,8 +11,10 @@ namespace health_index_app.Shared.FatSecret
         private readonly FatSecretAuthenticationManager _authManager;
         private readonly RestClientOptions _options;
         private readonly RestClient _client;
-        private readonly string _url = "https://platform.fatsecret.com/rest/server.api";
         private readonly HttpClient _httpClient;
+
+        private readonly string _url = "https://platform.fatsecret.com/rest/server.api";
+        
 
         public FatSecretClient(FatSecretCredentials credentials, HttpClient httpClient)
         {
@@ -33,7 +35,7 @@ namespace health_index_app.Shared.FatSecret
             return await FatSecretRequest<FoodsSearchResponse>(request);
         }
 
-        private async Task<T> FatSecretRequest<T>(IFatSecretRequest fatSecretRequest) where T : FatSecretResponse
+        private async Task<T> FatSecretRequest<T>(IFatSecretRequest fatSecretRequest) where T : FatSecretResponse, new()
         {
             var request = new RestRequest(_url, Method.Get);
             var authToken = await _authManager.GetAuthHeaderAsync(_httpClient);
@@ -47,7 +49,36 @@ namespace health_index_app.Shared.FatSecret
             request.AddParameter("format", "json");
 
             var response = await _client.ExecuteAsync<T>(request);
-            var fatSecretResponse = response.Data;
+
+            T fatSecretResponse;
+            // FatSecret Servings List Response
+            if (response.Data != null)
+            {
+                fatSecretResponse = response.Data;
+            }
+            // Parse Servings non list response to list
+            else
+            {
+                var json = response.Content;
+                try
+                {
+                    fatSecretResponse = JsonConvert.DeserializeObject<T>(json);
+                }
+                catch
+                {
+                    if (typeof(T) == typeof(GetFoodResponse))
+                    {
+                        json = json.Replace("{\"serving\": ", "{\"serving\": [");
+                        json = json.Insert(json.IndexOf("}") + 1, "]");
+                        fatSecretResponse = JsonConvert.DeserializeObject<T>(json);
+                    }
+                    else
+                    {
+                        fatSecretResponse = new() { Error = new FatSecretError { Code = -1, Message = "Json could not be converted to existing response objects!"} };
+                    }
+                }
+                
+            }
 
             var fatSecretErrorResponse = JsonConvert.DeserializeObject<FatSecretErrorResponse>(response.Content);
             if (fatSecretErrorResponse.Error != null)

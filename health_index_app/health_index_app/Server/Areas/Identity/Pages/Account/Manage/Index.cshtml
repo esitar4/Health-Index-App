@@ -17,12 +17,74 @@
                 <input asp-for="Username" class="form-control" disabled />
                 <label asp-for="Username" class="form-label"></label>
             </div>
+
+            <div class="form-floating">
+                <input asp-for="PhoneNumber" class="form-control" autocomplete="PhoneNumber" disabled/>
+                <label asp-for="PhoneNumber" class="form-label"></label>
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            
             <div class="form-floating">
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
+            @*
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+            *@
+
+            <div class="form-floating">
+                <input asp-for="dob" class="form-control" autocomplete="dob" disabled/>
+                <label asp-for="dob" class="form-label"></label>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.DateOfBirth" type="date" class="form-control"/>
+                <label asp-for="Input.DateOfBirth"></label>
+                <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
+                <input asp-for="Weight" class="form-control" autocomplete="weight" disabled/>
+                <label asp-for="Weight" class="form-label"></label>
+            </div>
+            
+            <div class="form-floating">
+                <input asp-for="Input.Weight" class="form-control" />
+                <label asp-for="Input.Weight" class="form-label"></label>
+            </div>
+            @*
+            <button id="change-weight-button" type="submit" asp-page-handler="ChangeWeight" class="w-100 btn btn-lg btn-primary">Change weight</button>
+            *@
+             <div class="form-floating">
+                <input asp-for="Height" class="form-control" autocomplete="height" disabled/>
+                <label asp-for="Height" class="form-label"></label>
+            </div>
+            
+            <div class="form-floating">
+                <input asp-for="Input.Height" class="form-control" />
+                <label asp-for="Input.Height" class="form-label"></label>
+            </div>
+            @*
+            <button id="change-height-button" type="submit" asp-page-handler="ChangeHeight" class="w-100 btn btn-lg btn-primary">Change height</button>
+            *@
+            <div class="form-floating">
+                <input asp-for="Gender" class="form-control" autocomplete="gender" disabled/>
+                <label asp-for="Gender" class="form-label"></label>
+            </div>
+            
+            <div class="form-floating">
+                 <select id="Gender" class="form-control" asp-for="Input.Gender">  
+                    <option value="" selected>--Select Gender (Optional)--</option>
+                    <option value='M'>Male</option>
+                    <option value='F'>Female</option>
+                    <option value='O'>Other</option>
+                </select> 
+                <span asp-validation-for="Input.Gender" class="text-danger"></span>
+            </div>
+            @*
+            <button id="change-gender-button" type="submit" asp-page-handler="ChangeGender" class="w-100 btn btn-lg btn-primary">Change gender</button>
+            *@
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save Changes</button>
         </form>
     </div>
 </div>
