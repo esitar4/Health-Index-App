@@ -1,6 +1,5 @@
 ﻿using health_index_app.Client.Services;
 using health_index_app.Shared.DTObjects;
-using health_index_app.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 
@@ -31,6 +30,9 @@ namespace health_index_app.Client.Pages
 
         string newChildUserName = string.Empty;
 
+        [Parameter]
+        public bool? AddChildStatus { get; set; } = true;
+
         protected override async Task OnInitializedAsync()
         {
             var UserAuth = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User.Identity;
@@ -55,16 +57,15 @@ namespace health_index_app.Client.Pages
 
         private async Task AddNewChild()
         {
-            Console.WriteLine(newChildUserName);
-            await parentAPIServices.AddChild(newChildUserName);
-            navigationManager.NavigateTo("refresh/parent");
+            AddChildStatus = await parentAPIServices.AddChild(newChildUserName);
+            navigationManager.NavigateTo($"refresh/parent/{AddChildStatus}");
         }
 
         private async Task DeleteChild(string username)
         {
-            Console.WriteLine(username);
             await parentAPIServices.DeleteChild(username);
-            navigationManager.NavigateTo("refresh/parent");
+            navigationManager.NavigateTo($"refresh/parent/");
         }
+
     }
 }

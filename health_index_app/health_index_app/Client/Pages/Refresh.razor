@@ -1,5 +1,6 @@
 ﻿@page "/refresh"
 @page "/refresh/{text}"
+@page "/refresh/{text}/{addchildstatus:bool}"
 @inject NavigationManager NavigationManager
 
 <h4>Page is refreshing please wait...</h4>
@@ -7,10 +8,12 @@
 @code {
     [Parameter]
     public string Text { get; set; }
+    [Parameter]
+    public bool? AddChildStatus { get; set; } = true;
 
     protected override void OnInitialized()
     {
-        NavigationManager.NavigateTo(Text);
+        NavigationManager.NavigateTo($"{Text}/{AddChildStatus}");
     }
 
 }
