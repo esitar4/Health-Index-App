@@ -13,6 +13,7 @@ namespace health_index_app.Client.Pages
         private string userIdDelete = String.Empty;
         private string userIdChild = String.Empty;
         private string userIdParent = String.Empty;
+        private string userIdRemoveParent = String.Empty;
 
         public async void PostAdminUser()
         {
@@ -32,6 +33,11 @@ namespace health_index_app.Client.Pages
         public async void PostAddParentChildRelationship()
         {
             await adminApiService.PostAddParentChildRelationship(userIdChild+userIdParent);
+        }
+
+        public async void PostRemoveParentChildRelationship()
+        {
+            await adminApiService.PostRemoveParentChildRelationship(userIdRemoveParent);
         }
     }
 }

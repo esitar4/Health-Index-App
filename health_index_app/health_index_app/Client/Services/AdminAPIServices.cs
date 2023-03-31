@@ -35,5 +35,11 @@ namespace health_index_app.Client.Services
             var response = await _client.PostAsJsonAsync("https://localhost:7005/api/admin/addParentChildRelationship", combinedId);
             return response.ToString();
         }
+
+        public async Task<string> PostRemoveParentChildRelationship(string userId)
+        {
+            var response = await _client.PostAsJsonAsync("https://localhost:7005/api/admin/removeParentChildRelationship", userId);
+            return response.ToString();
+        }
     }
 }

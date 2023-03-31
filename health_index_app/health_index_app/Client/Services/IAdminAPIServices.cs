@@ -6,5 +6,6 @@
         Task<string> PostUnlockAccount(string userId);
         Task<string> PostDeleteAccount(string userId);
         Task<string> PostAddParentChildRelationship(string combinedId);
+        Task<string> PostRemoveParentChildRelationship(string combinedId);
     }
 }

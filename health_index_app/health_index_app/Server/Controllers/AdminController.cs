@@ -106,5 +106,25 @@ namespace health_index_app.Server.Controllers
                 return
                     BadRequest(updateSuccess.Errors);
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [Route("removeParentChildRelationship")]
+        public async Task<ActionResult<string>> RemoveParentChildRelationship([FromBody] string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+                return NotFound($"User with the given id was not found");
+
+            user.ParentId = null;
+            var update = await _userManager.UpdateAsync(user);
+
+            if (update.Succeeded)
+                return Ok($"Successfully removed user {userId}'s parent account");
+            else
+                return
+                    BadRequest(update.Errors);
+        }
     }
 }
