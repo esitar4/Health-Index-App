@@ -10,6 +10,7 @@ namespace health_index_app.Client.Pages
         protected IAdminAPIServices adminApiService { get; set; }
         private string userIdUnlock = String.Empty;
         private string userIdAddAdmin = String.Empty;
+        private string userIdDelete = String.Empty;
 
         public async void PostAdminUser()
         {
@@ -19,6 +20,11 @@ namespace health_index_app.Client.Pages
         public async void PostUnlockAccount()
         {
             await adminApiService.PostUnlockAccount(userIdUnlock);
+        }
+
+        public async void PostDeleteAccount()
+        {
+            await adminApiService.PostDeleteAccount(userIdDelete);
         }
     }
 }

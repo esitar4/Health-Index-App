@@ -59,5 +59,24 @@ namespace health_index_app.Server.Controllers
                 return
                     BadRequest(updateSuccess.Errors);
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [Route("deleteAccount")]
+        public async Task<ActionResult<string>> DeleteUserAccount([FromBody] string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+                return NotFound($"User with the given id was not found");
+
+            var result = await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+                return Ok($"Successfully deleted user {user.Id}'s account");
+            else
+                return
+                    BadRequest(result.Errors);
+        }
     }
 }
