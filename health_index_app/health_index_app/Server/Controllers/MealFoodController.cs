@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using health_index_app.Shared.Models;
 using health_index_app.Shared.DTObjects;
+using Microsoft.AspNetCore.Authorization;
 
 namespace health_index_app.Server.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("mealfood")]
     public class MealFoodController : Controller
     {

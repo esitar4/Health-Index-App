@@ -10,6 +10,7 @@ using System.Security.Claims;
 namespace health_index_app.Server.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("usermeal")]
     public class UserMealController : Controller
     {
