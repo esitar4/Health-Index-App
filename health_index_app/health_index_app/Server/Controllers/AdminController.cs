@@ -84,8 +84,9 @@ namespace health_index_app.Server.Controllers
         [Route("addParentChildRelationship")]
         public async Task<ActionResult<string>> AddParentChildRelationship([FromBody] string combinedId)
         {
-            string childId = combinedId.Substring(0, combinedId.Length / 2);
-            string parentId = combinedId.Substring((combinedId.Length / 2), (combinedId.Length / 2));
+            string[] splitString = combinedId.Split(".");
+            string childId = splitString[0];
+            string parentId = splitString[1];
             if (childId == parentId)
                 return BadRequest("Parent and child id cannot be the same");
 

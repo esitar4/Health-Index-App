@@ -32,7 +32,7 @@ namespace health_index_app.Client.Pages
 
         public async void PostAddParentChildRelationship()
         {
-            await adminApiService.PostAddParentChildRelationship(userIdChild+userIdParent);
+            await adminApiService.PostAddParentChildRelationship($"{userIdChild}.{userIdParent}");
         }
 
         public async void PostRemoveParentChildRelationship()
