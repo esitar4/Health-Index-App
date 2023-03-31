@@ -20,12 +20,16 @@ namespace health_index_app.Client.Pages
         protected IUserMealsAPIServices UserMealsAPIServices { get; set; }
         protected ParentAPIServices parentAPIServices { get; set; } = new( new HttpClient());
 
+        [Inject]
+        protected NavigationManager navigationManager { get; set; }
 
         List<string> childUsernames = null!;
         List<ChildMealDTO> childMeals = null!;
         Dictionary<int, List<ChildMealFoodDTO>> childMealFoods = new();
 
         Dictionary<int, bool> isHidden = new();
+
+        string newChildUserName = string.Empty;
 
         protected override async Task OnInitializedAsync()
         {
@@ -49,7 +53,18 @@ namespace health_index_app.Client.Pages
             isHidden[mealId] = !isHidden[mealId];
         }
 
+        private async Task AddNewChild()
+        {
+            Console.WriteLine(newChildUserName);
+            await parentAPIServices.AddChild(newChildUserName);
+            navigationManager.NavigateTo("refresh/parent");
+        }
 
-
+        private async Task DeleteChild(string username)
+        {
+            Console.WriteLine(username);
+            await parentAPIServices.DeleteChild(username);
+            navigationManager.NavigateTo("refresh/parent");
+        }
     }
 }

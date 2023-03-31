@@ -28,16 +28,25 @@
     }
 
     .bg-True {
+        color: black;
         background-color: none;
     }
 
     .bg-False {
-        background-color: peachpuff;
+        color: white;
+        background-color: #078976;
     }
 
     .table {
         border: 1px solid;
         border-color: black;
+    }
+
+    caption {
+        text-align: center;
+        border: 1px solid;
+        color:white;
+        background-color: #073b4c;
     }
 
 </style>
@@ -48,12 +57,18 @@
 }
 else
 {
-    <table class="table table-bordered" style="width:200px">
+    <table class="table table-bordered" style="width:20%">
         <caption style="caption-side:top">Child Account Overview</caption>
         <thead>
             <tr>
-                <th>Username</th>
+                <th colspan="2">
+                    <input type="text" maxlength="25" style="width:75%" placeholder="Enter a username to add as child" @bind-value="newChildUserName" />
+                    <button class="btn btn-success btn-sm" style="width:20%" @onclick="AddNewChild">Add</button>
+                </th>
             </tr>
+@*            <tr>
+                <th colspan="2" style="text-align:center">Username</th>
+            </tr>*@
         </thead>
         <tbody>
             @if (childUsernames.Count == 0)
@@ -69,14 +84,17 @@ else
                 {
                     <tr>
                         <td>@name</td>
+                        <td style="text-align:center"><button class="btn btn-danger btn-sm" @onclick="() => DeleteChild(name)">Delete</button></td>
                     </tr>
                 }
-                <tr align="center">Total Children: @childUsernames.Count</tr>
+                <tr>
+                    <td colspan="2" style="text-align:center">Total Children: @childUsernames.Count</td>
+                </tr>
             }
         </tbody>
     </table>
 
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover" style="width:90%">
         <caption style="caption-side:top">Child Meal Overview</caption>
         <thead>
             <tr>
@@ -132,7 +150,6 @@ else
                         }
                     }
                 }
-
             }
         </tbody>
     </table>

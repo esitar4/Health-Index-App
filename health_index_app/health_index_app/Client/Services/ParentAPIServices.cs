@@ -34,5 +34,18 @@ namespace health_index_app.Client.Services
             var response = await _client.GetFromJsonAsync<List<ChildMealFoodDTO>>(url);
             return response;
         }
+        public async Task<bool> DeleteChild(string username)
+        {
+            var url = $"https://localhost:7005/api/applicationuser/remove-child-from-user";
+            var response = await _client.PostAsJsonAsync(url, username);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> AddChild(string username)
+        {
+            var url = $"https://localhost:7005/api/applicationuser/add-child-to-user";
+            var response = await _client.PostAsJsonAsync(url, username);
+            return response.IsSuccessStatusCode;
+        }
     }
 }

@@ -58,5 +58,38 @@ namespace health_index_app.Server.Controllers
                                         }).ToListAsync();
             return Ok(childMealFoods);
         }
+
+        [HttpPost]
+        [Route("add-child-to-user")]
+        public async Task<ActionResult<bool>> AddChildToUser([FromBody] string username)
+        {
+            var child = _context.Users.Where(u => u.NormalizedUserName == username.ToUpper()).FirstOrDefault();
+
+            if (child == null)
+                return NotFound(false);
+
+            var user = await _userManager.GetUserAsync(User);
+            child.ParentId = user.Id;
+            _context.Update(child);
+            await _context.SaveChangesAsync();
+
+            return Ok(true);
+        }
+
+        [HttpPost]
+        [Route("remove-child-from-user")]
+        public async Task<ActionResult<bool>> RemoveChildFromUser([FromBody] string username)
+        {
+            var child =  _context.Users.Where(u => u.UserName == username).FirstOrDefault();
+
+            if (child == null) 
+                return NotFound(false);
+
+            child.ParentId = null;
+            _context.Update(child);
+            await _context.SaveChangesAsync();
+
+            return Ok(true);
+        }
     }
 }
