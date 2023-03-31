@@ -36,22 +36,22 @@ namespace health_index_app.Server.Controllers
                 .Select(u => u.UserName)
                 .ToListAsync();
 
-
             return Ok(childUsernames);
         }
 
         [HttpGet]
         [Route("get-child-meals")]
-        public async Task<ActionResult<List<MealDTO>>> getChildMeals()
+        public async Task<ActionResult<List<ChildMealDTO>>> getChildMeals()
         {
             var user = await _userManager.GetUserAsync(User);
             var userId = user.Id;
-            List<MealDTO> childMealFoods = await (from u in _context.Users
+            List<ChildMealDTO> childMealFoods = await (from u in _context.Users
                                         join um in _context.UserMeals on u.Id equals um.UserId
                                         join m in _context.Meals on um.MealId equals m.Id
                                         where u.ParentId == userId
-                                        select new MealDTO
+                                        select new ChildMealDTO
                                         {
+                                            childUsername = u.UserName,
                                             MealId = m.Id,
                                             Name = um.Name,
                                             HealthIndex = m.HealthIndex

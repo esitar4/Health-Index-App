@@ -21,17 +21,17 @@ namespace health_index_app.Client.Services
             return response;
         }
 
-        public async Task<List<MealDTO>> GetChildMeals()
+        public async Task<List<ChildMealDTO>> GetChildMeals()
         {
             var url = "https://localhost:7005/api/applicationuser/get-child-meals";
-            var response = await _client.GetFromJsonAsync<List<MealDTO>>(url);
+            var response = await _client.GetFromJsonAsync<List<ChildMealDTO>>(url);
             return response;
         }
 
-        public async Task<List<Food>> GetChildFoods(int mealId)
+        public async Task<List<ChildMealFoodDTO>> GetChildFoods(int mealId)
         {
-            var url = $"https://localhost:7005/api/applicationuser/get-food-list?mealId={mealId}";
-            var response = await _client.GetFromJsonAsync<List<Food>>(url);
+            var url = $"https://localhost:7005/mealfood/get-food-list?mealId={mealId}";
+            var response = await _client.GetFromJsonAsync<List<ChildMealFoodDTO>>(url);
             return response;
         }
     }

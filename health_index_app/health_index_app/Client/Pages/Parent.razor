@@ -18,14 +18,13 @@
         {
             foreach(var meal in childMeals)
             {
-                <p>@meal.MealId, @meal.Name, @meal.HealthIndex</p>
-@*                @if(childMealFoods != null)
-                {
-                    foreach(var food in childMealFoods[meal.MealId])
+                if (meal.childUsername == name){
+                    <p>@meal.MealId, @meal.Name, @meal.HealthIndex</p>
+                    foreach (var food in childMealFoods[meal.MealId])
                     {
-                        <p>@food.FoodName, @food.Calories</p>
+                        <p>@food.Food.FoodName, @food.Food.Calories, @food.Amount</p>
                     }
-                }*@
+                }
             }
         }
     }

@@ -22,8 +22,8 @@ namespace health_index_app.Client.Pages
 
 
         List<string> childUsernames = null!;
-        List<MealDTO> childMeals = null!;
-        Dictionary<int, List<Food>> childMealFoods = null!;
+        List<ChildMealDTO> childMeals = null!;
+        Dictionary<int, List<ChildMealFoodDTO>> childMealFoods = new();
 
 
         protected override async Task OnInitializedAsync()
@@ -33,10 +33,11 @@ namespace health_index_app.Client.Pages
             {
                 childUsernames = await parentAPIServices.GetChildUsernames();
                 childMeals = await parentAPIServices.GetChildMeals();
-                //foreach(var meal in childMeals)
-                //{
-                //    childMealFoods.Add(meal.MealId, await parentAPIServices.GetChildFoods(meal.MealId));
-                //}
+                foreach (var meal in childMeals)
+                {
+                    List<ChildMealFoodDTO> foodList = await parentAPIServices.GetChildFoods(meal.MealId);
+                    childMealFoods.Add(meal.MealId, foodList);
+                }
             }
         }
 

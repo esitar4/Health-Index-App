@@ -3,6 +3,7 @@ using Food = health_index_app.Shared.Models.Food;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using health_index_app.Shared.Models;
+using health_index_app.Shared.DTObjects;
 
 namespace health_index_app.Server.Controllers
 {
@@ -96,10 +97,15 @@ namespace health_index_app.Server.Controllers
         [Route("get-food-list")]
         public async Task<ActionResult<List<Food>>> GetFoodList(int mealId)
         {
-            List<Food> foodList = await (from mf in _context.MealFoods
+            List<ChildMealFoodDTO> foodList = await (from mf in _context.MealFoods
                                          join f in _context.Foods on mf.FoodId equals f.Id
                                          where mf.MealId == mealId
-                                         select f)
+                                         select new ChildMealFoodDTO
+                                         {
+                                             MealId = mealId,
+                                             Food = f,
+                                             Amount = mf.Amount
+                                         })
                                          .ToListAsync();
             return Ok(foodList);
         }
