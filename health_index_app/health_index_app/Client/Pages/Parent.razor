@@ -1,5 +1,5 @@
 ﻿@page "/parent"
-@page "/refresh/parent/{addchildstatus:bool?}/{deletechildstatus:bool?}"
+@page "/parent/{addchildstatus:bool?}/{deletechildstatus:bool?}"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using health_index_app.Shared
@@ -62,7 +62,6 @@ else
     {
         <p>Unable to add user!</p>
     }
-    <p>Add: @AddChildStatus, Delete:  @DeleteChildStatus</p>
     
     <table class="table table-bordered" style="width:20%">
         <caption style="caption-side:top">Child Account Overview</caption>
@@ -71,7 +70,6 @@ else
                 <th colspan="2">
                     <input type="text" maxlength="25" style="width:75%" placeholder="Enter a username to add as child" @bind-value="newChildUserName" />
                     <button class="btn btn-success btn-sm" style="width:20%" @onclick="AddNewChild">Add</button>
-                    <button class="btn btn-danger btn-sm" @onclick='() => DeleteChild("ki")'>Delete</button>
                 </th>
             </tr>
 @*            <tr>

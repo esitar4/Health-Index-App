@@ -11,8 +11,8 @@ namespace health_index_app.Client.Pages
         public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Inject]
         protected IUserMealsAPIServices UserMealsAPIServices { get; set; }
-        protected ParentAPIServices parentAPIServices { get; set; } = new( new HttpClient());
-
+        [Inject]
+        protected IParentAPIServices parentAPIServices { get; set; }
         [Inject]
         protected NavigationManager navigationManager { get; set; }
 

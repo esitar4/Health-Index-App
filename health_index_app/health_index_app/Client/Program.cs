@@ -22,5 +22,6 @@ builder.Services.AddScoped<IFoodAPIServices, FoodAPIServices>();
 builder.Services.AddScoped<IMealsAPIServices, MealAPIServices>();
 builder.Services.AddScoped<IUserMealsAPIServices, UserMealsAPIServices>();
 builder.Services.AddScoped<IAdminAPIServices, AdminAPIServices>();
+builder.Services.AddScoped<IParentAPIServices, ParentAPIServices>();
 
 await builder.Build().RunAsync();
