@@ -5,6 +5,7 @@
 
 @attribute [Authorize(Roles = "Admin")]
 
+<link rel="stylesheet" href="~/css/app.css" />
 
 <h3>Admin</h3>
 
@@ -19,7 +20,7 @@
         
     </div>
     <div class="col-auto">
-        <button type="submit" class="btn btn-light" @onclick="PostAdminUser">Submit</button>
+        <button type="submit" class="btn btn-primary" @onclick="PostAdminUser">Submit</button>
     </div>
 </div>
 
@@ -29,7 +30,7 @@
         <input type="text" class="form-control" @bind-value="userIdUnlock"/>
     </div>
     <div class="col-auto">
-        <button type="submit" class="btn btn-light" @onclick="PostUnlockAccount">Submit</button>
+        <button type="submit" class="btn btn-primary" @onclick="PostUnlockAccount">Submit</button>
     </div>
 </div>
 
@@ -39,7 +40,7 @@
         <input type="text" class="form-control" @bind-value="userIdDelete"/>
     </div>
     <div class="col-auto">
-        <button type="submit" class="btn btn-light" @onclick="PostDeleteAccount">Delete Account</button>
+        <button type="submit" class="btn btn-primary" @onclick="PostDeleteAccount">Delete Account</button>
     </div>
 </div>
 
@@ -53,6 +54,6 @@
          <input type="text" class="form-control" @bind-value="userIdParent"/>
     </div>
     <div class="col-auto">
-        <button type="submit" class="btn btn-light" @onclick="PostAddParentChildRelationship">Submit</button>
+        <button type="submit" class="btn btn-primary" @onclick="PostAddParentChildRelationship">Submit</button>
     </div>
 </div>
