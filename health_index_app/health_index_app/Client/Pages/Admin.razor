@@ -1,0 +1,22 @@
+﻿@page "/admin"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using health_index_app.Shared
+
+@attribute [Authorize(Roles = "Admin")]
+
+
+<h3>Admin</h3>
+
+@code {
+
+}
+
+<div class="row">
+    <div class="col-auto">
+        <input type="text" class="form-control" @bind-value="userId" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-light" @onclick="PostAdminUser">Submit</button>
+    </div>
+</div>
