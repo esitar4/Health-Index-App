@@ -5,30 +5,108 @@
 
 @attribute [Authorize] 
 @*attribute [Authrize(Roles = "Parent")]*@
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 <h3>Parent</h3>
-<button @onclick="GetChildUsernames">Click</button>
 
-@if(childUsernames != null)
+<style>
+    .sort-th {
+        cursor: pointer;
+    }
+
+    .fa {
+        float: right;
+    }
+
+    .btn-custom {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color .3s;
+        border: 2px solid #000;
+        margin: 0px 5px 0px 5px;
+    }
+
+    .bg-True {
+        background-color: none;
+    }
+
+    .bg-False {
+        background-color: peachpuff;
+    }
+
+</style>
+
+@if (childUsernames == null)
 {
-    foreach(string name in childUsernames)
-    {
-        <p>@name</p><br />
-        @if(childMeals != null)
-        {
-            foreach(var meal in childMeals)
+    <p><em>Loading...</em></p>
+}
+else
+{
+        <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th style="width:60%">Child Username</th>
+                <th>Meal Name</th>
+                <th>Health Index</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(string name in childUsernames)
             {
-                if (meal.childUsername == name){
-                    <p>@meal.MealId, @meal.Name, @meal.HealthIndex</p>
-                    foreach (var food in childMealFoods[meal.MealId])
+
+                @if (name == null)
+                {
+                    <tr>
+                        <td colspan="3">
+                            No Records to display
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var meal in childMeals)
                     {
-                        <p>@food.Food.FoodName, @food.Food.Calories, @food.Amount</p>
+                        if (meal.childUsername == name)
+                        {
+                            <tr @onclick="() => Show(meal.MealId)" class="bg-@isHidden[meal.MealId]">
+                                <td style="width:60%">@meal.childUsername</td>
+                                <td>@meal.Name</td>
+                                <td>@meal.HealthIndex</td>
+                            </tr>
+                            <tr hidden="@isHidden[meal.MealId]">
+                                <td>
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Food Name</th>
+                                                <th>Food Calories</th>
+                                                <th>Food Serving</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var food in childMealFoods[meal.MealId])
+                                            {
+                                            <tr>
+                                                <td>@food.Food.FoodName</td>
+                                                <td>@food.Food.Calories</td>
+                                                <td>@food.Amount</td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        }
                     }
                 }
+
             }
-        }
-    }
+        </tbody>
+    </table>
 }
+
 
 
 @code {
