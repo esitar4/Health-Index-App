@@ -21,8 +21,8 @@ a:hover {
 
 .btn-primary {
     color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    background-color: #073B4C;
+    border-color: #073B4C;
 }
 
 .content {
@@ -75,4 +75,9 @@ a:hover {
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+
+.form-control:focus {
+    border-color: #073B4C;
+    box-shadow: 0 0 0 0.2rem #073B4C;
 }
