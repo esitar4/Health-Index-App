@@ -19,8 +19,13 @@ namespace health_index_app.Client.Pages
 
         List<string> childUsernames = null!;
         List<ChildMealFoodListDTO> childMealFoodList = null!;
+        List<ChildMealFoodListDTO> mutatedChildMealFoodList = null!;
 
         Dictionary<int, bool> isHidden = new();
+
+        private int MaxPage { get; set; }
+        private int pageSize = 1;
+        private int pageNumber = 1;
 
         protected override async Task OnInitializedAsync()
         {
@@ -48,6 +53,8 @@ namespace health_index_app.Client.Pages
                              .OrderBy(o => o.ChildName)
                              .ToList();
 
+                    mutatedChildMealFoodList = new(childMealFoodList);
+
                     isHidden.Add(meal.MealId, true);
                 }
             }
@@ -59,13 +66,38 @@ namespace health_index_app.Client.Pages
         string searchUsername = string.Empty;
         string searchMealName = string.Empty;
         int searchHealthIndex = 0;
-        List<ChildMealFoodListDTO> FilteredChildMealFoodList => childMealFoodList
+
+        List<ChildMealFoodListDTO> FilteredChildMealFoodList => mutatedChildMealFoodList
             .Where(
                 u => (u.ChildName.ToLower().Contains(searchUsername.ToLower())
                 && u.MealName.ToLower().Contains(searchMealName.ToLower()))
                 && u.HealthIndex >= searchHealthIndex
             )
+            .Page(pageNumber, pageSize)
             .ToList();
+
+
+        private void changePage(int num)
+        {
+            MaxPage = (mutatedChildMealFoodList
+            .Where(
+                u => (u.ChildName.ToLower().Contains(searchUsername.ToLower())
+                && u.MealName.ToLower().Contains(searchMealName.ToLower()))
+                && u.HealthIndex >= searchHealthIndex)
+            .Count()) / pageSize;
+
+            if (pageNumber + num < 1) {
+                pageNumber = 1;
+            } 
+            else if (pageNumber + num >= MaxPage)
+            {
+                pageNumber = Math.Max(MaxPage, 1);
+            } 
+            else
+            {
+                pageNumber += num;
+            }
+        }
 
 
         private void Show(int mealId)
@@ -109,7 +141,7 @@ namespace health_index_app.Client.Pages
         {
             if (columnName != activeSortColumn)
             {
-                childMealFoodList = childMealFoodList.OrderBy(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
+                mutatedChildMealFoodList = childMealFoodList.OrderBy(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
                 isSortedAscending = true;
                 activeSortColumn = columnName;
             }
@@ -117,11 +149,11 @@ namespace health_index_app.Client.Pages
             {
                 if (isSortedAscending)
                 {
-                    childMealFoodList = childMealFoodList.OrderByDescending(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
+                    mutatedChildMealFoodList = childMealFoodList.OrderByDescending(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
                 }
                 else
                 {
-                    childMealFoodList = childMealFoodList.OrderBy(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
+                    mutatedChildMealFoodList = childMealFoodList.OrderBy(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
                 }
                 isSortedAscending = !isSortedAscending;
             }
@@ -142,5 +174,21 @@ namespace health_index_app.Client.Pages
                 return "fa-sort-down";
             }
         }
+    }
+
+    public static class PagingExtensions
+    {
+        //used by LINQ to SQL
+        public static IQueryable<TSource> Page<TSource>(this IQueryable<TSource> source, int page, int pageSize)
+        {
+            return source.Skip((page - 1) * pageSize).Take(pageSize);
+        }
+
+        //used by LINQ
+        public static IEnumerable<TSource> Page<TSource>(this IEnumerable<TSource> source, int page, int pageSize)
+        {
+            return source.Skip((page - 1) * pageSize).Take(pageSize);
+        }
+
     }
 }

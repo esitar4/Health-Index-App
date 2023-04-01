@@ -70,6 +70,10 @@
         margin: 0px 5px 0px 5px;
     }
 
+    .pagination-button {
+        width: 35px;
+    }
+
 </style>
 
 @if (childUsernames == null)
@@ -130,10 +134,10 @@ else
                     <input type="text" maxlength="25" style="width:100%" placeholder="Enter a username..." @bind-value="searchUsername" @bind-value:event="oninput" />
                 </th>
                 <th>
-                    <input type="text" maxlength="25" style="width:100%" placeholder="Enter a mealname..." @bind-value="searchMealName" @bind-value:event="oninput" />
+                    <input type="text" maxlength="25" style="width:100%" placeholder="Enter a meal name..." @bind-value="searchMealName" @bind-value:event="oninput" />
                 </th>
                 <th>
-                    <input type="range" style="width:100%" min="0" max="10" step="1" @bind-value="searchHealthIndex" @bind-value:event="oninput" list="steplist" />
+                    <label style="width:100%">0 <input type="range" min="0" max="10" step="1" style="width:85%" @bind-value="searchHealthIndex" @bind-value:event="oninput" list="steplist" /> 10</label>
                     <datalist id="steplist">
                         <option>0</option>
                         <option>1</option>
@@ -206,6 +210,27 @@ else
             }
         </tbody>
     </table>
+
+    <div class="pagination">
+        <button class="btn btn-custom" @onclick="() => changePage(-1)">◀</button>
+        @if ((pageNumber - 1) >= 1) {
+            <button type="button" class="btn btn-outline-primary  pagination-button" @onclick="() => changePage(-1)">@(pageNumber - 1)</button>
+        } else
+        {
+            <button type="button" class="btn btn-outline-primary pagination-button" disabled></button>
+        }
+        <button type="button" class="btn btn-primary pagination-button" disabled>@pageNumber</button>
+        @if ((pageNumber + 1) <= MaxPage)
+        {
+            <button type="button" class="btn btn-outline-primary pagination-button" @onclick="() => changePage(1)">@(pageNumber + 1)</button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-outline-primary pagination-button" disabled></button>
+        }
+        
+        <button class="btn btn-custom" @onclick="() => changePage(1)">▶</button>
+   </div>
 }
 
 
