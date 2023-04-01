@@ -1,0 +1,28 @@
+﻿<div class="pagination">
+    <button class="btn btn-custom" @onclick="() => changePage(-1)">◀</button>
+    @if ((PageNumber - 1) >= 1)
+    {
+        <button type="button" class="btn btn-outline-primary  pagination-button" @onclick="() => changePage(-1)">@(PageNumber - 1)</button>
+    }
+    else
+    {
+        <button type="button" class="btn btn-outline-primary pagination-button" disabled></button>
+    }
+    <button type="button" class="btn btn-primary pagination-button" disabled>@PageNumber</button>
+    @if ((PageNumber + 1) <= MaxPage)
+    {
+        <button type="button" class="btn btn-outline-primary pagination-button" @onclick="() => changePage(1)">@(PageNumber + 1)</button>
+    }
+    else
+    {
+        <button type="button" class="btn btn-outline-primary pagination-button" disabled></button>
+    }
+
+    <button class="btn btn-custom" @onclick="() => changePage(1)">▶</button>
+</div>
+
+<style>
+    .pagination-button {
+        width: 35px;
+    }
+</style>

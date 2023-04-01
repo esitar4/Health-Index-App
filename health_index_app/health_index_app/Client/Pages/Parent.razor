@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using health_index_app.Shared
+@using health_index_app.Client.Components
 
 @attribute [Authorize] 
 @*attribute [Authrize(Roles = "Parent")]*@
@@ -70,9 +71,9 @@
         margin: 0px 5px 0px 5px;
     }
 
-    .pagination-button {
+/*    .pagination-button {
         width: 35px;
-    }
+    }*/
 
 </style>
 
@@ -131,7 +132,7 @@ else
         <thead>
             <tr>
                 <th>
-                    <input type="text" maxlength="25" style="width:100%" placeholder="Enter a username..." @bind-value="searchUsername" @bind-value:event="oninput" />
+                    <input type="text" maxlength="25" style="width:100%" placeholder="Enter a username..." @bind-value="searchUsername" @bind-value:event="oninput"/>
                 </th>
                 <th>
                     <input type="text" maxlength="25" style="width:100%" placeholder="Enter a meal name..." @bind-value="searchMealName" @bind-value:event="oninput" />
@@ -177,7 +178,7 @@ else
                     </td>
                 </tr>
             }
-            @foreach (var meal in FilteredChildMealFoodList)
+            @foreach (var meal in PagedChildMealFoodList)
             {
                 <tr @onclick="() => Show(meal.MealId)" class="bg-@isHidden[meal.MealId]">
                     <td>@meal.ChildName</td>
@@ -211,26 +212,11 @@ else
         </tbody>
     </table>
 
-    <div class="pagination">
-        <button class="btn btn-custom" @onclick="() => changePage(-1)">◀</button>
-        @if ((pageNumber - 1) >= 1) {
-            <button type="button" class="btn btn-outline-primary  pagination-button" @onclick="() => changePage(-1)">@(pageNumber - 1)</button>
-        } else
-        {
-            <button type="button" class="btn btn-outline-primary pagination-button" disabled></button>
-        }
-        <button type="button" class="btn btn-primary pagination-button" disabled>@pageNumber</button>
-        @if ((pageNumber + 1) <= MaxPage)
-        {
-            <button type="button" class="btn btn-outline-primary pagination-button" @onclick="() => changePage(1)">@(pageNumber + 1)</button>
-        }
-        else
-        {
-            <button type="button" class="btn btn-outline-primary pagination-button" disabled></button>
-        }
-        
-        <button class="btn btn-custom" @onclick="() => changePage(1)">▶</button>
-   </div>
+    <Pagination 
+        PageSize="pageSize" 
+        PageNumber="pageNumber"
+        ListSize="FilteredChildMealFoodList.Count"
+        eventCallback=@GetUpdatedPageNumber />
 }
 
 

@@ -67,36 +67,23 @@ namespace health_index_app.Client.Pages
         string searchMealName = string.Empty;
         int searchHealthIndex = 0;
 
+
         List<ChildMealFoodListDTO> FilteredChildMealFoodList => mutatedChildMealFoodList
             .Where(
                 u => (u.ChildName.ToLower().Contains(searchUsername.ToLower())
                 && u.MealName.ToLower().Contains(searchMealName.ToLower()))
                 && u.HealthIndex >= searchHealthIndex
             )
+            .ToList();
+        List<ChildMealFoodListDTO> PagedChildMealFoodList => FilteredChildMealFoodList
             .Page(pageNumber, pageSize)
             .ToList();
 
 
-        private void changePage(int num)
-        {
-            MaxPage = (mutatedChildMealFoodList
-            .Where(
-                u => (u.ChildName.ToLower().Contains(searchUsername.ToLower())
-                && u.MealName.ToLower().Contains(searchMealName.ToLower()))
-                && u.HealthIndex >= searchHealthIndex)
-            .Count()) / pageSize;
 
-            if (pageNumber + num < 1) {
-                pageNumber = 1;
-            } 
-            else if (pageNumber + num >= MaxPage)
-            {
-                pageNumber = Math.Max(MaxPage, 1);
-            } 
-            else
-            {
-                pageNumber += num;
-            }
+        public async Task GetUpdatedPageNumber(int num)
+        {
+            pageNumber = num;
         }
 
 
