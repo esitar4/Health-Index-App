@@ -2,6 +2,10 @@
 {
     public interface IAdminAPIServices
     {
-        Task<string> Post(string userId);
+        Task<string> PostAdminUser(string userId);
+        Task<string> PostUnlockAccount(string userId);
+        Task<string> PostDeleteAccount(string userId);
+        Task<string> PostAddParentChildRelationship(string combinedId);
+        Task<string> PostRemoveParentChildRelationship(string combinedId);
     }
 }
