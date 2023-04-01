@@ -56,8 +56,16 @@ namespace health_index_app.Client.Pages
 
 
         //OnInput real time search
-        string searchText = string.Empty;
-        List<ChildMealFoodListDTO> FilteredChildMealFoodList => childMealFoodList.Where(u => u.ChildName.ToLower().Contains(searchText.ToLower())).ToList();
+        string searchUsername = string.Empty;
+        string searchMealName = string.Empty;
+        int searchHealthIndex = 0;
+        List<ChildMealFoodListDTO> FilteredChildMealFoodList => childMealFoodList
+            .Where(
+                u => (u.ChildName.ToLower().Contains(searchUsername.ToLower())
+                && u.MealName.ToLower().Contains(searchMealName.ToLower()))
+                && u.HealthIndex >= searchHealthIndex
+            )
+            .ToList();
 
 
         private void Show(int mealId)
