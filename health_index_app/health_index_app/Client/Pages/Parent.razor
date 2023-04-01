@@ -7,6 +7,8 @@
 @attribute [Authorize] 
 @*attribute [Authrize(Roles = "Parent")]*@
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <h3>Parent</h3>
 
 <style>
@@ -50,6 +52,24 @@
         background-color: #073b4c;
     }
 
+    .sort-th {
+        cursor: pointer;
+    }
+
+    .fa {
+        float: right;
+    }
+
+    .btn-custom {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color .3s;
+        border: 2px solid #000;
+        margin: 0px 5px 0px 5px;
+    }
+
 </style>
 
 @if (childUsernames == null)
@@ -60,7 +80,11 @@ else
 {
     if (AddChildStatus == false)
     {
-        <p>Unable to add user!</p>
+        <div class="alert alert-danger" role="alert">Unable to add user! Please double check the username entered!</div>  
+    }
+    if (DeleteChildStatus == false)
+    {
+        <div class="alert alert-danger" role="alert">Unable to delete user! Please try again later!</div>
     }
     
     <table class="table table-bordered" style="width:20%">
@@ -72,9 +96,6 @@ else
                     <button class="btn btn-success btn-sm" style="width:20%" @onclick="AddNewChild">Add</button>
                 </th>
             </tr>
-@*            <tr>
-                <th colspan="2" style="text-align:center">Username</th>
-            </tr>*@
         </thead>
         <tbody>
             @if (childUsernames.Count == 0)
@@ -100,17 +121,32 @@ else
         </tbody>
     </table>
 
-    <table class="table table-bordered table-hover" style="width:90%">
-        <caption style="caption-side:top">Child Meal Overview</caption>
+    <table class="table table-bordered table-hover sortable" style="width:90%">
+
+        <caption style="caption-side:top">Child Meal Overview </caption>
         <thead>
             <tr>
-                <th>Child Username</th>
-                <th>Meal Name</th>
-                <th>Health Index</th>
+                <th colspan="3">
+                    <input type="text" maxlength="25" style="width:100%" placeholder="Enter a username to search" @bind-value="searchText" @bind-value:event="oninput" />
+                </th>
+            </tr>
+            <tr>
+                <th class="sort-th" @onclick='() => SortTable("ChildName")'>
+                    Child Username
+                    <span class="fa @(SetSortIcon("ChildName"))"></span>
+                </th>
+                <th class="sort-th" @onclick='() => SortTable("MealName")'>
+                    Meal Name
+                    <span class="fa @(SetSortIcon("MealName"))"></span>
+                </th>
+                <th class="sort-th" @onclick='() => SortTable("HealthIndex")'>
+                    Health Index
+                    <span class="fa @(SetSortIcon("HealthIndex"))"></span>
+                </th>
             </tr>
         </thead>
         <tbody>
-            @if (childMeals.Count == 0)
+            @if (childMealFoodList.Count == 0)
             {
                 <tr>
                     <td colspan="3">
@@ -118,44 +154,36 @@ else
                     </td>
                 </tr>
             }
-            @foreach(string name in childUsernames)
+            @foreach (var meal in FilteredChildMealFoodList)
             {
-                {
-                    foreach (var meal in childMeals)
-                    {
-                        if (meal.childUsername == name)
-                        {
-                            <tr @onclick="() => Show(meal.MealId)" class="bg-@isHidden[meal.MealId]">
-                                <td>@meal.childUsername</td>
-                                <td>@meal.Name</td>
-                                <td>@meal.HealthIndex</td>
-                            </tr>
-                            <tr hidden="@isHidden[meal.MealId]">
-                                <td colspan="3">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Food Name</th>
-                                                <th>Food Calories</th>
-                                                <th>Food Serving</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var food in childMealFoods[meal.MealId])
-                                            {
-                                            <tr>
-                                                <td>@food.Food.FoodName</td>
-                                                <td>@food.Food.Calories</td>
-                                                <td>@food.Amount</td>
-                                            </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        }
-                    }
-                }
+                <tr @onclick="() => Show(meal.MealId)" class="bg-@isHidden[meal.MealId]">
+                    <td>@meal.ChildName</td>
+                    <td>@meal.MealName</td>
+                    <td>@meal.HealthIndex</td>
+                </tr>
+                <tr hidden="@isHidden[meal.MealId]">
+                    <td colspan="3">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width:60%">Food Name</th>
+                                    <th>Food Calories</th>
+                                    <th>Food Serving</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var food in meal.Food)
+                                {
+                                    <tr>
+                                        <td style="width:60%">@food.Food.FoodName</td>
+                                        <td>@food.Food.Calories</td>
+                                        <td>@food.Amount</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

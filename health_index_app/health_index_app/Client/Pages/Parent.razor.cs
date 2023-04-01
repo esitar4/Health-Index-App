@@ -2,6 +2,7 @@
 using health_index_app.Shared.DTObjects;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using System.Xml.Linq;
 
 namespace health_index_app.Client.Pages
 {
@@ -17,17 +18,9 @@ namespace health_index_app.Client.Pages
         protected NavigationManager navigationManager { get; set; }
 
         List<string> childUsernames = null!;
-        List<ChildMealDTO> childMeals = null!;
-        Dictionary<int, List<ChildMealFoodDTO>> childMealFoods = new();
+        List<ChildMealFoodListDTO> childMealFoodList = null!;
 
         Dictionary<int, bool> isHidden = new();
-
-        string newChildUserName = string.Empty;
-
-        [Parameter]
-        public bool? AddChildStatus { get; set; } = true;
-        [Parameter]
-        public bool? DeleteChildStatus { get; set; } = true;
 
         protected override async Task OnInitializedAsync()
         {
@@ -35,21 +28,50 @@ namespace health_index_app.Client.Pages
             if (UserAuth is not null && UserAuth.IsAuthenticated)
             {
                 childUsernames = await parentAPIServices.GetChildUsernames();
-                childMeals = await parentAPIServices.GetChildMeals();
+                var childMeals = await parentAPIServices.GetChildMeals();
                 foreach (var meal in childMeals)
                 {
                     List<ChildMealFoodDTO> foodList = await parentAPIServices.GetChildFoods(meal.MealId);
-                    childMealFoods.Add(meal.MealId, foodList);
+
+
+                    childMealFoodList = (from u in childUsernames
+                             join m in childMeals on u equals m.childUsername
+                             select new ChildMealFoodListDTO
+                             {
+                                 ChildName = u,
+                                 MealId = m.MealId,
+                                 MealName = m.Name,
+                                 HealthIndex = m.HealthIndex,
+                                 Food = foodList,
+                             }
+                             )
+                             .OrderBy(o => o.ChildName)
+                             .ToList();
 
                     isHidden.Add(meal.MealId, true);
                 }
             }
         }
 
+
+
+        //OnInput real time search
+        string searchText = string.Empty;
+        List<ChildMealFoodListDTO> FilteredChildMealFoodList => childMealFoodList.Where(u => u.ChildName.ToLower().Contains(searchText.ToLower())).ToList();
+
+
         private void Show(int mealId)
         {
             isHidden[mealId] = !isHidden[mealId];
         }
+
+
+
+        [Parameter]
+        public bool? AddChildStatus { get; set; } = true;
+        [Parameter]
+        public bool? DeleteChildStatus { get; set; } = true;
+        string newChildUserName = string.Empty;
 
         private async Task AddNewChild()
         {
@@ -71,5 +93,46 @@ namespace health_index_app.Client.Pages
             DeleteChildStatus = true;
         }
 
+
+
+        private bool isSortedAscending;
+        private string activeSortColumn = "ChildName";
+        private void SortTable(string columnName)
+        {
+            if (columnName != activeSortColumn)
+            {
+                childMealFoodList = childMealFoodList.OrderBy(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
+                isSortedAscending = true;
+                activeSortColumn = columnName;
+            }
+            else
+            {
+                if (isSortedAscending)
+                {
+                    childMealFoodList = childMealFoodList.OrderByDescending(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
+                }
+                else
+                {
+                    childMealFoodList = childMealFoodList.OrderBy(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
+                }
+                isSortedAscending = !isSortedAscending;
+            }
+        }
+
+        private string SetSortIcon(string columnName)
+        {
+            if (activeSortColumn != columnName)
+            {
+                return "fa-sort";
+            }
+            if (isSortedAscending)
+            {
+                return "fa-sort-up";
+            }
+            else
+            {
+                return "fa-sort-down";
+            }
+        }
     }
 }
