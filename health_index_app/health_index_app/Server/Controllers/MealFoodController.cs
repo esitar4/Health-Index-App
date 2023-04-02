@@ -99,10 +99,10 @@ namespace health_index_app.Server.Controllers
         [Route("get-food-list")]
         public async Task<ActionResult<List<Food>>> GetFoodList(int mealId)
         {
-            List<ChildMealFoodDTO> foodList = await (from mf in _context.MealFoods
+            List<ChildFoodDTO> foodList = await (from mf in _context.MealFoods
                                          join f in _context.Foods on mf.FoodId equals f.Id
                                          where mf.MealId == mealId
-                                         select new ChildMealFoodDTO
+                                         select new ChildFoodDTO
                                          {
                                              MealId = mealId,
                                              Food = f,

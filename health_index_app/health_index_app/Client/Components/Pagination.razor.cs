@@ -16,14 +16,14 @@ namespace health_index_app.Client.Components
 
         protected override void OnInitialized()
         {
-            MaxPage = ListSize / PageSize;
+            MaxPage = (int) Math.Ceiling((double)ListSize / PageSize);
         }
 
         protected override void OnParametersSet()
         {
-            if (MaxPage != ListSize/PageSize)
+            if (MaxPage != (int)Math.Ceiling((double)ListSize / PageSize))
             {
-                MaxPage = ListSize / PageSize;
+                MaxPage = (int)Math.Ceiling((double)ListSize / PageSize);
                 PageNumber = 1;
                 eventCallback.InvokeAsync(PageNumber);
             }
@@ -31,7 +31,7 @@ namespace health_index_app.Client.Components
 
         private void changePage(int num)
         {
-            MaxPage = ListSize / PageSize;
+            MaxPage = (int)Math.Ceiling((double)ListSize / PageSize);
 
             if (PageNumber + num < 1)
             {

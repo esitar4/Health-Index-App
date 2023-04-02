@@ -6,7 +6,7 @@ namespace health_index_app.Client.Services
     {
         Task<List<string>> GetChildUsernames();
         Task<List<ChildMealDTO>> GetChildMeals();
-        Task<List<ChildMealFoodDTO>> GetChildFoods(int mealId);
+        Task<List<ChildFoodDTO>> GetChildFoods(int mealId);
         Task<bool> DeleteChild(string username);
         Task<bool> AddChild(string username);
     }

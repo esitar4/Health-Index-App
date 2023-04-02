@@ -8,6 +8,6 @@ namespace health_index_app.Shared.DTObjects
         public int MealId { get; set; }
         public string MealName { get; set; }
         public double HealthIndex { get; set; }
-        public List<ChildMealFoodDTO> Food { get; set; }
+        public List<ChildFoodDTO> Food { get; set; }
     }
 }

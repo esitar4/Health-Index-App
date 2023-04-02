@@ -28,10 +28,10 @@ namespace health_index_app.Client.Services
             return response;
         }
 
-        public async Task<List<ChildMealFoodDTO>> GetChildFoods(int mealId)
+        public async Task<List<ChildFoodDTO>> GetChildFoods(int mealId)
         {
             var url = $"/mealfood/get-food-list?mealId={mealId}";
-            var response = await _client.GetFromJsonAsync<List<ChildMealFoodDTO>>(url);
+            var response = await _client.GetFromJsonAsync<List<ChildFoodDTO>>(url);
             return response;
         }
         public async Task<bool> DeleteChild(string username)

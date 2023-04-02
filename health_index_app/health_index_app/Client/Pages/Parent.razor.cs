@@ -3,6 +3,7 @@ using health_index_app.Client.Services;
 using health_index_app.Shared.DTObjects;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Xml.Linq;
 
 namespace health_index_app.Client.Pages
@@ -12,38 +13,33 @@ namespace health_index_app.Client.Pages
         [Inject]
         public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Inject]
-        protected IUserMealsAPIServices UserMealsAPIServices { get; set; }
-        [Inject]
         protected IParentAPIServices parentAPIServices { get; set; }
         [Inject]
         protected NavigationManager navigationManager { get; set; }
 
-        List<string> childUsernames = null!;
-        List<ChildMealFoodListDTO> childMealFoodList = null!;
-        public List<ChildMealFoodListDTO> mutatedChildMealFoodList { get; set; } =  null!;
+        private List<ChildNameDTO> childUsernames = new List<ChildNameDTO>();
+        private List<ChildMealFoodListDTO> childMealFoodList = new List<ChildMealFoodListDTO>();
 
-        Dictionary<int, bool> isHidden = new();
-
-        private int pageSize = 1;
-        private int pageNumber = 1;
+        private  Dictionary<int, bool> isHidden = new();
 
         protected override async Task OnInitializedAsync()
         {
             var UserAuth = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User.Identity;
             if (UserAuth is not null && UserAuth.IsAuthenticated)
             {
-                childUsernames = await parentAPIServices.GetChildUsernames();
+                var names = await parentAPIServices.GetChildUsernames();
+                childUsernames = names.Select(u => new ChildNameDTO { Name = u }).ToList();
+
                 var childMeals = await parentAPIServices.GetChildMeals();
                 foreach (var meal in childMeals)
                 {
-                    List<ChildMealFoodDTO> foodList = await parentAPIServices.GetChildFoods(meal.MealId);
-
+                    List<ChildFoodDTO> foodList = await parentAPIServices.GetChildFoods(meal.MealId);
 
                     childMealFoodList = (from u in childUsernames
-                             join m in childMeals on u equals m.childUsername
+                             join m in childMeals on u.Name equals m.childUsername
                              select new ChildMealFoodListDTO
                              {
-                                 ChildName = u,
+                                 ChildName = u.Name,
                                  MealId = m.MealId,
                                  MealName = m.Name,
                                  HealthIndex = m.HealthIndex,
@@ -53,8 +49,6 @@ namespace health_index_app.Client.Pages
                              .OrderBy(o => o.ChildName)
                              .ToList();
 
-                    mutatedChildMealFoodList = new(childMealFoodList);
-
                     isHidden.Add(meal.MealId, true);
                 }
             }
@@ -63,12 +57,14 @@ namespace health_index_app.Client.Pages
 
 
         //OnInput real time search
-        string searchUsername = string.Empty;
-        string searchMealName = string.Empty;
-        int searchHealthIndex = 0;
+        private string searchUsername = string.Empty;
+        private string searchMealName = string.Empty;
+        private int searchHealthIndex = 0;
 
-
-        List<ChildMealFoodListDTO> FilteredChildMealFoodList => mutatedChildMealFoodList
+        private int pageNumber = 1;
+        private int pageSize = 1;
+        private string _activeSortColumn = "ChildName";
+        List<ChildMealFoodListDTO> FilteredChildMealFoodList => childMealFoodList
             .Where(
                 u => (u.ChildName.ToLower().Contains(searchUsername.ToLower())
                 && u.MealName.ToLower().Contains(searchMealName.ToLower()))
@@ -79,6 +75,11 @@ namespace health_index_app.Client.Pages
             .Page(pageNumber, pageSize)
             .ToList();
 
+        private void UpdateChildMealFoodListData(TableSortHeaderEventCallBackArgs<ChildMealFoodListDTO> args)
+        {
+            childMealFoodList = args.Data;
+            _activeSortColumn = args.ActiveSortColumn;
+        }
 
 
         public void GetUpdatedPageNumber(int num)
@@ -93,6 +94,31 @@ namespace health_index_app.Client.Pages
 
 
 
+        private string searchUserNameTable = string.Empty;
+        private int userTablePageSize = 2;
+        private int userTablePageNumber = 1;
+        private string _activeSortUserNameTableColumn = "Name";
+        List<ChildNameDTO> FilteredChildUserNames => childUsernames
+            .Where(
+                u => u.Name.ToLower().Contains(searchUserNameTable.ToLower())
+            )
+            .ToList();
+        List<ChildNameDTO> PagedChildUserNames => FilteredChildUserNames
+            .Page(userTablePageNumber, userTablePageSize)
+            .ToList();
+
+        private void UpdateChildUsernameData(TableSortHeaderEventCallBackArgs<ChildNameDTO> args)
+        {
+            childUsernames = args.Data;
+            _activeSortUserNameTableColumn = args.ActiveSortColumn;
+        }
+        public void GetUpdatedUserTablePageNumber(int num)
+        {
+            userTablePageNumber = num;
+        }
+
+
+
         [Parameter]
         public int AddChildStatus { get; set; }
         [Parameter]
@@ -101,8 +127,14 @@ namespace health_index_app.Client.Pages
 
         private async Task AddNewChild()
         {
+            Console.WriteLine("\n\n\n\n\n\n\n");
+            Console.WriteLine(childUsernames.GetType().Name);
+            Console.WriteLine(childUsernames.GetType().FullName);
+            foreach(var s in childUsernames.GetType().GetProperties().Select(p => p.Name))
+                Console.WriteLine(childUsernames.GetType().GetProperties().Select(p => p.Name));
+            Console.WriteLine("\n\n\n\n\n\n\n");
             ResetStatus();
-            if (childUsernames.Contains(newChildUserName)) 
+            if (childUsernames.Contains(new ChildNameDTO { Name = newChildUserName })) 
             {
                 AddChildStatus = (int) AlertMessage.Unsucessful;
             }
@@ -142,11 +174,5 @@ namespace health_index_app.Client.Pages
             DeleteChildStatus = (int) AlertMessage.None;
         }
 
-        private string _activeSortColumn = "ChildName";
-        private void updatedata(TableSortHeaderEventCallBackArgs<ChildMealFoodListDTO> args)
-        {
-            mutatedChildMealFoodList = args.Data;
-            _activeSortColumn = args.ActiveSortColumn;
-        }
     }
 }

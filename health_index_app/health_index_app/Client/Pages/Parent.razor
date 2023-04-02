@@ -105,6 +105,12 @@ else
                     <button class="btn btn-success btn-sm" style="width:20%" @onclick="AddNewChild">Add</button>
                 </th>
             </tr>
+            <TableSort Data="@childUsernames"
+                   NameList='new List<String> {"Username"}'
+                   ColumnNameList='new List<String> {"Name"}'
+                   ActiveSortColumn="@_activeSortUserNameTableColumn"
+                   eventCallback=UpdateChildUsernameData
+                   T="ChildNameDTO" />
         </thead>
         <tbody>
             @if (childUsernames.Count == 0)
@@ -116,11 +122,11 @@ else
                 </tr>
             } else
             {
-                foreach(string name in childUsernames)
+                foreach (var name in PagedChildUserNames)
                 {
                     <tr>
-                        <td>@name</td>
-                        <td style="text-align:center"><button class="btn btn-danger btn-sm" @onclick="() => DeleteChild(name)">Delete</button></td>
+                        <td>@name.Name</td>
+                        <td style="text-align:center"><button class="btn btn-danger btn-sm" @onclick="() => DeleteChild(name.Name)">Delete</button></td>
                     </tr>
                 }
                 <tr>
@@ -129,6 +135,11 @@ else
             }
         </tbody>
     </table>
+    <Pagination PageSize="userTablePageSize"
+            PageNumber="userTablePageNumber"
+            ListSize="FilteredChildUserNames.Count"
+            eventCallback=@GetUpdatedUserTablePageNumber />
+
 
     <table class="table table-bordered table-hover sortable" style="width:90%">
 
@@ -158,12 +169,11 @@ else
                     </datalist>
                 </th>
             </tr>
-            <TableSort 
-                Data="@mutatedChildMealFoodList"
+            <TableSort Data="@childMealFoodList"
                 NameList='new List<String> {"Child Name", "Meal Name", "Health Index"}'
                 ColumnNameList='new List<String> {"ChildName", "MealName", "HealthIndex"}'
                 ActiveSortColumn="@_activeSortColumn"
-                eventCallback=updatedata
+                eventCallback=UpdateChildMealFoodListData
                 T="ChildMealFoodListDTO" />
         </thead>
         <tbody>
