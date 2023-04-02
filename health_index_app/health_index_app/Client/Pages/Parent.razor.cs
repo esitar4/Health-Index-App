@@ -1,4 +1,5 @@
-﻿using health_index_app.Client.Services;
+﻿using health_index_app.Client.Components;
+using health_index_app.Client.Services;
 using health_index_app.Shared.DTObjects;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -19,11 +20,10 @@ namespace health_index_app.Client.Pages
 
         List<string> childUsernames = null!;
         List<ChildMealFoodListDTO> childMealFoodList = null!;
-        List<ChildMealFoodListDTO> mutatedChildMealFoodList = null!;
+        public List<ChildMealFoodListDTO> mutatedChildMealFoodList { get; set; } =  null!;
 
         Dictionary<int, bool> isHidden = new();
 
-        private int MaxPage { get; set; }
         private int pageSize = 1;
         private int pageNumber = 1;
 
@@ -81,11 +81,10 @@ namespace health_index_app.Client.Pages
 
 
 
-        public async Task GetUpdatedPageNumber(int num)
+        public void GetUpdatedPageNumber(int num)
         {
             pageNumber = num;
         }
-
 
         private void Show(int mealId)
         {
@@ -120,62 +119,11 @@ namespace health_index_app.Client.Pages
             DeleteChildStatus = true;
         }
 
-
-
-        private bool isSortedAscending;
-        private string activeSortColumn = "ChildName";
-        private void SortTable(string columnName)
+        private string _activeSortColumn = "ChildName";
+        private void updatedata(TableSortHeaderEventCallBackArgs<ChildMealFoodListDTO> args)
         {
-            if (columnName != activeSortColumn)
-            {
-                mutatedChildMealFoodList = childMealFoodList.OrderBy(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
-                isSortedAscending = true;
-                activeSortColumn = columnName;
-            }
-            else
-            {
-                if (isSortedAscending)
-                {
-                    mutatedChildMealFoodList = childMealFoodList.OrderByDescending(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
-                }
-                else
-                {
-                    mutatedChildMealFoodList = childMealFoodList.OrderBy(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
-                }
-                isSortedAscending = !isSortedAscending;
-            }
+            mutatedChildMealFoodList = args.Data;
+            _activeSortColumn = args.ActiveSortColumn;
         }
-
-        private string SetSortIcon(string columnName)
-        {
-            if (activeSortColumn != columnName)
-            {
-                return "fa-sort";
-            }
-            if (isSortedAscending)
-            {
-                return "fa-sort-up";
-            }
-            else
-            {
-                return "fa-sort-down";
-            }
-        }
-    }
-
-    public static class PagingExtensions
-    {
-        //used by LINQ to SQL
-        public static IQueryable<TSource> Page<TSource>(this IQueryable<TSource> source, int page, int pageSize)
-        {
-            return source.Skip((page - 1) * pageSize).Take(pageSize);
-        }
-
-        //used by LINQ
-        public static IEnumerable<TSource> Page<TSource>(this IEnumerable<TSource> source, int page, int pageSize)
-        {
-            return source.Skip((page - 1) * pageSize).Take(pageSize);
-        }
-
     }
 }

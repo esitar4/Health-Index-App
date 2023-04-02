@@ -4,6 +4,7 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using health_index_app.Shared
 @using health_index_app.Client.Components
+@using health_index_app.Shared.DTObjects;
 
 @attribute [Authorize] 
 @*attribute [Authrize(Roles = "Parent")]*@
@@ -70,10 +71,6 @@
         border: 2px solid #000;
         margin: 0px 5px 0px 5px;
     }
-
-/*    .pagination-button {
-        width: 35px;
-    }*/
 
 </style>
 
@@ -154,20 +151,13 @@ else
                     </datalist>
                 </th>
             </tr>
-            <tr>
-                <th class="sort-th" @onclick='() => SortTable("ChildName")'>
-                    Child Username
-                    <span class="fa @(SetSortIcon("ChildName"))"></span>
-                </th>
-                <th class="sort-th" @onclick='() => SortTable("MealName")'>
-                    Meal Name
-                    <span class="fa @(SetSortIcon("MealName"))"></span>
-                </th>
-                <th class="sort-th" @onclick='() => SortTable("HealthIndex")'>
-                    Health Index (0 - 10)
-                    <span class="fa @(SetSortIcon("HealthIndex"))"></span>
-                </th>
-            </tr>
+            <TableSort 
+                Data="@mutatedChildMealFoodList"
+                NameList='new List<String> {"Child Name", "Meal Name", "Health Index"}'
+                ColumnNameList='new List<String> {"ChildName", "MealName", "HealthIndex"}'
+                ActiveSortColumn="@_activeSortColumn"
+                eventCallback=updatedata
+                T="ChildMealFoodListDTO" />
         </thead>
         <tbody>
             @if (childMealFoodList.Count == 0)
