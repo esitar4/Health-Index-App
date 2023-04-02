@@ -3,8 +3,6 @@ using health_index_app.Client.Services;
 using health_index_app.Shared.DTObjects;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Xml.Linq;
 
 namespace health_index_app.Client.Pages
 {
@@ -27,30 +25,7 @@ namespace health_index_app.Client.Pages
             var UserAuth = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User.Identity;
             if (UserAuth is not null && UserAuth.IsAuthenticated)
             {
-                var names = await parentAPIServices.GetChildUsernames();
-                childUsernames = names.Select(u => new ChildNameDTO { Name = u }).ToList();
-
-                var childMeals = await parentAPIServices.GetChildMeals();
-                foreach (var meal in childMeals)
-                {
-                    List<ChildFoodDTO> foodList = await parentAPIServices.GetChildFoods(meal.MealId);
-
-                    childMealFoodList = (from u in childUsernames
-                             join m in childMeals on u.Name equals m.childUsername
-                             select new ChildMealFoodListDTO
-                             {
-                                 ChildName = u.Name,
-                                 MealId = m.MealId,
-                                 MealName = m.Name,
-                                 HealthIndex = m.HealthIndex,
-                                 Food = foodList,
-                             }
-                             )
-                             .OrderBy(o => o.ChildName)
-                             .ToList();
-
-                    isHidden.Add(meal.MealId, true);
-                }
+                await RefreshLists();
             }
         }
 
@@ -62,7 +37,7 @@ namespace health_index_app.Client.Pages
         private int searchHealthIndex = 0;
 
         private int pageNumber = 1;
-        private int pageSize = 1;
+        private int pageSize = 5;
         private string _activeSortColumn = "ChildName";
         List<ChildMealFoodListDTO> FilteredChildMealFoodList => childMealFoodList
             .Where(
@@ -166,18 +141,19 @@ namespace health_index_app.Client.Pages
             {
                 DeleteChildStatus = (int) AlertMessage.Successful;
                 await RefreshLists();
-                deleteMessage = "User was not deleted from your child list!";
+                deleteMessage = "User sucessfully deleted from your child list!";
             }
             else
             {
                 DeleteChildStatus = (int) AlertMessage.Unsucessful;
-                deleteMessage = "User sucessfully deleted from your child list!";
+                deleteMessage = "User was not deleted from your child list!";
             }
 
             StateHasChanged();
 
             await Task.Delay(3000);
             ResetStatus();
+
             //navigationManager.NavigateTo($"refresh/parent/{AddChildStatus}/{DeleteChildStatus}");
         }
 

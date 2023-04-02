@@ -1,5 +1,5 @@
 ﻿@page "/parent"
-@page "/parent/{addchildstatus:int}/{deletechildstatus:int}"
+@*@page "/parent/{addchildstatus:int}/{deletechildstatus:int}"*@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using health_index_app.Shared
@@ -7,7 +7,6 @@
 @using health_index_app.Shared.DTObjects;
 
 @attribute [Authorize] 
-@*attribute [Authrize(Roles = "Parent")]*@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -56,6 +55,7 @@
 
     .sort-th {
         cursor: pointer;
+        background-color: #073b4c;
     }
 
     .fa {
@@ -95,135 +95,193 @@ else
     {
                 <div class="alert alert-success" role="alert">@deleteMessage</div>
     }
-    
-    <table class="table table-bordered" style="width:20%">
-        <caption style="caption-side:top">Child Account Overview</caption>
-        <thead>
-            <tr>
-                <th colspan="2">
-                    <input type="text" maxlength="25" style="width:75%" placeholder="Enter a username to add as child" @bind-value="newChildUserName" />
-                    <button class="btn btn-success btn-sm" style="width:20%" @onclick="AddNewChild">Add</button>
-                </th>
-            </tr>
-            <TableSort Data="@childUsernames"
-                   NameList='new List<String> {"Username"}'
-                   ColumnNameList='new List<String> {"Name"}'
-                   ActiveSortColumn="@_activeSortUserNameTableColumn"
-                   eventCallback=UpdateChildUsernameData
-                   T="ChildNameDTO" />
-        </thead>
-        <tbody>
-            @if (childUsernames.Count == 0)
-            {
-                <tr>
-                    <td>
-                        No Records to display
-                    </td>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm">
+                <table class="table table-bordered table-striped">
+                    <caption style="caption-side:top">Child Account Overview</caption>
+                    <thead>
+                        <tr class="table-light">
+                            <th colspan="2">
+                                <input type="text" maxlength="25" style="width:100%" placeholder="Enter a username..." @bind-value="searchUserNameTable" @bind-value:event="oninput"/>
+                            </th>
+                        </tr>
+                        <tr class="table-light">
+                            <TableSort Data="@childUsernames"
+                                   NameList='new List<String> {"Username"}'
+                                   ColumnNameList='new List<String> {"Name"}'
+                                   ActiveSortColumn="@_activeSortUserNameTableColumn"
+                                   eventCallback=UpdateChildUsernameData
+                                   T="ChildNameDTO" />
+                               <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (childUsernames.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="2">
+                                    No Records to display
+                                </td>
+                            </tr>
+                            @for(int i = 0; i < userTablePageSize - 1; i++)
+                            {
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td colspan="2" style="text-align:center">Total Children: @childUsernames.Count</td>
+                            </tr>
+                        } else
+                        {
+                            foreach (var name in PagedChildUserNames)
+                            {
+                                <tr>
+                                    <td>@name.Name</td>
+                                    <td style="text-align:center"><button class="btn btn-danger btn-sm" @onclick="() => DeleteChild(name.Name)">Delete</button></td>
+                                </tr>
+                            }
+                            @for(int i = 0; i < userTablePageSize - PagedChildUserNames.Count; i++)
+                            {
+                                <tr>
+                                    <td>-</td>
+                                    <td>-
+                                        <button class="btn btn-danger btn-sm" style="visibility:hidden">D</button>
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <td colspan="2" style="text-align:center">Total Children: @childUsernames.Count</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <Pagination PageSize="userTablePageSize"
+                        PageNumber="userTablePageNumber"
+                        ListSize="FilteredChildUserNames.Count"
+                        eventCallback=@GetUpdatedUserTablePageNumber />
+            </div>
+            <div class="col-sm">
+                <div class="form-group">
+                    <label class="form-label">Child Username</label>
+                    <input type="email" maxlength="25" class="form-control" placeholder="Enter a email address to add as child" @bind-value="newChildUserName" />
+                    <small id="emailHelp" class="form-text text-muted">Please enter the email of your child account.</small>
+                </div>
+                <button class="btn btn-primary" @onclick="AddNewChild">Add</button>
+            </div>
+            <div class="col-sm"></div>
+        </div>
+        
+    </div>
+
+
+
+    <div class="container-fluid">
+            <table class="table table-hover table-bordered">
+
+            <caption style="caption-side:top">Child Meal Overview </caption>
+            <thead>
+                <tr class="table-light">
+                    <th>
+                        <input type="text" maxlength="25" style="width:100%" placeholder="Enter a username..." @bind-value="searchUsername" @bind-value:event="oninput"/>
+                    </th>
+                    <th>
+                        <input type="text" maxlength="25" style="width:100%" placeholder="Enter a meal name..." @bind-value="searchMealName" @bind-value:event="oninput" />
+                    </th>
+                    <th>
+                        <label style="width:100%">0 <input type="range" min="0" max="10" step="1" style="width:85%" @bind-value="searchHealthIndex" @bind-value:event="oninput" list="steplist" /> 10</label>
+                        <datalist id="steplist">
+                            <option>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                        </datalist>
+                    </th>
                 </tr>
-            } else
-            {
-                foreach (var name in PagedChildUserNames)
+                <tr class="table-light">
+                    <TableSort Data="@childMealFoodList"
+                        NameList='new List<String> {"Child Name", "Meal Name", "Health Index"}'
+                        ColumnNameList='new List<String> {"ChildName", "MealName", "HealthIndex"}'
+                        ActiveSortColumn="@_activeSortColumn"
+                        eventCallback=UpdateChildMealFoodListData
+                        T="ChildMealFoodListDTO" />
+                </tr>
+            </thead>
+            <tbody>
+                @if (childMealFoodList.Count == 0)
                 {
                     <tr>
-                        <td>@name.Name</td>
-                        <td style="text-align:center"><button class="btn btn-danger btn-sm" @onclick="() => DeleteChild(name.Name)">Delete</button></td>
+                        <td colspan="3">
+                            No Records to display
+                        </td>
+                    </tr>
+                    @for (int i = 0; i < pageSize - 1; i++)
+                    {
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    }
+                }
+                @foreach (var meal in PagedChildMealFoodList)
+                {
+                    <tr @onclick="() => Show(meal.MealId)" class="bg-@isHidden[meal.MealId]">
+                        <td>@meal.ChildName</td>
+                        <td>@meal.MealName</td>
+                        <td>@meal.HealthIndex</td>
+                    </tr>
+                            <tr hidden="@isHidden[meal.MealId]">
+                        <td colspan="3">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width:60%">Food Name</th>
+                                        <th>Food Calories</th>
+                                        <th>Food Serving</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var food in meal.Food)
+                                    {
+                                        <tr>
+                                            <td style="width:60%">@food.Food.FoodName</td>
+                                            <td>@food.Food.Calories</td>
+                                            <td>@food.Amount</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                 }
-                <tr>
-                    <td colspan="2" style="text-align:center">Total Children: @childUsernames.Count</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <Pagination PageSize="userTablePageSize"
-            PageNumber="userTablePageNumber"
-            ListSize="FilteredChildUserNames.Count"
-            eventCallback=@GetUpdatedUserTablePageNumber />
+                @for(int i = 0; i < pageSize - PagedChildMealFoodList.Count; i++)
+                {
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-
-    <table class="table table-bordered table-hover sortable" style="width:90%">
-
-        <caption style="caption-side:top">Child Meal Overview </caption>
-        <thead>
-            <tr>
-                <th>
-                    <input type="text" maxlength="25" style="width:100%" placeholder="Enter a username..." @bind-value="searchUsername" @bind-value:event="oninput"/>
-                </th>
-                <th>
-                    <input type="text" maxlength="25" style="width:100%" placeholder="Enter a meal name..." @bind-value="searchMealName" @bind-value:event="oninput" />
-                </th>
-                <th>
-                    <label style="width:100%">0 <input type="range" min="0" max="10" step="1" style="width:85%" @bind-value="searchHealthIndex" @bind-value:event="oninput" list="steplist" /> 10</label>
-                    <datalist id="steplist">
-                        <option>0</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
-                    </datalist>
-                </th>
-            </tr>
-            <TableSort Data="@childMealFoodList"
-                NameList='new List<String> {"Child Name", "Meal Name", "Health Index"}'
-                ColumnNameList='new List<String> {"ChildName", "MealName", "HealthIndex"}'
-                ActiveSortColumn="@_activeSortColumn"
-                eventCallback=UpdateChildMealFoodListData
-                T="ChildMealFoodListDTO" />
-        </thead>
-        <tbody>
-            @if (childMealFoodList.Count == 0)
-            {
-                <tr>
-                    <td colspan="3">
-                        No Records to display
-                    </td>
-                </tr>
-            }
-            @foreach (var meal in PagedChildMealFoodList)
-            {
-                <tr @onclick="() => Show(meal.MealId)" class="bg-@isHidden[meal.MealId]">
-                    <td>@meal.ChildName</td>
-                    <td>@meal.MealName</td>
-                    <td>@meal.HealthIndex</td>
-                </tr>
-                <tr hidden="@isHidden[meal.MealId]">
-                    <td colspan="3">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th style="width:60%">Food Name</th>
-                                    <th>Food Calories</th>
-                                    <th>Food Serving</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var food in meal.Food)
-                                {
-                                    <tr>
-                                        <td style="width:60%">@food.Food.FoodName</td>
-                                        <td>@food.Food.Calories</td>
-                                        <td>@food.Amount</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <Pagination 
-        PageSize="pageSize" 
-        PageNumber="pageNumber"
-        ListSize="FilteredChildMealFoodList.Count"
-        eventCallback=@GetUpdatedPageNumber />
+        <Pagination 
+            PageSize="pageSize" 
+            PageNumber="pageNumber"
+            ListSize="FilteredChildMealFoodList.Count"
+            eventCallback=@GetUpdatedPageNumber />
+    </div>
 }
 
 
