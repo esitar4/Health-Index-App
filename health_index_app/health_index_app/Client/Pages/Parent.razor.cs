@@ -124,54 +124,98 @@ namespace health_index_app.Client.Pages
         [Parameter]
         public int DeleteChildStatus { get; set; }
         private string newChildUserName = string.Empty;
+        private string addMessage = string.Empty;
+        private string deleteMessage = string.Empty;
 
         private async Task AddNewChild()
         {
-            Console.WriteLine("\n\n\n\n\n\n\n");
-            Console.WriteLine(childUsernames.GetType().Name);
-            Console.WriteLine(childUsernames.GetType().FullName);
-            foreach(var s in childUsernames.GetType().GetProperties().Select(p => p.Name))
-                Console.WriteLine(childUsernames.GetType().GetProperties().Select(p => p.Name));
-            Console.WriteLine("\n\n\n\n\n\n\n");
-            ResetStatus();
+            
             if (childUsernames.Contains(new ChildNameDTO { Name = newChildUserName })) 
             {
                 AddChildStatus = (int) AlertMessage.Unsucessful;
+                addMessage = "User is already in your child list!";
             }
             else
             {
                 if (await parentAPIServices.AddChild(newChildUserName))
                 {
                     AddChildStatus = (int) AlertMessage.Successful;
+                    await RefreshLists();
+                    addMessage = "User sucessfully added to your child list!";
+
                 }
                 else
                 {
                     AddChildStatus = (int) AlertMessage.Unsucessful;
+                    addMessage = "User was not added to your child list!";
                 }
             }
-                
 
-            navigationManager.NavigateTo($"refresh/parent/{AddChildStatus}/{DeleteChildStatus}");
+            StateHasChanged();
+
+            await Task.Delay(3000);
+            ResetStatus();
+
+            //navigationManager.NavigateTo($"refresh/parent/{AddChildStatus}/{DeleteChildStatus}");
         }
 
         private async Task DeleteChild(string username)
         {
-            ResetStatus();
+            
             if(await parentAPIServices.DeleteChild(username))
             {
                 DeleteChildStatus = (int) AlertMessage.Successful;
+                await RefreshLists();
+                deleteMessage = "User was not deleted from your child list!";
             }
             else
             {
                 DeleteChildStatus = (int) AlertMessage.Unsucessful;
+                deleteMessage = "User sucessfully deleted from your child list!";
             }
-            navigationManager.NavigateTo($"refresh/parent/{AddChildStatus}/{DeleteChildStatus}");
+
+            StateHasChanged();
+
+            await Task.Delay(3000);
+            ResetStatus();
+            //navigationManager.NavigateTo($"refresh/parent/{AddChildStatus}/{DeleteChildStatus}");
+        }
+
+        private async Task RefreshLists()
+        {
+            var names = await parentAPIServices.GetChildUsernames();
+            childUsernames = names.Select(u => new ChildNameDTO { Name = u }).ToList();
+
+            var childMeals = await parentAPIServices.GetChildMeals();
+            foreach (var meal in childMeals)
+            {
+                List<ChildFoodDTO> foodList = await parentAPIServices.GetChildFoods(meal.MealId);
+
+                childMealFoodList = (from u in childUsernames
+                                     join m in childMeals on u.Name equals m.childUsername
+                                     select new ChildMealFoodListDTO
+                                     {
+                                         ChildName = u.Name,
+                                         MealId = m.MealId,
+                                         MealName = m.Name,
+                                         HealthIndex = m.HealthIndex,
+                                         Food = foodList,
+                                     }
+                         )
+                         .OrderBy(o => o.ChildName)
+                         .ToList();
+
+                if (!isHidden.ContainsKey(meal.MealId))
+                    isHidden.Add(meal.MealId, true);
+            }
         }
 
         private void ResetStatus()
         {
             AddChildStatus = (int) AlertMessage.None;
             DeleteChildStatus = (int) AlertMessage.None;
+            addMessage = string.Empty;
+            deleteMessage = string.Empty;
         }
 
     }

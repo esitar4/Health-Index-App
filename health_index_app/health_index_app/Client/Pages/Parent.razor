@@ -82,18 +82,18 @@ else
 {
     if (AddChildStatus == (int) AlertMessage.Unsucessful)
     {
-        <div class="alert alert-danger" role="alert">User was not added to your child list!</div>
+        <div class="alert alert-danger" role="alert">@addMessage</div>
     }  else if (AddChildStatus == (int) AlertMessage.Successful) 
     {
-        <div class="alert alert-success" role="alert">User sucessfully added to your child list!</div>
+        <div class="alert alert-success" role="alert">@addMessage</div>
     }
     if (DeleteChildStatus == (int) AlertMessage.Unsucessful)
     {
-        <div class="alert alert-danger" role="alert">User was not deleted from your child list!</div>
+        <div class="alert alert-danger" role="alert">@deleteMessage</div>
     }  
     else if (DeleteChildStatus == (int)AlertMessage.Successful)
     {
-        <div class="alert alert-success" role="alert">User sucessfully deleted from your child list!</div>
+                <div class="alert alert-success" role="alert">@deleteMessage</div>
     }
     
     <table class="table table-bordered" style="width:20%">
