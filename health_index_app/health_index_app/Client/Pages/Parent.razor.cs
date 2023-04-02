@@ -94,29 +94,52 @@ namespace health_index_app.Client.Pages
 
 
         [Parameter]
-        public bool? AddChildStatus { get; set; } = true;
+        public int AddChildStatus { get; set; }
         [Parameter]
-        public bool? DeleteChildStatus { get; set; } = true;
-        string newChildUserName = string.Empty;
+        public int DeleteChildStatus { get; set; }
+        private string newChildUserName = string.Empty;
 
         private async Task AddNewChild()
         {
             ResetStatus();
-            AddChildStatus = await parentAPIServices.AddChild(newChildUserName);
+            if (childUsernames.Contains(newChildUserName)) 
+            {
+                AddChildStatus = (int) AlertMessage.Unsucessful;
+            }
+            else
+            {
+                if (await parentAPIServices.AddChild(newChildUserName))
+                {
+                    AddChildStatus = (int) AlertMessage.Successful;
+                }
+                else
+                {
+                    AddChildStatus = (int) AlertMessage.Unsucessful;
+                }
+            }
+                
+
             navigationManager.NavigateTo($"refresh/parent/{AddChildStatus}/{DeleteChildStatus}");
         }
 
         private async Task DeleteChild(string username)
         {
             ResetStatus();
-            DeleteChildStatus = await parentAPIServices.DeleteChild(username);
+            if(await parentAPIServices.DeleteChild(username))
+            {
+                DeleteChildStatus = (int) AlertMessage.Successful;
+            }
+            else
+            {
+                DeleteChildStatus = (int) AlertMessage.Unsucessful;
+            }
             navigationManager.NavigateTo($"refresh/parent/{AddChildStatus}/{DeleteChildStatus}");
         }
 
         private void ResetStatus()
         {
-            AddChildStatus = true;
-            DeleteChildStatus = true;
+            AddChildStatus = (int) AlertMessage.None;
+            DeleteChildStatus = (int) AlertMessage.None;
         }
 
         private string _activeSortColumn = "ChildName";

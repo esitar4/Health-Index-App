@@ -1,5 +1,5 @@
 ﻿@page "/parent"
-@page "/parent/{addchildstatus:bool?}/{deletechildstatus:bool?}"
+@page "/parent/{addchildstatus:int}/{deletechildstatus:int}"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using health_index_app.Shared
@@ -80,13 +80,20 @@
 }
 else
 {
-    if (AddChildStatus == false)
+    if (AddChildStatus == (int) AlertMessage.Unsucessful)
     {
-        <div class="alert alert-danger" role="alert">Unable to add user! Please double check the username entered!</div>  
+        <div class="alert alert-danger" role="alert">User was not added to your child list!</div>
+    }  else if (AddChildStatus == (int) AlertMessage.Successful) 
+    {
+        <div class="alert alert-success" role="alert">User sucessfully added to your child list!</div>
     }
-    if (DeleteChildStatus == false)
+    if (DeleteChildStatus == (int) AlertMessage.Unsucessful)
     {
-        <div class="alert alert-danger" role="alert">Unable to delete user! Please try again later!</div>
+        <div class="alert alert-danger" role="alert">User was not deleted from your child list!</div>
+    }  
+    else if (DeleteChildStatus == (int)AlertMessage.Successful)
+    {
+        <div class="alert alert-success" role="alert">User sucessfully deleted from your child list!</div>
     }
     
     <table class="table table-bordered" style="width:20%">
