@@ -173,23 +173,25 @@ namespace health_index_app.Client.Pages
             childUsernames = names.Select(u => new ChildNameDTO { Name = u }).ToList();
 
             var childMeals = await parentAPIServices.GetChildMeals();
-            foreach (var meal in childMeals)
-            {
-                List<ChildFoodDTO> foodList = await parentAPIServices.GetChildFoods(meal.MealId);
-
-                childMealFoodList = (from u in childUsernames
-                                     join m in childMeals on u.Name equals m.childUsername
-                                     select new ChildMealFoodListDTO
+            childMealFoodList = (from u in childUsernames
+                                 join m in childMeals on u.Name equals m.childUsername
+                                 select new ChildMealFoodListDTO
                                      {
                                          ChildName = u.Name,
                                          MealId = m.MealId,
                                          MealName = m.Name,
                                          HealthIndex = m.HealthIndex,
-                                         Food = foodList,
+                                         Food = new List<ChildFoodDTO>(),
                                      }
-                         )
-                         .OrderBy(o => o.ChildName)
-                         .ToList();
+                                 )
+                                 .OrderBy(o => o.ChildName)
+                                 .ToList();
+
+            foreach (var meal in childMeals)
+            {
+                List<ChildFoodDTO> foodList = await parentAPIServices.GetChildFoods(meal.MealId);
+
+                childMealFoodList.Where(c => c.MealId == meal.MealId).FirstOrDefault().Food = foodList;
 
                 if (!isHidden.ContainsKey(meal.MealId))
                     isHidden.Add(meal.MealId, true);
