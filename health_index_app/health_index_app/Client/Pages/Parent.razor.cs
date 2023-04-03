@@ -94,65 +94,69 @@ namespace health_index_app.Client.Pages
 
 
 
-        [Parameter]
-        public int AddChildStatus { get; set; }
-        [Parameter]
-        public int DeleteChildStatus { get; set; }
+        //[Parameter]
+        //public int AddChildStatus { get; set; }
+        //[Parameter]
+        //public int DeleteChildStatus { get; set; }
         private string newChildUserName = string.Empty;
-        private string addMessage = string.Empty;
-        private string deleteMessage = string.Empty;
+
+        private AlertMessagesDTO Message { get; set; } = new();
+        private AlertMessagesDTO addMessage = new AlertMessagesDTO()
+        {
+            Successful = "User sucessfully added to your child list!",
+            Unsucessful = "User was not added to your child list!"
+        };
+        private AlertMessagesDTO deleteMessage = new AlertMessagesDTO()
+        {
+            Successful = "User sucessfully deleted from your child list!",
+            Unsucessful = "User was not deleted from your child list!"
+        };
 
         private async Task AddNewChild()
         {
-            
-            if (childUsernames.Contains(new ChildNameDTO { Name = newChildUserName })) 
+            Message = addMessage;
+            if ((from u in childUsernames select u.Name).Contains(newChildUserName)) 
             {
-                AddChildStatus = (int) AlertMessage.Unsucessful;
-                addMessage = "User is already in your child list!";
+                Message.Status = (int) AlertMessage.Unsucessful;
             }
             else
             {
                 if (await parentAPIServices.AddChild(newChildUserName))
                 {
-                    AddChildStatus = (int) AlertMessage.Successful;
+                    Message.Status = (int) AlertMessage.Successful;
                     await RefreshLists();
-                    addMessage = "User sucessfully added to your child list!";
-
                 }
                 else
                 {
-                    AddChildStatus = (int) AlertMessage.Unsucessful;
-                    addMessage = "User was not added to your child list!";
+                    Message.Status = (int) AlertMessage.Unsucessful;
                 }
             }
 
             StateHasChanged();
 
-            await Task.Delay(3000);
-            ResetStatus();
+            await Task.Delay(TimeSpan.FromSeconds(3));
+            Message.Status = 0;
 
             //navigationManager.NavigateTo($"refresh/parent/{AddChildStatus}/{DeleteChildStatus}");
         }
 
         private async Task DeleteChild(string username)
         {
-            
+            Message = deleteMessage;
             if(await parentAPIServices.DeleteChild(username))
             {
-                DeleteChildStatus = (int) AlertMessage.Successful;
+                Message.Status = (int) AlertMessage.Successful;
                 await RefreshLists();
-                deleteMessage = "User sucessfully deleted from your child list!";
             }
             else
             {
-                DeleteChildStatus = (int) AlertMessage.Unsucessful;
-                deleteMessage = "User was not deleted from your child list!";
+                Message.Status = (int) AlertMessage.Unsucessful;
             }
 
             StateHasChanged();
 
-            await Task.Delay(3000);
-            ResetStatus();
+            await Task.Delay(TimeSpan.FromSeconds(3));
+            Message.Status = 0;
 
             //navigationManager.NavigateTo($"refresh/parent/{AddChildStatus}/{DeleteChildStatus}");
         }
@@ -185,14 +189,5 @@ namespace health_index_app.Client.Pages
                     isHidden.Add(meal.MealId, true);
             }
         }
-
-        private void ResetStatus()
-        {
-            AddChildStatus = (int) AlertMessage.None;
-            DeleteChildStatus = (int) AlertMessage.None;
-            addMessage = string.Empty;
-            deleteMessage = string.Empty;
-        }
-
     }
 }
