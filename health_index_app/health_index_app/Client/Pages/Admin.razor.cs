@@ -16,8 +16,25 @@ namespace health_index_app.Client.Pages
         private string userIdParent = String.Empty;
         private string userIdRemoveParent = String.Empty;
 
+        private Dictionary<string, string> ids = new Dictionary<string, string>();
+
         private List<ApplicationUserDTO> users = new();
 
+
+        protected override async Task OnInitializedAsync()
+        {
+            await RefreshList();
+        }
+
+        public async Task RefreshList()
+        {
+            users = await adminApiService.GetUsers();
+            foreach (var u in users)
+            {
+                if (!ids.ContainsKey(u.Id))
+                    ids[u.Id] = "";
+            }
+        }
 
         public async void PostAdminUser(string userId)
         {
@@ -58,7 +75,8 @@ namespace health_index_app.Client.Pages
 
         public async void PostAddParentChildRelationship(string userId)
         {
-            await adminApiService.PostAddParentChildRelationship(userId);
+            userIdParent = ids[userId];
+            await adminApiService.PostAddParentChildRelationship($"{userId}.{userIdParent}");
             await RefreshList();
             StateHasChanged();
         }
@@ -70,14 +88,5 @@ namespace health_index_app.Client.Pages
             StateHasChanged();
         }
 
-        protected override async Task OnInitializedAsync()
-        {
-            await RefreshList();
-        }
-
-        public async Task RefreshList()
-        {
-            users = await adminApiService.GetUsers();
-        }
     }
 }

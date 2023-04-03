@@ -87,20 +87,21 @@
     <tbody>
         @foreach (var user in users)
         {
+          
             <tr>
                 <td>@user.Username</td>
                 <td>@user.Id</td>
                     <td>@user.ParentId
                          <div class="col-auto"> 
-                             <label> Parent user id</label>
-                             <input type="text" class="form-control" @bind-value="userIdParent" placeholder="Enter parent id"/>
+                            @*<label> Parent user id</label>*@ 
+                             <input type="text" class="form-control" @bind-value="ids[user.Id]" placeholder="Enter parent id"/>
                     
                             <button type="submit" class="btn btn-primary" @onclick="() => PostAddParentChildRelationship(user.Id)">Add parent/child relationship</button>
                             <button type="submit" class="btn btn-primary" @onclick="() => PostRemoveParentChildRelationship(user.Id)">Remove parent/child relationship</button>
                         </div>
                     </td>
                     
-                
+               
                 <td>@user.LockedStatus
                     <div class="col-auto">                
                      @if(user.LockEnd == null || user.LockEnd < DateTime.Now) {
