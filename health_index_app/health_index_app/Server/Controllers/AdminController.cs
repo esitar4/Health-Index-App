@@ -176,6 +176,7 @@ namespace health_index_app.Server.Controllers
         [Route("getUsers")]
         public async Task<List<ApplicationUserDTO>> GetUsers()
         {
+            var currUser = await _userManager.GetUserAsync(User);
             var users = await (from u in _userManager.Users
                 from ur in _context.UserRoles
                 .Where(mapping => mapping.UserId == u.Id)
@@ -195,38 +196,20 @@ namespace health_index_app.Server.Controllers
                     Admin = r.Name.Equals("Admin"),
                     LockEnd = u.LockoutEnd
                 }).ToListAsync();
+            ApplicationUserDTO? toRemove = (from u in users
+                                          where u.Id == currUser.Id
+                                          select u).FirstOrDefault();
             foreach (var u in users)
+            {
                 if (u.LockEnd == null || u.LockEnd < DateTime.Now)
                     u.LockedStatus = "Account Unlocked";
                 else
                     u.LockedStatus = $"Account Locked until {u.LockEnd}";
+            }
+            if(toRemove is not null)
+                users.Remove(toRemove);
             return users;
 
-                /*
-            var users = await (from u in _userManager.Users
-
-                                   join ur in _context.UserRoles on u.Id equals ur.UserId 
-                                   join r in _context.Roles on ur.RoleId equals r.Id into role
-                                    from r in role.DefaultIfEmpty()
-
-                               select new ApplicationUserDTO
-                               {
-                                   Id = u.Id,
-                                   Username = u.UserName,
-                                   ParentId = u.ParentId,
-                                   DateOfBirth = u.DateOfBirth,
-                                   Weight = u.Weight,
-                                   Height = u.Height,
-                                   Gender = u.Gender,
-                                   IsLocked = u.LockoutEnd > DateTime.Now
-                               }).ToListAsync();
-
-
-            foreach (var u in users)
-            {
-
-            }
-            */
         }
     }
 }
