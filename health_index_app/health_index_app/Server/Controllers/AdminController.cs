@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using health_index_app.Server.Models;
 using health_index_app.Server.Data;
+using health_index_app.Shared.DTObjects;
+using Microsoft.EntityFrameworkCore;
 
 namespace health_index_app.Server.Controllers
 {
@@ -44,6 +46,28 @@ namespace health_index_app.Server.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
+        [Route("removeuser")]
+        public async Task<ActionResult<string>> RemoveUserFromAdmin([FromBody] string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var r = roles.FirstOrDefault();
+            Console.WriteLine(r);
+
+            if (user == null)
+                return NotFound($"User with the given id was not found");
+
+            var result = await _userManager.RemoveFromRoleAsync(user, "Admin");
+            if (result.Succeeded)
+                return Ok($"Successfully removed user {user.Id} to admin role");
+            else
+                return
+                    BadRequest(result.Errors);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
         [Route("unlockAccount")]
         public async Task<ActionResult<string>> UnlockUserAccount([FromBody] string userId)
         {
@@ -55,6 +79,24 @@ namespace health_index_app.Server.Controllers
             var updateSuccess = await _userManager.UpdateAsync(user);
             if (updateSuccess.Succeeded)
                 return Ok($"Successfully unlocked user {user.Id}'s account");
+            else
+                return
+                    BadRequest(updateSuccess.Errors);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [Route("lockAccount")]
+        public async Task<ActionResult<string>> LockUserAccount([FromBody] string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+                return NotFound($"User with the given id was not found");
+            user.LockoutEnd = DateTime.Now.AddMinutes(5);
+            var updateSuccess = await _userManager.UpdateAsync(user);
+            if (updateSuccess.Succeeded)
+                return Ok($"Successfully locked user {user.Id}'s account");
             else
                 return
                     BadRequest(updateSuccess.Errors);
@@ -126,6 +168,60 @@ namespace health_index_app.Server.Controllers
             else
                 return
                     BadRequest(update.Errors);
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Route("getUsers")]
+        public async Task<List<ApplicationUserDTO>> GetUsers()
+        {
+            var users = await (from u in _userManager.Users
+                from ur in _context.UserRoles
+                .Where(mapping => mapping.UserId == u.Id)
+                .DefaultIfEmpty()
+                from r in _context.Roles
+                .Where(mapping => mapping.Id == ur.RoleId)
+                .DefaultIfEmpty()
+                select new ApplicationUserDTO
+                {
+                    Id = u.Id,
+                    Username = u.UserName,
+                    ParentId = u.ParentId,
+                    DateOfBirth = u.DateOfBirth,
+                    Weight = u.Weight,
+                    Height = u.Height,
+                    Gender = u.Gender,
+                    Admin = r.Name.Equals("Admin"),
+                    IsLocked = u.LockoutEnd > DateTime.Now
+                }).ToListAsync();
+            return users;
+
+                /*
+            var users = await (from u in _userManager.Users
+
+                                   join ur in _context.UserRoles on u.Id equals ur.UserId 
+                                   join r in _context.Roles on ur.RoleId equals r.Id into role
+                                    from r in role.DefaultIfEmpty()
+
+                               select new ApplicationUserDTO
+                               {
+                                   Id = u.Id,
+                                   Username = u.UserName,
+                                   ParentId = u.ParentId,
+                                   DateOfBirth = u.DateOfBirth,
+                                   Weight = u.Weight,
+                                   Height = u.Height,
+                                   Gender = u.Gender,
+                                   IsLocked = u.LockoutEnd > DateTime.Now
+                               }).ToListAsync();
+
+
+            foreach (var u in users)
+            {
+
+            }
+            */
         }
     }
 }

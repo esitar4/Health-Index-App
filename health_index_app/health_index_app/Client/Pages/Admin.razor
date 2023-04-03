@@ -12,7 +12,7 @@
 @code {
 
 }
-
+@*
 <div class="row">
     <div class="col-auto">
         <label> Add user to admin</label>
@@ -67,3 +67,69 @@
         <button type="submit" class="btn btn-primary" @onclick="PostRemoveParentChildRelationship">Remove parent</button>
     </div>
 </div>
+
+*@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email/Username</th>
+            <th>Id</th>
+            <th>Parent Id</th>
+            <th>Lock status</th>
+            <th>Admin</th>
+            <th>Date of Birth</th>
+            <th>Gender</th>
+            <th>Weight</th>
+            <th>Height</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in users)
+        {
+            <tr>
+                <td>@user.Username</td>
+                <td>@user.Id</td>
+                    <td>@user.ParentId
+                         <div class="col-auto"> 
+                             <label> Parent user id</label>
+                             <input type="text" class="form-control" @bind-value="userIdParent" placeholder="Enter parent id"/>
+                    
+                            <button type="submit" class="btn btn-primary" @onclick="() => PostAddParentChildRelationship(user.Id)">Add parent/child relationship</button>
+                            <button type="submit" class="btn btn-primary" @onclick="() => PostRemoveParentChildRelationship(user.Id)">Remove parent/child relationship</button>
+                        </div>
+                    </td>
+                    
+                
+                <td>@user.IsLocked
+                    <div class="col-auto">                
+                     @if(user.IsLocked == false) {
+                        <button type="submit" class="btn btn-primary" @onclick="() => PostLockAccount(user.Id) ">Lock account</button>
+                      }
+                      else {
+                          <button type="submit" class="btn btn-primary" @onclick="() => PostUnlockAccount(user.Id) ">Unlock account</button>
+                      }
+                     </div>
+                </td>
+
+                <td>@user.Admin
+                    <div class="col-auto">                
+                     @if(user.Admin == false) {
+                        <button type="submit" class="btn btn-primary" @onclick="() => PostAdminUser(user.Id) ">Add to admin</button>
+                      }
+                      else {
+                          <button type="submit" class="btn btn-primary" @onclick="() => RemoveAdminUser(user.Id) ">Remove from admin</button>
+                      }
+                     </div>
+                </td>
+                <td>@user.DateOfBirth</td>
+                <td>@user.Gender</td>
+                <td>@user.Weight</td>
+                <td>@user.Height</td>
+                <td>
+                    <button type="submit" class="btn btn-danger" @onclick="() => PostDeleteAccount(user.Id) ">Delete Account</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
