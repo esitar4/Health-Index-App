@@ -145,6 +145,12 @@ namespace health_index_app.Client.Pages
             Message = deleteMessage;
             if(await parentAPIServices.DeleteChild(username))
             {
+                List<int> mealIds = childMealFoodList.Where(m => m.ChildName.ToLower() == username.ToLower()).Select(m => m.MealId).ToList();
+                foreach (int id in mealIds)
+                {
+                    isHidden[id] = true;
+                }
+
                 Message.Status = (int) AlertMessage.Successful;
                 await RefreshLists();
             }
