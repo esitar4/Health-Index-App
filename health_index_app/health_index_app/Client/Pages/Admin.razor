@@ -70,7 +70,8 @@
 </div>
 
 *@
-
+<input type="text" class="form-control" placeholder="Search for user" @bind-value="searchStr"/>
+<button type="submit" class = "btn btn-primary" @onclick="SearchUser"> Search User </button>
 <table class="table">
     <thead>
         <tr>
@@ -87,7 +88,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var user in users)
+        @foreach (var user in FilteredUsers)
         {
           
             <tr>
