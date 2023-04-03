@@ -1,11 +1,9 @@
 ﻿@page "/parent"
-@*@page "/parent/{addchildstatus:int}/{deletechildstatus:int}"*@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using health_index_app.Shared
 @using health_index_app.Client.Components
 @using health_index_app.Shared.DTObjects;
-
 
 @attribute [Authorize] 
 
@@ -174,7 +172,7 @@ else
                             <td>@meal.MealName</td>
                             <td>@meal.HealthIndex</td>
                         </tr>
-                                <tr hidden="@isHidden[meal.MealId]">
+                        <tr hidden="@isHidden[meal.MealId]">
                             <td colspan="3">
                                 <table class="table table-bordered">
                                     <thead>
@@ -217,13 +215,4 @@ else
             </div>
         </div>
     </div>
-
-
-
-
 }
-
-
-
-@code {
-}    

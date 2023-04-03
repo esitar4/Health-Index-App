@@ -94,10 +94,7 @@ namespace health_index_app.Client.Pages
 
 
 
-        //[Parameter]
-        //public int AddChildStatus { get; set; }
-        //[Parameter]
-        //public int DeleteChildStatus { get; set; }
+
         private string newChildUserName = string.Empty;
 
         private AlertMessagesDTO Message { get; set; } = new();
@@ -136,8 +133,6 @@ namespace health_index_app.Client.Pages
 
             await Task.Delay(TimeSpan.FromSeconds(3));
             Message.Status = 0;
-
-            //navigationManager.NavigateTo($"refresh/parent/{AddChildStatus}/{DeleteChildStatus}");
         }
 
         private async Task DeleteChild(string username)
@@ -163,8 +158,6 @@ namespace health_index_app.Client.Pages
 
             await Task.Delay(TimeSpan.FromSeconds(3));
             Message.Status = 0;
-
-            //navigationManager.NavigateTo($"refresh/parent/{AddChildStatus}/{DeleteChildStatus}");
         }
 
         private async Task RefreshLists()
