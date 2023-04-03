@@ -71,7 +71,7 @@
                                                     var serving_description = serving.Serving_Description ?? "";
                                                     <li>
                                                         <button class="dropdown-item" type="button" @onclick="() => UpdateFoodRow(local_j, serving)">
-                                                            @if (!new Regex(@"\d+ (g|oz)|\d+(g|oz)").IsMatch(serving_description))
+                                                            @if ((!new Regex(@"\d+ (g|oz)|\d+(g|oz)").IsMatch(serving_description) && serving_description != "") || serving.Metric_Serving_Unit == "")
                                                             {
                                                                 serving_description += " (" + (serving.Metric_Serving_Amount??"").Split('.')[0] + serving.Metric_Serving_Unit + ")";
                                                             }
@@ -150,14 +150,38 @@
                         @{
                             Console.WriteLine(UserMealTable.Count());
                         }
-                        @for (int j = 0; j < UserMealTable.Count(); j++)
+                        @foreach (var userMeal in UserMealTable) 
                         {
-                            var foodId = UserMealTable.ElementAt(j)[0];
-                            <tr>
-                                <td>@UserMealTable.ElementAt(j)[0]</td>
-                                <td>@UserMealTable.ElementAt(j)[1]</td>
-                                <td>@UserMealTable.ElementAt(j)[2]</td>
-                                <td><button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromMeal(foodId)">Remove</button></td>
+                            <tr @onclick="() => Show(userMeal[0])" class="bg-@isHidden[userMeal[0]]">
+                                <td>@userMeal[1]</td>
+                                <td>@userMeal[2]</td>
+                                <td>@userMeal[3]</td>
+                                <td><button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromUserMeals(userMeal[0])">Remove</button></td>
+                            </tr>
+                            <tr hidden="@isHidden[userMeal[0]]">
+                                <td colspan="3">
+                                    <table class="table table-striped" border="1">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:60%">Food Name:</th>
+                                                <th>Food Calories:</th>
+                                                <th>Serving size:</th>
+                                                <th>Count:</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (int i = 3; i <= userMeal.Length -5; i += 5)
+                                            {
+                                                <tr>
+                                                    <td style="width:60%">@userMeal[i+2]</td>
+                                                    <td>@userMeal[i+3]</td>
+                                                    <td>@userMeal[i+4]</td>
+                                                    <td>@userMeal[i+5]</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </td>
                             </tr>
                         }
                     </tbody>

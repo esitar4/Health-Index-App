@@ -29,8 +29,6 @@ namespace health_index_app.Client.Pages
             }
         }
 
-
-
         //OnInput real time search
         private string searchUsername = string.Empty;
         private string searchMealName = string.Empty;

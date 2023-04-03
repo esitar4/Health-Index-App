@@ -7,7 +7,7 @@
 @using health_index_app.Shared.DTObjects;
 
 
-@attribute [Authorize] 
+@attribute [Authorize]
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -21,14 +21,14 @@
 else
 {
     <div>
-    @if (Message.Status == (int) AlertMessage.Unsucessful)
-    {
+        @if (Message.Status == (int)AlertMessage.Unsucessful)
+        {
             <div id="snackbar" class="alert alert-danger show" role="alert">@Message.Unsucessful</div>
-    }
-    else if (Message.Status == (int)AlertMessage.Successful)
-    {
-                    <div id="snackbar" class="alert alert-success show" role="alert">@Message.Successful</div>
-    }
+        }
+        else if (Message.Status == (int)AlertMessage.Successful)
+        {
+            <div id="snackbar" class="alert alert-success show" role="alert">@Message.Successful</div>
+        }
     </div>
 
     <div class="container-fluid">
@@ -39,7 +39,7 @@ else
                     <thead>
                         <tr class="table-light">
                             <th colspan="2">
-                                <input type="text" maxlength="25" style="width:100%" placeholder="Enter a username..." @bind-value="searchUserNameTable" @bind-value:event="oninput"/>
+                                <input type="text" maxlength="25" style="width:100%" placeholder="Enter a username..." @bind-value="searchUserNameTable" @bind-value:event="oninput" />
                             </th>
                         </tr>
                         <tr class="table-light">
@@ -49,7 +49,7 @@ else
                                    ActiveSortColumn="@_activeSortUserNameTableColumn"
                                    eventCallback=UpdateChildUsernameData
                                    T="ChildNameDTO" />
-                               <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,7 +60,7 @@ else
                                     No Records to display
                                 </td>
                             </tr>
-                            @for(int i = 0; i < userTablePageSize - 1; i++)
+                            @for (int i = 0; i < userTablePageSize - 1; i++)
                             {
                                 <tr>
                                     <td>-</td>
@@ -70,7 +70,8 @@ else
                             <tr>
                                 <td colspan="2" style="text-align:center">Total Children: @childUsernames.Count</td>
                             </tr>
-                        } else
+                        }
+                        else
                         {
                             foreach (var name in PagedChildUserNames)
                             {
@@ -79,11 +80,12 @@ else
                                     <td style="text-align:center"><button class="btn btn-danger btn-sm" @onclick="() => DeleteChild(name.Name)">Delete</button></td>
                                 </tr>
                             }
-                            @for(int i = 0; i < userTablePageSize - PagedChildUserNames.Count; i++)
+                            @for (int i = 0; i < userTablePageSize - PagedChildUserNames.Count; i++)
                             {
                                 <tr>
                                     <td>-</td>
-                                    <td>-
+                                    <td>
+                                        -
                                         <button class="btn btn-danger btn-sm" style="visibility:hidden">D</button>
                                     </td>
                                 </tr>
@@ -109,56 +111,96 @@ else
             </div>
             <div class="col-sm"></div>
         </div>
-        
+
 
         <div class="row">
             <div class="col">
                 <table class="table table-hover table-bordered">
 
-                <caption style="caption-side:top">Child Meal Overview </caption>
-                <thead>
-                    <tr class="table-light">
-                        <th>
-                            <input type="text" maxlength="25" style="width:100%" placeholder="Enter a username..." @bind-value="searchUsername" @bind-value:event="oninput"/>
-                        </th>
-                        <th>
-                            <input type="text" maxlength="25" style="width:100%" placeholder="Enter a meal name..." @bind-value="searchMealName" @bind-value:event="oninput" />
-                        </th>
-                        <th>
-                            <label style="width:100%">0 <input type="range" min="0" max="10" step="1" style="width:85%" @bind-value="searchHealthIndex" @bind-value:event="oninput" list="steplist" /> 10</label>
-                            <datalist id="steplist">
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
-                                <option>9</option>
-                                <option>10</option>
-                            </datalist>
-                        </th>
-                    </tr>
-                    <tr class="table-light">
-                        <TableSort Data="@childMealFoodList"
-                            NameList='new List<String> {"Child Name", "Meal Name", "Health Index"}'
-                            ColumnNameList='new List<String> {"ChildName", "MealName", "HealthIndex"}'
-                            ActiveSortColumn="@_activeSortColumn"
-                            eventCallback=UpdateChildMealFoodListData
-                            T="ChildMealFoodListDTO" />
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (childMealFoodList.Count == 0)
-                    {
-                        <tr>
-                            <td colspan="3">
-                                No Records to display
-                            </td>
+                    <caption style="caption-side:top">Child Meal Overview </caption>
+                    <thead>
+                        <tr class="table-light">
+                            <th>
+                                <input type="text" maxlength="25" style="width:100%" placeholder="Enter a username..." @bind-value="searchUsername" @bind-value:event="oninput" />
+                            </th>
+                            <th>
+                                <input type="text" maxlength="25" style="width:100%" placeholder="Enter a meal name..." @bind-value="searchMealName" @bind-value:event="oninput" />
+                            </th>
+                            <th>
+                                <label style="width:100%">0 <input type="range" min="0" max="10" step="1" style="width:85%" @bind-value="searchHealthIndex" @bind-value:event="oninput" list="steplist" /> 10</label>
+                                <datalist id="steplist">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                </datalist>
+                            </th>
                         </tr>
-                        @for (int i = 0; i < pageSize - 1; i++)
+                        <tr class="table-light">
+                            <TableSort Data="@childMealFoodList"
+                                   NameList='new List<String> {"Child Name", "Meal Name", "Health Index"}'
+                                   ColumnNameList='new List<String> {"ChildName", "MealName", "HealthIndex"}'
+                                   ActiveSortColumn="@_activeSortColumn"
+                                   eventCallback=UpdateChildMealFoodListData
+                                   T="ChildMealFoodListDTO" />
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (childMealFoodList.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="3">
+                                    No Records to display
+                                </td>
+                            </tr>
+                            @for (int i = 0; i < pageSize - 1; i++)
+                            {
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            }
+                        }
+                        @foreach (var meal in PagedChildMealFoodList)
+                        {
+                            <tr @onclick="() => Show(meal.MealId)" class="bg-@isHidden[meal.MealId]">
+                                <td>@meal.ChildName</td>
+                                <td>@meal.MealName</td>
+                                <td>@meal.HealthIndex</td>
+                            </tr>
+                            <tr hidden="@isHidden[meal.MealId]">
+                                <td colspan="3">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:60%">Food Name</th>
+                                                <th>Food Calories</th>
+                                                <th>Food Serving</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var food in meal.Food)
+                                            {
+                                                <tr>
+                                                    <td style="width:60%">@food.Food.FoodName</td>
+                                                    <td>@food.Food.Calories</td>
+                                                    <td>@food.Amount</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        }
+                        @for (int i = 0; i < pageSize - PagedChildMealFoodList.Count; i++)
                         {
                             <tr>
                                 <td>-</td>
@@ -166,54 +208,13 @@ else
                                 <td>-</td>
                             </tr>
                         }
-                    }
-                    @foreach (var meal in PagedChildMealFoodList)
-                    {
-                        <tr @onclick="() => Show(meal.MealId)" class="bg-@isHidden[meal.MealId]">
-                            <td>@meal.ChildName</td>
-                            <td>@meal.MealName</td>
-                            <td>@meal.HealthIndex</td>
-                        </tr>
-                                <tr hidden="@isHidden[meal.MealId]">
-                            <td colspan="3">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:60%">Food Name</th>
-                                            <th>Food Calories</th>
-                                            <th>Food Serving</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var food in meal.Food)
-                                        {
-                                            <tr>
-                                                <td style="width:60%">@food.Food.FoodName</td>
-                                                <td>@food.Food.Calories</td>
-                                                <td>@food.Amount</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    }
-                    @for(int i = 0; i < pageSize - PagedChildMealFoodList.Count; i++)
-                    {
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
 
-            <Pagination 
-                PageSize="pageSize" 
-                PageNumber="pageNumber"
-                ListSize="FilteredChildMealFoodList.Count"
-                eventCallback=@GetUpdatedPageNumber />
+                <Pagination PageSize="pageSize"
+                        PageNumber="pageNumber"
+                        ListSize="FilteredChildMealFoodList.Count"
+                        eventCallback=@GetUpdatedPageNumber />
             </div>
         </div>
     </div>
@@ -226,4 +227,4 @@ else
 
 
 @code {
-}    
+}
