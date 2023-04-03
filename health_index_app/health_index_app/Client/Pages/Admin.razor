@@ -101,9 +101,9 @@
                     </td>
                     
                 
-                <td>@user.IsLocked
+                <td>@user.LockedStatus
                     <div class="col-auto">                
-                     @if(user.IsLocked == false) {
+                     @if(user.LockEnd == null || user.LockEnd < DateTime.Now) {
                         <button type="submit" class="btn btn-primary" @onclick="() => PostLockAccount(user.Id) ">Lock account</button>
                       }
                       else {

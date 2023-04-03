@@ -193,8 +193,13 @@ namespace health_index_app.Server.Controllers
                     Height = u.Height,
                     Gender = u.Gender,
                     Admin = r.Name.Equals("Admin"),
-                    IsLocked = u.LockoutEnd > DateTime.Now
+                    LockEnd = u.LockoutEnd
                 }).ToListAsync();
+            foreach (var u in users)
+                if (u.LockEnd == null || u.LockEnd < DateTime.Now)
+                    u.LockedStatus = "Account Unlocked";
+                else
+                    u.LockedStatus = $"Account Locked until {u.LockEnd}";
             return users;
 
                 /*

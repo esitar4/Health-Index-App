@@ -20,6 +20,7 @@ namespace health_index_app.Shared.DTObjects
         [RegularExpression("[MFO]", ErrorMessage = "Invalid Gender Character")]   //character for internal use - parsed from dropdown menu on frontend
         public char? Gender { get; set; }
         public bool Admin { get; set; }
-        public bool IsLocked { get; set; }
+        public string LockedStatus { get; set; }
+        public DateTimeOffset? LockEnd { get; set; }
     }
 }
