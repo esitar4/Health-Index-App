@@ -11,9 +11,9 @@ namespace health_index_app.Client.Pages
         [Inject]
         public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Inject]
-        protected IParentAPIServices parentAPIServices { get; set; }
+        protected IParentAPIServices ParentAPIServices { get; set; }
         [Inject]
-        protected NavigationManager navigationManager { get; set; }
+        protected NavigationManager NavigationManager { get; set; }
 
         private List<ChildNameDTO> childUsernames = new List<ChildNameDTO>();
         private List<ChildMealFoodListDTO> childMealFoodList = new List<ChildMealFoodListDTO>();
@@ -118,7 +118,7 @@ namespace health_index_app.Client.Pages
             }
             else
             {
-                if (await parentAPIServices.AddChild(newChildUserName))
+                if (await ParentAPIServices.AddChild(newChildUserName))
                 {
                     Message.Status = (int) AlertMessage.Successful;
                     await RefreshLists();
@@ -138,7 +138,7 @@ namespace health_index_app.Client.Pages
         private async Task DeleteChild(string username)
         {
             Message = deleteMessage;
-            if(await parentAPIServices.DeleteChild(username))
+            if(await ParentAPIServices.DeleteChild(username))
             {
                 List<int> mealIds = childMealFoodList.Where(m => m.ChildName.ToLower() == username.ToLower()).Select(m => m.MealId).ToList();
                 foreach (int id in mealIds)
@@ -162,10 +162,10 @@ namespace health_index_app.Client.Pages
 
         private async Task RefreshLists()
         {
-            var names = await parentAPIServices.GetChildUsernames();
+            var names = await ParentAPIServices.GetChildUsernames();
             childUsernames = names.Select(u => new ChildNameDTO { Name = u }).ToList();
 
-            var childMeals = await parentAPIServices.GetChildMeals();
+            var childMeals = await ParentAPIServices.GetChildMeals();
             childMealFoodList = (from u in childUsernames
                                  join m in childMeals on u.Name equals m.childUsername
                                  select new ChildMealFoodListDTO
@@ -182,7 +182,7 @@ namespace health_index_app.Client.Pages
 
             foreach (var meal in childMeals)
             {
-                List<ChildFoodDTO> foodList = await parentAPIServices.GetChildFoods(meal.MealId);
+                List<ChildFoodDTO> foodList = await ParentAPIServices.GetChildFoods(meal.MealId);
 
                 childMealFoodList.Where(c => c.MealId == meal.MealId).FirstOrDefault().Food = foodList;
 
