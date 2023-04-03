@@ -1,6 +1,7 @@
 ﻿@page "/admin"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using health_index_app.Client.Components
 @using health_index_app.Shared
 
 @attribute [Authorize(Roles = "Admin")]
@@ -135,3 +136,7 @@
         }
     </tbody>
 </table>
+<Pagination PageSize="pageSize"
+                        PageNumber="pageNumber"
+                        ListSize="users.Count-1"
+                        eventCallback=@GetUpdatedPageNumber />

@@ -36,6 +36,13 @@ namespace health_index_app.Client.Pages
             }
         }
 
+        private int pageNumber = 1;
+        private int pageSize = 5;
+        public void GetUpdatedPageNumber(int num)
+        {
+            pageNumber = num;
+        }
+
         public async void PostAdminUser(string userId)
         {
             await adminApiService.PostAdminUser(userId);
@@ -87,6 +94,5 @@ namespace health_index_app.Client.Pages
             await RefreshList();
             StateHasChanged();
         }
-
     }
 }
