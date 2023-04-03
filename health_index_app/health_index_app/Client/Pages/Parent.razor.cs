@@ -15,10 +15,11 @@ namespace health_index_app.Client.Pages
         [Inject]
         protected NavigationManager navigationManager { get; set; }
 
-        private List<ChildNameDTO> childUsernames = new List<ChildNameDTO>();
+        private List<StringDTO> childUsernames = new List<StringDTO>();
+        private List<StringDTO> childUsernamesTest = new List<StringDTO>();
         private List<ChildMealFoodListDTO> childMealFoodList = new List<ChildMealFoodListDTO>();
 
-        private  Dictionary<int, bool> isHidden = new();
+        private Dictionary<int, bool> isHidden = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -50,12 +51,11 @@ namespace health_index_app.Client.Pages
             .Page(pageNumber, pageSize)
             .ToList();
 
-        private void UpdateChildMealFoodListData(TableSortHeaderEventCallBackArgs<ChildMealFoodListDTO> args)
+        private void UpdateChildMealFoodListData(TableEventCallBackArgs<ChildMealFoodListDTO> args)
         {
             childMealFoodList = args.Data;
             _activeSortColumn = args.ActiveSortColumn;
         }
-
 
         public void GetUpdatedPageNumber(int num)
         {
@@ -67,22 +67,30 @@ namespace health_index_app.Client.Pages
             isHidden[mealId] = !isHidden[mealId];
         }
 
-
+        private string _asc = "Name";
+        private string _search = string.Empty;
+        private List<StringDTO> search = new List<StringDTO> { new StringDTO { Name = "" } };
+        private void Update(TableEventCallBackArgs<StringDTO> args)
+        {
+            _asc = args.ActiveSortColumn;
+            childUsernamesTest = args.Data;
+            search = args.Search;
+        }
 
         private string searchUserNameTable = string.Empty;
         private int userTablePageSize = 2;
         private int userTablePageNumber = 1;
         private string _activeSortUserNameTableColumn = "Name";
-        List<ChildNameDTO> FilteredChildUserNames => childUsernames
+        List<StringDTO> FilteredChildUserNames => childUsernames
             .Where(
                 u => u.Name.ToLower().Contains(searchUserNameTable.ToLower())
             )
             .ToList();
-        List<ChildNameDTO> PagedChildUserNames => FilteredChildUserNames
+        List<StringDTO> PagedChildUserNames => FilteredChildUserNames
             .Page(userTablePageNumber, userTablePageSize)
             .ToList();
 
-        private void UpdateChildUsernameData(TableSortHeaderEventCallBackArgs<ChildNameDTO> args)
+        private void UpdateChildUsernameData(TableEventCallBackArgs<StringDTO> args)
         {
             childUsernames = args.Data;
             _activeSortUserNameTableColumn = args.ActiveSortColumn;
@@ -164,8 +172,8 @@ namespace health_index_app.Client.Pages
         private async Task RefreshLists()
         {
             var names = await parentAPIServices.GetChildUsernames();
-            childUsernames = names.Select(u => new ChildNameDTO { Name = u }).ToList();
-
+            childUsernames = names.Select(u => new StringDTO { Name = u }).ToList();
+            childUsernamesTest = new(childUsernames);
             var childMeals = await parentAPIServices.GetChildMeals();
             foreach (var meal in childMeals)
             {

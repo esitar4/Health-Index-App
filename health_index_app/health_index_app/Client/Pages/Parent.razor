@@ -31,6 +31,20 @@ else
     }
     </div>
 
+    <Table Title="LOL"
+        Names='new List<String> {"Username"}'
+            ColumnNames = 'new List<String> {"Name"}'
+                ActiveSortColumn="@_asc"
+                Data = "@childUsernamesTest"
+                Values = "@(childUsernamesTest.Where(
+                u => u.Name.ToLower().Contains(search[0].Name.ToLower())
+                ))"
+                Search = "@search"
+                PageSize="2" 
+                eventCallback="Update"
+                T="StringDTO"/>
+
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm">
@@ -48,7 +62,7 @@ else
                                    ColumnNameList='new List<String> {"Name"}'
                                    ActiveSortColumn="@_activeSortUserNameTableColumn"
                                    eventCallback=UpdateChildUsernameData
-                                   T="ChildNameDTO" />
+                                   T="StringDTO" />
                                <th></th>
                         </tr>
                     </thead>

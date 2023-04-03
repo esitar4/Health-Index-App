@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using health_index_app.Shared.DTObjects;
+using Microsoft.AspNetCore.Components;
 using System.Drawing.Printing;
 
 namespace health_index_app.Client.Components
@@ -14,7 +15,9 @@ namespace health_index_app.Client.Components
         [Parameter]
         public string ActiveSortColumn { get; set; }
         [Parameter]
-        public EventCallback<TableSortHeaderEventCallBackArgs<T>> eventCallback { get; set; }
+        public List<StringDTO> Search { get; set; }
+        [Parameter]
+        public EventCallback<TableEventCallBackArgs<T>> eventCallback { get; set; }
 
         private bool isSortedAscending;
         private string _activeSortColumn = null!;
@@ -59,10 +62,11 @@ namespace health_index_app.Client.Components
             }
 
             eventCallback.InvokeAsync(
-                new TableSortHeaderEventCallBackArgs<T>
+                new TableEventCallBackArgs<T>
                 {
                     ActiveSortColumn = _activeSortColumn,
-                    Data = _data
+                    Data = _data,
+                    Search = Search
                 }
             );
         }

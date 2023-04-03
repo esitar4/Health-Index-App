@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using health_index_app.Shared.DTObjects;
+using Microsoft.AspNetCore.Components;
 
 namespace health_index_app.Client.Components
 {
@@ -13,11 +14,13 @@ namespace health_index_app.Client.Components
 
         [Parameter]
         public string ActiveSortColumn { get; set; }
+        [Parameter]
+        public List<StringDTO> Search { get; set; }
 
         [Parameter]
-        public EventCallback<TableSortHeaderEventCallBackArgs<T>> eventCallback { get; set; }
+        public EventCallback<TableEventCallBackArgs<T>> eventCallback { get; set; }
 
-        public void GetUpdatedData(TableSortHeaderEventCallBackArgs<T> args)
+        public void GetUpdatedData(TableEventCallBackArgs<T> args)
         {
             ActiveSortColumn = args.ActiveSortColumn;
             eventCallback.InvokeAsync(args);

@@ -1,0 +1,69 @@
+﻿@typeparam T 
+<div class="container-fluid">
+<table class="table table-bordered table-striped">
+    <caption style="caption-side:top">@Title @Search.Count</caption>
+    <thead>
+        <tr class="table-light">
+                @foreach (var s in Search)
+                {
+                    <th>
+                        <input type="text" maxlength="25" style="width:100%" placeholder="Enter a username..." @bind-value="s.Name" @bind-value:event="oninput" />
+                    </th>
+                }
+        </tr>
+        <tr class="table-light">
+            <TableSort Data="@Data"
+                    NameList="@Names"
+                    ColumnNameList="@ColumnNames"
+                    ActiveSortColumn="@ActiveSortColumn"
+                    eventCallback=UpdateData
+                    Search="@Search"
+                    T="T" />
+        </tr>
+    </thead>
+    <tbody>
+        @if (Data.Count == 0)
+        {
+            <tr>
+                <td colspan="2">
+                    No Records to display
+                </td>
+            </tr>
+            @for(int i = 0; i < PageSize - 1; i++)
+            {
+                <tr>
+                    @foreach(var n in Names)
+                    {
+                        <td>-</td>
+                    }
+                    
+                </tr>
+            }
+        } else
+        {
+            foreach (var d in PagedData)
+            {
+                <tr>
+                    @foreach(var c in ColumnNames)
+                    {
+                        <td>@d.GetType().GetProperty(c).GetValue(d,null)</td>
+                    }
+                </tr>
+            }
+            @for(int i = 0; i < PageSize - PagedData.Count; i++)
+            {
+                <tr>
+                    @foreach(var n in Names)
+                    {
+                        <td>-</td>
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<Pagination PageSize="PageSize"
+        PageNumber="_pageNumber"
+        ListSize="FilteredData.Count"
+        eventCallback=@GetUpdatedPageNumber />
+</div>

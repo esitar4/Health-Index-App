@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace health_index_app.Shared.DTObjects
 {
-    public class ChildNameDTO
+    public class StringDTO
     {
         public string Name { get; set; }
     }
