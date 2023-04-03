@@ -102,8 +102,8 @@ else
             <div class="col-sm">
                 <div class="form-group">
                     <label class="form-label">Child Username</label>
-                    <input type="email" maxlength="25" class="form-control" placeholder="Enter a email address to add as child" @bind-value="newChildUserName" />
-                    <small id="emailHelp" class="form-text text-muted">Please enter the email of your child account.</small>
+                    <input type="email" maxlength="25" class="form-control" placeholder="Enter a username to add as child" @bind-value="newChildUserName" />
+                    <small id="emailHelp" class="form-text text-muted">Please enter the username of your child account.</small>
                 </div>
                 <button class="btn btn-primary" @onclick="AddNewChild">Add</button>
             </div>
@@ -143,7 +143,7 @@ else
                     </tr>
                     <tr class="table-light">
                         <TableSort Data="@childMealFoodList"
-                            NameList='new List<String> {"Child Name", "Meal Name", "Health Index"}'
+                            NameList='new List<String> {"Username", "Meal Name", "Health Index"}'
                             ColumnNameList='new List<String> {"ChildName", "MealName", "HealthIndex"}'
                             ActiveSortColumn="@_activeSortColumn"
                             eventCallback=UpdateChildMealFoodListData
