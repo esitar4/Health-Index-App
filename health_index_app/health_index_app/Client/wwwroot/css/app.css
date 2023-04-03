@@ -81,17 +81,3 @@ a:hover {
     border-color: #073B4C;
     box-shadow: 0 0 0 0.2rem #073B4C;
 }
-
-th {
-    border: 2px solid;
-    border-color: black;
-    text-align: center;
-    font-size: 32px;
-}
-
-td {
-    border: 2px solid;
-    border-color: black;
-    text-align: center;
-    font-size: 26px
-}
