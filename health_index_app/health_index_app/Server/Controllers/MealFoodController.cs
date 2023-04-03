@@ -1,19 +1,15 @@
-﻿using AutoMapper.Internal;
-using health_index_app.Server.Data;
-using health_index_app.Shared.FatSecret;
-using health_index_app.Shared.FatSecret.Authentication;
-using health_index_app.Shared.FatSecret.Requests;
-using health_index_app.Shared.FatSecret.ResponseObjects;
-using health_index_app.Shared.Models;
-using Microsoft.AspNetCore.Components.Authorization;
+﻿using health_index_app.Server.Data;
+using Food = health_index_app.Shared.Models.Food;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Net;
+using health_index_app.Shared.Models;
+using health_index_app.Shared.DTObjects;
+using Microsoft.AspNetCore.Authorization;
 
 namespace health_index_app.Server.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("mealfood")]
     public class MealFoodController : Controller
     {
@@ -97,6 +93,23 @@ namespace health_index_app.Server.Controllers
             }
 
             return Ok(mealFood);
+        }
+
+        [HttpGet]
+        [Route("get-food-list")]
+        public async Task<ActionResult<List<Food>>> GetFoodList(int mealId)
+        {
+            List<ChildFoodDTO> foodList = await (from mf in _context.MealFoods
+                                         join f in _context.Foods on mf.FoodId equals f.Id
+                                         where mf.MealId == mealId
+                                         select new ChildFoodDTO
+                                         {
+                                             MealId = mealId,
+                                             Food = f,
+                                             Amount = mf.Amount
+                                         })
+                                         .ToListAsync();
+            return Ok(foodList);
         }
     }
 }
