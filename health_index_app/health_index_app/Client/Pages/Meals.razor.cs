@@ -5,6 +5,7 @@ using MealFood = health_index_app.Shared.Models.MealFood;
 using Microsoft.AspNetCore.Components;
 using ResponseSearchFood = health_index_app.Shared.FatSecret.ResponseObjects.SearchedFood;
 using ResponseGetFood = health_index_app.Shared.FatSecret.ResponseObjects.GetFoodResponse;
+using health_index_app.Shared.DTObjects;
 using health_index_app.Shared.FatSecret.ResponseObjects;
 using health_index_app.Shared.Models;
 using System.Security.Cryptography.X509Certificates;
@@ -29,7 +30,6 @@ namespace health_index_app.Client.Pages
 
         private string SearchExpression = String.Empty;
         private string MealName = String.Empty;
-        private string dropdown_desc = String.Empty;
 
 
         private List<int> currFoodIndexList = new List<int>();
@@ -39,6 +39,8 @@ namespace health_index_app.Client.Pages
 
         string[,] SearchTable = new string[10,6]; //id, name, serving description, calories
         List<string[]> MealTable = new List<string[]>();
+        List<string[]> UserMealTable = new List<string[]>();
+
         List<ResponseGetFood> getFoodResponses = new List<ResponseGetFood>();
         
         public MealAPIServices mealAPI { get; set; } = new(new HttpClient());
@@ -80,12 +82,12 @@ namespace health_index_app.Client.Pages
         private async Task AddFoodToMeal(int index)
         {
             MealTable.Add(new string[6]);
-            MealTable.Last()[0] = SearchTable[index, 0];
-            MealTable.Last()[1] = SearchTable[index, 1];
-            MealTable.Last()[2] = SearchTable[index, 2];
-            MealTable.Last()[3] = SearchTable[index, 3];
-            MealTable.Last()[4] = SearchTable[index, 4];
-            MealTable.Last()[5] = SearchTable[index, 5]??"1";
+            MealTable.Last()[0] = SearchTable[index, 0]; //id
+            MealTable.Last()[1] = SearchTable[index, 1]; //name
+            MealTable.Last()[2] = SearchTable[index, 2]; //serving size
+            MealTable.Last()[3] = SearchTable[index, 3]; //calories count
+            MealTable.Last()[4] = SearchTable[index, 4]; //Pretty serving size
+            MealTable.Last()[5] = SearchTable[index, 5]??"1"; //amount
 
             double foodAmount;
             try
@@ -121,7 +123,11 @@ namespace health_index_app.Client.Pages
         {
             Meal meal = await MealAPIServices.CreateMeal(new Meal());
 
-            foreach (var MealTableFood in MealTable)
+            MealFood mealFood; UserMealDTO userMealDTO;
+
+            int totalCalories = 0; int totalGrams = 0;
+
+            foreach (string[] MealTableFood in MealTable)
             {
                 var foodId = MealTableFood[0];
                 var foodServing = MealTableFood[4];
@@ -137,18 +143,29 @@ namespace health_index_app.Client.Pages
 
                 var food = await FoodAPIServices.CreateFood(Convert.ToInt32(foodId));
 
-                await MealFoodAPIServices.CreateMealFood(new MealFood { MealId = meal.Id, FoodId = food.Id, Amount = foodAmount });
+                totalCalories += Convert.ToInt32(food.Calories);
+                totalGrams += Convert.ToInt32(food.MetricServingAmount);
 
+                mealFood = await MealFoodAPIServices.CreateMealFood(new MealFood { MealId = meal.Id, FoodId = food.Id, Amount = foodAmount });
             }
+            userMealDTO = await UserMealsAPIServices.CreateUserMeal(new UserMealDTO() { MealId = meal.Id, Name = MealName != "" ? MealName : "Unnamed Meal"});
 
-            /*foreach (var foodResponse in currFoodList)
+            UserMealTable.Add(new string[3+MealTable.Count()*4]);
+
+            UserMealTable.Last()[0] = MealName;
+            UserMealTable.Last()[1] = totalCalories.ToString();
+            UserMealTable.Last()[2] = totalGrams.ToString();
+
+            for (int i = 0; i < MealTable.Count(); i++)
             {
-                var food = await FoodAPIServices.CreateFood(Convert.ToInt32(foodResponse.Food_Id));
-
-                await MealFoodAPIServices.CreateMealFood( new MealFood { MealId = meal.Id, FoodId = food.Id, Amount = food.MetricServingAmount});
-            }*/
-
-            await UserMealsAPIServices.CreateUserMeal(new UserMealDTO { MealId = meal.Id, Name = MealName });
+                UserMealTable.Last()[2+i*4] = MealTable[i][1];
+                UserMealTable.Last()[2+i*4+1] = MealTable[i][2];
+                UserMealTable.Last()[2+i*4+2] = MealTable[i][3];
+                UserMealTable.Last()[2+i*4+3] = MealTable[i][5];
+            }
+            MealTable.Clear();
+            MealName = String.Empty;
+            StateHasChanged();
         }
     }
 }

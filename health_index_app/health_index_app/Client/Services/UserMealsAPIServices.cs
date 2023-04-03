@@ -1,4 +1,5 @@
 ﻿using health_index_app.Shared.Models;
+using health_index_app.Shared.DTObjects;
 using System.Net.Http.Json;
 
 namespace health_index_app.Client.Services
@@ -31,6 +32,7 @@ namespace health_index_app.Client.Services
             }
             catch
             {
+                throw;
                 throw new Exception("Unable to create UserMeal");
             }
             return result;

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace health_index_app.Shared.Models
+namespace health_index_app.Shared.DTObjects
 {
     public class UserMealDTO
     {

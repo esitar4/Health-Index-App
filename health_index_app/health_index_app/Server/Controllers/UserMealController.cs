@@ -1,6 +1,6 @@
 ﻿using health_index_app.Server.Data;
 using health_index_app.Server.Models;
-using health_index_app.Shared.Models;
+using health_index_app.Shared.DTObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
