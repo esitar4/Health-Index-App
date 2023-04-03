@@ -1,5 +1,6 @@
 ﻿using health_index_app.Server.Data;
 using health_index_app.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace health_index_app.Server.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("meal")]
     public class MealController : Controller
     {

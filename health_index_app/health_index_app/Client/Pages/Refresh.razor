@@ -1,0 +1,21 @@
+﻿@page "/refresh"
+@page "/refresh/{text}"
+@*@page "/refresh/{text}/{addchildstatus:int}/{deletechildstatus:int}"*@
+@inject NavigationManager NavigationManager
+
+<h4>Page is refreshing please wait...</h4>
+
+@code {
+    [Parameter]
+    public string Text { get; set; }
+    [Parameter]
+    public int AddChildStatus { get; set; }
+    [Parameter]
+    public int DeleteChildStatus { get; set; }
+
+    protected override void OnInitialized()
+    {
+        NavigationManager.NavigateTo($"{Text}/{AddChildStatus}/{DeleteChildStatus}");
+    }
+
+}

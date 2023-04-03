@@ -158,6 +158,7 @@ namespace health_index_app.Client.Pages
 
             for (int i = 0; i < MealTable.Count(); i++)
             {
+<<<<<<< HEAD
                 UserMealTable.Last()[2+i*4] = MealTable[i][1];
                 UserMealTable.Last()[2+i*4+1] = MealTable[i][2];
                 UserMealTable.Last()[2+i*4+2] = MealTable[i][3];
@@ -166,6 +167,14 @@ namespace health_index_app.Client.Pages
             MealTable.Clear();
             MealName = String.Empty;
             StateHasChanged();
+=======
+                var food = await FoodAPIServices.CreateFood(Convert.ToInt32(foodResponse.Food_Id));
+
+                await MealFoodAPIServices.CreateMealFood( new MealFood { MealId = meal.Id, FoodId = food.Id, Amount = food.MetricServingAmount});
+            }*/
+
+            await UserMealsAPIServices.CreateUserMeal(new UserMealDTO { MealId = meal.Id, Name = "test" });
+>>>>>>> d01a24357bf8705198d721eb9645ad99cadbc337
         }
     }
 }
