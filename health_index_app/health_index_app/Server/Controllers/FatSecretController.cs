@@ -1,13 +1,14 @@
 ﻿using health_index_app.Shared.FatSecret;
 using health_index_app.Shared.FatSecret.Requests;
 using health_index_app.Shared.FatSecret.ResponseObjects;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace health_index_app.Server.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/fatsecret")]
     public class FatSecretController : Controller
     {

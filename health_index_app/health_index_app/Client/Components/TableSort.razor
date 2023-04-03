@@ -1,0 +1,11 @@
+﻿@typeparam T
+@for (int i = 0; i < NameList.Count; i++)
+{
+    <TableSortHeader 
+        Data="@Data"
+        Name="@NameList[i]"
+        ColumnName="@ColumnNameList[i]"
+        ActiveSortColumn="@ActiveSortColumn"
+        eventCallback="GetUpdatedData" 
+        T="T"/>
+}

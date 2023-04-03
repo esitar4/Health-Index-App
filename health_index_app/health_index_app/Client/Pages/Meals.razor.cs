@@ -148,7 +148,7 @@ namespace health_index_app.Client.Pages
                 await MealFoodAPIServices.CreateMealFood( new MealFood { MealId = meal.Id, FoodId = food.Id, Amount = food.MetricServingAmount});
             }*/
 
-            await UserMealsAPIServices.CreateUserMeal(new UserMealDTO { MealId = meal.Id, Name = MealName });
+            await UserMealsAPIServices.CreateUserMeal(new UserMealDTO { MealId = meal.Id, Name = "test" });
         }
     }
 }

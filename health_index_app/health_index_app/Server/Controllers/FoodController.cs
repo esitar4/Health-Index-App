@@ -1,11 +1,13 @@
 ﻿using health_index_app.Server.Data;
 using health_index_app.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace health_index_app.Server.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("food")]
     public class FoodController : Controller
     {
@@ -64,6 +66,7 @@ namespace health_index_app.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [Route("delete")]
         public async Task<ActionResult<bool>> DeleteFood([FromBody] Food food)
         {
