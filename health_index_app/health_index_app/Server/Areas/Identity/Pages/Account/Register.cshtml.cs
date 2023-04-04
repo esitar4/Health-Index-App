@@ -71,6 +71,22 @@ namespace health_index_app.Server.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+            //public string? ParentId { get; set; }
+            [DateOfBirth(ErrorMessage = "Date of Birth must be in the past")]
+            [Display(Name = "Date of Birth (Optional)")]
+            public DateTime? DateOfBirth { get; set; }
+            [Display(Name = "Weight (Optional - pounds)")]
+            [Range(0.001, 9999.99, ErrorMessage = "Weight must be in between 0 and 9999.99")]
+            public double? Weight { get; set; }
+            [Display(Name = "Height (Optional - inches)")]
+            [Range(0.001, 999.99, ErrorMessage = "Height must be in between 0 and 999.99")]
+            public double? Height { get; set; }
+            [RegularExpression("[MFO]", ErrorMessage = "Invalid Gender Character")]   //character for internal use - parsed from dropdown menu on frontend
+            [Display(Name = "Gender (Optional")]
+            public char? Gender { get; set; }
+
+
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -117,8 +133,18 @@ namespace health_index_app.Server.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                if (Input.DateOfBirth is not null)
+                    user.DateOfBirth = Input.DateOfBirth;
+                if (Input.Weight is not null)
+                    user.Weight = Input.Weight;
+                if (Input.Height is not null)
+                    user.Height = Input.Height;
+                if (Input.Gender is not null)
+                    user.Gender = Input.Gender;
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
+                user.EmailConfirmed = true;
+                await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
@@ -135,15 +161,15 @@ namespace health_index_app.Server.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    /*if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }
                     else
-                    {
+                    {*/
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
-                    }
+                    //}
                 }
                 foreach (var error in result.Errors)
                 {

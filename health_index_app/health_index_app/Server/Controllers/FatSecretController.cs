@@ -1,12 +1,14 @@
 ﻿using health_index_app.Shared.FatSecret;
-using health_index_app.Shared.FatSecret.Authentication;
 using health_index_app.Shared.FatSecret.Requests;
 using health_index_app.Shared.FatSecret.ResponseObjects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace health_index_app.Server.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/fatsecret")]
     public class FatSecretController : Controller
     {
@@ -21,16 +23,10 @@ namespace health_index_app.Server.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
-            return Ok();
-        }
-
         [HttpGet]
         [Route("foodsearch")]
         public async Task<FatSecretResponse> Get(string searchExpression, int maxResults = 10)
         {
-            //return GetDummyCurrentWeather();
             var request = new FoodsSearchRequest { SearchExpression = searchExpression, MaxResults = maxResults };
 
             return await _fatSecretClient.FoodsSearchAsync(request);
@@ -40,7 +36,6 @@ namespace health_index_app.Server.Controllers
         [Route("foodget")]
         public async Task<FatSecretResponse> Get(string foodId)
         {
-            //return GetDummyCurrentWeather();
             var request = new FoodGetV2Request { FoodId = Convert.ToInt32(foodId) };
 
             return await _fatSecretClient.FoodGetAsync(request);

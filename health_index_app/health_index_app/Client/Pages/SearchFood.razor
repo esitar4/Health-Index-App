@@ -1,5 +1,9 @@
 ﻿@page "/searchFood"
 @using System.Text.RegularExpressions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using health_index_app.Shared
+@attribute [Authorize]
 
 <label>Search</label>
 
@@ -29,7 +33,7 @@
         </thead>
 
         <tbody>
-            
+
                 @foreach (var food in json.Foods.Food)
                 {
 
@@ -44,10 +48,20 @@
                         <td>@food.Food_Name</td>
                         <td>@calorie_count</td>
                         <td>@serving_size</td>
+                        <td><button class="btn btn-primary btn-lg" type="button" @onclick="@(() => GetFood(@food.Food_Id))">Details</button></td>
                     </tr>
-                }
+                @if (getFood != null)
+                {
+                    <tr>
+                        <td>@getFood.Food.Food_Id</td>
+                        <td>Serving@(getFood.Food.Servings.Serving.Count)</td>
+                    </tr>
+                    }
+
+        }
         </tbody>
     </table>
 } else{
     <h4>Enter a food to search!</h4>
 }
+

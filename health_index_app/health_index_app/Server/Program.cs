@@ -3,8 +3,8 @@ using health_index_app.Server.Models;
 using health_index_app.Shared.FatSecret;
 using health_index_app.Shared.FatSecret.Authentication;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 string? CorsPolicy = "CorsPolicy";
 
@@ -29,28 +29,42 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => 
+{
+    options.SignIn.RequireConfirmedAccount = true;
+    options.Lockout.AllowedForNewUsers = true;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+})
+    .AddRoles<IdentityRole>()
+    .AddRoleManager<RoleManager<IdentityRole>>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddIdentityServer()
-    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
+    {
+        options.IdentityResources["openid"].UserClaims.Add("role");
+        options.ApiResources.Single().UserClaims.Add("role");
+    });
 
-builder.Services.AddAuthentication()
+builder.Services.AddAuthentication(options => 
+{ options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme; 
+    options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme; 
+    options.DefaultSignInScheme = IdentityConstants.ExternalScheme; 
+})
     .AddIdentityServerJwt();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-builder.Services.AddScoped(st => new HttpClient());
-builder.Services.AddSingleton<IFatSecretClient>(client => new FatSecretClient(
-    new FatSecretCredentials
+builder.Services.AddSingleton<FatSecretCredentials>(client => new FatSecretCredentials
     {
-        ClientKey = "44a3ee4ca84b42ebb3234bc6bf66518c",
-        ClientSecret = "29c8029e8f1b4fdcae11abc7d1babfdd"
-    },
-    new HttpClient()
-    )
+        ClientKey = builder.Configuration["ClientKey"],
+        ClientSecret = builder.Configuration["ClientSecret"]
+    }
 );
+
+builder.Services.AddSingleton<IFatSecretClient, FatSecretClient>();
 
 var app = builder.Build();
 

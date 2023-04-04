@@ -1,0 +1,13 @@
+﻿@typeparam T 
+
+<th class="sort-th" @onclick='() => SortTable(ColumnName)'>
+    @Name
+    <span class="fa @(SetSortIcon(ColumnName))"></span>
+</th>
+
+<style>
+.table th {
+    border: 1.5px solid;
+    border-color: black;
+}
+</style>

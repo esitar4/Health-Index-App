@@ -1,0 +1,156 @@
+﻿@page "/Meals"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using health_index_app.Shared
+@using System.Text.RegularExpressions;
+
+@attribute [Authorize]
+
+<label>Create/Edit your meals</label>
+
+<br />
+
+<br />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm">
+            <div class="row">
+                <div class="col-auto">
+                    <input type="text" class="form-control" @bind-value="SearchExpression" />
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-light" @onclick="SearchForFood">Submit</button>
+                </div>
+            </div>
+            @if (json is not null)
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Food Name:</th>
+                            <th>Serving Size:</th>
+                            <th>Calorie Count:</th>
+                            <th width="1%">Count:</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @{
+                            int i = 0;
+                            //SearchTable = new string[10, 5];
+                            foreach (var food in json.Foods.Food) { UserFoodSearch(i++, food); }
+                        }
+
+                        @for (int j = 0; j < SearchTable.GetLength(0); j++)
+                        {
+                            var local_j = j;
+
+                            var foodId = SearchTable[j, 0];
+                            var foodName = SearchTable[local_j, 1];
+                            var servingSize = SearchTable[local_j, 2];
+                            var calorieCount = SearchTable[local_j, 3];
+                            <tr>
+                                <td>@foodName</td>
+                                <td>@servingSize</td>
+                                <td>@calorieCount</td>
+                                <td><input type="text" class="form-control" placeholder="1" @bind-value="SearchTable[local_j,5]" /></td>
+                                <td>
+                                    <div class="btn-group dropend">
+                                        <button type="button" class="btn btn-primary btn-sm" @onclick="() => AddFoodToMeal(local_j)">Add</button>
+                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" @onclick="async () => await GetFood(foodId)">
+                                            @* <span class="visually-hidden"></span>*@
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            @if (getFood != null)
+                                            {
+                                                @foreach (var serving in getFood.Food.Servings.Serving)
+                                                {
+                                                    var serving_description = serving.Serving_Description ?? "";
+                                                    <li>
+                                                        <button class="dropdown-item" type="button" @onclick="() => UpdateFoodRow(local_j, serving)">
+                                                            @if (!new Regex(@"\d+ (g|oz)|\d+(g|oz)").IsMatch(serving_description))
+                                                            {
+                                                                serving_description += " (" + (serving.Metric_Serving_Amount??"").Split('.')[0] + serving.Metric_Serving_Unit + ")";
+                                                            }
+                                                            @{
+                                                                SearchTable[local_j, 4] = serving_description;
+                                                            }
+                                                            @SearchTable[local_j, 4]
+                                                        </button>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h4>Enter a food to search!</h4>
+            }
+        </div>
+        <div class="col-sm">
+            <div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Meal Food Name:</th>
+                            <th>Serving Size:</th>
+                            <th>Calorie Count:</th>
+                            <th width="1%">Count:</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @{
+                            Console.WriteLine(MealTable.Count());
+                        }
+                        @for (int j = 0; j < MealTable.Count(); j++)
+                        {
+                            var foodId = MealTable.ElementAt(j)[0];
+                            <tr>
+                                <td>@MealTable.ElementAt(j)[1]</td>
+                                <td>@MealTable.ElementAt(j)[2]</td>
+                                <td>@MealTable.ElementAt(j)[3]</td>
+                                <td>@MealTable.ElementAt(j)[5]</td>
+                                <td><button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromMeal(foodId)">Remove</button></td>
+                            </tr>
+                        }
+                        <div class="col-auto">
+                            <input type="text" class="form-control" @bind-value="MealName" />
+                        </div>
+                        <button class="btn btn-success" type="button" @onclick="() => CreateMeal()">Create Meal</button>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Food Name:</th>
+                            <th>Serving Size:</th>
+                            <th>Calorie Count:</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Example_name</td>
+                            <td>100 Calories</td>
+                            <td>2 servings</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -20,7 +20,7 @@ namespace health_index_app.Shared.FatSecret.Authentication
 
         private async Task GetNewTokenAsync(HttpClient httpClient)
         {
-            HttpClient Http = new HttpClient();
+            HttpClient Http = httpClient;
             var byteArray = Encoding.ASCII.GetBytes($"{_credentials.ClientKey}:{_credentials.ClientSecret}");
             Http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
