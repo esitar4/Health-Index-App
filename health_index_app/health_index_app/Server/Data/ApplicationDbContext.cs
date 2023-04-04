@@ -20,11 +20,11 @@ namespace health_index_app.Server.Data
         public DbSet<UserMeal> UserMeals { get; set; }
         public DbSet<MealFood> MealFoods { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder builder)
-        //{
-        //    base.OnModelCreating(builder);
-        //    builder.Entity<ApplicationUser>().HasMany(u => u.Parent).HasForeignKey(ApplicationUser.Id);
-        //}
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<ApplicationUser>().HasData(new ApplicationUser { Id = "440b047a-9335-4099-8b7c-1929aac527c4", UserName = "admin@cog.com"});
+            builder.Entity<ApplicationUser>().HasData(new ApplicationUser { UserName = "child1@cog.com", ParentId = "440b047a-9335-4099-8b7c-1929aac527c4" });
+        }
 
     }
 }
