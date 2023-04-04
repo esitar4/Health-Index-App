@@ -417,6 +417,17 @@ namespace health_index_app.Server.Data
                 new MealFood { MealId = 10006, FoodId = 1921249, Amount = 1}
             );
 
+            builder.Entity<UserMeal>().HasData(
+                new UserMeal { UserId = userIds[4], MealId = 10004 },
+                new UserMeal { UserId = userIds[1], MealId = 10001 },
+                new UserMeal { UserId = userIds[4], MealId = 10005 },
+                new UserMeal { UserId = userIds[3], MealId = 10004 },
+                new UserMeal { UserId = userIds[0], MealId = 10003 },
+                new UserMeal { UserId = userIds[1], MealId = 10004 },
+                new UserMeal { UserId = userIds[2], MealId = 10002 },
+                new UserMeal { UserId = userIds[4], MealId = 10006 }
+            );
+
 
             base.OnModelCreating(builder);
         }
