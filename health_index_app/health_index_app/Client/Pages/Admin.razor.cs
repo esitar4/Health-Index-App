@@ -19,8 +19,11 @@ namespace health_index_app.Client.Pages
         private Dictionary<string, string> ids = new Dictionary<string, string>();
 
         private List<ApplicationUserDTO> users = new();
-        List<ApplicationUserDTO> FilteredUsers = new();
+        List<ApplicationUserDTO> FilteredUsers => (from u in users
+                                                    where u.Username.ToLower().Contains(searchStr.ToLower())
+                                                    select u).ToList();
 
+        List<ApplicationUserDTO> pageData => FilteredUsers.Page(pageNumber, pageSize).ToList();
 
         protected override async Task OnInitializedAsync()
         {
@@ -30,8 +33,7 @@ namespace health_index_app.Client.Pages
         public async Task RefreshList()
         {
 
-            FilteredUsers = await adminApiService.GetUsers();
-            users = FilteredUsers;
+            users = await adminApiService.GetUsers();
             foreach (var u in users)
             {
                 if (!ids.ContainsKey(u.Id))
@@ -47,13 +49,6 @@ namespace health_index_app.Client.Pages
         }
 
         string searchStr = string.Empty;
-        public async void SearchUser()
-        {
-           FilteredUsers = (from u in users
-                                where u.Username.ToLower().Contains(searchStr.ToLower())
-                                select u).ToList();
-            await RefreshList();
-        }
 
         public async void PostAdminUser(string userId)
         {
