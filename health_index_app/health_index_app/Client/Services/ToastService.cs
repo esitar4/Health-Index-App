@@ -1,7 +1,7 @@
 ﻿using System.Timers;
 using Timer = System.Timers.Timer;
 
-namespace BlazorIntro.Client.Services;
+namespace health_index_app.Client.Services;
 
 public class ToastService
 {

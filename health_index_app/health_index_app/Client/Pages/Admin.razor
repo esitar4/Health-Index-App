@@ -13,63 +13,6 @@
 @code {
 
 }
-@*
-<div class="row">
-    <div class="col-auto">
-        <label> Add user to admin</label>
-        <input type="text" class="form-control" @bind-value="userIdAddAdmin"/>
-        
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary" @onclick="PostAdminUser">Submit</button>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-auto">
-        <label> Unlock user account</label>
-        <input type="text" class="form-control" @bind-value="userIdUnlock"/>
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary" @onclick="PostUnlockAccount">Unlock</button>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-auto">
-        <label> Delete user account</label>
-        <input type="text" class="form-control" @bind-value="userIdDelete"/>
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary" @onclick="PostDeleteAccount">Delete Account</button>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-auto">
-        <label> Child user id</label>
-        <input type="text" class="form-control" @bind-value="userIdChild"/>
-    </div>
-    <div class="col-auto"> 
-         <label> Parent user id</label>
-         <input type="text" class="form-control" @bind-value="userIdParent"/>
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary" @onclick="PostAddParentChildRelationship">Add parent/child relationship</button>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-auto">
-        <label> Child user id</label>
-        <input type="text" class="form-control" @bind-value="userIdRemoveParent"/>
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary" @onclick="PostRemoveParentChildRelationship">Remove parent</button>
-    </div>
-</div>
-
-*@
 <input type="text" class="form-control" placeholder="Search for user" @bind-value="searchStr"/>
 <button type="submit" class = "btn btn-primary" @onclick="SearchUser"> Search User </button>
 <table class="table">
