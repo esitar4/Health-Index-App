@@ -384,6 +384,38 @@ namespace health_index_app.Server.Data
                 }
             );
 
+            builder.Entity<Meal>().HasData(
+                new Meal { Id = 10001, HealthIndex = 5},
+                new Meal { Id = 10002, HealthIndex = 3},
+                new Meal { Id = 10003, HealthIndex = 7},
+                new Meal { Id = 10004, HealthIndex = 10},
+                new Meal { Id = 10005, HealthIndex = 1},
+                new Meal { Id = 10006, HealthIndex = 6}
+            );
+
+            builder.Entity<MealFood>().HasData( 
+                new MealFood { MealId = 10001, FoodId = 26547, Amount = 1},
+                new MealFood { MealId = 10001, FoodId = 31818, Amount = 1},
+                new MealFood { MealId = 10001, FoodId = 251811, Amount = 1},
+
+                new MealFood { MealId = 10002, FoodId = 41321916, Amount = 1},
+                new MealFood { MealId = 10002, FoodId = 26547, Amount = 2},
+
+                new MealFood { MealId = 10003, FoodId = 91707, Amount = 1},
+                new MealFood { MealId = 10003, FoodId = 1921249, Amount = 1},
+                new MealFood { MealId = 10003, FoodId = 568586, Amount = 1},
+
+                new MealFood { MealId = 10004, FoodId = 91707, Amount = 1},
+                new MealFood { MealId = 10004, FoodId = 31818, Amount = 1},
+                new MealFood { MealId = 10004, FoodId = 568586, Amount = 1},
+                new MealFood { MealId = 10004, FoodId = 9771793, Amount = 1},
+
+                new MealFood { MealId = 10005, FoodId = 251811, Amount = 10},
+                new MealFood { MealId = 10005, FoodId = 2861015, Amount = 1},
+
+                new MealFood { MealId = 10006, FoodId = 91707, Amount = 2},
+                new MealFood { MealId = 10006, FoodId = 1921249, Amount = 1}
+            );
 
 
             base.OnModelCreating(builder);
