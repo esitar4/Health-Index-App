@@ -74,7 +74,7 @@ namespace Test_health_index_app.Services
             var result = await parentAPIService.GetChildFoods(1234);
 
             //Assert
-            //Assert.That(result.Count, Is.EqualTo(7));
+            Assert.That(result.Count, Is.EqualTo(7));
 
         }
 
