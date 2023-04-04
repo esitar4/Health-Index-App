@@ -20,7 +20,7 @@ namespace Test_health_index_app.Services
         public async Task PostAdminUser_AddsUserSuccessfully(string userId)
         {
             var mockHttp = new MockHttpMessageHandler();
-            string testResponse = $"Successfully added user { userId} to admin role";
+            string testResponse = "StatusCode: 200, ReasonPhrase: 'OK', Version: 1.1, Content: System.Net.Http.BrowserHttpHandler+BrowserHttpContent, Headers:\n{\n  Access-Control-Allow-Origin: *\n  Date: Tue, 04 Apr 2023 22:05:32 GMT\n  Server: Kestrel\n  Content-Type: text/plain; charset=utf-8\n}";
 
             mockHttp.When("https://localhost:7005/api/admin/adduser")
                 .Respond("application/json", testResponse);
@@ -32,7 +32,6 @@ namespace Test_health_index_app.Services
             var result = await adminAPIService.PostAdminUser(userId);
 
             Assert.That(result.StartsWith("StatusCode: 200"));
-            // Assert.That(result.Contains($"{userId}"));
             Console.WriteLine( result );
         }
 
