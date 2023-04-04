@@ -19,10 +19,9 @@ namespace health_index_app.Client.Services
         private readonly HttpClient _client;
         private readonly IFatSecretAPIServices _fatSecretAPIServices;
 
-        public FoodAPIServices(HttpClient client, IFatSecretAPIServices fatSecretAPIServices)
+        public FoodAPIServices(HttpClient client)
         {
             _client = client;
-            _fatSecretAPIServices = fatSecretAPIServices;
         }
 
         public async Task<Food> CreateFood(int foodId)
@@ -62,7 +61,7 @@ namespace health_index_app.Client.Services
         {
             try
             {
-                var response = await _client.PostAsJsonAsync("Food/update", food);
+                var response = await _client.PostAsJsonAsync("food/update", food);
             }
             catch
             {
