@@ -394,38 +394,38 @@ namespace health_index_app.Server.Data
             );
 
             builder.Entity<MealFood>().HasData( 
-                new MealFood { MealId = 10001, FoodId = 26547, Amount = 1},
-                new MealFood { MealId = 10001, FoodId = 31818, Amount = 1},
-                new MealFood { MealId = 10001, FoodId = 251811, Amount = 1},
+                new MealFood { Id = 1, MealId = 10001, FoodId = 26547, Amount = 1},
+                new MealFood { Id = 2, MealId = 10001, FoodId = 31818, Amount = 1},
+                new MealFood { Id = 3, MealId = 10001, FoodId = 251811, Amount = 1},
 
-                new MealFood { MealId = 10002, FoodId = 41321916, Amount = 1},
-                new MealFood { MealId = 10002, FoodId = 26547, Amount = 2},
+                new MealFood { Id = 4, MealId = 10002, FoodId = 41321916, Amount = 1},
+                new MealFood { Id = 5, MealId = 10002, FoodId = 26547, Amount = 2},
 
-                new MealFood { MealId = 10003, FoodId = 91707, Amount = 1},
-                new MealFood { MealId = 10003, FoodId = 1921249, Amount = 1},
-                new MealFood { MealId = 10003, FoodId = 568586, Amount = 1},
+                new MealFood { Id = 6, MealId = 10003, FoodId = 91707, Amount = 1},
+                new MealFood { Id = 7, MealId = 10003, FoodId = 1921249, Amount = 1},
+                new MealFood { Id = 8, MealId = 10003, FoodId = 568586, Amount = 1},
 
-                new MealFood { MealId = 10004, FoodId = 91707, Amount = 1},
-                new MealFood { MealId = 10004, FoodId = 31818, Amount = 1},
-                new MealFood { MealId = 10004, FoodId = 568586, Amount = 1},
-                new MealFood { MealId = 10004, FoodId = 9771793, Amount = 1},
+                new MealFood { Id = 9, MealId = 10004, FoodId = 91707, Amount = 1},
+                new MealFood { Id = 10, MealId = 10004, FoodId = 31818, Amount = 1},
+                new MealFood { Id = 11, MealId = 10004, FoodId = 568586, Amount = 1},
+                new MealFood { Id = 12, MealId = 10004, FoodId = 9771793, Amount = 1},
 
-                new MealFood { MealId = 10005, FoodId = 251811, Amount = 10},
-                new MealFood { MealId = 10005, FoodId = 2861015, Amount = 1},
+                new MealFood { Id = 13, MealId = 10005, FoodId = 251811, Amount = 10},
+                new MealFood { Id = 14, MealId = 10005, FoodId = 2861015, Amount = 1},
 
-                new MealFood { MealId = 10006, FoodId = 91707, Amount = 2},
-                new MealFood { MealId = 10006, FoodId = 1921249, Amount = 1}
+                new MealFood { Id = 15, MealId = 10006, FoodId = 91707, Amount = 2},
+                new MealFood { Id = 16, MealId = 10006, FoodId = 1921249, Amount = 1}
             );
 
             builder.Entity<UserMeal>().HasData(
-                new UserMeal { UserId = userIds[4], MealId = 10004 },
-                new UserMeal { UserId = userIds[1], MealId = 10001 },
-                new UserMeal { UserId = userIds[4], MealId = 10005 },
-                new UserMeal { UserId = userIds[3], MealId = 10004 },
-                new UserMeal { UserId = userIds[0], MealId = 10003 },
-                new UserMeal { UserId = userIds[1], MealId = 10004 },
-                new UserMeal { UserId = userIds[2], MealId = 10002 },
-                new UserMeal { UserId = userIds[4], MealId = 10006 }
+                new UserMeal { Id = 1, UserId = userIds[4], MealId = 10004 },
+                new UserMeal { Id = 2, UserId = userIds[1], MealId = 10001 },
+                new UserMeal { Id = 3, UserId = userIds[4], MealId = 10005 },
+                new UserMeal { Id = 4, UserId = userIds[3], MealId = 10004 },
+                new UserMeal { Id = 5, UserId = userIds[0], MealId = 10003 },
+                new UserMeal { Id = 6, UserId = userIds[1], MealId = 10004 },
+                new UserMeal { Id = 7, UserId = userIds[2], MealId = 10002 },
+                new UserMeal { Id = 8, UserId = userIds[4], MealId = 10006 }
             );
 
 
