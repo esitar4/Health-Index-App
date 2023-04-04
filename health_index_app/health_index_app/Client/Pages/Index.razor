@@ -1,5 +1,10 @@
 ﻿@page "/"
 
+@using health_index_app.Client.Services;
+@*@inject ToastService ToastService
+
+<button @onclick=TestButton>Test</button>*@
+
 <div class="container-fluid">
     <div class="col">
         <div class="row-12">
@@ -7,7 +12,7 @@
                 <img src="logo-no-background.png" class="img-fluid" style="max-width:25%; max-height:25%;"/>
             </div>
             <div class="text-center" style="padding-top: 50px">
-                <h1 class="display-1" style="font-family: system-ui">Hii! Health, It's Important!</h1>
+                <h1 class="display-1" style="font-family: system-ui">Hii. Health, It's Important!</h1>
             </div>
             <div class="row-12" style="padding-top: 50px">
                 <h1 class="display-2" style="font-family: system-ui">
@@ -18,9 +23,9 @@
                     be challenging in today's busy world, but we believe that with the right tools and knowledge, 
                     anyone can make positive changes to their diet and lifestyle. That's why we've created an 
                     easy-to-use app that puts the power of nutrition education at your fingertips.</p>
-                <p>Our app is designed to provide you with a personalized nutrition analysis based on your 
-                    individual needs and preferences whether you're looking to lose weight, build muscle, 
-                    or simply maintain a healthy lifestyle. Our app also features a food diary, where you can log 
+                <p>Our app is designed to provide you with a personalized nutritional analysis based on your 
+                    individual needs and preferences. whether you're looking to lose weight, build muscle, 
+                    or simply maintain a healthy lifestyle Hii is the app for you. Our app also features a food diary, where you can log 
                     your meals and track your daily intake of nutrients such as carbohydrates, protein, and fats. 
                     In addition, our app includes a database of thousands of foods, including their nutritional values, 
                     which allows you to easily track your intake and make informed decisions about what to eat.</p>
@@ -42,7 +47,7 @@
                     <li>Extensive Nutrition Data: The FatSecret API provides access to an extensive database of 
                     nutrition information, including calorie counts, macronutrient breakdowns, and ingredient 
                     lists for hundreds of thousands of foods. This provides users with accurate and up-to-date 
-                    nutrition information, helping them make informed decisions about their diet.</li>
+                    nutritional information, helping them make informed decisions about their diet.</li>
                     <li>Customizable Search and Recommendation Algorithms: The FatSecret API provides powerful
                     search and recommendation algorithms that can be customized to fit the needs of your app 
                     or platform. This allows users to personalize food recommendations based on their dietary 
@@ -52,11 +57,11 @@
                     user base grows.</li>
                 </ul>
                 <p>Overall, the FatSecret API provides a powerful and flexible tool for us to build this nutrition 
-                    app in order to help our users achieve their health and wellness goals.With this API, users can 
-                    access our extensive database. of food and nutrition information, including calorie counts, and 
+                    app in order to help our users achieve their health and wellness goals. With this API, users can 
+                    access our extensive database of food and nutrition information, including calorie counts and 
                     macronutrient breakdowns. Users can also leverage our powerful search 
                     and recommendation algorithms to help find the best foods to fit their dietary needs and preferences. 
-                    The FatSecret API is flexible and customizable, which allowed us to integrate it seamlessly 
+                    The FatSecret API is flexible and customizable, which allows us to integrate it seamlessly 
                     into our own application.</p>
                 <p>With the FatSecret API, we hope to empower our users to make informed decisions about their 
                     diet and nutrition, and help them achieve their health and wellness goals.</p>
@@ -64,3 +69,12 @@
         </div>
     </div>
 </div>
+
+@*@code{
+    //public  toastService ToastService {get; set;} = new();
+
+    public async void TestButton()
+    {
+        ToastService.ShowToast("Button Pressed", ToastLevel.Success, 3000);
+    }
+}*@
