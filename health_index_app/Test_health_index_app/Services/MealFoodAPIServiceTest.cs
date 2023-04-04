@@ -11,8 +11,15 @@ namespace Test_health_index_app.Services
     public class MealFoodAPIServiceTest
     {
         [Test]
-        public async Task CreateMealFood_Success(MealFood mealFood)
+        public async Task CreateMealFood_Success()
         {
+            MealFood mealFood = new MealFood() {
+                Id = 1,
+                Meal = new Meal(),
+                Food = new Food(),
+                Amount = 1.0
+            };
+
             var mockHttp = new MockHttpMessageHandler();
             string testResponse = @"{ }";
             mockHttp.When("https://localhost:7005//mealfood/create")
@@ -49,8 +56,16 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
-        public async Task UpdateMealFood_Success(MealFood mealFood)
+        public async Task UpdateMealFood_Success()
         {
+            MealFood mealFood = new MealFood()
+            {
+                Id = 1,
+                Meal = new Meal(),
+                Food = new Food(),
+                Amount = 1.0
+            };
+
             var mockHttp = new MockHttpMessageHandler();
             string testResponse = @"{ }";
             mockHttp.When("https://localhost:7005//mealfood/update")
@@ -68,8 +83,16 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
-        public async Task DeleteMealFood_Success(MealFood mealFood)
+        public async Task DeleteMealFood_Success()
         {
+            MealFood mealFood = new MealFood()
+            {
+                Id = 1,
+                Meal = new Meal(),
+                Food = new Food(),
+                Amount = 1.0
+            };
+
             var mockHttp = new MockHttpMessageHandler();
             string testResponse = @"{ }";
             mockHttp.When("https://localhost:7005//mealfood/delete")

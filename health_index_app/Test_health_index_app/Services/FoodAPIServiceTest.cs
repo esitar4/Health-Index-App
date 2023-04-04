@@ -10,6 +10,11 @@ namespace Test_health_index_app.Services
     [TestFixture]
     public class FoodAPIServiceTest
     {
+        [SetUp]
+        public void Setup()
+        {
+ 
+        }
         [Test]
         [TestCase("1234567")]
         [TestCase("7654321")]
@@ -51,8 +56,40 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
-        public async Task UpdateFood_Success(Food food)
+        public async Task UpdateFood_Success()
         {
+            Food food = new Food()
+            {
+                Id = 26547,
+                FoodName = "Double-Double Burger",
+                FoodType = "Brand",
+                BrandName = "In-N-Out",
+                FoodURL = "https://www.fatsecret.com/calories-nutrition/in-n-out/double-double-burger",
+                ServingId = 66486,
+                ServingDescription = "1 burger",
+                ServingURL = "https://www.fatsecret.com/calories-nutrition/in-n-out/double-double-burger",
+                MetricServingAmount = 330,
+                MetricServingUnit = "g",
+                NumberOfUnits = 0,
+                MeasurementDescription = "serving",
+                Calories = 670,
+                CarboHydrate = 39,
+                Protein = 37,
+                Fat = 39,
+                SaturatedFat = 17,
+                PolyunsaturatedFat = 0,
+                Cholesterol = 120,
+                Sodium = 1520,
+                Potassium = 0,
+                Fiber = 3,
+                Sugar = 10,
+                VitaminD = 0,
+                VitaminA = 0,
+                VitaminC = 0,
+                Calcium = 0,
+                Iron = 0
+            };
+
             var mockHttp = new MockHttpMessageHandler();
             string testResponse = @"{ }";
             mockHttp.When("https://localhost:7005//Food/update")
@@ -70,8 +107,40 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
-        public async Task DeleteFood_Success(Food food)
+        public async Task DeleteFood_Success()
         {
+            Food food = new Food()
+            {
+                Id = 26547,
+                FoodName = "Double-Double Burger",
+                FoodType = "Brand",
+                BrandName = "In-N-Out",
+                FoodURL = "https://www.fatsecret.com/calories-nutrition/in-n-out/double-double-burger",
+                ServingId = 66486,
+                ServingDescription = "1 burger",
+                ServingURL = "https://www.fatsecret.com/calories-nutrition/in-n-out/double-double-burger",
+                MetricServingAmount = 330,
+                MetricServingUnit = "g",
+                NumberOfUnits = 0,
+                MeasurementDescription = "serving",
+                Calories = 670,
+                CarboHydrate = 39,
+                Protein = 37,
+                Fat = 39,
+                SaturatedFat = 17,
+                PolyunsaturatedFat = 0,
+                Cholesterol = 120,
+                Sodium = 1520,
+                Potassium = 0,
+                Fiber = 3,
+                Sugar = 10,
+                VitaminD = 0,
+                VitaminA = 0,
+                VitaminC = 0,
+                Calcium = 0,
+                Iron = 0
+            };
+
             var mockHttp = new MockHttpMessageHandler();
             string testResponse = @"{ }";
             mockHttp.When("https://localhost:7005//food/delete")

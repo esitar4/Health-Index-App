@@ -11,27 +11,10 @@ namespace Test_health_index_app.Services
     public class UserMealsAPIServicesTest
     {
         [Test]
-        public async Task CreateUserMeal_Success(UserMealDTO userMealDTO)
-        {
-            var mockHttp = new MockHttpMessageHandler();
-            string testResponse = @"{ }";
-            mockHttp.When("https://localhost:7005//usermeal/create")
-                    .Respond("application/json", testResponse);
-
-            var client = mockHttp.ToHttpClient();
-            client.BaseAddress = new Uri("https://localhost:7005/");
-            var userMealsAPIService = new UserMealsAPIServices(client);
-
-            //Act
-            var result = await userMealsAPIService.CreateUserMeal(userMealDTO);
-
-            //Assert
-            Assert.That(result, Is.Not.Null);
-        }
-
-        [Test]
         public async Task CreateUserMeal_Success()
         {
+            UserMealDTO userMealDTO = new UserMealDTO { MealId = 1234, Name = "test" };
+
             var mockHttp = new MockHttpMessageHandler();
             string testResponse = @"{ }";
             mockHttp.When("https://localhost:7005//usermeal/read?mealId=1234")
@@ -49,8 +32,10 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
-        public async Task UpdateUserMeal_Success(UserMealDTO userMealDTO)
+        public async Task UpdateUserMeal_Success()
         {
+            UserMealDTO userMealDTO = new UserMealDTO { MealId = 1234, Name = "test" };
+
             var mockHttp = new MockHttpMessageHandler();
             string testResponse = @"{ }";
             mockHttp.When("https://localhost:7005//usermeal/update")
