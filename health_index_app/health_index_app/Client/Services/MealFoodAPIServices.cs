@@ -6,7 +6,7 @@ namespace health_index_app.Client.Services
     public interface IMealFoodAPIServices
     {
         Task<MealFood> CreateMealFood(MealFood mealFood);
-        Task<MealFood> ReadMealFood(int mealFoodId);
+        Task<IEnumerable<MealFood>> ReadMealFood(int mealFoodId);
         Task<bool> UpdateMealFood(MealFood mealFood);
         Task<bool> DeleteMealFood(MealFood mealFood);
     }
@@ -34,13 +34,13 @@ namespace health_index_app.Client.Services
             }
             return MealFood;
         }
-        public async Task<MealFood> ReadMealFood(int mealFoodId)
+        public async Task<IEnumerable<MealFood>> ReadMealFood(int mealFoodId)
         {
-            MealFood response;
+            List<MealFood> response;
             try
             {
                 var url = $"/mealfood/read?mealFoodId={mealFoodId}";
-                response = await _client.GetFromJsonAsync<MealFood>(url);
+                response = await _client.GetFromJsonAsync<List<MealFood>>(url);
             }
             catch
             {

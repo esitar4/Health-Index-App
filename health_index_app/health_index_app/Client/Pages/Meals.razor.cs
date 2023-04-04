@@ -12,6 +12,7 @@ using System.Security.Cryptography.X509Certificates;
 
 using System.Text.RegularExpressions;
 using System.Drawing;
+using System.Drawing.Text;
 
 namespace health_index_app.Client.Pages
 {
@@ -28,13 +29,15 @@ namespace health_index_app.Client.Pages
         [Inject]
         protected IUserMealsAPIServices UserMealsAPIServices { get; set; }
 
+        const int NUMDESC = 6;
+
         private string SearchExpression = String.Empty;
         private string MealName = String.Empty;
 
         FoodsSearchResponse json = null!;
         GetFoodResponse getFood = null!;
 
-        string[,] SearchTable = new string[10,6]; //id, name, serving description, calories
+        string[,] SearchTable = new string[10, 6]; //id, name, serving description, calories
         List<string[]> MealTable = new List<string[]>();
         List<string[]> UserMealTable = new List<string[]>();
 
@@ -42,12 +45,18 @@ namespace health_index_app.Client.Pages
 
         private void Show(string mealId)
         {
-            isHidden[mealId] = !isHidden[mealId];
+            if (isHidden.ContainsKey(mealId))
+                isHidden[mealId] = !isHidden[mealId];
         }
 
         List<ResponseGetFood> getFoodResponses = new List<ResponseGetFood>();
 
         public MealAPIServices mealAPI { get; set; } = new(new HttpClient());
+
+        protected override async void OnInitialized()
+        {
+            await PopulateUserMeals();
+        }
 
         private async Task SearchForFood()
         {
@@ -81,7 +90,7 @@ namespace health_index_app.Client.Pages
             SearchTable[i, 3] = food.Food_Description.Split('|')[0].Split(':')[1].Trim(); //calorie count
             SearchTable[i, 4] = food.Food_Description.Split('|')[0].Split('-')[0][4..].Trim();
         }
-        
+
         //Add foods from the search table to the meal table
         private async Task AddFoodToMeal(int index)
         {
@@ -105,17 +114,49 @@ namespace health_index_app.Client.Pages
             }
         }
 
-        private async Task UpdateFoodRow(int index, Serving serving)
+        private async Task AddUserMealToMealTable(int index)
+        {
+            MealTable.Clear();
+
+            var userMeal = UserMealTable[index];
+
+            for (int i = 4; i <= userMeal.Length -NUMDESC; i += NUMDESC)
+            {
+                MealTable.Add(new string[NUMDESC]);
+                MealTable.Last()[0] = userMeal[i+0]; //id
+                MealTable.Last()[1] = userMeal[i+1]; //name
+                MealTable.Last()[2] = userMeal[i+2]; //serving size
+                MealTable.Last()[3] = userMeal[i+3]; //calories count
+                MealTable.Last()[4] = userMeal[i+4]; //Pretty serving size
+                MealTable.Last()[5] = userMeal[i+5]??"1"; //amount
+            }
+                
+        }
+            private async Task UpdateFoodRow(int index, Serving serving)
         {
             var serving_description = serving.Serving_Description ?? "";
 
-            SearchTable[index, 2] = (!new Regex(@"\d+ (g|oz)|\d+(g|oz)").IsMatch(serving_description) && serving_description != "") || serving.Metric_Serving_Unit == ""?
-                                    serving_description + " (" + (serving.Metric_Serving_Amount??"").Split('.')[0] + serving.Metric_Serving_Unit + ")" :
-                                    serving.Serving_Description ?? "";
+            SearchTable[index, 2] = PrettyServingSize(serving);
 
             SearchTable[index, 3] = serving.Calories + " kcal";
+        }
 
-            StateHasChanged();
+        private string PrettyServingSize(Serving serving)
+        {
+            var serving_description = serving.Serving_Description ?? "";
+
+            return (!new Regex(@"\d+ (g|oz)|\d+(g|oz)").IsMatch(serving_description) && serving_description != "") || serving.Metric_Serving_Unit == "" ?
+                                    serving_description + " (" + (serving.Metric_Serving_Amount??"").Split('.')[0] + serving.Metric_Serving_Unit + ")" :
+                                    serving.Serving_Description ?? "";
+        }
+
+        private string PrettyServingSize(Food food)
+        {
+            var serving_description = food.ServingDescription ?? "";
+
+            return (!new Regex(@"\d+ (g|oz)|\d+(g|oz)").IsMatch(serving_description) && serving_description != "") || food.MetricServingUnit == "" ?
+                                    serving_description + " (" + (food.MetricServingAmount.ToString()??"").Split('.')[0] + food.MetricServingUnit + ")" :
+                                    food.ServingDescription ?? "";
         }
 
         private async Task RemoveFoodFromMeal(string foodId)
@@ -123,13 +164,40 @@ namespace health_index_app.Client.Pages
             MealTable.Remove(MealTable.Where(x => x[0] == foodId).First());
         }
 
-        private async Task RemoveFoodFromUserMeals(string mealId)
+        private async Task RemoveFoodFromUserMeals(string mealId, int i)
         {
-            MealTable.Remove(UserMealTable.Where(x => x[0] == mealId).First());
+            UserMealTable.RemoveAt(i);
             isHidden.Remove(mealId);
+            await UserMealsAPIServices.DeleteUserMeal(Convert.ToInt32(mealId));
         }
 
-        private async Task CreateMeal()
+        private async Task PopulateUserMeals()
+        {
+            List<UserMealDTO> mealIdsToMealNames = await UserMealsAPIServices.GetAllUserMealIdsToMealNames();
+            foreach (var userMeal in mealIdsToMealNames)
+            {
+                var mealId = userMeal.MealId;
+                var mealName = userMeal.Name;
+                var totalCalories = 0;
+                var totalGrams = 0;
+                var mealFoods = await MealFoodAPIServices.ReadMealFood(mealId);
+
+                Dictionary<Food,double> foods = new();
+                foreach (var mealFood in mealFoods)
+                {
+                    var food = await FoodAPIServices.ReadFood(mealFood.FoodId);
+                    totalCalories += Convert.ToInt32(food.Calories);
+                    totalGrams += Convert.ToInt32(food.MetricServingAmount);
+                    var foodCount = mealFood.Amount;
+
+                    foods.Add(food, foodCount);
+                }
+                await AddNewUserMeal(mealId.ToString(), mealName, totalCalories.ToString(), totalGrams.ToString(), foods);
+            }
+            StateHasChanged();
+        }
+
+        private async Task CreateMeal(string mealName)
         {
             Meal meal = await MealAPIServices.CreateMeal(new Meal());
 
@@ -140,52 +208,83 @@ namespace health_index_app.Client.Pages
             foreach (string[] MealTableFood in MealTable)
             {
                 var foodId = MealTableFood[0];
-                var foodServing = MealTableFood[4];
+                var foodReponse = getFoodResponses.Where(x => x.Food.Food_Id == foodId).FirstOrDefault();
+
                 double foodAmount = 1;
 
                 try
                 {
                     foodAmount = Convert.ToDouble(MealTableFood[5]);
-                } catch(FormatException ex)
+                }
+                catch (FormatException ex)
                 {
                     Console.WriteLine(@"The amount given for {0} is not valid, defaulted to 1", MealTableFood[1]);
                 }
 
-                var food = await FoodAPIServices.CreateFood(Convert.ToInt32(foodId));
+                var food = await FoodAPIServices.CreateFood(, foodReponse);
 
                 totalCalories += Convert.ToInt32(food.Calories);
                 totalGrams += Convert.ToInt32(food.MetricServingAmount);
 
                 mealFood = await MealFoodAPIServices.CreateMealFood(new MealFood { MealId = meal.Id, FoodId = food.Id, Amount = foodAmount });
             }
-            userMealDTO = await UserMealsAPIServices.CreateUserMeal(new UserMealDTO() { MealId = meal.Id, Name = MealName != "" ? MealName : "Unnamed Meal"});
-            
-            UserMealTable.Add(new string[4+MealTable.Count()*5]);
-            
-            UserMealTable.Last()[0] = meal.Id.ToString();
-            isHidden.Add(UserMealTable.Last()[0], true);
+            userMealDTO = await UserMealsAPIServices.CreateUserMeal(new UserMealDTO() { MealId = meal.Id, Name = MealName != "" ? MealName : "Unnamed Meal" });
 
-            UserMealTable.Last()[1] = userMealDTO.Name;
-            UserMealTable.Last()[2] = totalCalories.ToString();
-            UserMealTable.Last()[3] = totalGrams.ToString();
+            await AddNewUserMeal(meal.Id.ToString(), userMealDTO.Name, totalCalories.ToString(), totalGrams.ToString());
 
-            for (int i = 0; i < MealTable.Count(); i++)
-            {
-                UserMealTable.Last()[4+i*5] = MealTable[i][0];
-                UserMealTable.Last()[4+i*5+1] = MealTable[i][1];
-                UserMealTable.Last()[4+i*5+2] = MealTable[i][2];
-                UserMealTable.Last()[4+i*5+3] = MealTable[i][3];
-                UserMealTable.Last()[4+i*5+4] = MealTable[i][5];
-            }
             MealTable.Clear();
             MealName = String.Empty;
-            StateHasChanged();
-                /*var food = await FoodAPIServices.CreateFood(Convert.ToInt32(foodResponse.Food_Id));
+        }
 
-                await MealFoodAPIServices.CreateMealFood( new MealFood { MealId = meal.Id, FoodId = food.Id, Amount = food.MetricServingAmount});
+        private async Task EditUserMeal(string mealId, int i)
+        {
+            await AddUserMealToMealTable(i);
+            await RemoveFoodFromUserMeals(mealId, i);
+
+        }
+
+        private async Task AddNewUserMeal(string mealId, string mealName, string totalCalories, string totalGrams, Dictionary<Food,double> foods = null)
+        {
+            if (foods == null)
+            {
+                UserMealTable.Add(new string[4+MealTable.Count()*NUMDESC]);
+            }
+            else
+            {
+                UserMealTable.Add(new string[4+foods.Count()*NUMDESC]);
             }
 
-            await UserMealsAPIServices.CreateUserMeal(new UserMealDTO { MealId = meal.Id, Name = "test" });*/
+            UserMealTable.Last()[0] = mealId;
+            isHidden.Add(UserMealTable.Last()[0], true);
+
+            UserMealTable.Last()[1] = mealName;
+            UserMealTable.Last()[2] = totalCalories;
+            UserMealTable.Last()[3] = totalGrams;
+
+            if (foods == null)
+            {
+                for (int i = 0; i < MealTable.Count(); i++)
+                {
+                    UserMealTable.Last()[4+i*NUMDESC] = MealTable[i][0];
+                    UserMealTable.Last()[4+i*NUMDESC+1] = MealTable[i][1];
+                    UserMealTable.Last()[4+i*NUMDESC+2] = MealTable[i][2];
+                    UserMealTable.Last()[4+i*NUMDESC+3] = MealTable[i][3];
+                    UserMealTable.Last()[4+i*NUMDESC+4] = MealTable[i][5];
+                }
+            }
+            else
+            {
+                for (int i = 0; i < foods.Count(); i++)
+                {
+                    var food = foods.ElementAt(i).Key;
+                    UserMealTable.Last()[4+i*NUMDESC] = food.Id.ToString(); //id
+                    UserMealTable.Last()[4+i*NUMDESC+1] = food.FoodName; //name
+                    UserMealTable.Last()[4+i*NUMDESC+2] = food.MetricServingAmount + " " + food.MetricServingUnit; //serving size
+                    UserMealTable.Last()[4+i*NUMDESC+3] = food.Calories.ToString(); //calories count
+                    UserMealTable.Last()[4+i*NUMDESC+4] = PrettyServingSize(food); //Pretty serving size
+                    UserMealTable.Last()[4+i*NUMDESC+5] = foods.ElementAt(i).Value.ToString(); //amount
+                }
+            }
         }
     }
 }

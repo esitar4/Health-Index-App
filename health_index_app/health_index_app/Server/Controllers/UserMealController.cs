@@ -138,5 +138,18 @@ namespace health_index_app.Server.Controllers
                 
             return Ok(mealIds);
         }
+
+        [HttpGet]
+        [Authorize]
+        [Route("get-all-meal-ids-to-meal-names")]
+        public async Task<ActionResult<List<UserMealDTO>>> GetAllUserMealIdsToMealNames()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            List<UserMealDTO> mealIdsToMealNames = await _context.UserMeals
+                .Where(um => um.UserId == user.Id)
+                .Select(um => new UserMealDTO() { MealId = um.MealId, Name = um.Name })
+                .ToListAsync();
+            return Ok(mealIdsToMealNames);
+        }
     }
 }

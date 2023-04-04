@@ -48,10 +48,10 @@ namespace health_index_app.Server.Controllers
 
         [HttpGet]
         [Route("read")]
-        public async Task<ActionResult<MealFood>> ReadMealFood(int mealFoodId)
+        public async Task<ActionResult<IEnumerable<MealFood>>> ReadMealFood(int mealFoodId)
         {
 
-            var MealFood = await _context.MealFoods.Where(mf => mf.Id == mealFoodId).FirstOrDefaultAsync();
+            var MealFood = _context.MealFoods.Where(mf => mf.Id == mealFoodId);
 
             if (MealFood == null)
             {

@@ -6,8 +6,6 @@
 
 @attribute [Authorize]
 
-<label>Create/Edit your meals</label>
-
 <br />
 
 <br />
@@ -33,6 +31,7 @@
                             <th>Serving Size:</th>
                             <th>Calorie Count:</th>
                             <th width="1%">Count:</th>
+                            <th>Choose Servings:</th>
                         </tr>
                     </thead>
 
@@ -71,12 +70,8 @@
                                                     var serving_description = serving.Serving_Description ?? "";
                                                     <li>
                                                         <button class="dropdown-item" type="button" @onclick="() => UpdateFoodRow(local_j, serving)">
-                                                            @if ((!new Regex(@"\d+ (g|oz)|\d+(g|oz)").IsMatch(serving_description) && serving_description != "") || serving.Metric_Serving_Unit == "")
-                                                            {
-                                                                serving_description += " (" + (serving.Metric_Serving_Amount??"").Split('.')[0] + serving.Metric_Serving_Unit + ")";
-                                                            }
                                                             @{
-                                                                SearchTable[local_j, 4] = serving_description;
+                                                                SearchTable[local_j, 4] = PrettyServingSize(serving);
                                                             }
                                                             @SearchTable[local_j, 4]
                                                         </button>
@@ -129,7 +124,7 @@
                         <div class="col-auto">
                             <input type="text" class="form-control" @bind-value="MealName" />
                         </div>
-                        <button class="btn btn-success" type="button" @onclick="() => CreateMeal()">Create Meal</button>
+                        <button class="btn btn-success" type="button" @onclick="() => CreateMeal(MealName)">Create Meal</button>
                     </tbody>
                 </table>
             </div>
@@ -147,16 +142,14 @@
                     </thead>
 
                     <tbody>
-                        @{
-                            Console.WriteLine(UserMealTable.Count());
-                        }
                         @foreach (var userMeal in UserMealTable) 
                         {
                             <tr @onclick="() => Show(userMeal[0])" class="bg-@isHidden[userMeal[0]]">
                                 <td>@userMeal[1]</td>
                                 <td>@userMeal[2]</td>
                                 <td>@userMeal[3]</td>
-                                <td><button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromUserMeals(userMeal[0])">Remove</button></td>
+                                <td><button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromUserMeals(userMeal[0],UserMealTable.IndexOf(userMeal))">Remove</button></td>
+                                <td><button class="btn btn-warning btn-sm" type="button" @onclick="() => EditUserMeal(userMeal[0],UserMealTable.IndexOf(userMeal))">Edit</button></td>
                             </tr>
                             <tr hidden="@isHidden[userMeal[0]]">
                                 <td colspan="3">
@@ -170,12 +163,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @for (int i = 3; i <= userMeal.Length -5; i += 5)
+                                            @for (int i = 4; i <= userMeal.Length -NUMDESC; i += NUMDESC)
                                             {
                                                 <tr>
-                                                    <td style="width:60%">@userMeal[i+2]</td>
+                                                    <td>@userMeal[i+1]</td>
+                                                    <td>@userMeal[i+2]</td>
                                                     <td>@userMeal[i+3]</td>
-                                                    <td>@userMeal[i+4]</td>
                                                     <td>@userMeal[i+5]</td>
                                                 </tr>
                                             }
