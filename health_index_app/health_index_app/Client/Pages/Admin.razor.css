@@ -1,0 +1,14 @@
+﻿
+th {
+    border: 2px solid;
+    border-color: black;
+    text-align: center;
+    font-size: 32px;
+}
+
+td {
+    border: 2px solid;
+    border-color: black;
+    text-align: center;
+    font-size: 26px
+}

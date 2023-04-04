@@ -1,6 +1,7 @@
 ﻿@page "/admin"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using health_index_app.Client.Components
 @using health_index_app.Shared
 
 @attribute [Authorize(Roles = "Admin")]
@@ -12,58 +13,73 @@
 @code {
 
 }
+<input type="text" class="form-control" placeholder="Search for user" @bind-value="searchStr" @bind-value:event="oninput"/>
 
-<div class="row">
-    <div class="col-auto">
-        <label> Add user to admin</label>
-        <input type="text" class="form-control" @bind-value="userIdAddAdmin"/>
-        
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary" @onclick="PostAdminUser">Submit</button>
-    </div>
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email/Username</th>
+            <th>Id</th>
+            <th>Parent Id</th>
+            <th>Lock status</th>
+            <th>Admin</th>
+            <th>Date of Birth</th>
+            <th>Gender</th>
+            <th>Weight</th>
+            <th>Height</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in pageData)
+        {
+          
+            <tr>
+                <td>@user.Username</td>
+                <td>@user.Id</td>
+                    <td>@user.ParentId
+                         <div class="col-auto"> 
+                            @*<label> Parent user id</label>*@ 
+                             <input type="text" class="form-control" @bind-value="ids[user.Id]" placeholder="Enter parent id"/>
+                    
+                            <button type="submit" class="btn btn-primary" @onclick="() => PostAddParentChildRelationship(user.Id)">Add parent/child relationship</button>
+                            <button type="submit" class="btn btn-primary" @onclick="() => PostRemoveParentChildRelationship(user.Id)">Remove parent/child relationship</button>
+                        </div>
+                    </td>
+                    
+                <td>@user.LockedStatus
+                    <div class="col-auto">                
+                     @if(user.LockEnd == null || user.LockEnd < DateTime.Now) {
+                        <button type="submit" class="btn btn-primary" @onclick="() => PostLockAccount(user.Id) ">Lock account</button>
+                      }
+                      else {
+                          <button type="submit" class="btn btn-primary" @onclick="() => PostUnlockAccount(user.Id) ">Unlock account</button>
+                      }
+                     </div>
+                </td>
 
-<div class="row">
-    <div class="col-auto">
-        <label> Unlock user account</label>
-        <input type="text" class="form-control" @bind-value="userIdUnlock"/>
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary" @onclick="PostUnlockAccount">Unlock</button>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-auto">
-        <label> Delete user account</label>
-        <input type="text" class="form-control" @bind-value="userIdDelete"/>
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary" @onclick="PostDeleteAccount">Delete Account</button>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-auto">
-        <label> Child user id</label>
-        <input type="text" class="form-control" @bind-value="userIdChild"/>
-    </div>
-    <div class="col-auto"> 
-         <label> Parent user id</label>
-         <input type="text" class="form-control" @bind-value="userIdParent"/>
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary" @onclick="PostAddParentChildRelationship">Add parent/child relationship</button>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-auto">
-        <label> Child user id</label>
-        <input type="text" class="form-control" @bind-value="userIdRemoveParent"/>
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary" @onclick="PostRemoveParentChildRelationship">Remove parent</button>
-    </div>
-</div>
+                <td>@user.Admin
+                    <div class="col-auto">                
+                     @if(user.Admin == false) {
+                        <button type="submit" class="btn btn-primary" @onclick="() => PostAdminUser(user.Id) ">Add to admin</button>
+                      }
+                      else {
+                          <button type="submit" class="btn btn-primary" @onclick="() => RemoveAdminUser(user.Id) ">Remove from admin</button>
+                      }
+                     </div>
+                </td>
+                <td>@user.DateOfBirth</td>
+                <td>@user.Gender</td>
+                <td>@user.Weight</td>
+                <td>@user.Height</td>
+                <td>
+                    <button type="submit" class="btn btn-danger" @onclick="() => PostDeleteAccount(user.Id) ">Delete Account</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<Pagination PageSize="pageSize"
+                        PageNumber="pageNumber"
+                        ListSize="users.Count-1"
+                        eventCallback=@GetUpdatedPageNumber />
