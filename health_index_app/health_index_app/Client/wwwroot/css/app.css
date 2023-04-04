@@ -81,3 +81,53 @@ a:hover {
     border-color: #073B4C;
     box-shadow: 0 0 0 0.2rem #073B4C;
 }
+
+.cs-toast {
+    display: none;
+    padding: 1.5rem;
+    color: #fff;
+    z-index: 999;
+    position: absolute;
+    width: 25rem;
+    top: 2rem;
+    border-radius: 1rem;
+    right: 2rem;
+}
+
+.cs-toast-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 1rem;
+    font-size: 2.5rem;
+}
+
+.cs-toast-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-left: 1rem;
+}
+
+    .cs-toast-body p {
+        margin-bottom: 0;
+    }
+
+.cs-toast-visible {
+    display: flex;
+    flex-direction: row;
+    animation: fadein 1.5s;
+    position: fixed; /*top: 50%;*/
+    left: 50%; /*margin-top: -50px;*/
+    margin-left: -100px;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

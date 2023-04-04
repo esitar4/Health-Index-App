@@ -1,0 +1,15 @@
+﻿@using health_index_app.Client.Services;
+@inject ToastService ToastService
+@implements IDisposable
+
+ 
+
+<div class="cs-toast @(_isVisible ? "cs-toast-visible" : null) @_backgroundCssClass">
+<div class="cs-toast-icon">
+<i class="fa fa-@_iconCssClass" aria-hidden="true"></i>
+</div>
+<div class="cs-toast-body">
+<h5>@_heading</h5>
+<p>@_message</p>
+</div>
+</div>

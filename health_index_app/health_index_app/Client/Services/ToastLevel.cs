@@ -1,4 +1,4 @@
-﻿namespace BlazorIntro.Client.Services
+﻿namespace health_index_app.Client.Services
 {
     public enum ToastLevel
     {
