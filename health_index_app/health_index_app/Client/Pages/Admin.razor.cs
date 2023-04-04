@@ -71,10 +71,10 @@ namespace health_index_app.Client.Pages
         {
             var res = await adminApiService.RemoveAdminUser(userId);
             if (res.StartsWith($"StatusCode: 200"))
-                ToastService.ShowToast($"{userId} successfully removed to the admin role", ToastLevel.Success, 30000);
+                ToastService.ShowToast($"{userId} successfully removed from the admin role", ToastLevel.Success, 30000);
 
             else
-                ToastService.ShowToast($"Could not remove user {userId} to the admin role", ToastLevel.Error, 30000);
+                ToastService.ShowToast($"Could not remove user {userId} from the admin role", ToastLevel.Error, 30000);
             await RefreshList();
             StateHasChanged();
         }
