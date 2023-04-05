@@ -167,12 +167,12 @@ else
                     }
                     @foreach (var meal in PagedChildMealFoodList)
                     {
-                        <tr @onclick="() => Show(meal.MealId)" class="bg-@isHidden[meal.MealId]">
+                        <tr @onclick='() => Show($"{meal.ChildName}?{meal.MealId}")' class="bg-@isHidden[$"{meal.ChildName}?{meal.MealId}"]">
                             <td>@meal.ChildName</td>
                             <td>@meal.MealName</td>
                             <td>@meal.HealthIndex</td>
                         </tr>
-                        <tr hidden="@isHidden[meal.MealId]">
+                        <tr hidden="@isHidden[$"{meal.ChildName}?{meal.MealId}"]">
                             <td colspan="3">
                                 <table class="table table-bordered">
                                     <thead>

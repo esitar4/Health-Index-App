@@ -18,7 +18,7 @@ namespace health_index_app.Client.Pages
         private List<ChildNameDTO> childUsernames = new List<ChildNameDTO>();
         private List<ChildMealFoodListDTO> childMealFoodList = new List<ChildMealFoodListDTO>();
 
-        private  Dictionary<int, bool> isHidden = new();
+        private  Dictionary<string, bool> isHidden = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -62,9 +62,9 @@ namespace health_index_app.Client.Pages
             pageNumber = num;
         }
 
-        private void Show(int mealId)
+        private void Show(string childNameMealId)
         {
-            isHidden[mealId] = !isHidden[mealId];
+            isHidden[childNameMealId] = !isHidden[childNameMealId];
         }
 
 
@@ -143,7 +143,7 @@ namespace health_index_app.Client.Pages
                 List<int> mealIds = childMealFoodList.Where(m => m.ChildName.ToLower() == username.ToLower()).Select(m => m.MealId).ToList();
                 foreach (int id in mealIds)
                 {
-                    isHidden[id] = true;
+                    isHidden[$"{username}?{id}"] = true;
                 }
 
                 Message.Status = (int) AlertMessage.Successful;
@@ -186,8 +186,8 @@ namespace health_index_app.Client.Pages
 
                 childMealFoodList.Where(c => c.MealId == meal.MealId).FirstOrDefault().Food = foodList;
 
-                if (!isHidden.ContainsKey(meal.MealId))
-                    isHidden.Add(meal.MealId, true);
+                if (!isHidden.ContainsKey($"{meal.childUsername}?{meal.MealId}"))
+                    isHidden.Add($"{meal.childUsername}?{meal.MealId}", true);
             }
         }
     }
