@@ -97,19 +97,13 @@ namespace health_index_app.Server.Controllers
 
         [HttpGet]
         [Route("get-food-list")]
-        public async Task<ActionResult<List<Food>>> GetFoodList(int mealId)
+        public async Task<ActionResult<List<MealFood>>> GetFoodList(int mealId)
         {
-            List<ChildFoodDTO> foodList = await (from mf in _context.MealFoods
-                                         join f in _context.Foods on mf.FoodId equals f.Id
+            List<MealFood> mealFoodList = await (from mf in _context.MealFoods
                                          where mf.MealId == mealId
-                                         select new ChildFoodDTO
-                                         {
-                                             MealId = mealId,
-                                             Food = f,
-                                             Amount = mf.Amount
-                                         })
+                                         select mf)
                                          .ToListAsync();
-            return Ok(foodList);
+            return Ok(mealFoodList);
         }
     }
 }
