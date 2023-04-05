@@ -7,7 +7,7 @@ using ResponseSearchFood = health_index_app.Shared.FatSecret.ResponseObjects.Sea
 using ResponseGetFood = health_index_app.Shared.FatSecret.ResponseObjects.GetFoodResponse;
 using health_index_app.Shared.DTObjects;
 using health_index_app.Shared.FatSecret.ResponseObjects;
-using health_index_app.Shared.Models;
+using health_index_app.Shared;
 using System.Security.Cryptography.X509Certificates;
 
 using System.Text.RegularExpressions;
@@ -36,6 +36,7 @@ namespace health_index_app.Client.Pages
 
         FoodsSearchResponse json = null!;
         GetFoodResponse getFood = null!;
+        double healthIndex = 0;
 
         string[,] SearchTable = new string[10, NUMDESC]; //id, name, serving description, calories
         List<string[]> MealTable = new List<string[]>();
@@ -65,6 +66,8 @@ namespace health_index_app.Client.Pages
             {
                 json = await ApiService.FoodsSearchAsync(SearchExpression);
             }
+            int i = 0;
+            foreach (var food in json.Foods.Food) { UserFoodSearch(i++, food); }
         }
 
         private async Task GetFood(string foodId)
@@ -103,7 +106,7 @@ namespace health_index_app.Client.Pages
             MealTable.Last()[3] = SearchTable[index, 3]; //calories count
             MealTable.Last()[4] = SearchTable[index, 4]; //Pretty serving size
             MealTable.Last()[5] = SearchTable[index, 5]??"1"; //amount
-            MealTable.Last()[6] = SearchTable[index, 6]??getFood.Food.Servings.Serving[0].Serving_Id;
+            MealTable.Last()[6] = SearchTable[index, 6]??getFood.Food.Servings.Serving[0].Serving_Id; //serving id
 
             double foodAmount;
             try
@@ -116,8 +119,22 @@ namespace health_index_app.Client.Pages
                 Console.WriteLine(@"The amount given for {0} is not valid, defaulted to 1", MealTable.Last()[1]);
             }
 
-
+            GetHealthIndex();
         }
+
+        private async void GetHealthIndex()
+        {
+            List<Food> foods = new();
+
+            foreach (var food in MealTable)
+            {
+                await GetFood(food[0]);
+                foods.Add(await FoodAPIServices.CreateFood(food[6], getFood));
+            }
+
+            healthIndex = HealthIndex.generateHealthIndex(foods);
+        }
+
 
         private async Task AddUserMealToMealTable(int index)
         {
@@ -169,6 +186,7 @@ namespace health_index_app.Client.Pages
         private async Task RemoveFoodFromMeal(string foodId)
         {
             MealTable.Remove(MealTable.Where(x => x[0] == foodId).First());
+            GetHealthIndex();
         }
 
         private async Task RemoveFoodFromUserMeals(string mealId, int i)
@@ -242,11 +260,14 @@ namespace health_index_app.Client.Pages
 
             MealTable.Clear();
             MealName = String.Empty;
+
+            healthIndex = 0;
         }
 
         private async Task EditUserMeal(string mealId, int i)
         {
             await AddUserMealToMealTable(i);
+            GetHealthIndex();
             await RemoveFoodFromUserMeals(mealId, i);
 
         }
