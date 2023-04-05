@@ -23,5 +23,6 @@ builder.Services.AddScoped<IMealsAPIServices, MealAPIServices>();
 builder.Services.AddScoped<IUserMealsAPIServices, UserMealsAPIServices>();
 builder.Services.AddScoped<IAdminAPIServices, AdminAPIServices>();
 builder.Services.AddScoped<IParentAPIServices, ParentAPIServices>();
+builder.Services.AddScoped<ToastService>();
 
 await builder.Build().RunAsync();
