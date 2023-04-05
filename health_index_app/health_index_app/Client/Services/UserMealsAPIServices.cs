@@ -1,4 +1,5 @@
 ﻿using health_index_app.Shared.Models;
+using health_index_app.Shared.DTObjects;
 using System.Net.Http.Json;
 
 namespace health_index_app.Client.Services
@@ -10,6 +11,7 @@ namespace health_index_app.Client.Services
         Task<bool> UpdateUserMeal(UserMealDTO userMealDTO);
         Task<bool> DeleteUserMeal(int mealId);
         Task<List<int>> GetAllUserMealId();
+        Task<List<UserMealDTO>> GetAllUserMealIdsToMealNames();
     }
 
     public class UserMealsAPIServices : IUserMealsAPIServices
@@ -31,6 +33,7 @@ namespace health_index_app.Client.Services
             }
             catch
             {
+                throw;
                 throw new Exception("Unable to create UserMeal");
             }
             return result;
@@ -91,6 +94,22 @@ namespace health_index_app.Client.Services
                 throw new Exception("Something went very wrong");
             }
             return mealIds;
+        }
+
+        public async Task<List<UserMealDTO>> GetAllUserMealIdsToMealNames()
+        {
+            List<UserMealDTO> mealIdsToMealNames;
+            try
+            {
+                var url = $"/usermeal/get-all-meal-ids-to-meal-names";
+                mealIdsToMealNames = await _client.GetFromJsonAsync<List<UserMealDTO>>(url);
+            }
+            catch
+            {
+                throw;
+                throw new Exception("Something went very wrong");
+            }
+            return mealIdsToMealNames;
         }
     }
 }

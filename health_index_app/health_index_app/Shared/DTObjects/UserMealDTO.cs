@@ -2,11 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace health_index_app.Shared.Models
+namespace health_index_app.Shared.DTObjects
 {
     public class UserMealDTO
     {
-        public int Id { get; set; }
+        public int Id { get; set; } = 0;
         public virtual int MealId { get; set; }
 
         [MaxLength(15, ErrorMessage = "Name length shouldn't be longer than 15 letters")]

@@ -1,6 +1,6 @@
 ﻿using health_index_app.Server.Data;
 using health_index_app.Server.Models;
-using health_index_app.Shared.Models;
+using health_index_app.Shared.DTObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -137,6 +137,19 @@ namespace health_index_app.Server.Controllers
                 .ToListAsync();
                 
             return Ok(mealIds);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("get-all-meal-ids-to-meal-names")]
+        public async Task<ActionResult<List<UserMealDTO>>> GetAllUserMealIdsToMealNames()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            List<UserMealDTO> mealIdsToMealNames = await _context.UserMeals
+                .Where(um => um.UserId == user.Id)
+                .Select(um => new UserMealDTO() { MealId = um.MealId, Name = um.Name })
+                .ToListAsync();
+            return Ok(mealIdsToMealNames);
         }
     }
 }

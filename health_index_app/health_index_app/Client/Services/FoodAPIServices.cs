@@ -1,5 +1,7 @@
-﻿using System.Net.Http.Json;
-
+﻿using health_index_app.Shared.FatSecret.ResponseObjects;
+using System.Net.Http.Json;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using Food = health_index_app.Shared.Models.Food;
 
 
@@ -7,30 +9,28 @@ namespace health_index_app.Client.Services
 {
     public interface IFoodAPIServices
     {
-        Task<Food> CreateFood(int foodId);
+        Task<Food> CreateFood(string servingId, GetFoodResponse foodResponse);
         Task<Food> ReadFood(int FoodId);
         Task<bool> UpdateFood(Food Food);
         Task<bool> DeleteFood(Food food);
-        Task<Food> CreateFoodHelper(int foodId);
+        Task<Food> CreateFoodHelper(string servingId, GetFoodResponse foodResponse);
     }
 
     public class FoodAPIServices : IFoodAPIServices
     {
         private readonly HttpClient _client;
-        private readonly IFatSecretAPIServices _fatSecretAPIServices;
 
-        public FoodAPIServices(HttpClient client, IFatSecretAPIServices fatSecretAPIServices)
+        public FoodAPIServices(HttpClient client)
         {
             _client = client;
-            _fatSecretAPIServices = fatSecretAPIServices;
         }
 
-        public async Task<Food> CreateFood(int foodId)
+        public async Task<Food> CreateFood(string servingId, GetFoodResponse foodResponse)
         {
             Food food;
             try
             {
-                food = await CreateFoodHelper(foodId);
+                food = await CreateFoodHelper(servingId, foodResponse);
 
                 var response = await _client.PostAsJsonAsync("food/create", food);
 
@@ -38,6 +38,7 @@ namespace health_index_app.Client.Services
             }
             catch
             {
+                throw;
                 throw new Exception("Unable to create Food");
             }
             return food;
@@ -85,16 +86,15 @@ namespace health_index_app.Client.Services
         }
 
 
-        public async Task<Food> CreateFoodHelper(int foodId)
+        public async Task<Food> CreateFoodHelper(string servingId, GetFoodResponse foodResponse)
         {
             Food food;
-            try
-            {
+/*            try
+            {*/
                 food = new Food();
 
-                var response = await _fatSecretAPIServices.FoodGetAsync(foodId);
-                var responseFood = response.Food;
-
+                var responseFood = foodResponse.Food;
+                var serving = responseFood.Servings.Serving.Where(x => x.Serving_Id == servingId).FirstOrDefault();
                 //Add all of the food attributes from responseFood to food
 
                 food.Id = Convert.ToInt32(responseFood.Food_Id);
@@ -103,34 +103,35 @@ namespace health_index_app.Client.Services
                 food.BrandName = responseFood.Brand_Name ??= "";
                 food.FoodURL = responseFood.Food_Url ??= "";
 
-                food.ServingId = Convert.ToInt32(responseFood.Servings.Serving[0].Serving_Id);
+                food.ServingId = Convert.ToInt32(serving.Serving_Id);
                 food.ServingURL = responseFood.Food_Url ??= "";
-                food.ServingDescription = responseFood.Servings.Serving[0].Serving_Description ??= "";
-                food.MetricServingAmount = Convert.ToDouble(responseFood.Servings.Serving[0].Metric_Serving_Amount);
-                food.MetricServingUnit = responseFood.Servings.Serving[0].Metric_Serving_Unit ??= "";
-                food.MeasurementDescription = responseFood.Servings.Serving[0].Measurement_Description ??= "";
+                food.ServingDescription = serving.Serving_Description ??= "";
+                food.MetricServingAmount = Convert.ToDouble(serving.Metric_Serving_Amount);
+                food.MetricServingUnit = serving.Metric_Serving_Unit ??= "";
+                food.MeasurementDescription = serving.Measurement_Description ??= "";
 
-                food.Calories = Convert.ToDouble(responseFood.Servings.Serving[0].Calories);
-                food.Calcium = Convert.ToDouble(responseFood.Servings.Serving[0].Calcium);
-                food.CarboHydrate = Convert.ToDouble(responseFood.Servings.Serving[0].Carbohydrate);
-                food.Cholesterol = Convert.ToDouble(responseFood.Servings.Serving[0].Cholesterol);
-                food.Fat = Convert.ToDouble(responseFood.Servings.Serving[0].Fat);
-                food.Fiber = Convert.ToDouble(responseFood.Servings.Serving[0].Fiber);
-                food.Iron = Convert.ToDouble(responseFood.Servings.Serving[0].Iron);
-                food.PolyunsaturatedFat = Convert.ToDouble(responseFood.Servings.Serving[0].Polyunsaturated_Fat);
-                food.Potassium = Convert.ToDouble(responseFood.Servings.Serving[0].Potassium);
-                food.Protein = Convert.ToDouble(responseFood.Servings.Serving[0].Protein);
-                food.SaturatedFat = Convert.ToDouble(responseFood.Servings.Serving[0].Saturated_Fat);
-                food.Sodium = Convert.ToDouble(responseFood.Servings.Serving[0].Sodium);
-                food.Sugar = Convert.ToDouble(responseFood.Servings.Serving[0].Sugar);
-                food.VitaminA = Convert.ToDouble(responseFood.Servings.Serving[0].Vitamin_A);
-                food.VitaminC = Convert.ToDouble(responseFood.Servings.Serving[0].Vitamin_C);
-                food.VitaminD = Convert.ToDouble(responseFood.Servings.Serving[0].Vitamin_D);
-            }
+                food.Calories = Convert.ToDouble(serving.Calories);
+                food.Calcium = Convert.ToDouble(serving.Calcium);
+                food.CarboHydrate = Convert.ToDouble(serving.Carbohydrate);
+                food.Cholesterol = Convert.ToDouble(serving.Cholesterol);
+                food.Fat = Convert.ToDouble(serving.Fat);
+                food.Fiber = Convert.ToDouble(serving.Fiber);
+                food.Iron = Convert.ToDouble(serving.Iron);
+                food.PolyunsaturatedFat = Convert.ToDouble(serving.Polyunsaturated_Fat);
+                food.Potassium = Convert.ToDouble(serving.Potassium);
+                food.Protein = Convert.ToDouble(serving.Protein);
+                food.SaturatedFat = Convert.ToDouble(serving.Saturated_Fat);
+                food.Sodium = Convert.ToDouble(serving.Sodium);
+                food.Sugar = Convert.ToDouble(serving.Sugar);
+                food.VitaminA = Convert.ToDouble(serving.Vitamin_A);
+                food.VitaminC = Convert.ToDouble(serving.Vitamin_C);
+                food.VitaminD = Convert.ToDouble(serving.Vitamin_D);
+/*            }
             catch
             {
+                throw;
                 throw new Exception("Unable to convert Food");
-            }
+            }*/
 
             return food;
         }
