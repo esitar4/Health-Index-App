@@ -23,7 +23,7 @@ namespace health_index_app.Shared.Models
         [Required]
         [Range(0.0, Double.MaxValue, ErrorMessage = "Metric Serving Amount must be larger than 0")]
         public double MetricServingAmount { get; set; }
-        [Required]
+
         public string MetricServingUnit { get; set; } = "";
         public double NumberOfUnits { get; set; }
         [Required]
