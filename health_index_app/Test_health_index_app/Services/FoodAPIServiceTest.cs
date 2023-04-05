@@ -172,10 +172,44 @@ namespace Test_health_index_app.Services
     ""successful"": true,
     ""error"": null
 }";
+
+            health_index_app.Shared.Models.Food food = new health_index_app.Shared.Models.Food()
+            {
+                Id = foodId,
+                FoodName = "Double-Double Burger",
+                FoodType = "Brand",
+                BrandName = "In-N-Out",
+                FoodURL = "https://www.fatsecret.com/calories-nutrition/in-n-out/double-double-burger",
+                ServingId = Convert.ToInt32(servingId),
+                ServingDescription = "1 burger",
+                ServingURL = "https://www.fatsecret.com/calories-nutrition/in-n-out/double-double-burger",
+                MetricServingAmount = 330,
+                MetricServingUnit = "g",
+                NumberOfUnits = 0,
+                MeasurementDescription = "serving",
+                Calories = 670,
+                CarboHydrate = 39,
+                Protein = 37,
+                Fat = 39,
+                SaturatedFat = 17,
+                PolyunsaturatedFat = 0,
+                Cholesterol = 120,
+                Sodium = 1520,
+                Potassium = 0,
+                Fiber = 3,
+                Sugar = 10,
+                VitaminD = 0,
+                VitaminA = 0,
+                VitaminC = 0,
+                Calcium = 0,
+                Iron = 0
+            };
+
             GetFoodResponse getFoodResponse = JsonConvert.DeserializeObject<GetFoodResponse>(json);
 
             var mockHttp = new MockHttpMessageHandler();
-            string testResponse = JsonConvert.SerializeObject(json);
+
+            string testResponse = JsonConvert.SerializeObject(food);
             mockHttp.When("https://localhost:7005/food/create")
                     .Respond("application/json", testResponse);
 
@@ -187,7 +221,7 @@ namespace Test_health_index_app.Services
             var result = await foodAPIService.CreateFood(servingId, getFoodResponse);
 
             //Assert
-            Assert.That(result.ServingId, Is.EqualTo(servingId));
+            Assert.That(result.ServingId, Is.EqualTo(Convert.ToInt32(servingId)));
         }
 
         [Test]
