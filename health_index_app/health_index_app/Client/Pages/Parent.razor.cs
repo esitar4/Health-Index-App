@@ -184,11 +184,14 @@ namespace health_index_app.Client.Pages
             {
                 List<ChildFoodDTO> foodList = await ParentAPIServices.GetChildFoods(meal.MealId);
 
-                childMealFoodList.Where(c => c.MealId == meal.MealId).FirstOrDefault().Food = foodList;
+                childMealFoodList.Where(c => c.MealId == meal.MealId && c.ChildName == meal.childUsername).FirstOrDefault().Food = foodList;
 
                 if (!isHidden.ContainsKey($"{meal.childUsername}?{meal.MealId}"))
                     isHidden.Add($"{meal.childUsername}?{meal.MealId}", true);
             }
+
+            var c = childMealFoodList;
+            var x = 1;
         }
     }
 }
