@@ -97,7 +97,7 @@ namespace Test_health_index_app.Services
         public async Task GetAllUserMealId_Success()
         {
             var mockHttp = new MockHttpMessageHandler();
-            string testResponse = @"{""mealId"": 1234567}";
+            string testResponse = @"[1, 2]";
             mockHttp.When("https://localhost:7005/usermeal/get-all-meal-ids")
                     .Respond("application/json", testResponse);
 
@@ -109,7 +109,8 @@ namespace Test_health_index_app.Services
             var result = await userMealsAPIService.GetAllUserMealId();
 
             //Assert
-            Assert.That(result[0], Is.EqualTo(1234567));
+            Assert.That(result[0], Is.EqualTo(1));
+            Assert.That(result.Count, Is.EqualTo(2));
         }
     }
 }
