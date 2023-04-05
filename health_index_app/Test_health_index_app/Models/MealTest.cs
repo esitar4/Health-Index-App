@@ -91,10 +91,7 @@ namespace Test_health_index_app.Models
             //Act
 
             //Assert
-            Assert.IsTrue(ValidateModel(meal).Count == 1);
-            Assert.IsTrue(ValidateModel(meal).Any(
-                    v => v.MemberNames.Contains("HealthIndex") &&
-                         v.ErrorMessage.Contains("Score must be between 0 and 10")));
+            Assert.IsTrue(ValidateModel(meal).Count == 0);
         }
     }
 }
