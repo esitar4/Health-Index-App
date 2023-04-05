@@ -146,8 +146,8 @@
                         {
                             <tr @onclick="() => Show(userMeal[0])" class="bg-@isHidden[userMeal[0]]">
                                 <td>@userMeal[1]</td>
-                                <td>@userMeal[2]</td>
-                                <td>@userMeal[3]</td>
+                                <td>@userMeal[2]kcal</td>
+                                <td>@userMeal[3]g</td>
                                 <td><button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromUserMeals(userMeal[0],UserMealTable.IndexOf(userMeal))">Remove</button></td>
                                 <td><button class="btn btn-warning btn-sm" type="button" @onclick="() => EditUserMeal(userMeal[0],UserMealTable.IndexOf(userMeal))">Edit</button></td>
                             </tr>

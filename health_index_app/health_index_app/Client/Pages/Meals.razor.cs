@@ -29,7 +29,7 @@ namespace health_index_app.Client.Pages
         [Inject]
         protected IUserMealsAPIServices UserMealsAPIServices { get; set; }
 
-        const int NUMDESC = 6;
+        const int NUMDESC = 7;
 
         private string SearchExpression = String.Empty;
         private string MealName = String.Empty;
@@ -37,7 +37,7 @@ namespace health_index_app.Client.Pages
         FoodsSearchResponse json = null!;
         GetFoodResponse getFood = null!;
 
-        string[,] SearchTable = new string[10, 6]; //id, name, serving description, calories
+        string[,] SearchTable = new string[10, NUMDESC]; //id, name, serving description, calories
         List<string[]> MealTable = new List<string[]>();
         List<string[]> UserMealTable = new List<string[]>();
 
@@ -94,13 +94,16 @@ namespace health_index_app.Client.Pages
         //Add foods from the search table to the meal table
         private async Task AddFoodToMeal(int index)
         {
-            MealTable.Add(new string[6]);
+            await GetFood(SearchTable[index, 0]);
+
+            MealTable.Add(new string[NUMDESC]);
             MealTable.Last()[0] = SearchTable[index, 0]; //id
             MealTable.Last()[1] = SearchTable[index, 1]; //name
             MealTable.Last()[2] = SearchTable[index, 2]; //serving size
             MealTable.Last()[3] = SearchTable[index, 3]; //calories count
             MealTable.Last()[4] = SearchTable[index, 4]; //Pretty serving size
             MealTable.Last()[5] = SearchTable[index, 5]??"1"; //amount
+            MealTable.Last()[6] = SearchTable[index, 6]??getFood.Food.Servings.Serving[0].Serving_Id;
 
             double foodAmount;
             try
@@ -112,6 +115,8 @@ namespace health_index_app.Client.Pages
                 MealTable.Last()[5] = "1";
                 Console.WriteLine(@"The amount given for {0} is not valid, defaulted to 1", MealTable.Last()[1]);
             }
+
+            
         }
 
         private async Task AddUserMealToMealTable(int index)
@@ -129,6 +134,7 @@ namespace health_index_app.Client.Pages
                 MealTable.Last()[3] = userMeal[i+3]; //calories count
                 MealTable.Last()[4] = userMeal[i+4]; //Pretty serving size
                 MealTable.Last()[5] = userMeal[i+5]??"1"; //amount
+                MealTable.Last()[6] = userMeal[i+6]; //amount
             }
                 
         }
@@ -139,6 +145,7 @@ namespace health_index_app.Client.Pages
             SearchTable[index, 2] = PrettyServingSize(serving);
 
             SearchTable[index, 3] = serving.Calories + " kcal";
+            SearchTable[index, 6] = serving.Serving_Id??"0";
         }
 
         private string PrettyServingSize(Serving serving)
@@ -178,16 +185,16 @@ namespace health_index_app.Client.Pages
             {
                 var mealId = userMeal.MealId;
                 var mealName = userMeal.Name;
-                var totalCalories = 0;
-                var totalGrams = 0;
+                double totalCalories = 0;
+                double totalGrams = 0;
                 var mealFoods = await MealFoodAPIServices.ReadMealFood(mealId);
 
                 Dictionary<Food,double> foods = new();
                 foreach (var mealFood in mealFoods)
                 {
                     var food = await FoodAPIServices.ReadFood(mealFood.FoodId);
-                    totalCalories += Convert.ToInt32(food.Calories);
-                    totalGrams += Convert.ToInt32(food.MetricServingAmount);
+                    totalCalories += Convert.ToInt32(food.Calories)*mealFood.Amount;
+                    totalGrams += Convert.ToInt32(food.MetricServingAmount)*mealFood.Amount;
                     var foodCount = mealFood.Amount;
 
                     foods.Add(food, foodCount);
@@ -203,7 +210,7 @@ namespace health_index_app.Client.Pages
 
             MealFood mealFood; UserMealDTO userMealDTO;
 
-            int totalCalories = 0; int totalGrams = 0;
+            double totalCalories = 0; double totalGrams = 0;
 
             foreach (string[] MealTableFood in MealTable)
             {
@@ -221,10 +228,10 @@ namespace health_index_app.Client.Pages
                     Console.WriteLine(@"The amount given for {0} is not valid, defaulted to 1", MealTableFood[1]);
                 }
 
-                var food = await FoodAPIServices.CreateFood(, foodReponse);
+                var food = await FoodAPIServices.CreateFood(MealTableFood[6], foodReponse);
 
-                totalCalories += Convert.ToInt32(food.Calories);
-                totalGrams += Convert.ToInt32(food.MetricServingAmount);
+                totalCalories += Convert.ToInt32(food.Calories)*foodAmount;
+                totalGrams += Convert.ToInt32(food.MetricServingAmount)*foodAmount;
 
                 mealFood = await MealFoodAPIServices.CreateMealFood(new MealFood { MealId = meal.Id, FoodId = food.Id, Amount = foodAmount });
             }
@@ -269,7 +276,9 @@ namespace health_index_app.Client.Pages
                     UserMealTable.Last()[4+i*NUMDESC+1] = MealTable[i][1];
                     UserMealTable.Last()[4+i*NUMDESC+2] = MealTable[i][2];
                     UserMealTable.Last()[4+i*NUMDESC+3] = MealTable[i][3];
-                    UserMealTable.Last()[4+i*NUMDESC+4] = MealTable[i][5];
+                    UserMealTable.Last()[4+i*NUMDESC+4] = MealTable[i][4];
+                    UserMealTable.Last()[4+i*NUMDESC+5] = MealTable[i][5];
+                    UserMealTable.Last()[4+i*NUMDESC+6] = MealTable[i][6];
                 }
             }
             else
@@ -283,6 +292,7 @@ namespace health_index_app.Client.Pages
                     UserMealTable.Last()[4+i*NUMDESC+3] = food.Calories.ToString(); //calories count
                     UserMealTable.Last()[4+i*NUMDESC+4] = PrettyServingSize(food); //Pretty serving size
                     UserMealTable.Last()[4+i*NUMDESC+5] = foods.ElementAt(i).Value.ToString(); //amount
+                    UserMealTable.Last()[4+i*NUMDESC+6] = food.ServingId.ToString();
                 }
             }
         }

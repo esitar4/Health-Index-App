@@ -38,6 +38,7 @@ namespace health_index_app.Client.Services
             }
             catch
             {
+                throw;
                 throw new Exception("Unable to create Food");
             }
             return food;
@@ -88,8 +89,8 @@ namespace health_index_app.Client.Services
         public async Task<Food> CreateFoodHelper(string servingId, GetFoodResponse foodResponse)
         {
             Food food;
-            try
-            {
+/*            try
+            {*/
                 food = new Food();
 
                 var responseFood = foodResponse.Food;
@@ -125,11 +126,12 @@ namespace health_index_app.Client.Services
                 food.VitaminA = Convert.ToDouble(serving.Vitamin_A);
                 food.VitaminC = Convert.ToDouble(serving.Vitamin_C);
                 food.VitaminD = Convert.ToDouble(serving.Vitamin_D);
-            }
+/*            }
             catch
             {
+                throw;
                 throw new Exception("Unable to convert Food");
-            }
+            }*/
 
             return food;
         }
