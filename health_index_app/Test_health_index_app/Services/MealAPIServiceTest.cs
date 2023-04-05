@@ -19,7 +19,7 @@ namespace Test_health_index_app.Services
             };
 
             var mockHttp = new MockHttpMessageHandler();
-            string testResponse = @"{ }";
+            string testResponse = "{  }";
             mockHttp.When("https://localhost:7005//meal/create")
                     .Respond("application/json", testResponse);
 
@@ -75,7 +75,7 @@ namespace Test_health_index_app.Services
             var result = await mealAPIService.UpdateMeal(meal);
 
             //Assert
-            Assert.That(result, Is.Not.Null);
+            Assert.IsTrue(result);
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace Test_health_index_app.Services
             var result = await mealAPIService.DeleteMeal(meal);
 
             //Assert
-            Assert.That(result, Is.Not.Null);
+            Assert.IsTrue(result);
         }
     }
 }

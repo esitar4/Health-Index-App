@@ -41,7 +41,7 @@ namespace Test_health_index_app.Services
         {
             //Arrange
             var mockHttp = new MockHttpMessageHandler();
-            string testResponse = @"{ }";
+            string testResponse = @"[{""childUsername"":""scott@cognizant.com"",""mealId"":10004,""name"":"""",""healthIndex"":10},{""childUsername"":""scott@cognizant.com"",""mealId"":10005,""name"":"""",""healthIndex"":1},{""childUsername"":""scott@cognizant.com"",""mealId"":10006,""name"":"""",""healthIndex"":6}]";
             mockHttp.When("https://localhost:7005/api/applicationuser/get-child-meals")
                     .Respond("application/json", testResponse);
 
@@ -53,7 +53,7 @@ namespace Test_health_index_app.Services
             var result = await parentAPIService.GetChildMeals();
 
             //Assert
-            //Assert.That(result.Count, Is.EqualTo(7));
+            Assert.That(result.Count, Is.EqualTo(3));
 
         }
 
