@@ -18,7 +18,7 @@ namespace health_index_app.Client.Pages
         private List<ChildNameDTO> childUsernames = new List<ChildNameDTO>();
         private List<ChildMealFoodListDTO> childMealFoodList = new List<ChildMealFoodListDTO>();
 
-        private  Dictionary<int, bool> isHidden = new();
+        private Dictionary<string, bool> isHidden = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -28,6 +28,8 @@ namespace health_index_app.Client.Pages
                 await RefreshLists();
             }
         }
+
+
 
         //OnInput real time search
         private string searchUsername = string.Empty;
@@ -60,9 +62,9 @@ namespace health_index_app.Client.Pages
             pageNumber = num;
         }
 
-        private void Show(int mealId)
+        private void Show(string childNameMealId)
         {
-            isHidden[mealId] = !isHidden[mealId];
+            isHidden[childNameMealId] = !isHidden[childNameMealId];
         }
 
 
@@ -110,20 +112,20 @@ namespace health_index_app.Client.Pages
         private async Task AddNewChild()
         {
             Message = addMessage;
-            if ((from u in childUsernames select u.Name).Contains(newChildUserName)) 
+            if ((from u in childUsernames select u.Name).Contains(newChildUserName))
             {
-                Message.Status = (int) AlertMessage.Unsucessful;
+                Message.Status = (int)AlertMessage.Unsucessful;
             }
             else
             {
                 if (await ParentAPIServices.AddChild(newChildUserName))
                 {
-                    Message.Status = (int) AlertMessage.Successful;
+                    Message.Status = (int)AlertMessage.Successful;
                     await RefreshLists();
                 }
                 else
                 {
-                    Message.Status = (int) AlertMessage.Unsucessful;
+                    Message.Status = (int)AlertMessage.Unsucessful;
                 }
             }
 
@@ -136,20 +138,20 @@ namespace health_index_app.Client.Pages
         private async Task DeleteChild(string username)
         {
             Message = deleteMessage;
-            if(await ParentAPIServices.DeleteChild(username))
+            if (await ParentAPIServices.DeleteChild(username))
             {
                 List<int> mealIds = childMealFoodList.Where(m => m.ChildName.ToLower() == username.ToLower()).Select(m => m.MealId).ToList();
                 foreach (int id in mealIds)
                 {
-                    isHidden[id] = true;
+                    isHidden[$"{username}?{id}"] = true;
                 }
 
-                Message.Status = (int) AlertMessage.Successful;
+                Message.Status = (int)AlertMessage.Successful;
                 await RefreshLists();
             }
             else
             {
-                Message.Status = (int) AlertMessage.Unsucessful;
+                Message.Status = (int)AlertMessage.Unsucessful;
             }
 
             StateHasChanged();
@@ -167,13 +169,13 @@ namespace health_index_app.Client.Pages
             childMealFoodList = (from u in childUsernames
                                  join m in childMeals on u.Name equals m.childUsername
                                  select new ChildMealFoodListDTO
-                                     {
-                                         ChildName = u.Name,
-                                         MealId = m.MealId,
-                                         MealName = m.Name,
-                                         HealthIndex = m.HealthIndex,
-                                         Food = new List<ChildFoodDTO>(),
-                                     }
+                                 {
+                                     ChildName = u.Name,
+                                     MealId = m.MealId,
+                                     MealName = m.Name,
+                                     HealthIndex = m.HealthIndex,
+                                     Food = new List<ChildFoodDTO>(),
+                                 }
                                  )
                                  .OrderBy(o => o.ChildName)
                                  .ToList();
@@ -182,10 +184,10 @@ namespace health_index_app.Client.Pages
             {
                 List<ChildFoodDTO> foodList = await ParentAPIServices.GetChildFoods(meal.MealId);
 
-                childMealFoodList.Where(c => c.MealId == meal.MealId).FirstOrDefault().Food = foodList;
+                childMealFoodList.Where(c => c.MealId == meal.MealId && c.ChildName == meal.childUsername).FirstOrDefault().Food = foodList;
 
-                if (!isHidden.ContainsKey(meal.MealId))
-                    isHidden.Add(meal.MealId, true);
+                if (!isHidden.ContainsKey($"{meal.childUsername}?{meal.MealId}"))
+                    isHidden.Add($"{meal.childUsername}?{meal.MealId}", true);
             }
         }
     }
