@@ -187,7 +187,7 @@ namespace health_index_app.Client.Pages
                 var mealName = userMeal.Name;
                 double totalCalories = 0;
                 double totalGrams = 0;
-                var mealFoods = await MealFoodAPIServices.GetFoodList(mealId);
+                var mealFoods = await MealFoodAPIServices.GetMealFoodList(mealId);
 
                 Dictionary<Food,double> foods = new();
                 foreach (var mealFood in mealFoods)
