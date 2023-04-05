@@ -38,27 +38,29 @@
                     <tbody>
 
                         @{
-                            int i = 0;
-                            //SearchTable = new string[10, 5];
-                            foreach (var food in json.Foods.Food) { UserFoodSearch(i++, food); }
+                            if (SearchTable[0, 0] == null)
+                            {
+                                int i = 0;
+                                //SearchTable = new string[10, 5];
+                                foreach (var food in json.Foods.Food) { UserFoodSearch(i++, food); }
+                            }
                         }
 
-                        @for (int j = 0; j < SearchTable.GetLength(0); j++)
+                        @for (int local_j = 0; local_j < SearchTable.GetLength(0)-1; local_j++)
                         {
-                            var local_j = j;
-
+                            int j = local_j;
                             var foodId = SearchTable[j, 0];
-                            var foodName = SearchTable[local_j, 1];
-                            var servingSize = SearchTable[local_j, 2];
-                            var calorieCount = SearchTable[local_j, 3];
+                            var foodName = SearchTable[j, 1];
+                            var servingSize = SearchTable[j, 2];
+                            var calorieCount = SearchTable[j, 3];
                             <tr>
-                                <td>@SearchTable[local_j, 1]</td>
-                                <td>@SearchTable[local_j, 2]</td>
-                                <td>@SearchTable[local_j, 3]</td>
-                                <td><input type="text" class="form-control" placeholder="1" @bind-value="SearchTable[local_j,5]" /></td>
+                                <td>@SearchTable[j, 1]</td>
+                                <td>@SearchTable[j, 2]</td>
+                                <td>@SearchTable[j, 3]</td>
+                                <td><input type="text" class="form-control" placeholder="1" @bind-value="SearchTable[j,5]" /></td>
                                 <td>
                                     <div class="btn-group dropend">
-                                        <button type="button" class="btn btn-primary btn-sm" @onclick="() => AddFoodToMeal(local_j)">Add</button>
+                                        <button type="button" class="btn btn-primary btn-sm" @onclick="() => AddFoodToMeal(j)">Add</button>
                                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" @onclick="async () => await GetFood(foodId)">
                                             @* <span class="visually-hidden"></span>*@
                                         </button>
@@ -69,11 +71,11 @@
                                                 {
                                                     var serving_description = serving.Serving_Description ?? "";
                                                     <li>
-                                                        <button class="dropdown-item" type="button" @onclick="() => UpdateFoodRow(local_j, serving)">
+                                                        <button class="dropdown-item" type="button" @onclick="() => UpdateFoodRow(j, serving)">
                                                             @{
-                                                                SearchTable[local_j, 4] = PrettyServingSize(serving);
+                                                                SearchTable[j, 4] = PrettyServingSize(serving);
                                                             }
-                                                            @SearchTable[local_j, 4]
+                                                            @SearchTable[j, 4]
                                                         </button>
                                                     </li>
                                                 }
@@ -82,7 +84,6 @@
                                     </div>
                                 </td>
                             </tr>
-                            i++;
                         }
                     </tbody>
                 </table>
@@ -142,7 +143,7 @@
                     </thead>
 
                     <tbody>
-                        @foreach (var userMeal in UserMealTable) 
+                        @foreach (var userMeal in UserMealTable)
                         {
                             <tr @onclick="() => Show(userMeal[0])" class="bg-@isHidden[userMeal[0]]">
                                 <td>@userMeal[1]</td>

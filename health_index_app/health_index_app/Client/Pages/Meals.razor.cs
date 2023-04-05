@@ -116,7 +116,7 @@ namespace health_index_app.Client.Pages
                 Console.WriteLine(@"The amount given for {0} is not valid, defaulted to 1", MealTable.Last()[1]);
             }
 
-            
+
         }
 
         private async Task AddUserMealToMealTable(int index)
@@ -136,9 +136,9 @@ namespace health_index_app.Client.Pages
                 MealTable.Last()[5] = userMeal[i+5]??"1"; //amount
                 MealTable.Last()[6] = userMeal[i+6]; //amount
             }
-                
+
         }
-            private async Task UpdateFoodRow(int index, Serving serving)
+        private async Task UpdateFoodRow(int index, Serving serving)
         {
             var serving_description = serving.Serving_Description ?? "";
 
@@ -189,7 +189,7 @@ namespace health_index_app.Client.Pages
                 double totalGrams = 0;
                 var mealFoods = await MealFoodAPIServices.ReadMealFood(mealId);
 
-                Dictionary<Food,double> foods = new();
+                Dictionary<Food, double> foods = new();
                 foreach (var mealFood in mealFoods)
                 {
                     var food = await FoodAPIServices.ReadFood(mealFood.FoodId);
@@ -250,7 +250,7 @@ namespace health_index_app.Client.Pages
 
         }
 
-        private async Task AddNewUserMeal(string mealId, string mealName, string totalCalories, string totalGrams, Dictionary<Food,double> foods = null)
+        private async Task AddNewUserMeal(string mealId, string mealName, string totalCalories, string totalGrams, Dictionary<Food, double> foods = null)
         {
             if (foods == null)
             {
