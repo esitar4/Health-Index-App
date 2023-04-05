@@ -4,6 +4,7 @@ using RichardSzalay.MockHttp;
 using System;
 using System.Threading.Tasks;
 using health_index_app.Shared.Models;
+using Newtonsoft.Json;
 
 namespace Test_health_index_app.Services
 {
@@ -22,7 +23,7 @@ namespace Test_health_index_app.Services
 
             var mockHttp = new MockHttpMessageHandler();
             string testResponse = @"{ }";
-            mockHttp.When("https://localhost:7005//mealfood/create")
+            mockHttp.When("https://localhost:7005/mealfood/create")
                     .Respond("application/json", testResponse);
 
             var client = mockHttp.ToHttpClient();
@@ -37,11 +38,20 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
-        public async Task ReadMealFood_Success(int mealFoodId)
+        public async Task ReadMealFood_Success()
         {
+            MealFood mealFood = new MealFood()
+            {
+                Id = 1234,
+                Meal = new Meal(),
+                Food = new Food(),
+                Amount = 1.0
+            };
+
+
             var mockHttp = new MockHttpMessageHandler();
-            string testResponse = @"{ }";
-            mockHttp.When("https://localhost:7005//mealfood/read?mealFoodId=1234")
+            string testResponse = JsonConvert.SerializeObject(mealFood);
+            mockHttp.When("https://localhost:7005/mealfood/read?mealFoodId=1234")
                     .Respond("application/json", testResponse);
 
             var client = mockHttp.ToHttpClient();
@@ -52,7 +62,7 @@ namespace Test_health_index_app.Services
             var result = await mealFoodAPIService.ReadMealFood(1234);
 
             //Assert
-            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Id, Is.EqualTo(1234));
         }
 
         [Test]
