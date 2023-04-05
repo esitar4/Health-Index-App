@@ -54,11 +54,18 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
-        public async Task UpdateMeal_Success()
+        [TestCase(0000)]
+        [TestCase(1000)]
+        [TestCase(1001)]
+        [TestCase(100 - 001)]
+        [TestCase(1234567)]
+        [TestCase(7654321)]
+        [TestCase(7654321 - 1234567)]
+        public async Task UpdateMeal_Success(int id)
         {
             Meal meal = new Meal()
             {
-                Id = 10001,
+                Id = id,
                 HealthIndex = 5
             };
 
@@ -79,11 +86,18 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
-        public async Task DeleteMeal_Success()
+        [TestCase(0000)]
+        [TestCase(1000)]
+        [TestCase(1001)]
+        [TestCase(100 - 001)]
+        [TestCase(1234567)]
+        [TestCase(7654321)]
+        [TestCase(7654321 - 1234567)]
+        public async Task DeleteMeal_Success(int id)
         {
             Meal meal = new Meal()
             {
-                Id = 10001,
+                Id = id,
                 HealthIndex = 5
             };
 

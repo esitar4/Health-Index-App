@@ -18,8 +18,13 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
+        [TestCase("0000")]
+        [TestCase("1000")]
+        [TestCase("1001")]
+        [TestCase("100 - 001")]
         [TestCase("1234567")]
         [TestCase("7654321")]
+        [TestCase("7654321 - 1234567")]
         public async Task PostAdminUser_AddsUserSuccessfully(string userId)
         {
             var mockHttp = new MockHttpMessageHandler();
@@ -41,8 +46,13 @@ namespace Test_health_index_app.Services
 
 
         [Test]
+        [TestCase("0000")]
+        [TestCase("1000")]
+        [TestCase("1001")]
+        [TestCase("100 - 001")]
         [TestCase("1234567")]
         [TestCase("7654321")]
+        [TestCase("7654321 - 1234567")]
         public async Task PostUnlockAccount_Success(string userId)
         {
             var mockHttp = new MockHttpMessageHandler();
@@ -60,8 +70,13 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
+        [TestCase("0000")]
+        [TestCase("1000")]
+        [TestCase("1001")]
+        [TestCase("100 - 001")]
         [TestCase("1234567")]
         [TestCase("7654321")]
+        [TestCase("7654321 - 1234567")]
         public async Task PostLockAccount_Success(string userId)
         {
             var mockHttp = new MockHttpMessageHandler();
@@ -82,8 +97,13 @@ namespace Test_health_index_app.Services
 
 
         [Test]
+        [TestCase("0000")]
+        [TestCase("1000")]
+        [TestCase("1001")]
+        [TestCase("100 - 001")]
         [TestCase("1234567")]
         [TestCase("7654321")]
+        [TestCase("7654321 - 1234567")]
         public async Task PostDeleteAccount_Success(string userId)
         {
             var mockHttp = new MockHttpMessageHandler();
@@ -103,8 +123,13 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
+        [TestCase("0000", "1111")]
+        [TestCase("1000", "0001")]
+        [TestCase("1001", "0110")]
+        [TestCase("100 - 001", "011 - 110")]
         [TestCase("1234567", "7654321")]
-        [TestCase("987654321", "123456789")]
+        [TestCase("7654321", "1234567")]
+        [TestCase("7654321 - 1234567", "1234567 - 7654321")]
         public async Task PostAddParentChildRelationship_Success(string childId, string parentId)
         {
             var mockHttp = new MockHttpMessageHandler();
@@ -124,8 +149,13 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
+        [TestCase("0000")]
+        [TestCase("1000")]
+        [TestCase("1001")]
+        [TestCase("100 - 001")]
         [TestCase("1234567")]
         [TestCase("7654321")]
+        [TestCase("7654321 - 1234567")]
         public async Task PostRemoveParentChildRelationship_Success(string userId)
         {
             var mockHttp = new MockHttpMessageHandler();

@@ -12,10 +12,17 @@ namespace Test_health_index_app.Services
     public class MealFoodAPIServiceTest
     {
         [Test]
-        public async Task CreateMealFood_Success()
+        [TestCase(0000)]
+        [TestCase(1000)]
+        [TestCase(1001)]
+        [TestCase(100 - 001)]
+        [TestCase(1234567)]
+        [TestCase(7654321)]
+        [TestCase(7654321 - 1234567)]
+        public async Task CreateMealFood_Success(int id)
         {
             MealFood mealFood = new MealFood() {
-                Id = 1,
+                Id = id,
                 Meal = new Meal(),
                 Food = new Food(),
                 Amount = 1.0
@@ -38,11 +45,18 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
-        public async Task ReadMealFood_Success()
+        [TestCase(0000)]
+        [TestCase(1000)]
+        [TestCase(1001)]
+        [TestCase(100 - 001)]
+        [TestCase(1234567)]
+        [TestCase(7654321)]
+        [TestCase(7654321 - 1234567)]
+        public async Task ReadMealFood_Success(int id)
         {
             MealFood mealFood = new MealFood()
             {
-                Id = 1234,
+                Id = id,
                 Meal = new Meal(),
                 Food = new Food(),
                 Amount = 1.0
@@ -51,7 +65,7 @@ namespace Test_health_index_app.Services
 
             var mockHttp = new MockHttpMessageHandler();
             string testResponse = JsonConvert.SerializeObject(mealFood);
-            mockHttp.When("https://localhost:7005/mealfood/read?mealFoodId=1234")
+            mockHttp.When($"https://localhost:7005/mealfood/read?mealFoodId={id}")
                     .Respond("application/json", testResponse);
 
             var client = mockHttp.ToHttpClient();
@@ -59,18 +73,25 @@ namespace Test_health_index_app.Services
             var mealFoodAPIService = new MealFoodAPIServices(client);
 
             //Act
-            var result = await mealFoodAPIService.ReadMealFood(1234);
+            var result = await mealFoodAPIService.ReadMealFood(id);
 
             //Assert
-            Assert.That(result.Id, Is.EqualTo(1234));
+            Assert.That(result.Id, Is.EqualTo(id));
         }
 
         [Test]
-        public async Task UpdateMealFood_Success()
+        [TestCase(0000)]
+        [TestCase(1000)]
+        [TestCase(1001)]
+        [TestCase(100 - 001)]
+        [TestCase(1234567)]
+        [TestCase(7654321)]
+        [TestCase(7654321 - 1234567)]
+        public async Task UpdateMealFood_Success(int id)
         {
             MealFood mealFood = new MealFood()
             {
-                Id = 1,
+                Id = id,
                 Meal = new Meal(),
                 Food = new Food(),
                 Amount = 1.0
@@ -93,11 +114,18 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
-        public async Task DeleteMealFood_Success()
+        [TestCase(0000)]
+        [TestCase(1000)]
+        [TestCase(1001)]
+        [TestCase(100 - 001)]
+        [TestCase(1234567)]
+        [TestCase(7654321)]
+        [TestCase(7654321 - 1234567)]
+        public async Task DeleteMealFood_Success(int id)
         {
             MealFood mealFood = new MealFood()
             {
-                Id = 1,
+                Id = id,
                 Meal = new Meal(),
                 Food = new Food(),
                 Amount = 1.0

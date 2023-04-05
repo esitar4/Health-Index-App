@@ -80,8 +80,13 @@ namespace Test_health_index_app.Services
 
 
         [Test]
+        [TestCase("0000")]
+        [TestCase("1000")]
+        [TestCase("1001")]
+        [TestCase("100 - 001")]
         [TestCase("1234567")]
         [TestCase("7654321")]
+        [TestCase("7654321 - 1234567")]
         public async Task DeleteChild_Success(string userId)
         {
             var mockHttp = new MockHttpMessageHandler();
@@ -101,8 +106,13 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
+        [TestCase("0000")]
+        [TestCase("1000")]
+        [TestCase("1001")]
+        [TestCase("100 - 001")]
         [TestCase("1234567")]
         [TestCase("7654321")]
+        [TestCase("7654321 - 1234567")]
         public async Task AddChild_Success(string userId)
         {
             var mockHttp = new MockHttpMessageHandler();

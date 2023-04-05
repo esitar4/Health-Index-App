@@ -17,8 +17,13 @@ namespace Test_health_index_app.Services
  
         }
         [Test]
-        [TestCase("1234567")]
-        [TestCase("7654321")]
+        [TestCase(0000)]
+        [TestCase(1000)]
+        [TestCase(1001)]
+        [TestCase(100 - 001)]
+        [TestCase(1234567)]
+        [TestCase(7654321)]
+        [TestCase(7654321 - 1234567)]
         public async Task CreateFood_Success(int foodId)
         {
             Food food = new Food()
@@ -69,11 +74,18 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
-        public async Task ReadFood_Success()
+        [TestCase(0000)]
+        [TestCase(1000)]
+        [TestCase(1001)]
+        [TestCase(100 - 001)]
+        [TestCase(1234567)]
+        [TestCase(7654321)]
+        [TestCase(7654321 - 1234567)]
+        public async Task ReadFood_Success(int foodId)
         {
             Food food = new Food()
             {
-                Id = 26547,
+                Id = foodId,
                 FoodName = "Double-Double Burger",
                 FoodType = "Brand",
                 BrandName = "In-N-Out",
@@ -105,7 +117,7 @@ namespace Test_health_index_app.Services
 
             var mockHttp = new MockHttpMessageHandler();
             string testResponse = JsonConvert.SerializeObject(food);
-            mockHttp.When("https://localhost:7005/food/read?FoodId=26547")
+            mockHttp.When($"https://localhost:7005/food/read?FoodId={foodId}")
                     .Respond("application/json", testResponse);
 
             var client = mockHttp.ToHttpClient();
@@ -113,18 +125,25 @@ namespace Test_health_index_app.Services
             var foodAPIService = new FoodAPIServices(client);
 
             //Act
-            var result = await foodAPIService.ReadFood(26547);
+            var result = await foodAPIService.ReadFood(foodId);
 
             //Assert
-            Assert.That(result.Id, Is.EqualTo(26547));
+            Assert.That(result.Id, Is.EqualTo(foodId));
         }
 
         [Test]
-        public async Task UpdateFood_Success()
+        [TestCase(0000)]
+        [TestCase(1000)]
+        [TestCase(1001)]
+        [TestCase(100 - 001)]
+        [TestCase(1234567)]
+        [TestCase(7654321)]
+        [TestCase(7654321 - 1234567)]
+        public async Task UpdateFood_Success(int foodId)
         {
             Food food = new Food()
             {
-                Id = 26547,
+                Id = foodId,
                 FoodName = "Double-Double Burger",
                 FoodType = "Brand",
                 BrandName = "In-N-Out",
@@ -171,11 +190,18 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
-        public async Task DeleteFood_Success()
+        [TestCase(0000)]
+        [TestCase(1000)]
+        [TestCase(1001)]
+        [TestCase(100 - 001)]
+        [TestCase(1234567)]
+        [TestCase(7654321)]
+        [TestCase(7654321 - 1234567)]
+        public async Task DeleteFood_Success(int foodId)
         {
             Food food = new Food()
             {
-                Id = 26547,
+                Id = foodId,
                 FoodName = "Double-Double Burger",
                 FoodType = "Brand",
                 BrandName = "In-N-Out",
