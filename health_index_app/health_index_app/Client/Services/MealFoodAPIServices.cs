@@ -9,6 +9,7 @@ namespace health_index_app.Client.Services
         Task<IEnumerable<MealFood>> ReadMealFood(int mealFoodId);
         Task<bool> UpdateMealFood(MealFood mealFood);
         Task<bool> DeleteMealFood(MealFood mealFood);
+        Task<List<MealFood>> GetMealFoodList(int mealId);
     }
 
     public class MealFoodAPIServices : IMealFoodAPIServices
@@ -34,12 +35,12 @@ namespace health_index_app.Client.Services
             }
             return MealFood;
         }
-        public async Task<IEnumerable<MealFood>> ReadMealFood(int mealFoodId)
+        public async Task<IEnumerable<MealFood>> ReadMealFood(int mealId)
         {
             List<MealFood> response;
             try
             {
-                var url = $"/mealfood/read?mealFoodId={mealFoodId}";
+                var url = $"/mealfood/read?mealId={mealId}";
                 response = await _client.GetFromJsonAsync<List<MealFood>>(url);
             }
             catch
@@ -74,6 +75,14 @@ namespace health_index_app.Client.Services
             return true;
         }
 
+
+
+        public async Task<List<MealFood>> GetMealFoodList(int mealId)
+        {
+            var url = $"/mealfood/get-meal-food-list?mealId={mealId}";
+            var response = await _client.GetFromJsonAsync<List<MealFood>>(url);
+            return response;
+        }
 
     }
 }
