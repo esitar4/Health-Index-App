@@ -34,11 +34,11 @@ namespace health_index_app.Server.Data
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser
             { 
                 Id = AdminUserId, 
-                UserName = "admin@cognizant.com", 
+                UserName = "eric@cognizant.com", 
                 PasswordHash = hasher.HashPassword(null, "Hell0!"), 
-                Email = "admin@cognizant.com", 
-                NormalizedUserName = "admin@cognizant.com".ToUpper(),
-                NormalizedEmail = "admin@cognizant.com".ToUpper(),
+                Email = "eric@cognizant.com", 
+                NormalizedUserName = "eric@cognizant.com".ToUpper(),
+                NormalizedEmail = "eric@cognizant.com".ToUpper(),
                 EmailConfirmed = true
             });
             builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = AdminRoleId, UserId = AdminUserId });
@@ -88,6 +88,7 @@ namespace health_index_app.Server.Data
                 NormalizedUserName = "charles@cognizant.com".ToUpper(),
                 NormalizedEmail = "charles@cognizant.com".ToUpper(),
                 EmailConfirmed = true,
+                ParentId = AdminUserId
             });
 
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser
@@ -418,14 +419,14 @@ namespace health_index_app.Server.Data
             );
 
             builder.Entity<UserMeal>().HasData(
-                new UserMeal { Id = 1, UserId = userIds[4], MealId = 10004 },
-                new UserMeal { Id = 2, UserId = userIds[1], MealId = 10001 },
-                new UserMeal { Id = 3, UserId = userIds[4], MealId = 10005 },
-                new UserMeal { Id = 4, UserId = userIds[3], MealId = 10004 },
-                new UserMeal { Id = 5, UserId = userIds[0], MealId = 10003 },
-                new UserMeal { Id = 6, UserId = userIds[1], MealId = 10004 },
-                new UserMeal { Id = 7, UserId = userIds[2], MealId = 10002 },
-                new UserMeal { Id = 8, UserId = userIds[4], MealId = 10006 }
+                new UserMeal { Id = 1, UserId = userIds[4], MealId = 10004, Name = "Lunch" },
+                new UserMeal { Id = 2, UserId = userIds[1], MealId = 10001, Name = "Snack"},
+                new UserMeal { Id = 3, UserId = userIds[4], MealId = 10005, Name = "Duck" },
+                new UserMeal { Id = 4, UserId = userIds[3], MealId = 10004, Name = "Worcestershire" },
+                new UserMeal { Id = 5, UserId = userIds[0], MealId = 10003, Name = "Truffle Oil" },
+                new UserMeal { Id = 6, UserId = userIds[1], MealId = 10004, Name = "Feta" },
+                new UserMeal { Id = 7, UserId = userIds[2], MealId = 10002, Name = "Fenugreek" },
+                new UserMeal { Id = 8, UserId = userIds[4], MealId = 10006, Name = "Rocket" }
             );
 
 

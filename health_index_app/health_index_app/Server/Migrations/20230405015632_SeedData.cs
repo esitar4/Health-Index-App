@@ -11,18 +11,17 @@ namespace health_index_app.Server.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "cd7e9f2f-d755-43a5-93e4-b0e3f3311a58", "a7595f36-599d-4a90-81b5-61129c4f4881", "Admin", "ADMIN" });
+                values: new object[] { "07cfe6f7-54f1-4c9a-951a-82f88235ccf5", "95b70b77-6408-4563-b60d-3cbb75a36fe8", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "Gender", "Height", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "ParentId", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "Weight" },
                 values: new object[,]
                 {
-                    { "5820a983-c7b4-4153-9a97-950714bb5a8f", 0, "e0161783-ff1e-41f4-8f2a-a5f4448f42a1", null, "edward@cognizant.com", true, null, null, false, null, "EDWARD@COGNIZANT.COM", "EDWARD@COGNIZANT.COM", null, "AQAAAAEAACcQAAAAEGPJtFICCGlIEecxFEuUsz+7g7OZegKm1YWwEeGDJdGPLPt93QZA+YCiqvNgK1LCNQ==", null, false, "a1b0ccd9-e4cf-4b7a-8b2d-d70fbe27c82a", false, "edward@cognizant.com", null },
-                    { "6d4f586b-3e43-4655-a23d-70f120eeee08", 0, "6869cd0c-f8eb-4d1d-935b-47acd18bde8b", null, "jessica@cognizant.com", true, null, null, false, null, "JESSICA@COGNIZANT.COM", "JESSICA@COGNIZANT.COM", null, "AQAAAAEAACcQAAAAEM5ZDClicA78jWWG8P2ZE/Lr34xKzEBU4NFuRQNgSgi6D4C2FgeiLm2qveOgyWmuxg==", null, false, "93b17f53-9b7c-4ca4-bfa0-9c8dd18a6426", false, "jessica@cognizant.com", null },
-                    { "877dffea-9501-4237-b437-b95dea46a2a5", 0, "25b17198-35b6-4c03-a42b-b7b6bae50499", null, "ravid@cognizant.com", true, null, null, false, null, "RAVID@COGNIZANT.COM", "RAVID@COGNIZANT.COM", null, "AQAAAAEAACcQAAAAEFJxNshchHiaXBIdqwGI2o/Sf9H5bENe7Md6eN7XhW4qsnlcsTSAyvLpI9vWc4ML9Q==", null, false, "f0b78aad-f961-43ef-8fd0-ba9f2cf2c973", false, "ravid@cognizant.com", null },
-                    { "a142f5eb-7cd1-4c7e-849c-95f2c73d9f09", 0, "1d3ac3da-5209-477d-8893-b4685f633c09", null, "admin@cognizant.com", true, null, null, false, null, "ADMIN@COGNIZANT.COM", "ADMIN@COGNIZANT.COM", null, "AQAAAAEAACcQAAAAENdy0nPca/D0Orw4Du4NjyrSjn8emaJxWhIF+awOctDpoa+nYq+CC1A8h9Hkc+VUwQ==", null, false, "777bc1b9-ef89-404c-899e-3ea5e5e9ce35", false, "admin@cognizant.com", null },
-                    { "fa1b4867-9195-4bdc-8286-da2b47df22ed", 0, "6c507d56-d637-46ab-8910-8cb2b33142db", null, "charles@cognizant.com", true, null, null, false, null, "CHARLES@COGNIZANT.COM", "CHARLES@COGNIZANT.COM", null, "AQAAAAEAACcQAAAAEADaw36vj4suVZQ3kpA41WBKed9yC08HtAZC6z87tYqCqePrx5HJYMlmCR95tla3RQ==", null, false, "0343ad73-4d8d-42cc-8b8e-d13ee030ada7", false, "charles@cognizant.com", null }
+                    { "25ab57d4-1ec1-45a4-b479-1b0a05e2483a", 0, "8b535116-2833-40f8-b6ab-f550ffdc6e7d", null, "edward@cognizant.com", true, null, null, false, null, "EDWARD@COGNIZANT.COM", "EDWARD@COGNIZANT.COM", null, "AQAAAAEAACcQAAAAEEbvFC+huQ5A5ubv8cOWLeaOCecNBlkVa8foDd4w5H9LVIH2jXEYaZNzCBz+Z7z4WA==", null, false, "30c900a1-882b-40fd-8793-eca0aadf0bd5", false, "edward@cognizant.com", null },
+                    { "3afeb668-c51a-4f4c-91f5-7e4aa9322d01", 0, "51d81afe-bc33-4d1e-ac26-32fa61674acd", null, "ravid@cognizant.com", true, null, null, false, null, "RAVID@COGNIZANT.COM", "RAVID@COGNIZANT.COM", null, "AQAAAAEAACcQAAAAEHcHFZVNhbbm+fm94eQN8T747eYInAVsJxmfPQzvfqwlpvkOrDeEwpckW/4mNAQSPg==", null, false, "bbc8dfe5-4d1f-4e06-b6ea-1010141dbc77", false, "ravid@cognizant.com", null },
+                    { "6f1372e5-7f5b-4cac-bf87-408c987cdb0c", 0, "f1127fe9-f808-42d5-b27e-405b747658f3", null, "jessica@cognizant.com", true, null, null, false, null, "JESSICA@COGNIZANT.COM", "JESSICA@COGNIZANT.COM", null, "AQAAAAEAACcQAAAAEJnaQA/SWpVsk1OzV2yqbOt8nVW1y7tenuECbiOC6vdxSOlVdqjU2BC+xUVy4CxcFw==", null, false, "bc2d6712-6356-4b8c-b141-0caf4ed069db", false, "jessica@cognizant.com", null },
+                    { "79181ade-a68d-4b30-8ba2-74367631e1f5", 0, "4690c9a0-d9d5-46ad-99da-532aee153cc9", null, "eric@cognizant.com", true, null, null, false, null, "ERIC@COGNIZANT.COM", "ERIC@COGNIZANT.COM", null, "AQAAAAEAACcQAAAAELrGiIIjJ9Q75rpBD8rFwRAZ6shVLE4BHAgaOWkIsglwptk2+vlMyYD1Ar4SEc6sKw==", null, false, "3ed24d85-06ee-4764-8848-adc6cbd61238", false, "eric@cognizant.com", null }
                 });
 
             migrationBuilder.InsertData(
@@ -57,12 +56,16 @@ namespace health_index_app.Server.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "cd7e9f2f-d755-43a5-93e4-b0e3f3311a58", "a142f5eb-7cd1-4c7e-849c-95f2c73d9f09" });
+                values: new object[] { "07cfe6f7-54f1-4c9a-951a-82f88235ccf5", "79181ade-a68d-4b30-8ba2-74367631e1f5" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "Gender", "Height", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "ParentId", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "Weight" },
-                values: new object[] { "5a4458e5-6edb-4879-8d71-4077669149d9", 0, "41d3ef90-4c4c-487b-8865-e08994ac7353", null, "scott@cognizant.com", true, null, null, false, null, "SCOTT@COGNIZANT.COM", "SCOTT@COGNIZANT.COM", "a142f5eb-7cd1-4c7e-849c-95f2c73d9f09", "AQAAAAEAACcQAAAAEDOlW+z6QZl7rQ8lECxM7XQPLFcpjncdIoGqOytOkL/JmQSH4aQNavyeyatxl3V3JA==", null, false, "1699900b-410d-41d2-a242-e3df0a8f1f10", false, "scott@cognizant.com", null });
+                values: new object[,]
+                {
+                    { "c148fe3a-8c82-48e2-a3bf-9bf3708d1f2a", 0, "4822c0bc-d85a-4f1e-844b-5e3962e03129", null, "charles@cognizant.com", true, null, null, false, null, "CHARLES@COGNIZANT.COM", "CHARLES@COGNIZANT.COM", "79181ade-a68d-4b30-8ba2-74367631e1f5", "AQAAAAEAACcQAAAAEEMT5fDhgHfoOgacOEm3iIaI6QWJVD10C0c2ek0zDbFQ2OLd2P+1LbSPq6f9VVOogA==", null, false, "1815f6ab-7bbb-4de2-b3b3-e0f035ff1324", false, "charles@cognizant.com", null },
+                    { "ee505841-aec9-41c3-90ce-ead4fc82818f", 0, "0a94233c-bf71-422e-8f58-a0da85575772", null, "scott@cognizant.com", true, null, null, false, null, "SCOTT@COGNIZANT.COM", "SCOTT@COGNIZANT.COM", "79181ade-a68d-4b30-8ba2-74367631e1f5", "AQAAAAEAACcQAAAAENBNluBubPzBAL+wcdMwRsfQfrInT/8OAJKApOYuzcrHci8aH+jXl17h4ulEA6+0lQ==", null, false, "53404c29-aff6-4950-8b6a-df941b501ff3", false, "scott@cognizant.com", null }
+                });
 
             migrationBuilder.InsertData(
                 table: "MealFoods",
@@ -92,27 +95,22 @@ namespace health_index_app.Server.Migrations
                 columns: new[] { "Id", "MealId", "Name", "UserId" },
                 values: new object[,]
                 {
-                    { 2, 10001, "", "5820a983-c7b4-4153-9a97-950714bb5a8f" },
-                    { 4, 10004, "", "fa1b4867-9195-4bdc-8286-da2b47df22ed" },
-                    { 5, 10003, "", "877dffea-9501-4237-b437-b95dea46a2a5" },
-                    { 6, 10004, "", "5820a983-c7b4-4153-9a97-950714bb5a8f" },
-                    { 7, 10002, "", "6d4f586b-3e43-4655-a23d-70f120eeee08" }
+                    { 2, 10001, "Snack", "25ab57d4-1ec1-45a4-b479-1b0a05e2483a" },
+                    { 5, 10003, "Truffle Oil", "3afeb668-c51a-4f4c-91f5-7e4aa9322d01" },
+                    { 6, 10004, "Feta", "25ab57d4-1ec1-45a4-b479-1b0a05e2483a" },
+                    { 7, 10002, "Fenugreek", "6f1372e5-7f5b-4cac-bf87-408c987cdb0c" }
                 });
 
             migrationBuilder.InsertData(
                 table: "UserMeals",
                 columns: new[] { "Id", "MealId", "Name", "UserId" },
-                values: new object[] { 1, 10004, "", "5a4458e5-6edb-4879-8d71-4077669149d9" });
-
-            migrationBuilder.InsertData(
-                table: "UserMeals",
-                columns: new[] { "Id", "MealId", "Name", "UserId" },
-                values: new object[] { 3, 10005, "", "5a4458e5-6edb-4879-8d71-4077669149d9" });
-
-            migrationBuilder.InsertData(
-                table: "UserMeals",
-                columns: new[] { "Id", "MealId", "Name", "UserId" },
-                values: new object[] { 8, 10006, "", "5a4458e5-6edb-4879-8d71-4077669149d9" });
+                values: new object[,]
+                {
+                    { 1, 10004, "Lunch", "ee505841-aec9-41c3-90ce-ead4fc82818f" },
+                    { 3, 10005, "Duck", "ee505841-aec9-41c3-90ce-ead4fc82818f" },
+                    { 4, 10004, "Worcestershire", "c148fe3a-8c82-48e2-a3bf-9bf3708d1f2a" },
+                    { 8, 10006, "Rocket", "ee505841-aec9-41c3-90ce-ead4fc82818f" }
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -120,7 +118,7 @@ namespace health_index_app.Server.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetUserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { "cd7e9f2f-d755-43a5-93e4-b0e3f3311a58", "a142f5eb-7cd1-4c7e-849c-95f2c73d9f09" });
+                keyValues: new object[] { "07cfe6f7-54f1-4c9a-951a-82f88235ccf5", "79181ade-a68d-4b30-8ba2-74367631e1f5" });
 
             migrationBuilder.DeleteData(
                 table: "MealFoods",
@@ -245,32 +243,32 @@ namespace health_index_app.Server.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "cd7e9f2f-d755-43a5-93e4-b0e3f3311a58");
+                keyValue: "07cfe6f7-54f1-4c9a-951a-82f88235ccf5");
 
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "5820a983-c7b4-4153-9a97-950714bb5a8f");
+                keyValue: "25ab57d4-1ec1-45a4-b479-1b0a05e2483a");
 
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "5a4458e5-6edb-4879-8d71-4077669149d9");
+                keyValue: "3afeb668-c51a-4f4c-91f5-7e4aa9322d01");
 
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "6d4f586b-3e43-4655-a23d-70f120eeee08");
+                keyValue: "6f1372e5-7f5b-4cac-bf87-408c987cdb0c");
 
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "877dffea-9501-4237-b437-b95dea46a2a5");
+                keyValue: "c148fe3a-8c82-48e2-a3bf-9bf3708d1f2a");
 
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "fa1b4867-9195-4bdc-8286-da2b47df22ed");
+                keyValue: "ee505841-aec9-41c3-90ce-ead4fc82818f");
 
             migrationBuilder.DeleteData(
                 table: "Foods",
@@ -350,7 +348,7 @@ namespace health_index_app.Server.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "a142f5eb-7cd1-4c7e-849c-95f2c73d9f09");
+                keyValue: "79181ade-a68d-4b30-8ba2-74367631e1f5");
         }
     }
 }
