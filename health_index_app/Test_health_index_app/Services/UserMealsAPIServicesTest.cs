@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using health_index_app.Shared.Models;
 using Newtonsoft.Json;
+using health_index_app.Shared.DTObjects;
 
 namespace Test_health_index_app.Services
 {
