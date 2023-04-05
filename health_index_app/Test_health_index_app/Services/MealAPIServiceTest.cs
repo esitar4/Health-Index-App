@@ -19,8 +19,8 @@ namespace Test_health_index_app.Services
             };
 
             var mockHttp = new MockHttpMessageHandler();
-            string testResponse = "{  }";
-            mockHttp.When("https://localhost:7005//meal/create")
+            string testResponse = @"{""id"":10001,""healthIndex"":0}";
+            mockHttp.When("https://localhost:7005/meal/create")
                     .Respond("application/json", testResponse);
 
             var client = mockHttp.ToHttpClient();
@@ -31,15 +31,15 @@ namespace Test_health_index_app.Services
             var result = await mealAPIService.CreateMeal(meal);
 
             //Assert
-            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Id, Is.EqualTo(10001));
         }
 
         [Test]
         public async Task ReadMeal_Success()
         {
             var mockHttp = new MockHttpMessageHandler();
-            string testResponse = @"{ }";
-            mockHttp.When("https://localhost:7005//meal/read?mealId=1234")
+            string testResponse = @"{""id"":10001,""healthIndex"":0}";
+            mockHttp.When("https://localhost:7005/meal/read?mealId=10001")
                     .Respond("application/json", testResponse);
 
             var client = mockHttp.ToHttpClient();
@@ -47,10 +47,10 @@ namespace Test_health_index_app.Services
             var mealAPIService = new MealAPIServices(client);
 
             //Act
-            var result = await mealAPIService.ReadMeal(1234);
+            var result = await mealAPIService.ReadMeal(10001);
 
             //Assert
-            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Id, Is.EqualTo(10001));
         }
 
         [Test]
