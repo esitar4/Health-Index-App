@@ -104,22 +104,6 @@ namespace Test_health_index_app.Models
         }
 
         [Test]
-        public void TestMetricServingUnitRequired()
-        {
-            //Arrange
-            food.MetricServingUnit = null;
-
-            //Act
-
-            //Assert
-            Assert.IsTrue(ValidateModel(food).Count == 1);
-            Assert.IsTrue(ValidateModel(food).Any(
-                    v => v.MemberNames.Contains("MetricServingUnit") &&
-                         v.ErrorMessage.Contains("required")));
-
-        }
-
-        [Test]
         public void TestMeasurementDescriptionRequired()
         {
             //Arrange

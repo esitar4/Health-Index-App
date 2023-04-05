@@ -3,6 +3,7 @@ using health_index_app.Shared.DTObjects;
 using health_index_app.Client.Components;
 using Microsoft.AspNetCore.Components;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace health_index_app.Client.Services
 {
