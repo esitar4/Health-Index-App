@@ -35,12 +35,12 @@ namespace health_index_app.Client.Services
             }
             return MealFood;
         }
-        public async Task<MealFood> ReadMealFood(int mealId)
+        public async Task<MealFood> ReadMealFood(int mealFoodId)
         {
             MealFood response;
             try
             {
-                var url = $"/mealfood/read?mealId={mealId}";
+                var url = $"/mealfood/read?mealFoodId={mealFoodId}";
                 response = await _client.GetFromJsonAsync<MealFood>(url);
             }
             catch
