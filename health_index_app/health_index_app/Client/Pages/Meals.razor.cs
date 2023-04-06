@@ -133,6 +133,7 @@ namespace health_index_app.Client.Pages
             }
 
             healthIndex = HealthIndex.generateHealthIndex(foods);
+            StateHasChanged();
         }
 
 
