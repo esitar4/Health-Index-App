@@ -18,7 +18,6 @@
                     <button type="submit" class="btn btn-light" @onclick="SearchForFood">Submit</button>
                 </div>
             </div>
-            
             @if (json is not null)
             {
                 <table class="table table-striped">
@@ -27,7 +26,6 @@
                             <th>Food Name:</th>
                             <th>Serving Size:</th>
                             <th>Calorie Count:</th>
-                            <th width="1%">Count:</th>
                             <th>Choose Servings:</th>
                         </tr>
                     </thead>
@@ -45,7 +43,6 @@
                                 <td>@SearchTable[j, 1]</td>
                                 <td>@SearchTable[j, 2]</td>
                                 <td>@SearchTable[j, 3]</td>
-                                <td><input type="text" class="form-control" placeholder="1" @bind-value="SearchTable[j,5]" /></td>
                                 <td>
                                     <div class="btn-group dropend">
                                         <button type="button" class="btn btn-primary btn-sm" @onclick="() => AddFoodToMeal(j)">Add</button>
@@ -81,7 +78,6 @@
             <div>
                 <h3>View Foods added to Meal:</h3>
                 <table class="table table-striped">
-
                     <thead>
                         <tr>
                             <th>Meal Food Name:</th>
@@ -98,24 +94,25 @@
                         }
                         @for (int j = 0; j < MealTable.Count(); j++)
                         {
+                            var local_j = j;
                             var foodId = MealTable.ElementAt(j)[0];
                             <tr>
-                                <td>@MealTable.ElementAt(j)[1]</td>
-                                <td>@MealTable.ElementAt(j)[2]</td>
-                                <td>@MealTable.ElementAt(j)[3]</td>
-                                <td>@MealTable.ElementAt(j)[5]</td>
+                                <td>@MealTable.ElementAt(local_j)[1]</td>
+                                <td>@MealTable.ElementAt(local_j)[2]</td>
+                                <td>@MealTable.ElementAt(local_j)[3]</td>
+                                <td><input type="text" class="form-control" placeholder="1" @bind-value="MealTable.ElementAt(local_j)[5]" /></td>
                                 <td><button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromMeal(foodId)">Remove</button></td>
                             </tr>
                         }
                     </tbody>
                 </table>
                 <div class="row">
-                    <div class="col-auto">
-                        <input type="text" class="form-control" @bind-value="MealName" />
+                    <div class="col-auto" style="width:40%">
+                        <input type="text" class="form-control" placeholder="Name of Meal" maxlength="64" @bind-value="MealName">@MealName</input>
                     </div>
-                    <h4 class="col-auto" style="text-align:right">
+                    <h5 class="col-auto" style="text-align:right">
                         Health Index: @healthIndex / 10.0
-                    </h4>
+                    </h5>
                 </div>
                 <button class="btn btn-success" type="button" @onclick="() => CreateMeal(MealName)">Create Meal</button>
             </div>
@@ -140,8 +137,10 @@
                                 <td @onclick="() => Show(userMeal[0])" style="cursor:pointer">@userMeal[1]</td>
                                 <td @onclick="() => Show(userMeal[0])" style="cursor:pointer">@userMeal[2]kcal</td>
                                 <td @onclick="() => Show(userMeal[0])" style="cursor:pointer">@userMeal[3]g</td>
-                                <td><button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromUserMeals(userMeal[0],UserMealTable.IndexOf(userMeal))">Remove</button>
-                                <button class="btn btn-warning btn-sm" type="button" @onclick="() => EditUserMeal(userMeal[0],UserMealTable.IndexOf(userMeal))" disabled="@disableEdit">Edit</button></td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromUserMeals(userMeal[0],UserMealTable.IndexOf(userMeal))">Remove</button>
+                                    <button class="btn btn-warning btn-sm" type="button" @onclick="() => EditUserMeal(userMeal[0],UserMealTable.IndexOf(userMeal))" disabled="@disableEdit">Edit</button>
+                                </td>
                             </tr>
                             <tr hidden="@isHidden[userMeal[0]]">
                                 <td colspan="4">
