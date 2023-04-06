@@ -47,7 +47,7 @@ namespace Test_health_index_app.Models
         public void TestMaxNameLength()
         {
             //Arrange  
-            userMeal.Name = "ihatechickfilachickensandwich";
+            userMeal.Name = "ihatechickfilachickensandwichwithchickensauceihatechickfilachickensandwichwithchickensauceihatechickfilachickensandwichwithchickensauceihatechickfilachickensandwichwithchickensauce";
 
             //Act   
 
@@ -55,7 +55,7 @@ namespace Test_health_index_app.Models
             Assert.IsTrue(ValidateModel(userMeal).Count == 1);
             Assert.IsTrue(ValidateModel(userMeal).Any(
                 v => v.MemberNames.Contains("Name") &&
-                     v.ErrorMessage.Contains("Name length shouldn't be longer than 15 letters")));
+                     v.ErrorMessage.Contains("Name length shouldn't be longer than 64 letters")));
 
         }
     }
