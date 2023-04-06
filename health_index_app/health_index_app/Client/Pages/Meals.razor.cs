@@ -41,7 +41,7 @@ namespace health_index_app.Client.Pages
         FoodsSearchResponse json = null!;
         GetFoodResponse getFood = null!;
         double healthIndex = 0;
-
+        
         const string NOMEALNAME = "Meal name is required";
 
         string[,] SearchTable = new string[10, NUMDESC]; //id, name, serving description, calories
@@ -133,7 +133,7 @@ namespace health_index_app.Client.Pages
         private async void GetHealthIndex()
         {
             List<Food> foods = new();
-
+            
             foreach (var food in MealTable)
             {
                 await GetFood(food[0]);

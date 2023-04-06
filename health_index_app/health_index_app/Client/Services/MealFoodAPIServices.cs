@@ -55,12 +55,15 @@ namespace health_index_app.Client.Services
             try
             {
                 var response = await _client.PostAsJsonAsync("mealfood/update", MealFood);
+                if (response.IsSuccessStatusCode)
+                    return true;
+                else
+                    return false;
             }
             catch
             {
                 throw new Exception("Unable to update MealFood, MealFood not found");
             }
-            return true;
         }
 
         public async Task<bool> DeleteMealFood(MealFood mealFood)
@@ -68,11 +71,15 @@ namespace health_index_app.Client.Services
             try
             {
                 var response = await _client.PostAsJsonAsync("mealfood/delete", mealFood);
-            } 
-            catch {
+                if (response.IsSuccessStatusCode)
+                    return true;
+                else
+                    return false;
+            }
+            catch
+            {
                 throw new Exception("Unable to delete MealFood, MealFood not found");
             }
-            return true;
         }
 
 

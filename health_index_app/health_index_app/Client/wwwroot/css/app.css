@@ -90,7 +90,8 @@ a:hover {
     position: absolute;
     width: 25rem;
     top: 2rem;
-    border-radius: 1rem;
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px;
     right: 2rem;
 }
 
@@ -120,14 +121,52 @@ a:hover {
     position: fixed; /*top: 50%;*/
     left: 50%; /*margin-top: -50px;*/
     margin-left: -100px;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
-
-@keyframes fadein {
+@-webkit-keyframes fadein {
     from {
+        top: 0;
         opacity: 0;
     }
 
     to {
+        top: 30px;
         opacity: 1;
     }
 }
+
+@keyframes fadein {
+    from {
+        top: 0;
+        opacity: 0;
+    }
+
+    to {
+        top: 30px;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        top: 30px;
+        opacity: 1;
+    }
+
+    to {
+        top: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        top: 30px;
+        opacity: 1;
+    }
+    to {
+        top: 0;
+        opacity: 0;
+    }
+}
+
