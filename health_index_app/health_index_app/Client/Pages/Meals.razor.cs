@@ -44,6 +44,8 @@ namespace health_index_app.Client.Pages
 
         private Dictionary<string, bool> isHidden = new();
 
+        private bool disableEdit => MealTable.Count > 0 ? true : false;
+
         private void Show(string mealId)
         {
             if (isHidden.ContainsKey(mealId))
@@ -317,6 +319,11 @@ namespace health_index_app.Client.Pages
                     UserMealTable.Last()[4+i*NUMDESC+6] = food.ServingId.ToString();
                 }
             }
+        }
+
+        private void ClearList()
+        {
+            MealTable.Clear();
         }
     }
 }
