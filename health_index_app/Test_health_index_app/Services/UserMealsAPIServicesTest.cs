@@ -53,8 +53,8 @@ namespace Test_health_index_app.Services
             UserMealDTO userMealDTO = new UserMealDTO { MealId = mealId, Name = "test" };
 
             var mockHttp = new MockHttpMessageHandler();
-            string testResponse = @"{ }";
-            mockHttp.When("https://localhost:7005//usermeal/update")
+            string testResponse = "StatusCode: 200, ReasonPhrase: 'OK', Version: 1.1, Content: System.Net.Http.BrowserHttpHandler+BrowserHttpContent, Headers:\n{\n Access-Control-Allow-Origin: *\n Date: Tue, 04 Apr 2023 22:05:32 GMT\n Server: Kestrel\n Content-Type: text/plain; charset=utf-8\n}";
+            mockHttp.When("https://localhost:7005/usermeal/update")
                     .Respond("application/json", testResponse);
 
             var client = mockHttp.ToHttpClient();

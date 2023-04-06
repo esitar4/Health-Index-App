@@ -59,12 +59,15 @@ namespace health_index_app.Client.Services
             try
             {
                 var response = await _client.PostAsJsonAsync("usermeal/update", userMealDTO);
+                if (response.IsSuccessStatusCode)
+                    return true;
+                else
+                    return false;
             }
             catch
             {
                 throw new Exception("Unable to update UserMeal, UserMeal not found");
             }
-            return true;
         }
 
 
