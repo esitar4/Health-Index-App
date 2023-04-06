@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace health_index_app.Shared
 {
-    internal class HealthIndex
+    public class HealthIndex
     {
         public static double generateHealthIndex(List<Food> meal)
         {
@@ -34,7 +34,7 @@ namespace health_index_app.Shared
                 }
             }
 
-            return healthIndex/meal.Count;
+            return Math.Round(healthIndex/meal.Count, 1);
         }
 
         public static double? nullCheck(double? value)
