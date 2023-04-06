@@ -13,6 +13,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Drawing.Text;
+using health_index_app.Client.Components;
 
 namespace health_index_app.Client.Pages
 {
@@ -28,15 +29,20 @@ namespace health_index_app.Client.Pages
         protected IMealsAPIServices MealAPIServices { get; set; }
         [Inject]
         protected IUserMealsAPIServices UserMealsAPIServices { get; set; }
+        [Inject]
+        protected ToastService ToastService { get; set; }
+
 
         const int NUMDESC = 7;
 
         private string SearchExpression = String.Empty;
-        private string MealName = String.Empty;
+        private string MealName = "";
 
         FoodsSearchResponse json = null!;
         GetFoodResponse getFood = null!;
         double healthIndex = 0;
+        
+        const string NOMEALNAME = "Meal name is required";
 
         string[,] SearchTable = new string[10, NUMDESC]; //id, name, serving description, calories
         List<string[]> MealTable = new List<string[]>();
@@ -127,7 +133,7 @@ namespace health_index_app.Client.Pages
         private async void GetHealthIndex()
         {
             List<Food> foods = new();
-
+            
             foreach (var food in MealTable)
             {
                 await GetFood(food[0]);
@@ -135,6 +141,7 @@ namespace health_index_app.Client.Pages
             }
 
             healthIndex = HealthIndex.generateHealthIndex(foods);
+            StateHasChanged();
         }
 
 
@@ -155,6 +162,8 @@ namespace health_index_app.Client.Pages
                 MealTable.Last()[5] = userMeal[i+5]??"1"; //amount
                 MealTable.Last()[6] = userMeal[i+6]; //amount
             }
+
+            MealName = MealTable.Last()[1];
 
         }
         private async Task UpdateFoodRow(int index, Serving serving)
@@ -227,43 +236,49 @@ namespace health_index_app.Client.Pages
 
         private async Task CreateMeal(string mealName)
         {
-            Meal meal = await MealAPIServices.CreateMeal(new Meal());
-
-            MealFood mealFood; UserMealDTO userMealDTO;
-
-            double totalCalories = 0; double totalGrams = 0;
-
-            foreach (string[] MealTableFood in MealTable)
+            if (mealName != "")
             {
-                var foodId = MealTableFood[0];
-                var foodReponse = getFoodResponses.Where(x => x.Food.Food_Id == foodId).FirstOrDefault();
+                Meal meal = await MealAPIServices.CreateMeal(new Meal());
 
-                double foodAmount = 1;
+                MealFood mealFood; UserMealDTO userMealDTO;
 
-                try
+                double totalCalories = 0; double totalGrams = 0;
+
+                foreach (string[] MealTableFood in MealTable)
                 {
-                    foodAmount = Convert.ToDouble(MealTableFood[5]);
+                    var foodId = MealTableFood[0];
+                    var foodReponse = getFoodResponses.Where(x => x.Food.Food_Id == foodId).FirstOrDefault();
+
+                    double foodAmount = 1;
+
+                    try
+                    {
+                        foodAmount = Convert.ToDouble(MealTableFood[5]);
+                    }
+                    catch (FormatException ex)
+                    {
+                        Console.WriteLine(@"The amount given for {0} is not valid, defaulted to 1", MealTableFood[1]);
+                    }
+
+                    var food = await FoodAPIServices.CreateFood(MealTableFood[6], foodReponse);
+
+                    totalCalories += Convert.ToInt32(food.Calories)*foodAmount;
+                    totalGrams += Convert.ToInt32(food.MetricServingAmount)*foodAmount;
+
+                    mealFood = await MealFoodAPIServices.CreateMealFood(new MealFood { MealId = meal.Id, FoodId = food.Id, Amount = foodAmount });
                 }
-                catch (FormatException ex)
-                {
-                    Console.WriteLine(@"The amount given for {0} is not valid, defaulted to 1", MealTableFood[1]);
-                }
+                userMealDTO = await UserMealsAPIServices.CreateUserMeal(new UserMealDTO() { MealId = meal.Id, Name = MealName != "" ? MealName : "Unnamed Meal" });
 
-                var food = await FoodAPIServices.CreateFood(MealTableFood[6], foodReponse);
+                await AddNewUserMeal(meal.Id.ToString(), userMealDTO.Name, totalCalories.ToString(), totalGrams.ToString());
 
-                totalCalories += Convert.ToInt32(food.Calories)*foodAmount;
-                totalGrams += Convert.ToInt32(food.MetricServingAmount)*foodAmount;
+                MealTable.Clear();
+                MealName = "";
 
-                mealFood = await MealFoodAPIServices.CreateMealFood(new MealFood { MealId = meal.Id, FoodId = food.Id, Amount = foodAmount });
+                healthIndex = 0;
+            } else
+            {
+                ToastService.ShowToast(NOMEALNAME, ToastLevel.Warning, 5000);
             }
-            userMealDTO = await UserMealsAPIServices.CreateUserMeal(new UserMealDTO() { MealId = meal.Id, Name = MealName != "" ? MealName : "Unnamed Meal" });
-
-            await AddNewUserMeal(meal.Id.ToString(), userMealDTO.Name, totalCalories.ToString(), totalGrams.ToString());
-
-            MealTable.Clear();
-            MealName = String.Empty;
-
-            healthIndex = 0;
         }
 
         private async Task EditUserMeal(string mealId, int i)
@@ -316,7 +331,7 @@ namespace health_index_app.Client.Pages
                     UserMealTable.Last()[4+i*NUMDESC+3] = food.Calories.ToString(); //calories count
                     UserMealTable.Last()[4+i*NUMDESC+4] = PrettyServingSize(food); //Pretty serving size
                     UserMealTable.Last()[4+i*NUMDESC+5] = foods.ElementAt(i).Value.ToString(); //amount
-                    UserMealTable.Last()[4+i*NUMDESC+6] = food.ServingId.ToString();
+                    UserMealTable.Last()[4+i*NUMDESC+6] = food.ServingId.ToString(); //serving_id
                 }
             }
         }
