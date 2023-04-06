@@ -20,58 +20,72 @@
             </div>
             @if (json is not null)
             {
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Food Name:</th>
-                            <th>Serving Size:</th>
-                            <th>Calorie Count:</th>
-                            <th>Choose Servings:</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        @for (int local_j = 0; local_j < SearchTable.GetLength(0)-1; local_j++)
-                        {
-                            int j = local_j;
-                            var foodId = SearchTable[j, 0];
-                            var foodName = SearchTable[j, 1];
-                            var servingSize = SearchTable[j, 2];
-                            var calorieCount = SearchTable[j, 3];
+                if (json.Successful)
+                {
+                    <table style="margin-top:4px" class="table table-striped">
+                        <thead>
                             <tr>
-                                <td>@SearchTable[j, 1]</td>
-                                <td>@SearchTable[j, 2]</td>
-                                <td>@SearchTable[j, 3]</td>
-                                <td>
-                                    <div class="btn-group dropend">
-                                        <button type="button" class="btn btn-primary btn-sm" @onclick="() => AddFoodToMeal(j)">Add</button>
-                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" @onclick="async () => await GetFood(foodId)">
-                                            @* <span class="visually-hidden"></span>*@
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            @if (getFood != null)
-                                            {
-                                                @foreach (var serving in getFood.Food.Servings.Serving)
-                                                {
-                                                    var serving_description = serving.Serving_Description ?? "";
-                                                    <li>
-                                                        <button class="dropdown-item" type="button" @onclick="() => UpdateFoodRow(j, serving)">
-                                                            @{
-                                                                SearchTable[j, 4] = PrettyServingSize(serving);
-                                                            }
-                                                            @SearchTable[j, 4]
-                                                        </button>
-                                                    </li>
-                                                }
-                                            }
-                                        </ul>
-                                    </div>
-                                </td>
+                                <th>Food Name:</th>
+                                <th>Serving Size:</th>
+                                <th>Calorie Count:</th>
+                                <th>Choose Servings:</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+
+                        <tbody>
+
+                            @for (int local_j = 0; local_j < SearchTable.GetLength(0) - 1; local_j++)
+                            {
+                                int j = local_j;
+                                var foodId = SearchTable[j, 0];
+                                var foodName = SearchTable[j, 1];
+                                var servingSize = SearchTable[j, 2];
+                                var calorieCount = SearchTable[j, 3];
+                                <tr>
+                                    <td>@SearchTable[j, 1]</td>
+                                    <td>@SearchTable[j, 2]</td>
+                                    <td>@SearchTable[j, 3]</td>
+                                    <td>
+                                        <div class="btn-group dropend">
+                                            <button type="button" class="btn btn-primary btn-sm" @onclick="() => AddFoodToMeal(j)">Add</button>
+                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" @onclick="async () => await GetFood(foodId)">
+                                                @* <span class="visually-hidden"></span>*@
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                @if (getFood != null)
+                                                {
+
+                                                    @foreach (var serving in getFood.Food.Servings.Serving)
+                                                    {
+                                                        var serving_description = serving.Serving_Description ?? "";
+                                                        <li>
+                                                            <button class="dropdown-item" type="button" @onclick="() => UpdateFoodRow(j, serving)">
+                                                                @{
+                                                                    SearchTable[j, 4] = PrettyServingSize(serving);
+                                                                }
+                                                                @SearchTable[j, 4]
+                                                            </button>
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    ToastService.ShowToast(SEARCHERROR, Services.ToastLevel.Error, 3000);
+                }
+            }
+            else if (searching)
+            {
+                <div style="text-align:center; margin-top=2px">
+                    <div class="lds-heart"><div></div></div>
+                </div>
             }
         </div>
         <div class="col-sm" style="border-right:dotted">
@@ -107,14 +121,17 @@
                     </tbody>
                 </table>
                 <div class="row">
+                    <hr style="width:97%; margin-left:1.5%; margin-bottom:0.5rem"/>
                     <div class="col-auto" style="width:40%">
-                        <input type="text" class="form-control" placeholder="Name of Meal" maxlength="64" @bind-value="MealName">@MealName</input>
+                        <input type="text" class="form-control" placeholder="Name of Meal" maxlength="64" @bind-value="MealName"></input>
                     </div>
-                    <h5 class="col-auto" style="text-align:right">
-                        Health Index: @healthIndex / 10.0
-                    </h5>
+                    <div class="col-auto" style="width:60%">
+                        <h5 class="text-end">
+                            Health Index: @healthIndex / 10.0
+                        </h5>
+                    </div>
                 </div>
-                <button class="btn btn-success" type="button" @onclick="() => CreateMeal(MealName)">Create Meal</button>
+                <button class="btn btn-success" style="margin-top:2px;" type="button" @onclick="() => CreateMeal(MealName)">Create Meal</button>
             </div>
         </div>
         <div class="col-sm">
@@ -137,28 +154,29 @@
                                 <td @onclick="() => Show(userMeal[0])" style="cursor:pointer">@userMeal[1]</td>
                                 <td @onclick="() => Show(userMeal[0])" style="cursor:pointer">@userMeal[2]kcal</td>
                                 <td @onclick="() => Show(userMeal[0])" style="cursor:pointer">@userMeal[3]g</td>
+                                <td @onclick="() => Show(userMeal[0])" style="cursor:pointer">@userMeal[4]</td>
                                 <td>
                                     <button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromUserMeals(userMeal[0],UserMealTable.IndexOf(userMeal))">Remove</button>
-                                    <button class="btn btn-warning btn-sm" type="button" @onclick="() => EditUserMeal(userMeal[0],UserMealTable.IndexOf(userMeal))" disabled="@disableEdit">Edit</button>
+                                    <button class="btn btn-warning btn-sm" type="button" style="text-align:middle; margin-top:2px" @onclick="() => EditUserMeal(userMeal[0],UserMealTable.IndexOf(userMeal))" disabled="@disableEdit">Edit</button>
                                 </td>
                             </tr>
                             <tr hidden="@isHidden[userMeal[0]]">
-                                <td colspan="4">
+                                <td colspan="5">
                                     <table class="table table-striped" border="1">
                                         <thead>
                                             <tr>
                                                 <th style="width:60%">Food Name:</th>
+                                                <th>Serving Size:</th>
                                                 <th>Food Calories:</th>
-                                                <th>Serving size:</th>
                                                 <th>Count:</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @for (int i = 4; i <= userMeal.Length -NUMDESC; i += NUMDESC)
+                                            @for (int i = 5; i <= userMeal.Length -NUMDESC; i += NUMDESC)
                                             {
                                                 <tr>
                                                     <td>@userMeal[i+1]</td>
-                                                    <td>@userMeal[i+2]</td>
+                                                    <td>@userMeal[i+4]</td>
                                                     <td>@userMeal[i+3]</td>
                                                     <td>@userMeal[i+5]</td>
                                                 </tr>
