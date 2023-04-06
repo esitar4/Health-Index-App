@@ -80,7 +80,7 @@ namespace Test_health_index_app.Services
         {
             var mockHttp = new MockHttpMessageHandler();
             string testResponse = @"{ }";
-            mockHttp.When("https://localhost:7005//usermeal/delete")
+            mockHttp.When("https://localhost:7005/usermeal/delete")
                     .Respond("application/json", testResponse);
 
             var client = mockHttp.ToHttpClient();
