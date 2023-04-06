@@ -58,10 +58,10 @@ namespace health_index_app.Client.Pages
         {
             var res = await adminApiService.PostAdminUser(userId);
             if (res.StartsWith($"StatusCode: 200")) 
-                ToastService.ShowToast($"{userId} successfully added to the admin role", ToastLevel.Success, 30000);
+                ToastService.ShowToast($"{userId} successfully added to the admin role", ToastLevel.Success, 3000);
 
             else
-                ToastService.ShowToast($"Could not add user {userId} to the admin role", ToastLevel.Error, 30000);
+                ToastService.ShowToast($"Could not add user {userId} to the admin role", ToastLevel.Error, 3000);
             await RefreshList();
             StateHasChanged();
 
@@ -71,10 +71,10 @@ namespace health_index_app.Client.Pages
         {
             var res = await adminApiService.RemoveAdminUser(userId);
             if (res.StartsWith($"StatusCode: 200"))
-                ToastService.ShowToast($"{userId} successfully removed to the admin role", ToastLevel.Success, 30000);
+                ToastService.ShowToast($"{userId} successfully removed from the admin role", ToastLevel.Success, 3000);
 
             else
-                ToastService.ShowToast($"Could not remove user {userId} to the admin role", ToastLevel.Error, 30000);
+                ToastService.ShowToast($"Could not remove user {userId} from the admin role", ToastLevel.Error, 3000);
             await RefreshList();
             StateHasChanged();
         }
@@ -83,10 +83,10 @@ namespace health_index_app.Client.Pages
         {
             var res = await adminApiService.PostUnlockAccount(userId);
             if (res.StartsWith($"StatusCode: 200")) 
-                ToastService.ShowToast($"User account {userId} successfully unlocked", ToastLevel.Success, 30000);
+                ToastService.ShowToast($"User account {userId} successfully unlocked", ToastLevel.Success, 3000);
 
             else
-                ToastService.ShowToast($"Could not unlock user account {userId}", ToastLevel.Error, 30000);
+                ToastService.ShowToast($"Could not unlock user account {userId}", ToastLevel.Error, 3000);
             await RefreshList();
             StateHasChanged();
         }
@@ -95,10 +95,10 @@ namespace health_index_app.Client.Pages
         {
             var res = await adminApiService.PostLockAccount(userId);
             if (res.StartsWith($"StatusCode: 200"))
-                ToastService.ShowToast($"User account {userId} successfully locked", ToastLevel.Success, 30000);
+                ToastService.ShowToast($"User account {userId} successfully locked", ToastLevel.Success, 3000);
 
             else
-                ToastService.ShowToast($"Could not lock user account {userId}", ToastLevel.Error, 30000);
+                ToastService.ShowToast($"Could not lock user account {userId}", ToastLevel.Error, 3000);
             await RefreshList();
             StateHasChanged();
         }
@@ -107,10 +107,10 @@ namespace health_index_app.Client.Pages
         {
             var res = await adminApiService.PostDeleteAccount(userId);
             if (res.StartsWith($"StatusCode: 200")) 
-                ToastService.ShowToast($"User account{userId} successfully deleted", ToastLevel.Success, 30000);
+                ToastService.ShowToast($"User account{userId} successfully deleted", ToastLevel.Success, 3000);
 
             else
-                ToastService.ShowToast($"Could not delted user account {userId}", ToastLevel.Error, 30000);
+                ToastService.ShowToast($"Could not delted user account {userId}", ToastLevel.Error, 3000);
             await RefreshList();
             StateHasChanged();
         }
@@ -121,10 +121,10 @@ namespace health_index_app.Client.Pages
             userIdParent = ids[userId];
             var res = await adminApiService.PostAddParentChildRelationship($"{userId}.{userIdParent}");
             if (res.StartsWith($"StatusCode: 200")) 
-                ToastService.ShowToast($"User {userIdParent} successfully added as a parent to user {userId}", ToastLevel.Success, 30000);
+                ToastService.ShowToast($"User {userIdParent} successfully added as a parent to user {userId}", ToastLevel.Success, 3000);
 
             else
-                ToastService.ShowToast($"Could not add user {userIdParent} as a parent to user {userId}", ToastLevel.Error, 30000);
+                ToastService.ShowToast($"Could not add user {userIdParent} as a parent to user {userId}", ToastLevel.Error, 3000);
             await RefreshList();
             StateHasChanged();
         }
@@ -133,10 +133,10 @@ namespace health_index_app.Client.Pages
         {
             var res = await adminApiService.PostRemoveParentChildRelationship(userId);
             if (res.StartsWith($"StatusCode: 200")) 
-                ToastService.ShowToast($"Removed parent account from user {userId}", ToastLevel.Success, 30000);
+                ToastService.ShowToast($"Removed parent account from user {userId}", ToastLevel.Success, 3000);
 
             else
-                ToastService.ShowToast($"Could not remove the parent account from user {userId}", ToastLevel.Error, 30000);
+                ToastService.ShowToast($"Could not remove the parent account from user {userId}", ToastLevel.Error, 3000);
             await RefreshList();
             StateHasChanged();
         }

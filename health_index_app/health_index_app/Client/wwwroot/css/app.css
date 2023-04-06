@@ -164,9 +164,9 @@ a:hover {
         top: 30px;
         opacity: 1;
     }
-
     to {
         top: 0;
         opacity: 0;
     }
 }
+

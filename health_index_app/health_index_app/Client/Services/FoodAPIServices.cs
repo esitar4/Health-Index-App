@@ -63,7 +63,7 @@ namespace health_index_app.Client.Services
         {
             try
             {
-                var response = await _client.PostAsJsonAsync("Food/update", food);
+                var response = await _client.PostAsJsonAsync("food/update", food);
             }
             catch
             {

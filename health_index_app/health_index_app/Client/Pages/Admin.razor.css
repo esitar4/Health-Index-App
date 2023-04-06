@@ -3,12 +3,17 @@ th {
     border: 2px solid;
     border-color: black;
     text-align: center;
-    font-size: 32px;
+    font-size: 20px;
 }
 
 td {
     border: 2px solid;
     border-color: black;
     text-align: center;
-    font-size: 26px
+}
+
+.btn-primary, .btn-primary:focus, .btn-primary:active, .btn-primary:hover {
+    color: #fff;
+    background-color: #073B4C;
+    border-color: #073B4C;
 }
