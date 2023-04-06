@@ -7,8 +7,8 @@
 @attribute [Authorize]
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm">
+    <div class="row" style="height:90vh">
+        <div class="col-sm" style="border-right:dotted">
             <h3>Search for Foods to add:</h3>
             <div class="row">
                 <div class="col-auto">
@@ -77,7 +77,7 @@
                 </table>
             }
         </div>
-        <div class="col-sm">
+        <div class="col-sm" style="border-right:dotted">
             <div>
                 <h3>View Foods added to Meal:</h3>
                 <table class="table table-striped">
@@ -88,7 +88,7 @@
                             <th>Serving Size:</th>
                             <th>Calorie Count:</th>
                             <th width="1%">Count:</th>
-                            <th></th>
+                            <th><button class="btn btn-dark btn-sm" @onclick="ClearList">Clear List</button></th>
                         </tr>
                     </thead>
 
@@ -136,16 +136,15 @@
                     <tbody>
                         @foreach (var userMeal in UserMealTable)
                         {
-                            <tr @onclick="() => Show(userMeal[0])" class="bg-@isHidden[userMeal[0]]">
-                                <td>@userMeal[1]</td>
-                                <td>@userMeal[2]kcal</td>
-                                <td>@userMeal[3]g</td>
+                            <tr class="bg-@isHidden[userMeal[0]]">
+                                <td @onclick="() => Show(userMeal[0])" style="cursor:pointer">@userMeal[1]</td>
+                                <td @onclick="() => Show(userMeal[0])" style="cursor:pointer">@userMeal[2]kcal</td>
+                                <td @onclick="() => Show(userMeal[0])" style="cursor:pointer">@userMeal[3]g</td>
                                 <td><button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromUserMeals(userMeal[0],UserMealTable.IndexOf(userMeal))">Remove</button>
-                                <button class="btn btn-warning btn-sm" type="button" @onclick="() => EditUserMeal(userMeal[0],UserMealTable.IndexOf(userMeal))">Edit</button></td>
-                                <td></td>
+                                <button class="btn btn-warning btn-sm" type="button" @onclick="() => EditUserMeal(userMeal[0],UserMealTable.IndexOf(userMeal))" disabled="@disableEdit">Edit</button></td>
                             </tr>
                             <tr hidden="@isHidden[userMeal[0]]">
-                                <td colspan="3">
+                                <td colspan="4">
                                     <table class="table table-striped" border="1">
                                         <thead>
                                             <tr>
