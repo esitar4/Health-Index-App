@@ -145,5 +145,37 @@ namespace Test_health_index_app.Models
                          v.ErrorMessage.Contains("Invalid Gender Character")));
 
         }
+
+
+        [Test]
+        public void TestValidDOB()
+        {
+            //Arrange
+
+            applicationUser.DateOfBirth = DateTime.Now.AddDays(-1);
+
+            //Act
+
+            //Assert
+            Assert.IsTrue(ValidateModel(applicationUser).Count == 0);
+
+        }
+
+        [Test]
+        public void TestInvalidDOB()
+        {
+            //Arrange
+            
+            applicationUser.DateOfBirth = DateTime.Now.AddDays(1);
+
+            //Act
+
+            //Assert
+            Assert.IsTrue(ValidateModel(applicationUser).Count == 1);
+            Assert.IsTrue(ValidateModel(applicationUser).Any(
+                    v => v.MemberNames.Contains("DateOfBirth") &&
+                         v.ErrorMessage.Contains("Date of birth must be in the past")));
+
+        }
     }
 }
