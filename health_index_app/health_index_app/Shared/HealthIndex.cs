@@ -16,10 +16,11 @@ namespace health_index_app.Shared
             foreach(Food food in meal)
             {
                 double arg = (double)(nullCheck(food.Calories) + nullCheck(food.CarboHydrate) -
-                    30*nullCheck(food.Cholesterol) + 30*nullCheck(food.Fiber) + 30*nullCheck(food.Protein)
-                    - 30*nullCheck(food.SaturatedFat) + 10*nullCheck(food.Sodium) - 30*nullCheck(food.Sugar)
-                    + 30*(nullCheck(food.VitaminA) + 30*nullCheck(food.VitaminC) + 30*nullCheck(food.VitaminD)));
 
+                         30 * nullCheck(food.Cholesterol) + 30 * nullCheck(food.Fiber) + 30 * nullCheck(food.Protein)
+                         - 30 * nullCheck(food.SaturatedFat) + 10 * nullCheck(food.Sodium) - 30 * nullCheck(food.Sugar)
+                         + 30 * (nullCheck(food.VitaminA) + 30 * nullCheck(food.VitaminC) + 30 * nullCheck(food.VitaminD)));
+                         
                 if (arg <= 0)
                 {
                     healthIndex += 0;

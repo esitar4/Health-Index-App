@@ -28,7 +28,7 @@ namespace health_index_app.Server.Models
                 public bool IsAdmin { get; set; } = false;*/
 
         public string? ParentId { get; set; }
-        [DateOfBirth]
+        [DateOfBirth (ErrorMessage = "Date of birth must be in the past")]
         public DateTime? DateOfBirth { get; set; }
         [Column(TypeName = "decimal(6,2)")]
         [Range(0.001, 9999.99, ErrorMessage = "Weight must be in between 0 and 9999.99")]
