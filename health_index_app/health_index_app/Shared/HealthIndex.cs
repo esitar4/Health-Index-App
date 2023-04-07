@@ -13,6 +13,11 @@ namespace health_index_app.Shared
         {
             double healthIndex = 0;
             
+            if (meal.Count == 0)
+            {
+                return healthIndex;
+            }
+
             foreach(Food food in meal)
             {
                 double arg = (double)(nullCheck(food.Calories) + nullCheck(food.CarboHydrate) -

@@ -9,7 +9,15 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<h3>Parent</h3>
+
+
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Manage Child</h1>    
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+</div>
 
 
 @if (childUsernames == null)
@@ -31,8 +39,9 @@ else
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm">
-                <table class="table table-bordered table-striped">
+            <div class="col-4"></div>
+            <div class="col">
+                <table class="table table-bordered table-light table-striped">
                     <caption style="caption-side:top">Child Account Overview</caption>
                     <thead>
                         <tr class="table-light">
@@ -47,20 +56,32 @@ else
                                    ActiveSortColumn="@_activeSortUserNameTableColumn"
                                    eventCallback=UpdateChildUsernameData
                                    T="ChildNameDTO" />
-                               <th></th>
+                            <th style="text-align:center;"><button @onclick="ShowAdd" class="btn btn-primary btn-sm"><span><i class="fa-solid fa-user-plus"></i></span></button></th>
+                        </tr>
+                        <tr hidden="@hideAdd">
+                            <th colspan="2">
+                                <div class="col-auto">
+                                    <div class="input-group mb-2">
+                                        <input type="text" class="form-control" maxlength="25" placeholder="Enter a username to add as child" @bind-value="newChildUserName" style="border:1.5px solid" />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-success" @onclick="AddNewChild">Add</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         @if (childUsernames.Count == 0)
                         {
                             <tr>
-                                <td colspan="2">
+                                <td colspan="2" class="table-light">
                                     No Records to display
                                 </td>
                             </tr>
                             @for(int i = 0; i < userTablePageSize - 1; i++)
                             {
-                                <tr>
+                                <tr class="table-light">
                                     <td>-</td>
                                     <td>-</td>
                                 </tr>
@@ -74,7 +95,7 @@ else
                             {
                                 <tr>
                                     <td>@name.Name</td>
-                                    <td style="text-align:center"><button class="btn btn-danger btn-sm" @onclick="() => DeleteChild(name.Name)">Delete</button></td>
+                                    <td style="text-align:center; border-left-style:hidden;"><button class="btn btn-danger btn-sm" @onclick="() => DeleteChild(name.Name)"><span><i class="fa-solid fa-trash-can"></i></span></button></td>
                                 </tr>
                             }
                             @for(int i = 0; i < userTablePageSize - PagedChildUserNames.Count; i++)
@@ -97,22 +118,14 @@ else
                         ListSize="FilteredChildUserNames.Count"
                         eventCallback=@GetUpdatedUserTablePageNumber />
             </div>
-            <div class="col-sm">
-                <div class="form-group">
-                    <label class="form-label">Child Username</label>
-                    <input type="email" maxlength="25" class="form-control" placeholder="Enter a username to add as child" @bind-value="newChildUserName" />
-                    <small id="emailHelp" class="form-text text-muted">Please enter the username of your child account.</small>
-                </div>
-                <button class="btn btn-primary" @onclick="AddNewChild">Add</button>
-            </div>
-            <div class="col-sm"></div>
+            <div class="col-4"></div>
         </div>
         
 
         <div class="row">
+            <div class="col-1"></div>
             <div class="col">
-                <table class="table table-hover table-bordered">
-
+                <table class="table table-hover table-bordered table-striped table-light">
                 <caption style="caption-side:top">Child Meal Overview </caption>
                 <thead>
                     <tr class="table-light">
@@ -151,14 +164,14 @@ else
                 <tbody>
                     @if (childMealFoodList.Count == 0)
                     {
-                        <tr>
+                        <tr class="table-light">
                             <td colspan="3">
                                 No Records to display
                             </td>
                         </tr>
                         @for (int i = 0; i < pageSize - 1; i++)
                         {
-                            <tr>
+                                <tr class="table-light">
                                 <td>-</td>
                                 <td>-</td>
                                 <td>-</td>
@@ -167,38 +180,16 @@ else
                     }
                     @foreach (var meal in PagedChildMealFoodList)
                     {
-                        <tr @onclick='() => Show($"{meal.ChildName}?{meal.MealId}")' class="bg-@isHidden[$"{meal.ChildName}?{meal.MealId}"]">
+                        <tr data-bs-toggle="modal" data-bs-target="#portfolioModal-@meal.MealId" style="cursor:pointer">
                             <td>@meal.ChildName</td>
                             <td>@meal.MealName</td>
                             <td>@meal.HealthIndex</td>
                         </tr>
-                        <tr hidden="@isHidden[$"{meal.ChildName}?{meal.MealId}"]">
-                            <td colspan="3">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:60%">Food Name</th>
-                                            <th>Food Calories</th>
-                                            <th>Food Serving</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var food in meal.Food)
-                                        {
-                                            <tr>
-                                                <td style="width:60%">@food.Food.FoodName</td>
-                                                <td>@food.Food.Calories</td>
-                                                <td>@food.Amount</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
+
                     }
                     @for(int i = 0; i < pageSize - PagedChildMealFoodList.Count; i++)
                     {
-                        <tr>
+                        <tr class="table-light">
                             <td>-</td>
                             <td>-</td>
                             <td>-</td>
@@ -213,6 +204,82 @@ else
                 ListSize="FilteredChildMealFoodList.Count"
                 eventCallback=@GetUpdatedPageNumber />
             </div>
+            <div class="col-1"></div>
         </div>
     </div>
 }
+@foreach(var meal in PagedChildMealFoodList) {
+    <div class="portfolio-modal modal fade" id="portfolioModal-@meal.MealId" tabindex="-1" aria-labelledby="portfolioModal-@meal.MealId " aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <!-- Portfolio Modal - Title-->
+                            <h5 class="portfolio-modal-title text-secondary text-uppercase mb-0">@meal.MealName</h5>
+                            <p class="portfolio-modal text-secondary text-uppercase mb-0">@meal.ChildName</p>
+                            <!-- Icon Divider-->
+                                @{
+                                    if (meal.HealthIndex >= 7)
+                                        color = "#bee69d";
+                                    else if (meal.HealthIndex >= 4)
+                                        color = "#ffc107";
+                                    else
+                                        color = "#dc3545";
+                                }
+                            <div class="divider-custom">
+                                <div class="divider-custom-line" style="background-color:@color"></div>
+                                    <div class="divider-custom-icon">
+                                    @{
+                                        int i = 1;
+                                        while (i <= meal.HealthIndex)
+                                        {
+                                                <span><i class="fa-solid fa-star" style="color:@color"></i></span>
+                                                i++;
+                                            }
+                                            if (1 > (meal.HealthIndex - i + 1)  && (meal.HealthIndex - i + 1) >= 0.5)
+                                            {
+                                                <span><i class="fa-solid fa-star-half" style="color:@color"></i></span>
+                                            }
+                                    }
+                                    </div>
+                                    
+                                    <div class="divider-custom-line" style="background-color:@color"></div>
+                            </div>
+                            <!-- Portfolio Modal - Text-->
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:60%">Food Name</th>
+                                            <th style="width:20%">Food Calories (Per Serving)</th>
+                                            <th style="width:20%">Food Serving</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var food in meal.Food)
+                                        {
+                                            <tr>
+                                                <td style="width:60%">@food.Food.FoodName</td>
+                                                <td>@food.Food.Calories</td>
+                                                <td>@food.Amount</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            <button class="btn btn-primary" data-bs-dismiss="modal">
+                                <i class="fas fa-xmark fa-fw"></i>
+                                Close Window
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+
+<FooterHii />

@@ -8,78 +8,96 @@
 
 <link rel="stylesheet" href="~/css/app.css" />
 
-<h3>Admin</h3>
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Admin</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+</div>
 
-@code {
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col">
+            <input type="text" class="form-control" placeholder="Search for user" @bind-value="searchStr" @bind-value:event="oninput" style="border:2px solid"/>
+            <table class="table table-light table-striped">
+                <thead>
+                    <tr>
+                        <th>Email/Username</th>
+                        <th>Id</th>
+                        <th>Parent Id</th>
+                        <th>Lock status</th>
+                        <th>Admin</th>
+                        <th>Date of Birth</th>
+                        <th>Gender</th>
+                        <th>Weight</th>
+                        <th>Height</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in pageData)
+                    {
 
-}
-<input type="text" class="form-control" placeholder="Search for user" @bind-value="searchStr" @bind-value:event="oninput"/>
+                        <tr>
+                            <td style="width:10%">@user.Username</td>
+                            <td style="width:10%">@user.Id</td>
+                            <td style="width:35%">
+                                @user.ParentId
+                                <div class="col-auto">
+                                    @*<label> Parent user id</label>*@
+                                    <input type="text" class="form-control" @bind-value="ids[user.Id]" placeholder="Enter parent id" />
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Email/Username</th>
-            <th>Id</th>
-            <th>Parent Id</th>
-            <th>Lock status</th>
-            <th>Admin</th>
-            <th>Date of Birth</th>
-            <th>Gender</th>
-            <th>Weight</th>
-            <th>Height</th>
-            <th> </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in pageData)
-        {
-          
-            <tr>
-                <td>@user.Username</td>
-                <td>@user.Id</td>
-                    <td>@user.ParentId
-                         <div class="col-auto"> 
-                            @*<label> Parent user id</label>*@ 
-                             <input type="text" class="form-control" @bind-value="ids[user.Id]" placeholder="Enter parent id"/>
-                    
-                            <button type="submit" class="btn btn-primary" @onclick="() => PostAddParentChildRelationship(user.Id)">Add parent/child relationship</button>
-                            <button type="submit" class="btn btn-primary" @onclick="() => PostRemoveParentChildRelationship(user.Id)">Remove parent/child relationship</button>
-                        </div>
-                    </td>
-                    
-                <td>@user.LockedStatus
-                    <div class="col-auto">                
-                     @if(user.LockEnd == null || user.LockEnd < DateTime.Now) {
-                        <button type="submit" class="btn btn-primary" @onclick="() => PostLockAccount(user.Id) ">Lock account</button>
-                      }
-                      else {
-                          <button type="submit" class="btn btn-primary" @onclick="() => PostUnlockAccount(user.Id) ">Unlock account</button>
-                      }
-                     </div>
-                </td>
+                                    <button type="submit" class="btn btn-primary" @onclick="() => PostAddParentChildRelationship(user.Id)">Add parent/child</button>
+                                    <button type="submit" class="btn btn-primary" @onclick="() => PostRemoveParentChildRelationship(user.Id)">Remove parent/child</button>
+                                </div>
+                            </td>
 
-                <td>@user.Admin
-                    <div class="col-auto">                
-                     @if(user.Admin == false) {
-                        <button type="submit" class="btn btn-primary" @onclick="() => PostAdminUser(user.Id) ">Add to admin</button>
-                      }
-                      else {
-                          <button type="submit" class="btn btn-primary" @onclick="() => RemoveAdminUser(user.Id) ">Remove from admin</button>
-                      }
-                     </div>
-                </td>
-                <td>@user.DateOfBirth</td>
-                <td>@user.Gender</td>
-                <td>@user.Weight</td>
-                <td>@user.Height</td>
-                <td>
-                    <button type="submit" class="btn btn-danger" @onclick="() => PostDeleteAccount(user.Id) ">Delete Account</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<Pagination PageSize="pageSize"
+                            <td style="width:10%">
+                                @user.LockedStatus
+                                <div class="col-auto">
+                                    @if (user.LockEnd == null || user.LockEnd < DateTime.Now)
+                                    {
+                                        <button type="submit" class="btn btn-primary" @onclick="() => PostLockAccount(user.Id) "><span><i class="fa-solid fa-lock"></i></span></button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-primary" @onclick="() => PostUnlockAccount(user.Id) "><span><i class="fa-solid fa-unlock"></i></span></button>
+                                    }
+                                </div>
+                            </td>
+
+                            <td style="width:5%">
+                                @user.Admin
+                                <div class="col-auto">
+                                    @if (user.Admin == false)
+                                    {
+                                        <button type="submit" class="btn btn-primary" @onclick="() => PostAdminUser(user.Id) "><span><i class="fa-solid fa-arrows-rotate"></i></span></button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-primary" @onclick="() => RemoveAdminUser(user.Id) "><span><i class="fa-solid fa-arrows-rotate fa-rotate-90"></i></span></button>
+                                    }
+                                </div>
+                            </td>
+                            <td style="width:10%">@user.DateOfBirth</td>
+                            <td style="width:5%">@user.Gender</td>
+                            <td style="width:5%">@user.Weight</td>
+                            <td style="width:5%">@user.Height</td>
+                            <td style="width:5%">
+                                <button type="submit" class="btn btn-danger" @onclick="() => PostDeleteAccount(user.Id) "><span><i class="fa-solid fa-trash-can"></i></span></button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <Pagination PageSize="pageSize"
                         PageNumber="pageNumber"
                         ListSize="users.Count"
                         eventCallback=@GetUpdatedPageNumber />
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+
+<health_index_app.Client.Components.FooterHii />

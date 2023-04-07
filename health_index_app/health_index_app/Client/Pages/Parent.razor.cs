@@ -19,6 +19,7 @@ namespace health_index_app.Client.Pages
         private List<ChildMealFoodListDTO> childMealFoodList = new List<ChildMealFoodListDTO>();
 
         private Dictionary<string, bool> isHidden = new();
+        private string color = "#000";
 
         protected override async Task OnInitializedAsync()
         {
@@ -189,6 +190,13 @@ namespace health_index_app.Client.Pages
                 if (!isHidden.ContainsKey($"{meal.childUsername}?{meal.MealId}"))
                     isHidden.Add($"{meal.childUsername}?{meal.MealId}", true);
             }
+        }
+
+
+        private bool hideAdd = true;
+        private void ShowAdd()
+        {
+            hideAdd = !hideAdd;
         }
     }
 }

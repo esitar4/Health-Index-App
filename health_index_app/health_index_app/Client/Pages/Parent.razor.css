@@ -19,7 +19,7 @@
 
 .bg-True {
     color: black;
-    background-color: none;
+    background-color: white;
 }
 
 .bg-False {
@@ -40,6 +40,10 @@
 .table th {
     border: 1.5px solid;
     border-color: black;
+}
+
+.tr-food {
+    background-color:#f3f3f3;
 }
 
 caption {
@@ -138,3 +142,48 @@ caption {
         opacity: 0;
     }
 }
+
+.portfolio .portfolio-item {
+    cursor: pointer;
+    position: relative;
+    display: block;
+    max-width: 25rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+    .portfolio .portfolio-item .portfolio-item-caption {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: all 0.2s ease-in-out;
+        opacity: 0;
+        background-color: rgba(26, 188, 156, 0.9);
+    }
+
+        .portfolio .portfolio-item .portfolio-item-caption:hover {
+            opacity: 1;
+        }
+
+        .portfolio .portfolio-item .portfolio-item-caption .portfolio-item-caption-content {
+            font-size: 1.5rem;
+        }
+
+.portfolio-modal .btn-close {
+    color: #1abc9c;
+    font-size: 2rem;
+    padding: 1rem;
+}
+
+.portfolio-modal .portfolio-modal-title {
+    font-size: 2.25rem;
+    line-height: 2rem;
+}
+
+@media (min-width: 992px) {
+    .portfolio-modal .portfolio-modal-title {
+        font-size: 3rem;
+        line-height: 2.5rem;
+    }
+}
+

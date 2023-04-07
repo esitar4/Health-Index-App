@@ -1,6 +1,7 @@
 ﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Health. It's Important!</a>
+        <a class="navbar-brand"  href=""><img style="width:50px;filter:brightness(0) invert(1);" src="logo-no-background.png"/> Health. It's Important! </a>
+        
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -29,6 +30,15 @@
                 <span class="oi oi-people" aria-hidden="true"></span> Manage Child
             </NavLink>
         </div>
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="admin">
+                        <span class="oi oi-terminal" aria-hidden="true"></span> Admin
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
     </nav>
 </div>
 
