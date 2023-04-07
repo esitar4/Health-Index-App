@@ -143,11 +143,3 @@ caption {
     }
 }
 
-.footer {
-    position: absolute;
-    bottom: 0;
-    overflow: auto;
-    white-space: nowrap;
-    text-align:center;
-    line-height: 60px;
-}
