@@ -154,11 +154,11 @@
                 <table class="table table-striped table-light">
                     <thead>
                         <tr>
-                            <th style="width:35%">Meal Name:</th>
-                            <th style="width:20%">Total Calories:</th>
-                            <th style="width:20%">Total Volume:</th>
-                            <th style="width:10%">Health Index:</th>
-                            <th style="width:15%"></th>
+                            <th style="width:auto">Meal Name:</th>
+                            <th style="width:auto">Total Calories:</th>
+                            <th style="width:auto">Total Volume:</th>
+                            <th style="width:auto">Health Index:</th>
+                            <th style="width:auto"></th>
                         </tr>
                     </thead>
 
@@ -166,11 +166,11 @@
                         @foreach (var userMeal in UserMealTable)
                         {
                             <tr>
-                                <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:30%;">@userMeal[1]</td>
-                                <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:20%;">@userMeal[2]kcal</td>
-                                <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:20%;">@userMeal[3]g</td>
-                                <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:10%;">@userMeal[4]</td>
-                                <td style="width:20%">
+                                <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:auto;">@userMeal[1]</td>
+                                <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:auto;">@userMeal[2]kcal</td>
+                                <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:auto;">@userMeal[3]g</td>
+                                <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:auto;">@userMeal[4]</td>
+                                <td style="width:auto">
                                     <button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromUserMeals(userMeal[0],UserMealTable.IndexOf(userMeal))"><span><i class="fa-solid fa-trash-can"></i></span></button>
                                     <button class="btn btn-warning btn-sm" type="button" style="margin-top:2px" @onclick="() => EditUserMeal(userMeal[0],UserMealTable.IndexOf(userMeal))" disabled="@disableEdit"><span><i class="fa-solid fa-pen-to-square"></i></span></button>
                                 </td>
