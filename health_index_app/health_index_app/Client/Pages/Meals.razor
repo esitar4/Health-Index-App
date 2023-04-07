@@ -54,7 +54,6 @@
                                             <ul class="dropdown-menu">
                                                 @if (getFood != null)
                                                 {
-
                                                     @foreach (var serving in getFood.Food.Servings.Serving)
                                                     {
                                                         var serving_description = serving.Serving_Description ?? "";
@@ -177,7 +176,7 @@
                                                 <tr>
                                                     <td>@userMeal[i+1]</td>
                                                     <td>@userMeal[i+4]</td>
-                                                    <td>@userMeal[i+3]</td>
+                                                    <td>@userMeal[i+3]kcal</td>
                                                     <td>@userMeal[i+5]</td>
                                                 </tr>
                                             }

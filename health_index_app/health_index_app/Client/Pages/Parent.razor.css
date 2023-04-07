@@ -19,7 +19,7 @@
 
 .bg-True {
     color: black;
-    background-color: none;
+    background-color: white;
 }
 
 .bg-False {
@@ -40,6 +40,10 @@
 .table th {
     border: 1.5px solid;
     border-color: black;
+}
+
+.tr-food {
+    background-color:#f3f3f3;
 }
 
 caption {
@@ -137,4 +141,13 @@ caption {
         top: 0;
         opacity: 0;
     }
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    overflow: auto;
+    white-space: nowrap;
+    text-align:center;
+    line-height: 60px;
 }

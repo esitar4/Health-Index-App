@@ -190,5 +190,12 @@ namespace health_index_app.Client.Pages
                     isHidden.Add($"{meal.childUsername}?{meal.MealId}", true);
             }
         }
+
+
+        private bool hideAdd = true;
+        private void ShowAdd()
+        {
+            hideAdd = !hideAdd;
+        }
     }
 }
