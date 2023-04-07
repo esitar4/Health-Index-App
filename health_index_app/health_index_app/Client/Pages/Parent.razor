@@ -95,7 +95,7 @@ else
                             {
                                 <tr>
                                     <td>@name.Name</td>
-                                    <td style="text-align:center; border-left-style:hidden;"><button class="btn btn-danger btn-sm" @onclick="() => DeleteChild(name.Name)"><i class="fa-solid fa-trash-can"></i></button></td>
+                                    <td style="text-align:center; border-left-style:hidden;"><button class="btn btn-danger btn-sm" @onclick="() => DeleteChild(name.Name)"><span><i class="fa-solid fa-trash-can"></i></span></button></td>
                                 </tr>
                             }
                             @for(int i = 0; i < userTablePageSize - PagedChildUserNames.Count; i++)
