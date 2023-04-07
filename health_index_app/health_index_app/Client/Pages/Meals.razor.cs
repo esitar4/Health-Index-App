@@ -292,7 +292,7 @@ namespace health_index_app.Client.Pages
                 healthIndex = 0;
             } else
             {
-                ToastService.ShowToast(NOMEALNAME, ToastLevel.Warning, 5000);
+                ToastService.ShowToast(NOMEALNAME, ToastLevel.Warning, 3000);
             }
         }
 
