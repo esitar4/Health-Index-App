@@ -165,41 +165,17 @@
                     <tbody>
                         @foreach (var userMeal in UserMealTable)
                         {
-                            <tr class="bg-@isHidden[userMeal[0]]">
-                                <td @onclick="() => Show(userMeal[0])" style="cursor:pointer; width:35%;">@userMeal[1]</td>
-                                <td @onclick="() => Show(userMeal[0])" style="cursor:pointer; width:20%;">@userMeal[2]kcal</td>
-                                <td @onclick="() => Show(userMeal[0])" style="cursor:pointer; width:20%;">@userMeal[3]g</td>
-                                <td @onclick="() => Show(userMeal[0])" style="cursor:pointer; width:10%;">@userMeal[4]</td>
-                                <td style="width:15%">
+                            <tr>
+                                <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:30%;">@userMeal[1]</td>
+                                <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:20%;">@userMeal[2]kcal</td>
+                                <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:20%;">@userMeal[3]g</td>
+                                <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:10%;">@userMeal[4]</td>
+                                <td style="width:20%">
                                     <button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromUserMeals(userMeal[0],UserMealTable.IndexOf(userMeal))"><span><i class="fa-solid fa-trash-can"></i></span></button>
                                     <button class="btn btn-warning btn-sm" type="button" style="margin-top:2px" @onclick="() => EditUserMeal(userMeal[0],UserMealTable.IndexOf(userMeal))" disabled="@disableEdit"><span><i class="fa-solid fa-pen-to-square"></i></span></button>
                                 </td>
                             </tr>
-                            <tr hidden="@isHidden[userMeal[0]]">
-                                <td colspan="5">
-                                    <table class="table table-striped" border="1">
-                                        <thead>
-                                            <tr>
-                                                <th style="width:40%">Food Name:</th>
-                                                <th style="width:30%">Serving Size:</th>
-                                                <th style="width:20%">Calories:</th>
-                                                <th style="width:10%">Count:</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @for (int i = 5; i <= userMeal.Length -NUMDESC; i += NUMDESC)
-                                            {
-                                                <tr>
-                                                    <td style="width:40%">@userMeal[i+1]</td>
-                                                    <td style="width:30%">@userMeal[i+4]</td>
-                                                    <td style="width:20%">@userMeal[i+3]kcal</td>
-                                                    <td style="width:10%">@userMeal[i+5]</td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
+                            
                         }
                     </tbody>
                 </table>
@@ -207,3 +183,78 @@
         </div>
     </div>
 </div>
+
+@foreach (var userMeal in UserMealTable)
+{
+    <div class="portfolio-modal modal fade" id="portfolioModal-@userMeal[0]" tabindex="-1" aria-labelledby="portfolioModal-@userMeal[0] " aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h5 class="portfolio-modal-title text-secondary text-uppercase mb-0">@userMeal[1]</h5>
+                                <!-- Icon Divider-->
+                                @{
+                                    if (Convert.ToDouble(userMeal[4]) >= 7)
+                                        color = "#C9EFC7";
+                                    else if (Convert.ToDouble(userMeal[4]) >= 4)
+                                        color = "#fd7e14";
+                                    else
+                                        color = "#dc3545";
+                                }
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line" style="background-color:@color"></div>
+                                    <div class="divider-custom-icon">
+                                        @{
+                                            int j = 1;
+                                            while (j < Convert.ToDouble(userMeal[4]))
+                                            {
+                                                <span><i class="fa-solid fa-star" style="color:@color"></i></span>
+                                                j++;
+                                            }
+                                            if ((Convert.ToDouble(userMeal[4]) - j + 1) >= 0.5)
+                                            {
+                                                <span><i class="fa-solid fa-star-half" style="color:@color"></i></span>
+                                            }
+                                        }
+                                    </div>
+
+                                    <div class="divider-custom-line" style="background-color:@color"></div>
+                                </div>
+                                <!-- Portfolio Modal - Text-->
+                                <table class="table table-striped" border="1">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:40%">Food Name:</th>
+                                            <th style="width:30%">Serving Size:</th>
+                                            <th style="width:20%">Calories:</th>
+                                            <th style="width:10%">Count:</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 5; i <= userMeal.Length - NUMDESC; i += NUMDESC)
+                                        {
+                                            <tr>
+                                                <td style="width:40%">@userMeal[i+1]</td>
+                                                <td style="width:30%">@userMeal[i+4]</td>
+                                                <td style="width:20%">@userMeal[i+3]kcal</td>
+                                                <td style="width:10%">@userMeal[i+5]</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <button class="btn btn-primary" data-bs-dismiss="modal">
+                                    <i class="fas fa-xmark fa-fw"></i>
+                                    Close Window
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -19,6 +19,7 @@ namespace health_index_app.Client.Pages
         private List<ChildMealFoodListDTO> childMealFoodList = new List<ChildMealFoodListDTO>();
 
         private Dictionary<string, bool> isHidden = new();
+        private string color = "#000";
 
         protected override async Task OnInitializedAsync()
         {

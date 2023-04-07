@@ -125,7 +125,7 @@ else
         <div class="row">
             <div class="col-1"></div>
             <div class="col">
-                <table class="table table-hover table-bordered table-striped">
+                <table class="table table-hover table-bordered table-striped table-light">
                 <caption style="caption-side:top">Child Meal Overview </caption>
                 <thead>
                     <tr class="table-light">
@@ -180,34 +180,12 @@ else
                     }
                     @foreach (var meal in PagedChildMealFoodList)
                     {
-                        <tr @onclick='() => Show($"{meal.ChildName}?{meal.MealId}")' class="bg-@isHidden[$"{meal.ChildName}?{meal.MealId}"]">
+                        <tr data-bs-toggle="modal" data-bs-target="#portfolioModal-@meal.MealId" style="cursor:pointer">
                             <td>@meal.ChildName</td>
                             <td>@meal.MealName</td>
                             <td>@meal.HealthIndex</td>
                         </tr>
-                        <tr hidden="@isHidden[$"{meal.ChildName}?{meal.MealId}"]">
-                            <td colspan="3">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr class="tr-food">
-                                            <th style="width:60%">Food Name</th>
-                                            <th>Food Calories (Per Serving)</th>
-                                            <th>Food Serving</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var food in meal.Food)
-                                        {
-                                            <tr class="tr-food">
-                                                <td style="width:60%">@food.Food.FoodName</td>
-                                                <td>@food.Food.Calories</td>
-                                                <td>@food.Amount</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
+
                     }
                     @for(int i = 0; i < pageSize - PagedChildMealFoodList.Count; i++)
                     {
@@ -230,4 +208,78 @@ else
         </div>
     </div>
 }
+@foreach(var meal in PagedChildMealFoodList) {
+    <div class="portfolio-modal modal fade" id="portfolioModal-@meal.MealId" tabindex="-1" aria-labelledby="portfolioModal-@meal.MealId " aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <!-- Portfolio Modal - Title-->
+                            <h5 class="portfolio-modal-title text-secondary text-uppercase mb-0">@meal.MealName</h5>
+                            <p class="portfolio-modal text-secondary text-uppercase mb-0">@meal.ChildName</p>
+                            <!-- Icon Divider-->
+                                @{
+                                    if (meal.HealthIndex >= 7)
+                                        color = "#C9EFC7";
+                                    else if (meal.HealthIndex >= 4)
+                                        color = "#fd7e14";
+                                    else
+                                        color = "#dc3545";
+                                }
+                            <div class="divider-custom">
+                                <div class="divider-custom-line" style="background-color:@color"></div>
+                                    <div class="divider-custom-icon">
+                                    @{
+                                        int i = 1;
+                                        while (i < meal.HealthIndex)
+                                        {
+                                            <span><i class="fa-solid fa-star" style="color:@color"></i></span>
+                                            i++;
+                                        }
+                                        if (meal.HealthIndex - i + 1 > 0.5)
+                                        {
+                                            <span><i class="fa-solid fa-star-half" style="color:@color"></i></span>
+                                        }
+                                    }
+                                    </div>
+                                    
+                                    <div class="divider-custom-line" style="background-color:@color"></div>
+                            </div>
+                            <!-- Portfolio Modal - Text-->
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:60%">Food Name</th>
+                                            <th style="width:20%">Food Calories (Per Serving)</th>
+                                            <th style="width:20%">Food Serving</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var food in meal.Food)
+                                        {
+                                            <tr>
+                                                <td style="width:60%">@food.Food.FoodName</td>
+                                                <td>@food.Food.Calories</td>
+                                                <td>@food.Amount</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            <button class="btn btn-primary" data-bs-dismiss="modal">
+                                <i class="fas fa-xmark fa-fw"></i>
+                                Close Window
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+
 <FooterHii />

@@ -53,6 +53,8 @@ namespace health_index_app.Client.Pages
 
         private Dictionary<string, bool> isHidden = new();
 
+
+        private string color = "#000";
         private bool disableEdit => MealTable.Count > 0 ? true : false;
 
         private void Show(string mealId)
