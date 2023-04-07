@@ -62,15 +62,17 @@
                     <img class="img-fluid" src="fatsecret-logo.jpg" alt="..." />
                 </div>
             </div>
-@*            <!-- Portfolio Item 3-->
+            <!-- Portfolio Item 3-->
             <div class="col-md-6 col-lg-4 mb-5">
                 <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal3">
                     <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                         <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                     </div>
-                    <img class="img-fluid" src="logo-color.png" alt="..." />
+                    <h2 class="page-section-heading text-center text-uppercase text-secondary mb-4 text-light">HEI</h2>
+                    <img class="img-fluid" src="healthy-eating-index-white.png" alt="..." />
                 </div>
             </div>
+@*
             <!-- Portfolio Item 4-->
             <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
                 <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal4">
@@ -192,7 +194,7 @@
                             <!-- Icon Divider-->
                             <div class="divider-custom">
                                 <div class="divider-custom-line"></div>
-                                <div class="divider-custom-icon"><i class="fa-solid fa-circle-nodes fa-spin"></i></div>
+                                <div class="divider-custom-icon"><i class="fa-solid fa-key fa-spin"></i></div>
                                 <div class="divider-custom-line"></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
@@ -244,7 +246,7 @@
         </div>
     </div>
 </div>
-@*<!-- Portfolio Modal 3-->
+<!-- Portfolio Modal 3-->
 <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" aria-labelledby="portfolioModal3" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -254,17 +256,25 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
                             <!-- Portfolio Modal - Title-->
-                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Circus Tent</h2>
+                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Healthy Eating Index (HEI)</h2>
                             <!-- Icon Divider-->
                             <div class="divider-custom">
                                 <div class="divider-custom-line"></div>
-                                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                <div class="divider-custom-icon"><i class="fa-solid fa-carrot fa-beat"></i></div>
                                 <div class="divider-custom-line"></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="assets/img/portfolio/circus.png" alt="..." />
+                            <img class="img-fluid rounded mb-5 w-25" src="healthy-eating-index-white.png" alt="..." />
                             <!-- Portfolio Modal - Text-->
-                            <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                            <p>We used real world data received from the FatSecret API to generate the healthy eating index for each food item. It is a useful tool to access diet quality and identity areas for improvement in an individual's diet.</p>
+                            <p>We account for several critical nutritional factors such as the saturated fat levels, cholesterol levels, and the vitamins present in the food item to portray the healthiness of each food item a user adds to their meal.
+                                We have various checks in place to ensure that our generator provides us a number that fits in a 10-point star scale.
+                            </p>
+                            <p>The graded approach can be used to aid interpretation of the HEI scores. Grades should be used only to help interpret scores and never alone. A higher score indicates that the person's diet is closer to the Dietary Guidelines for Americans.</p>
+                            <p><b>HEI Score Interpretation:</b></p>
+                                <p><span><i class="fa-solid fa-star" style="color:#bee69d"></i></span> 7-10 Good Eating Habits</p>
+                                <p><span><i class="fa-solid fa-star" style="color:#ffc107"></i></span> 4-6 Needs Improvement</p>
+                               <p><span><i class="fa-solid fa-star" style="color:#dc3545"></i></span> 0-3 Poor Eating Habits</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Close Window
@@ -276,6 +286,7 @@
         </div>
     </div>
 </div>
+@*
 <!-- Portfolio Modal 4-->
 <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" aria-labelledby="portfolioModal4" aria-hidden="true">
     <div class="modal-dialog modal-xl">
