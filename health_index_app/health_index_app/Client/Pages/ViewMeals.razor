@@ -11,9 +11,11 @@
 }
 else
 {
-    GetMeal(MealId);
-    <h3>@CurMeal.Id, @CurMeal.HealthIndex</h3>
-
+    <h2>@MealId</h2>
+    if (CurMeal != null)
+    {
+        <h3>@CurMeal.Id, @CurMeal.HealthIndex</h3>
+    }
 }
 
 @code {

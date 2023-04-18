@@ -1,11 +1,14 @@
 ﻿using health_index_app.Client.Services;
 using health_index_app.Shared.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace health_index_app.Client.Pages
 {
     partial class ViewMeals
     {
+        [Inject]
+        public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Inject]
         IMealsAPIServices MealAPIService { get; set; }
         
@@ -14,13 +17,18 @@ namespace health_index_app.Client.Pages
 
         List<Meal> Meals { get; set; } = new List<Meal>();
 
-        public Meal CurMeal { get; set; } = new Meal();
+        public Meal CurMeal { get; set; } = null!;
 
-
-        public async void GetMeal(int mealId)
+        protected override async Task OnInitializedAsync()
         {
-            if (mealId != 0) {
-                CurMeal = await MealAPIService.ReadMeal(mealId);
+            var UserAuth = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User.Identity;
+            if (UserAuth is not null && UserAuth.IsAuthenticated)
+            {
+                if (MealId != 0) 
+                {
+                    CurMeal = await MealAPIService.ReadMeal(MealId);
+                }
+                
             }
         }
 
