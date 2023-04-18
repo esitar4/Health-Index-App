@@ -1,0 +1,21 @@
+﻿@page "/viewmeals"
+@page "/viewmeals/{mealid:int}"
+
+@using health_index_app.Shared.Models;
+
+<h3>ViewMeals</h3>
+
+@if (MealId == 0)
+{
+    <h3>Nothing to see here</h3>
+}
+else
+{
+    GetMeal(MealId);
+    <h3>@CurMeal.Id, @CurMeal.HealthIndex</h3>
+
+}
+
+@code {
+
+}
