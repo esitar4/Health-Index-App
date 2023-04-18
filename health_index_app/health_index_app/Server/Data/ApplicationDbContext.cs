@@ -26,7 +26,7 @@ namespace health_index_app.Server.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //Admin
-            string AdminUserId = Guid.NewGuid().ToString();
+            string AdminUserId = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9";
             string AdminRoleId = Guid.NewGuid().ToString();
             var hasher = new PasswordHasher<IdentityUser>();
 
@@ -45,7 +45,7 @@ namespace health_index_app.Server.Data
 
 
             // Users
-            List<string> userIds = new List<string>() { Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString() };
+            List<string> userIds = new List<string>() { "ad4faee2-b1ff-4c19-bc85-2400fc2e9787", "3f2b23ed-0959-45a4-9499-8b1ee1f0f4d9", "e03b81e4-c2be-4a64-b26d-0782511cfbc4", "3aee0927-28c9-4308-92cc-296bf325521b", "5ac8f00d-f3bb-4c96-8570-6f8997cf2ae5" };
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
                 Id = userIds[0],

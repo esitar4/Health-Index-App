@@ -249,15 +249,15 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "df588d91-e7ef-48d2-a300-2831b5da5259",
+                            ConcurrencyStamp = "e32dfe57-4706-43b9-95e4-975119108278",
                             Email = "eric@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ERIC@COGNIZANT.COM",
                             NormalizedUserName = "ERIC@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELkzc+v3jgNXEEjmes6gC1QgosluZNY/lNiFHcb7B0tIYhenQ+YLryWN1xcZvFbZqg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG/PRAlkhY7jienfN25eaXQk87NCcdf53xKsg2ytmfvtdMz4omDrUxrpiNHMCT+xsQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5a4bcef6-3bc7-4ab3-b02b-5b49af9e3528",
+                            SecurityStamp = "d540a2bc-6b1f-4ec2-8c82-4ba6516f846a",
                             TwoFactorEnabled = false,
                             UserName = "eric@cognizant.com"
                         },
@@ -265,15 +265,15 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "ad4faee2-b1ff-4c19-bc85-2400fc2e9787",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1d37998a-7bed-4f49-b5fb-6892dcddc87f",
+                            ConcurrencyStamp = "dc95ecd2-357e-43e5-b457-74f8b86c487c",
                             Email = "ravid@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "RAVID@COGNIZANT.COM",
                             NormalizedUserName = "RAVID@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELZnR9QL/hM71me6WBTncVmqNtm2ecbRfnEnPI77S0TMKZPAUk9hJvABtd1+8N78Rg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELMQ9eWT45kLygc+jFW+lo8EwgPUm8PmJblrmtrS9b/AZloSc8W87NETUQ7tkYd0nQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "12bb5727-a7b7-4199-8f5b-99c904597331",
+                            SecurityStamp = "1c14470e-2444-456f-a9e9-76daae7b39c9",
                             TwoFactorEnabled = false,
                             UserName = "ravid@cognizant.com"
                         },
@@ -281,15 +281,15 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "3f2b23ed-0959-45a4-9499-8b1ee1f0f4d9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b4c78866-0b97-4f51-9da7-0a3cee914187",
+                            ConcurrencyStamp = "e23e26fb-36e9-4d47-9ec2-27158d519689",
                             Email = "edward@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "EDWARD@COGNIZANT.COM",
                             NormalizedUserName = "EDWARD@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKSvLj9BZ9HEnqC8GKRL9N0a2djWXUov+kBWlFa4uvdWhsxTu1iqQ2xXTDg3P2CLCA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPaLf6F21J0KFizNwaN4hMzUF8M162RWTP7s+hDmuEOlDR/g7pxLwxPnHo7ZhKWY5g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5626211f-0aac-4c7c-882c-c420354f468b",
+                            SecurityStamp = "8d3dc3c5-82de-41ac-8250-9daa76143f66",
                             TwoFactorEnabled = false,
                             UserName = "edward@cognizant.com"
                         },
@@ -297,15 +297,15 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "e03b81e4-c2be-4a64-b26d-0782511cfbc4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "48aefbc0-ff3f-4de1-884f-fd96d82abd85",
+                            ConcurrencyStamp = "3c660b8f-cab1-45b2-bb49-d578b788262d",
                             Email = "jessica@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "JESSICA@COGNIZANT.COM",
                             NormalizedUserName = "JESSICA@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFc2JbPv/ncWB2suZ2U8Oylt0xEEY3pwVcUh00DbjoD/g86I9EQngH4SYzzsLak2RQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFLLB7+9ExWv/sem0DUWU0uizk7KRxCozNNnppvCxSc/RBZzzrQhVsT4NOQRt8wHXg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "64bdf398-6b3d-4fc1-9d1d-26d3ed9a1865",
+                            SecurityStamp = "947aad0d-0bc5-4ca7-be09-56584000aada",
                             TwoFactorEnabled = false,
                             UserName = "jessica@cognizant.com"
                         },
@@ -313,16 +313,16 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "3aee0927-28c9-4308-92cc-296bf325521b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2d2e29cb-edca-4dc4-a0ea-ed2dd17ed76c",
+                            ConcurrencyStamp = "546bfbc9-b795-4eea-a491-5d26243bbb41",
                             Email = "charles@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "CHARLES@COGNIZANT.COM",
                             NormalizedUserName = "CHARLES@COGNIZANT.COM",
                             ParentId = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
-                            PasswordHash = "AQAAAAEAACcQAAAAEE2qcsALMMYh77YSgdhFu/BNHJFka3QJbNO1viWzDinO7hmo2nX08B97y4wBgrIHLg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKBHgjxriWTH+qcRtOhCLF1hfqj575KJOlzSRaya4kZ9bEFeMpfaCdvz8B32eqeqSw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ab6e3205-c86e-4911-8300-8a4a92af9253",
+                            SecurityStamp = "271571c7-8d74-4ff9-9d09-bfee8f5aaa26",
                             TwoFactorEnabled = false,
                             UserName = "charles@cognizant.com"
                         },
@@ -330,16 +330,16 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "5ac8f00d-f3bb-4c96-8570-6f8997cf2ae5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c1fe1694-de8a-4aad-b3ad-70e07d0c5090",
+                            ConcurrencyStamp = "665938c2-625a-4ac4-ace8-50a9157c019d",
                             Email = "scott@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "SCOTT@COGNIZANT.COM",
                             NormalizedUserName = "SCOTT@COGNIZANT.COM",
                             ParentId = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKT0e1KhdO3APAhrgsMhVOoi8h8IDDAUqaoY9ByQIz51OjNgFCg7mJhTizKJFX9OEQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL1xuSPgyRhYIidxX4TTpKjT/3QO5iK33waBEAuPp4DAXCu4aM50Kfpz77KrHGdbgg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7fb4724c-1911-4ba6-8c0e-769796b1eaf9",
+                            SecurityStamp = "b9f7475a-0e31-4fcb-a552-50fcf2381b6a",
                             TwoFactorEnabled = false,
                             UserName = "scott@cognizant.com"
                         });
@@ -1035,8 +1035,8 @@ namespace health_index_app.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "86a69b2b-3fa5-4698-b7f4-4a77243e815b",
-                            ConcurrencyStamp = "2915c3f6-56a1-49a3-a02f-ff08dad543d3",
+                            Id = "245c02db-22a5-4903-b86f-4634ba583d4a",
+                            ConcurrencyStamp = "3d5204ed-9ec8-4593-84a7-afc574ca5478",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -1134,7 +1134,7 @@ namespace health_index_app.Server.Migrations
                         new
                         {
                             UserId = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
-                            RoleId = "86a69b2b-3fa5-4698-b7f4-4a77243e815b"
+                            RoleId = "245c02db-22a5-4903-b86f-4634ba583d4a"
                         });
                 });
 

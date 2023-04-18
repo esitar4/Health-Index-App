@@ -12,7 +12,7 @@ using health_index_app.Server.Data;
 namespace health_index_app.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230405015632_SeedData")]
+    [Migration("20230418045923_SeedData")]
     partial class SeedData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -249,99 +249,99 @@ namespace health_index_app.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "79181ade-a68d-4b30-8ba2-74367631e1f5",
+                            Id = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4690c9a0-d9d5-46ad-99da-532aee153cc9",
+                            ConcurrencyStamp = "1aa1c5e3-389f-47ab-8147-d13b66db7c93",
                             Email = "eric@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ERIC@COGNIZANT.COM",
                             NormalizedUserName = "ERIC@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELrGiIIjJ9Q75rpBD8rFwRAZ6shVLE4BHAgaOWkIsglwptk2+vlMyYD1Ar4SEc6sKw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPV2YPekwE+lHoVXlxiavgu8tGjXmF0ZIwREM0/QgoJ+/YizpB5/XTShKCAz3fNODA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3ed24d85-06ee-4764-8848-adc6cbd61238",
+                            SecurityStamp = "f49cbc04-3b23-401e-b3fd-368b0e0557a8",
                             TwoFactorEnabled = false,
                             UserName = "eric@cognizant.com"
                         },
                         new
                         {
-                            Id = "3afeb668-c51a-4f4c-91f5-7e4aa9322d01",
+                            Id = "ad4faee2-b1ff-4c19-bc85-2400fc2e9787",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "51d81afe-bc33-4d1e-ac26-32fa61674acd",
+                            ConcurrencyStamp = "d45dac2b-8d68-4ba0-b14a-b48f0a43417e",
                             Email = "ravid@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "RAVID@COGNIZANT.COM",
                             NormalizedUserName = "RAVID@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHcHFZVNhbbm+fm94eQN8T747eYInAVsJxmfPQzvfqwlpvkOrDeEwpckW/4mNAQSPg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEH6kqaKe+K3ml2rX70eB20d9YF3vjfObLpQGX9RovshCfOBgR9bT0w/TD6lxKqcwDw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bbc8dfe5-4d1f-4e06-b6ea-1010141dbc77",
+                            SecurityStamp = "febc06cf-0551-4eda-a2c2-17a5777f3bf2",
                             TwoFactorEnabled = false,
                             UserName = "ravid@cognizant.com"
                         },
                         new
                         {
-                            Id = "25ab57d4-1ec1-45a4-b479-1b0a05e2483a",
+                            Id = "3f2b23ed-0959-45a4-9499-8b1ee1f0f4d9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8b535116-2833-40f8-b6ab-f550ffdc6e7d",
+                            ConcurrencyStamp = "922a9cdf-a7ab-4f13-98c2-1ad9025610d5",
                             Email = "edward@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "EDWARD@COGNIZANT.COM",
                             NormalizedUserName = "EDWARD@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEbvFC+huQ5A5ubv8cOWLeaOCecNBlkVa8foDd4w5H9LVIH2jXEYaZNzCBz+Z7z4WA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENFtJ+Gb0beSEJx8o3oJ59gaTKHXFkEqW0Sefw2wOvyQuil+zi9/DqUFG+Uc+GMTgA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "30c900a1-882b-40fd-8793-eca0aadf0bd5",
+                            SecurityStamp = "a7d01c79-a89b-4321-b7a9-abd9637e745e",
                             TwoFactorEnabled = false,
                             UserName = "edward@cognizant.com"
                         },
                         new
                         {
-                            Id = "6f1372e5-7f5b-4cac-bf87-408c987cdb0c",
+                            Id = "e03b81e4-c2be-4a64-b26d-0782511cfbc4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f1127fe9-f808-42d5-b27e-405b747658f3",
+                            ConcurrencyStamp = "5589dcf6-b510-4f47-a47c-377dfd32573c",
                             Email = "jessica@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "JESSICA@COGNIZANT.COM",
                             NormalizedUserName = "JESSICA@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJnaQA/SWpVsk1OzV2yqbOt8nVW1y7tenuECbiOC6vdxSOlVdqjU2BC+xUVy4CxcFw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEORkn1sU5PmFaRCfYTQ0VC+zNrHT09OD0TYn358pXoONUDqhMyp6yQY/3AVGF4yAMg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bc2d6712-6356-4b8c-b141-0caf4ed069db",
+                            SecurityStamp = "5469d0b0-eba5-401f-aced-bd8093886a63",
                             TwoFactorEnabled = false,
                             UserName = "jessica@cognizant.com"
                         },
                         new
                         {
-                            Id = "c148fe3a-8c82-48e2-a3bf-9bf3708d1f2a",
+                            Id = "3aee0927-28c9-4308-92cc-296bf325521b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4822c0bc-d85a-4f1e-844b-5e3962e03129",
+                            ConcurrencyStamp = "b5c3d6a4-c23f-4f21-82cb-803d3bfb3ba7",
                             Email = "charles@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "CHARLES@COGNIZANT.COM",
                             NormalizedUserName = "CHARLES@COGNIZANT.COM",
-                            ParentId = "79181ade-a68d-4b30-8ba2-74367631e1f5",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEMT5fDhgHfoOgacOEm3iIaI6QWJVD10C0c2ek0zDbFQ2OLd2P+1LbSPq6f9VVOogA==",
+                            ParentId = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHrFJG0ScDi8GaB5mm7Y20AaMz1AU8mYMtiVWxjdA53PZYYX8vWMQFrZ8ZFdbhMaiA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1815f6ab-7bbb-4de2-b3b3-e0f035ff1324",
+                            SecurityStamp = "8244416d-c9b9-49c8-b60b-7c42be34d6d0",
                             TwoFactorEnabled = false,
                             UserName = "charles@cognizant.com"
                         },
                         new
                         {
-                            Id = "ee505841-aec9-41c3-90ce-ead4fc82818f",
+                            Id = "5ac8f00d-f3bb-4c96-8570-6f8997cf2ae5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0a94233c-bf71-422e-8f58-a0da85575772",
+                            ConcurrencyStamp = "657e6221-d8c7-4323-a379-5866b4889dd4",
                             Email = "scott@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "SCOTT@COGNIZANT.COM",
                             NormalizedUserName = "SCOTT@COGNIZANT.COM",
-                            ParentId = "79181ade-a68d-4b30-8ba2-74367631e1f5",
-                            PasswordHash = "AQAAAAEAACcQAAAAENBNluBubPzBAL+wcdMwRsfQfrInT/8OAJKApOYuzcrHci8aH+jXl17h4ulEA6+0lQ==",
+                            ParentId = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
+                            PasswordHash = "AQAAAAEAACcQAAAAENm03/EkSnz+OtVmewU6XlO0Bp8wJxaQT/xsxJtFbDvTxJb3nx+xbdr+r8yiR8/AkA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "53404c29-aff6-4950-8b6a-df941b501ff3",
+                            SecurityStamp = "a3bc775c-097f-45e0-8bd8-85a9bd205546",
                             TwoFactorEnabled = false,
                             UserName = "scott@cognizant.com"
                         });
@@ -360,8 +360,8 @@ namespace health_index_app.Server.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -381,56 +381,56 @@ namespace health_index_app.Server.Migrations
                             Id = 1,
                             MealId = 10004,
                             Name = "Lunch",
-                            UserId = "ee505841-aec9-41c3-90ce-ead4fc82818f"
+                            UserId = "5ac8f00d-f3bb-4c96-8570-6f8997cf2ae5"
                         },
                         new
                         {
                             Id = 2,
                             MealId = 10001,
                             Name = "Snack",
-                            UserId = "25ab57d4-1ec1-45a4-b479-1b0a05e2483a"
+                            UserId = "3f2b23ed-0959-45a4-9499-8b1ee1f0f4d9"
                         },
                         new
                         {
                             Id = 3,
                             MealId = 10005,
                             Name = "Duck",
-                            UserId = "ee505841-aec9-41c3-90ce-ead4fc82818f"
+                            UserId = "5ac8f00d-f3bb-4c96-8570-6f8997cf2ae5"
                         },
                         new
                         {
                             Id = 4,
                             MealId = 10004,
                             Name = "Worcestershire",
-                            UserId = "c148fe3a-8c82-48e2-a3bf-9bf3708d1f2a"
+                            UserId = "3aee0927-28c9-4308-92cc-296bf325521b"
                         },
                         new
                         {
                             Id = 5,
                             MealId = 10003,
                             Name = "Truffle Oil",
-                            UserId = "3afeb668-c51a-4f4c-91f5-7e4aa9322d01"
+                            UserId = "ad4faee2-b1ff-4c19-bc85-2400fc2e9787"
                         },
                         new
                         {
                             Id = 6,
                             MealId = 10004,
                             Name = "Feta",
-                            UserId = "25ab57d4-1ec1-45a4-b479-1b0a05e2483a"
+                            UserId = "3f2b23ed-0959-45a4-9499-8b1ee1f0f4d9"
                         },
                         new
                         {
                             Id = 7,
                             MealId = 10002,
                             Name = "Fenugreek",
-                            UserId = "6f1372e5-7f5b-4cac-bf87-408c987cdb0c"
+                            UserId = "e03b81e4-c2be-4a64-b26d-0782511cfbc4"
                         },
                         new
                         {
                             Id = 8,
                             MealId = 10006,
                             Name = "Rocket",
-                            UserId = "ee505841-aec9-41c3-90ce-ead4fc82818f"
+                            UserId = "5ac8f00d-f3bb-4c96-8570-6f8997cf2ae5"
                         });
                 });
 
@@ -1037,8 +1037,8 @@ namespace health_index_app.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "07cfe6f7-54f1-4c9a-951a-82f88235ccf5",
-                            ConcurrencyStamp = "95b70b77-6408-4563-b60d-3cbb75a36fe8",
+                            Id = "adf3001d-64d3-4dfb-b93f-3ad2503167e7",
+                            ConcurrencyStamp = "bec5f1b1-3338-46af-8ab3-784d2c36d626",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -1135,8 +1135,8 @@ namespace health_index_app.Server.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "79181ade-a68d-4b30-8ba2-74367631e1f5",
-                            RoleId = "07cfe6f7-54f1-4c9a-951a-82f88235ccf5"
+                            UserId = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
+                            RoleId = "adf3001d-64d3-4dfb-b93f-3ad2503167e7"
                         });
                 });
 
