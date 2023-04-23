@@ -2,6 +2,12 @@
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <Authorizing>
+                    <div class="container d-flex align-items-center flex-column mt-5">
+                        <div style="font-size:36px"><p class="authorizing">Authorizing...</p></div>
+                        <img class="spinner-grow" style="width: 15rem; height: 15rem;" src="logo-color.png" alt="..." role="status" />
+                    </div>
+                </Authorizing>
                 <NotAuthorized>
                     @if (context.User.Identity?.IsAuthenticated != true)
                     {
@@ -9,7 +15,10 @@
                     }
                     else
                     {
-                        <p role="alert">You are not authorized to access this resource.</p>
+                        <div class="container d-flex align-items-center flex-column mt-5">
+                            <div style="font-size:36px"><p class="authorizing">You're not authorized to view this resource, @(context.User.Identity.Name ?? "anonymous")</p></div>
+                            <img class="w-25" src="logo-no-background.png" alt="..." />
+                        </div>
                     }
                 </NotAuthorized>
             </AuthorizeRouteView>
