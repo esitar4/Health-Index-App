@@ -253,7 +253,7 @@ namespace health_index_app.Client.Pages
         {
             if (mealName != "")
             {
-                Meal meal = await MealAPIServices.CreateMeal(new Meal());
+                Meal meal = await MealAPIServices.CreateMeal(new Meal() { HealthIndex = healthIndex});
 
                 MealFood mealFood; UserMealDTO userMealDTO;
 
