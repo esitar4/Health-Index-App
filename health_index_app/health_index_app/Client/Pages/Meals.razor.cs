@@ -26,7 +26,7 @@ namespace health_index_app.Client.Pages
         [Inject]
         protected IMealFoodAPIServices MealFoodAPIServices { get; set; }
         [Inject]
-        protected IMealsAPIServices MealAPIServices { get; set; }
+        protected IMealAPIServices MealAPIServices { get; set; }
         [Inject]
         protected IUserMealsAPIServices UserMealsAPIServices { get; set; }
         [Inject]

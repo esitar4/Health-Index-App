@@ -10,7 +10,7 @@ namespace health_index_app.Client.Pages
         [Inject]
         public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Inject]
-        IMealsAPIServices MealAPIService { get; set; }
+        IMealAPIServices MealAPIService { get; set; }
         
         [Parameter]
         public int MealId { get; set; }
