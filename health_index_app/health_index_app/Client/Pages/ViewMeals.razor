@@ -3,37 +3,40 @@
 
 @using health_index_app.Shared.Models;
 
-<h3>ViewMeals</h3>
-
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2">
-            <div class="list-group list-group-flush border-bottom scrollarea h-100">
+        <div class="col-2 d-flex flex-column align-items-stretch flex-shrink-0 bg-white min-vh-100" style="padding:0px">
+            <div class="list-group list-group-flush border-bottom scrollarea">
+                <a class="text-light bg-dark d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom ">
+                    <span class="fs-5 fw-semibold">View Meals <i class="fa-solid fa-mortar-pestle"></i></span>
+                </a>
+                @foreach(var userMeal in UserMeals)
+                {
+                    <a @onclick="() => showMealDetail(userMeal.MealId)" class="list-group-item list-group-item-action py-3 lh-tight">@userMeal.Name</a>
+                }
+            </div>         
                 <a href="#" class="list-group-item list-group-item-action py-3 lh-tight active" aria-current="true">L1</a>
-                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">L2</a>
+                
                 <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">L3</a>
-            </div>
+            
         </div>
 
         <div class="col-10">
             <div>
-                @if (MealId == 0)
+                @if (MealId == 0 && CurMeal == null)
                 {
-                    <h3>Nothing to see here</h3>
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 }
-                else
+                else if (CurMeal != null)
                 {
-                    <h2>@MealId</h2>
-                    if (CurMeal != null)
-                    {
-                        <h3>@CurMeal.Id, @CurMeal.HealthIndex</h3>
-                    }
+                    <h3>@CurMeal.Id, @CurMeal.HealthIndex</h3>
                 }
             </div>
         </div>
     </div>
 </div>
-
 @code {
 
 }
