@@ -26,15 +26,13 @@ namespace health_index_app.Client.Pages
         [Parameter]
         public int MealId { get; set; }
 
-        List<Meal> Meals { get; set; } = new List<Meal>();
         List<UserMealDTO> UserMeals { get; set; } = new();
 
         private Dictionary<int, string> activeListItem = new Dictionary<int, string>();
-
+        private string color = "#000";
         private Meal CurMeal { get; set; } = null!;
         private UserMealFoodDTO userMealFoodDTO { get; set; } = new();
-        private Dictionary<int, object> storage { get; set; } = new();
-
+        private int numCols = 4;
         protected override async Task OnInitializedAsync()
         {
             var UserAuth = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User.Identity;
@@ -42,7 +40,7 @@ namespace health_index_app.Client.Pages
             {
                 if (MealId != 0) 
                 {
-                    CurMeal = await MealAPIService.ReadMeal(MealId);
+                    userMealFoodDTO.Meal = await MealAPIService.ReadMeal(MealId);
                 }
                 
                 UserMeals = await UserMealsAPIService.GetAllUserMealIdsToMealNames();

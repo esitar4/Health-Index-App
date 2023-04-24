@@ -19,28 +19,83 @@
 
         <div class="col-10">
             <div>
-                @if (MealId == 0 && CurMeal == null)
+                @if (MealId == 0 && userMealFoodDTO.Meal == null)
                 {
                     <div class="container d-flex align-items-center flex-column mt-5">
                         <img class="spinner-grow" style="width: 15rem; height: 15rem; color: #C9EFC7; animation-duration:1.5s;" src="logo-color.png" alt="..." role="status" />
                     </div>
                 }
-                else if (CurMeal != null)
+                else if (userMealFoodDTO.Meal != null)
                 {
-                    <h3>@CurMeal.Id, @CurMeal.HealthIndex</h3>
-                    foreach (var food in userMealFoodDTO.MealFood)
-                    {
-                        <div class="card" style="width: 18rem;">
-                            <img src="healthy-eating-index.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">@food.FoodId</h5>
-                                <p class="card-text">@food.Amount</p>
-                                <p class="card-text">@userMealFoodDTO.Food.Where(f => f.Id == food.FoodId).FirstOrDefault().FoodName</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="row">
+                        <div class="container text-center">
+                            <!-- Portfolio Modal - Title-->
+                            <h5 class="portfolio-modal-title text-secondary text-uppercase mb-0">@userMealFoodDTO.UserMealDTO.Name @userMealFoodDTO.UserMealDTO.MealId</h5>
+                            <!-- Icon Divider-->
+                            @{
+                                if (Convert.ToDouble(userMealFoodDTO.Meal.HealthIndex) >= 7)
+                                    color = "#bee69d";
+                                else if (Convert.ToDouble(userMealFoodDTO.Meal.HealthIndex) >= 4)
+                                    color = "#ffc107";
+                                else
+                                    color = "#dc3545";
+                            }
+                            <div class="divider-custom">
+                                <div class="divider-custom-line" style="background-color:@color"></div>
+                                <div class="divider-custom-icon">
+                                    @{
+                                        int j = 1;
+                                        while (j < Convert.ToDouble(userMealFoodDTO.Meal.HealthIndex))
+                                        {
+                                            <span><i class="fa-solid fa-star" style="color:@color"></i></span>
+                                            j++;
+                                        }
+                                        if ((Convert.ToDouble(userMealFoodDTO.Meal.HealthIndex) - j + 1) >= 0.5)
+                                        {
+                                            <span><i class="fa-solid fa-star-half" style="color:@color"></i></span>
+                                        }
+                                    }
+                                </div>
+
+                                <div class="divider-custom-line" style="background-color:@color"></div>
                             </div>
                         </div>
+                    </div>
+                    //foreach (var food in userMealFoodDTO.MealFood)
+                    //{
+                    //    <div class="card" style="width: 18rem;">
+                    //        <img src="healthy-eating-index.png" class="card-img-top" alt="...">
+                    //        <div class="card-body">
+                    //            <h5 class="card-title">@food.FoodId</h5>
+                    //            <p class="card-text">@food.Amount</p>
+                    //            <p class="card-text">@userMealFoodDTO.Food.Where(f => f.Id == food.FoodId).FirstOrDefault().FoodName</p>
+                    //            <a href="#" class="btn btn-primary">Go somewhere</a>
+                    //        </div>
+                    //    </div>
+                    //}
+                    @for (int index = 0; index < userMealFoodDTO.MealFood.Count; index += numCols)
+                    {
+                        <div class="row justify-content-center">
+                            @for (int col = 0; col < numCols; col++)
+                            {
+                                if (index + col < userMealFoodDTO.MealFood.Count)
+                                {
+                                    <div class="col-sm-@(12/(numCols+1))">
+                                        <div class="card">
+                                            <img src="healthy-eating-index.png" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">@userMealFoodDTO.MealFood[index + col].FoodId</h5>
+                                                <p class="card-text">@userMealFoodDTO.MealFood[index + col].Amount</p>
+                                                <p class="card-text">@userMealFoodDTO.Food.Where(f => f.Id == @userMealFoodDTO.MealFood[index + col].FoodId).FirstOrDefault().FoodName</p>
+                                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        }
                     }
-                }
             </div>
         </div>
     </div>
