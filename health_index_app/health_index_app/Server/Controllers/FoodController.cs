@@ -39,9 +39,9 @@ namespace health_index_app.Server.Controllers
 
         [HttpGet]
         [Route("read")]
-        public async Task<ActionResult<Food>> ReadFood(int foodId)
+        public async Task<ActionResult<Food>> ReadFood(int foodId, int servingId)
         {
-            var food = await _context.Foods.Where(f => f.Id == foodId).FirstOrDefaultAsync();
+            var food = await _context.Foods.Where(f => f.Id == foodId && f.ServingId == servingId).FirstOrDefaultAsync();
 
             if (food == null)
                 return NotFound();

@@ -10,7 +10,7 @@ namespace health_index_app.Client.Services
     public interface IFoodAPIServices
     {
         Task<Food> CreateFood(string servingId, GetFoodResponse foodResponse);
-        Task<Food> ReadFood(int FoodId);
+        Task<Food> ReadFood(int FoodId, int ServingId);
         Task<bool> UpdateFood(Food Food);
         Task<bool> DeleteFood(Food food);
         Task<Food> CreateFoodHelper(string servingId, GetFoodResponse foodResponse);
@@ -44,12 +44,12 @@ namespace health_index_app.Client.Services
             return food;
         }
 
-        public async Task<Food> ReadFood(int FoodId)
+        public async Task<Food> ReadFood(int FoodId, int ServingId)
         {
             Food response;
             try
             {
-                var url = $"/food/read?FoodId={FoodId}";
+                var url = $"/food/read?FoodId={FoodId}&ServingId={ServingId}";
                 response = await _client.GetFromJsonAsync<Food>(url);
             }
             catch
