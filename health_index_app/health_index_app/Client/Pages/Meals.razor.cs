@@ -236,7 +236,7 @@ namespace health_index_app.Client.Pages
                 Dictionary<Food, double> foods = new();
                 foreach (var mealFood in mealFoods)
                 {
-                    var food = await FoodAPIServices.ReadFood(mealFood.FoodId);
+                    var food = await FoodAPIServices.ReadFood(mealFood.FoodId, mealFood.ServingId);
                     totalCalories += Convert.ToInt32(food.Calories)*mealFood.Amount;
                     totalGrams += Convert.ToInt32(food.MetricServingAmount)*mealFood.Amount;
                     var foodCount = mealFood.Amount;

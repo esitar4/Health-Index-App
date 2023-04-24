@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using health_index_app.Client;
 using health_index_app.Client.Services;
 using Microsoft.AspNetCore.Components.Web;
@@ -12,7 +13,8 @@ builder.Services.AddHttpClient("health_index_app.ServerAPI", client => client.Ba
     .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
 // Supply HttpClient instances that include access tokens when making requests to the server project
-builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("health_index_app.ServerAPI"));
+builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("health_index_app.ServerAPI"))
+    .AddBlazoredLocalStorage();
 
 builder.Services.AddApiAuthorization();
 

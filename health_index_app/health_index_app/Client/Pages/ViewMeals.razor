@@ -5,33 +5,41 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2 d-flex flex-column align-items-stretch flex-shrink-0 bg-white min-vh-100" style="padding:0px">
+        <div class="col-2 d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="padding:0px; height:calc(100vh - 3.5rem); position: -webkit-sticky; position: sticky; top:3.5rem;">
             <div class="list-group list-group-flush border-bottom scrollarea">
-                <a class="text-light bg-dark d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom ">
-                    <span class="fs-5 fw-semibold">View Meals <i class="fa-solid fa-mortar-pestle"></i></span>
+                <a class="text-light bg-dark d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+                    <span class="fs-5 fw-semibold"><i class="fa-solid fa-bowl-food"></i> View Meals </span>
                 </a>
                 @foreach(var userMeal in UserMeals)
                 {
-                    <a @onclick="() => showMealDetail(userMeal.MealId)" class="list-group-item list-group-item-action py-3 lh-tight">@userMeal.Name</a>
+                    <a @onclick="() => showMealDetail(userMeal.MealId)" class="list-group-item list-group-item-action py-3 lh-tight @activeListItem[userMeal.MealId]">@userMeal.Name</a>
                 }
-            </div>         
-                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight active" aria-current="true">L1</a>
-                
-                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">L3</a>
-            
+            </div>
         </div>
 
         <div class="col-10">
             <div>
                 @if (MealId == 0 && CurMeal == null)
                 {
-                    <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                    <div class="container d-flex align-items-center flex-column mt-5">
+                        <img class="spinner-grow" style="width: 15rem; height: 15rem; color: #C9EFC7; animation-duration:1.5s;" src="logo-color.png" alt="..." role="status" />
                     </div>
                 }
                 else if (CurMeal != null)
                 {
                     <h3>@CurMeal.Id, @CurMeal.HealthIndex</h3>
+                    foreach (var food in userMealFoodDTO.MealFood)
+                    {
+                        <div class="card" style="width: 18rem;">
+                            <img src="healthy-eating-index.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">@food.FoodId</h5>
+                                <p class="card-text">@food.Amount</p>
+                                <p class="card-text">@userMealFoodDTO.Food.Where(f => f.Id == food.FoodId).FirstOrDefault().FoodName</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    }
                 }
             </div>
         </div>
