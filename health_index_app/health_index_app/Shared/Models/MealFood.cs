@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace health_index_app.Shared.Models
 {
+
     public class MealFood
     {
 
@@ -15,9 +17,11 @@ namespace health_index_app.Shared.Models
 
         public virtual Meal? Meal { get; set; }
 
-        [ForeignKey("Id")]
         public int FoodId { get; set; }
 
+        public int ServingId { get; set; }
+
+        [ForeignKey("FoodId, ServingId")]
         public virtual Food? Food { get; set; }
 
         [Required]

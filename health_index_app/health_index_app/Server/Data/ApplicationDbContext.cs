@@ -27,7 +27,7 @@ namespace health_index_app.Server.Data
         {
             //Admin
             string AdminUserId = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9";
-            string AdminRoleId = Guid.NewGuid().ToString();
+            string AdminRoleId = "adf3001d-64d3-4dfb-b93f-3ad2503167e7";
             var hasher = new PasswordHasher<IdentityUser>();
 
             builder.Entity<IdentityRole>().HasData(new IdentityRole { Id = AdminRoleId, Name = "Admin", NormalizedName = "ADMIN"});
@@ -394,28 +394,28 @@ namespace health_index_app.Server.Data
                 new Meal { Id = 10006, HealthIndex = 6}
             );
 
-            builder.Entity<MealFood>().HasData( 
-                new MealFood { Id = 1, MealId = 10001, FoodId = 26547, Amount = 1},
-                new MealFood { Id = 2, MealId = 10001, FoodId = 31818, Amount = 1},
-                new MealFood { Id = 3, MealId = 10001, FoodId = 251811, Amount = 1},
+            builder.Entity<MealFood>().HasData(
+                new MealFood { Id = 1, MealId = 10001, FoodId = 26547, ServingId = 66486, Amount = 1 },
+                new MealFood { Id = 2, MealId = 10001, FoodId = 31818, ServingId = 101820, Amount = 1 },
+                new MealFood { Id = 3, MealId = 10001, FoodId = 251811, ServingId = 289802, Amount = 1 },
 
-                new MealFood { Id = 4, MealId = 10002, FoodId = 41321916, Amount = 1},
-                new MealFood { Id = 5, MealId = 10002, FoodId = 26547, Amount = 2},
+                new MealFood { Id = 4, MealId = 10002, FoodId = 41321916, ServingId = 36059775, Amount = 1 },
+                new MealFood { Id = 5, MealId = 10002, FoodId = 26547, ServingId = 66486, Amount = 2 },
 
-                new MealFood { Id = 6, MealId = 10003, FoodId = 91707, Amount = 1},
-                new MealFood { Id = 7, MealId = 10003, FoodId = 1921249, Amount = 1},
-                new MealFood { Id = 8, MealId = 10003, FoodId = 568586, Amount = 1},
+                new MealFood { Id = 6, MealId = 10003, FoodId = 91707, ServingId = 132185, Amount = 1 },
+                new MealFood { Id = 7, MealId = 10003, FoodId = 1921249, ServingId = 1886238, Amount = 1 },
+                new MealFood { Id = 8, MealId = 10003, FoodId = 568586, ServingId = 591920, Amount = 1 },
 
-                new MealFood { Id = 9, MealId = 10004, FoodId = 91707, Amount = 1},
-                new MealFood { Id = 10, MealId = 10004, FoodId = 31818, Amount = 1},
-                new MealFood { Id = 11, MealId = 10004, FoodId = 568586, Amount = 1},
-                new MealFood { Id = 12, MealId = 10004, FoodId = 9771793, Amount = 1},
+                new MealFood { Id = 9, MealId = 10004, FoodId = 91707, ServingId = 132185, Amount = 1 },
+                new MealFood { Id = 10, MealId = 10004, FoodId = 31818, ServingId = 101820, Amount = 1 },
+                new MealFood { Id = 11, MealId = 10004, FoodId = 568586, ServingId = 591920, Amount = 1 },
+                new MealFood { Id = 12, MealId = 10004, FoodId = 9771793, ServingId = 9336939, Amount = 1 },
 
-                new MealFood { Id = 13, MealId = 10005, FoodId = 251811, Amount = 10},
-                new MealFood { Id = 14, MealId = 10005, FoodId = 2861015, Amount = 1},
+                new MealFood { Id = 13, MealId = 10005, FoodId = 251811, ServingId = 289802, Amount = 10 },
+                new MealFood { Id = 14, MealId = 10005, FoodId = 2861015, ServingId = 2787144, Amount = 1 },
 
-                new MealFood { Id = 15, MealId = 10006, FoodId = 91707, Amount = 2},
-                new MealFood { Id = 16, MealId = 10006, FoodId = 1921249, Amount = 1}
+                new MealFood { Id = 15, MealId = 10006, FoodId = 91707, ServingId = 132185, Amount = 2 },
+                new MealFood { Id = 16, MealId = 10006, FoodId = 1921249, ServingId = 1886238, Amount = 1 }
             );
 
             builder.Entity<UserMeal>().HasData(
@@ -429,7 +429,8 @@ namespace health_index_app.Server.Data
                 new UserMeal { Id = 8, UserId = userIds[4], MealId = 10006, Name = "Rocket" }
             );
 
-
+            builder.Entity<Food>().HasKey(f => new { f.Id, f.ServingId });
+            //builder.Entity<MealFood>().HasOne(mf => mf.Food).WithMany(mf => mf.MealFood).HasForeignKey(mf => new { mf.FoodId, mf.ServingId });
             base.OnModelCreating(builder);
         }
 

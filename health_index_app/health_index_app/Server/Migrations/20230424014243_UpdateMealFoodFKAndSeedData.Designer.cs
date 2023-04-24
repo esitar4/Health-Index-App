@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using health_index_app.Server.Data;
 
@@ -11,9 +12,10 @@ using health_index_app.Server.Data;
 namespace health_index_app.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230424014243_UpdateMealFoodFKAndSeedData")]
+    partial class UpdateMealFoodFKAndSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -249,15 +251,15 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "426ac449-e79a-4993-9bcb-0271d931f311",
+                            ConcurrencyStamp = "149454b4-2612-4bea-bf88-c61cf145bc8d",
                             Email = "eric@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ERIC@COGNIZANT.COM",
                             NormalizedUserName = "ERIC@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAECvLHTRz6+/FeFxIBciOELlA8N7K2Hqu6tbY/wDmGhtCjq+AH1N1R1d0DkhlS5jOVA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEN56X+Sw/ByTCkcypT8NIDH4TlxK8e9hMaqWiq5T1OrKzb8N3ZY+RIKy7sCLLDP44A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c635eec3-d72c-4426-939f-554d94be1460",
+                            SecurityStamp = "d1e80a88-c41a-4e5c-91d2-089ac9bafe30",
                             TwoFactorEnabled = false,
                             UserName = "eric@cognizant.com"
                         },
@@ -265,15 +267,15 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "ad4faee2-b1ff-4c19-bc85-2400fc2e9787",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "65d52ad1-392f-4a70-8fd4-e0f0faca2679",
+                            ConcurrencyStamp = "34a6a144-dd4c-461c-b8ab-9c8c8ea770cd",
                             Email = "ravid@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "RAVID@COGNIZANT.COM",
                             NormalizedUserName = "RAVID@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOYR9HSM2ere4661iKtZ6ibWcC/AYaRgp9w1PP2CAVyOMUxKQVBd7Ia11M56d0Jqtg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIcWBIzr9B9JjCDyrMkw6OwRTXwTJjPRxdfKjz0ywToEC7LmylSjy6Jfq5UvzXsrng==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "582bee3d-3b4d-4ad1-af98-a8d2141181c4",
+                            SecurityStamp = "d18eb043-0692-4e8c-9608-d117aa3b1bc8",
                             TwoFactorEnabled = false,
                             UserName = "ravid@cognizant.com"
                         },
@@ -281,15 +283,15 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "3f2b23ed-0959-45a4-9499-8b1ee1f0f4d9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "62f87937-d0b9-44c4-a19e-bd676babd7eb",
+                            ConcurrencyStamp = "24331fc0-16b4-4646-9c02-489cad2c6865",
                             Email = "edward@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "EDWARD@COGNIZANT.COM",
                             NormalizedUserName = "EDWARD@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFO/hcP2aQud2A1an5PKj4xZq+Po9l9J4SsP4+QCjm6qzPPSqWsJHHNE19PFndq7Qg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEItwzDM/7QIhwLZkuKPHfJGOSLgmbufJqqYilpRcOVHMR388mxXvQgYihQxkwhuTpw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bc5e1d58-a570-4977-86a9-1bbc1feedcfd",
+                            SecurityStamp = "a22e43d6-3132-493d-80a1-da95aff84d0c",
                             TwoFactorEnabled = false,
                             UserName = "edward@cognizant.com"
                         },
@@ -297,15 +299,15 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "e03b81e4-c2be-4a64-b26d-0782511cfbc4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9a000eb8-165c-4342-aea6-2ed4b7ec4c0a",
+                            ConcurrencyStamp = "8ac15788-1524-402f-a4ed-2655f57fd1d6",
                             Email = "jessica@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "JESSICA@COGNIZANT.COM",
                             NormalizedUserName = "JESSICA@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENy2RQdmnFXTiSHXdoDCITFqhUpjETQXxPOBl41g9tj6GAgw2fDXmezz61xBNXSymw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKIdBO5nyMvy35w4/n6MIPScPUxm5OevmEr4LDlCpKHRnHC2tqVOSSsFraEDDTnw6Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7eedbbc0-bb8a-4003-93b5-83ab4db1d17b",
+                            SecurityStamp = "f760f24b-58af-49ab-a378-fc10cf0606e7",
                             TwoFactorEnabled = false,
                             UserName = "jessica@cognizant.com"
                         },
@@ -313,16 +315,16 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "3aee0927-28c9-4308-92cc-296bf325521b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "442825d8-4994-4187-b2e4-ada18987881d",
+                            ConcurrencyStamp = "0bcce475-c117-4132-8c7c-0cb4db578665",
                             Email = "charles@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "CHARLES@COGNIZANT.COM",
                             NormalizedUserName = "CHARLES@COGNIZANT.COM",
                             ParentId = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJkUYO8GC+AahJjLw/XSwb5a8pXmgv6h+GhjiZP81I/4CD6au81LzxzuvHYO5fVv9w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDbocw9EgX1+DoFcAGFt6ACKmjJXZ0xFYh7nSTqBzDoFJSINA24qlA1xswGb8JFqHQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9bd46b0d-86c0-499c-a627-918d6d2d7e8a",
+                            SecurityStamp = "e0f6fb49-040b-4c08-956e-518f5b37acb4",
                             TwoFactorEnabled = false,
                             UserName = "charles@cognizant.com"
                         },
@@ -330,16 +332,16 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "5ac8f00d-f3bb-4c96-8570-6f8997cf2ae5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "abd77adf-4337-45fb-b180-47123278eb4b",
+                            ConcurrencyStamp = "5ad151c0-a6e2-4218-b14f-911c9a41d367",
                             Email = "scott@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "SCOTT@COGNIZANT.COM",
                             NormalizedUserName = "SCOTT@COGNIZANT.COM",
                             ParentId = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGxBSGRU4g7Am5iKZSilXt8CcZYYWEK6yKBfLIOEDEAsYVG0qrvv9VUMNer7XAJ7rw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMSPMfWrbWdpJV6qDypWxt8NLqn1IYuTU1DlX0VV89Ehb2jJ63FtaBHwLnEYq9gbYQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "69e9df30-4f09-4be7-ae44-89510e905c72",
+                            SecurityStamp = "651f8282-bedd-4936-b6c7-8ae6bc5ca090",
                             TwoFactorEnabled = false,
                             UserName = "scott@cognizant.com"
                         });
@@ -896,136 +898,6 @@ namespace health_index_app.Server.Migrations
                     b.HasIndex("FoodId", "ServingId");
 
                     b.ToTable("MealFoods");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Amount = 1.0,
-                            FoodId = 26547,
-                            MealId = 10001,
-                            ServingId = 66486
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Amount = 1.0,
-                            FoodId = 31818,
-                            MealId = 10001,
-                            ServingId = 101820
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Amount = 1.0,
-                            FoodId = 251811,
-                            MealId = 10001,
-                            ServingId = 289802
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Amount = 1.0,
-                            FoodId = 41321916,
-                            MealId = 10002,
-                            ServingId = 36059775
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Amount = 2.0,
-                            FoodId = 26547,
-                            MealId = 10002,
-                            ServingId = 66486
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Amount = 1.0,
-                            FoodId = 91707,
-                            MealId = 10003,
-                            ServingId = 132185
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Amount = 1.0,
-                            FoodId = 1921249,
-                            MealId = 10003,
-                            ServingId = 1886238
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Amount = 1.0,
-                            FoodId = 568586,
-                            MealId = 10003,
-                            ServingId = 591920
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Amount = 1.0,
-                            FoodId = 91707,
-                            MealId = 10004,
-                            ServingId = 132185
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Amount = 1.0,
-                            FoodId = 31818,
-                            MealId = 10004,
-                            ServingId = 101820
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Amount = 1.0,
-                            FoodId = 568586,
-                            MealId = 10004,
-                            ServingId = 591920
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Amount = 1.0,
-                            FoodId = 9771793,
-                            MealId = 10004,
-                            ServingId = 9336939
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Amount = 10.0,
-                            FoodId = 251811,
-                            MealId = 10005,
-                            ServingId = 289802
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Amount = 1.0,
-                            FoodId = 2861015,
-                            MealId = 10005,
-                            ServingId = 2787144
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Amount = 2.0,
-                            FoodId = 91707,
-                            MealId = 10006,
-                            ServingId = 132185
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Amount = 1.0,
-                            FoodId = 1921249,
-                            MealId = 10006,
-                            ServingId = 1886238
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1058,7 +930,7 @@ namespace health_index_app.Server.Migrations
                         new
                         {
                             Id = "adf3001d-64d3-4dfb-b93f-3ad2503167e7",
-                            ConcurrencyStamp = "b909518e-222c-441e-8ebf-a6c8276a1a4e",
+                            ConcurrencyStamp = "87babb54-c603-4b8e-a08c-85cde78c78ba",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
