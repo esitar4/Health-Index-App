@@ -22,7 +22,7 @@
                 @if (MealId == 0 && userMealFoodDTO.Meal == null)
                 {
                     <div class="container d-flex align-items-center flex-column mt-5">
-                        <img class="spinner-grow" style="width: 15rem; height: 15rem; color: #C9EFC7; animation-duration:1.5s;" src="logo-color.png" alt="..." role="status" />
+                        <img style="width: 15rem; height: 15rem; color: #C9EFC7; animation-duration:1.5s;" src="logo-color.png" alt="..." role="status" />
                     </div>
                 }
                 else if (userMealFoodDTO.Food != null && userMealFoodDTO.Meal != null && userMealFoodDTO.UserMealDTO != null && userMealFoodDTO.MealFood != null)
@@ -237,9 +237,16 @@
                         </div>
                     }
                 } 
+                else if (MealId != 0 && !MealIdCheck)
+                {
+                    <h1>Meal Does not Exist!</h1>
+                }
                 else
                 {
-                    <h1>Nothing to see</h1>
+                    <div class="container d-flex align-items-center flex-column mt-5">
+                        <div style="font-size:36px"><p class="authorizing">Fetching Meal...</p></div>
+                        <img class="spinner-border" style="width: 15rem; height: 15rem; color: #C9EFC7; animation-duration:1.5s;" src="logo-color.png" alt="..." role="status" />
+                    </div>
                 }
             </div>
         </div>

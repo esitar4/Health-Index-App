@@ -25,6 +25,7 @@ namespace health_index_app.Client.Pages
 
         [Parameter]
         public int MealId { get; set; }
+        public bool MealIdCheck { get; set; } = true;
 
         List<UserMealDTO> UserMeals { get; set; } = new();
 
@@ -48,6 +49,15 @@ namespace health_index_app.Client.Pages
                 foreach (var meal in UserMeals)
                 {
                     activeListItem.Add(meal.MealId, "");
+                }
+
+                if (UserMeals.Where(um => um.MealId == MealId).Any())
+                {
+                    await showMealDetail(MealId);
+                }
+                else
+                {
+                    MealIdCheck = false;
                 }
                 
             }
