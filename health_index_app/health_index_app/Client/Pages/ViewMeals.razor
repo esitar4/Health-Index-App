@@ -85,9 +85,10 @@
                                         <div class="card shadow">
                                             <img src="healthy-eating-index.png" class="card-img-top" alt="...">
                                             <div class="card-body text-center">
-                                                <h5 class="card-title">@userMealFoodDTO.MealFood[index + col].FoodId</h5>
-                                                <p class="card-text">@userMealFoodDTO.MealFood[index + col].Amount</p>
-                                                <p class="card-text">@food.FoodName</p>
+                                                <h5 class="card-title mb-3">@food.FoodName</h5>
+                                                <p class="card-text">Serving(s): @userMealFoodDTO.MealFood[index + col].Amount</p>
+                                                <p class="card-text">Total Calories: @(food.Calories * userMealFoodDTO.MealFood[index + col].Amount) kcal</p>
+                                                <p class="card-text">Total Portion: @(food.MetricServingAmount * userMealFoodDTO.MealFood[index + col].Amount) @(food.MetricServingUnit != string.Empty ? food.MetricServingUnit : "Unknown Unit")</p>
                                                 <a data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMealFoodDTO.MealFood[index + col].FoodId" class="btn btn-primary">More Details</a>
                                             </div>
                                         </div>
