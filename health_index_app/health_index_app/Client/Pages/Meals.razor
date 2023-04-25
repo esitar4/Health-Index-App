@@ -7,7 +7,7 @@
 @attribute [Authorize]
 
 <div class="container-fluid px-4 py-4">
-    <div class="row" style="height:90vh">
+    <div class="row" style="height:calc(100vh-3.5rem)">
         <div class="col-sm" style="border-right:dotted">
             <h3>Search for Foods to add:</h3>
             <div class="row">
@@ -96,44 +96,46 @@
         <div class="col-sm" style="border-right:dotted">
             <div>
                 <h3>View Foods added to Meal:</h3>
-                <table class="table table-striped table-light">
-                    <thead>
-                        <tr>
-                            <th style="width:50%">Meal Food Name:</th>
-                            <th style="width:20%">Serving Size:</th>
-                            <th style="width:20%">Calorie Count:</th>
-                            <th style="width:5%">Count:</th>
-                            <th style="width:5%"><button class="btn btn-dark btn-sm" @onclick="ClearList">Clear</button></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if(MealTable.Count() == 0)
-                        {
+                <div style="overflow:auto; height:calc(100vh - 15rem)">
+                    <table class="table table-striped table-light">
+                        <thead>
                             <tr>
-                                <td colspan="5">
-                                    <ol class="breadcrumb mb-4">
-                                        <li class="breadcrumb-item active">Please add a food item!</li>
-                                    </ol>
-                                </td>
+                                <th style="width:50%">Meal Food Name:</th>
+                                <th style="width:20%">Serving Size:</th>
+                                <th style="width:20%">Calorie Count:</th>
+                                <th style="width:5%">Count:</th>
+                                <th style="width:5%"><button class="btn btn-dark btn-sm" @onclick="ClearList">Clear</button></th>
                             </tr>
-                        }
-                        @{
-                            Console.WriteLine(MealTable.Count());
-                        }
-                        @for (int j = 0; j < MealTable.Count(); j++)
-                        {
-                            var local_j = j;
-                            var foodId = MealTable.ElementAt(j)[0];
-                            <tr>
-                                <td style="width:50%">@MealTable.ElementAt(local_j)[1]</td>
-                                <td style="width:20%">@MealTable.ElementAt(local_j)[2]</td>
-                                <td style="width:20%">@MealTable.ElementAt(local_j)[3]</td>
-                                <td style="width:5%"><input type="text" class="form-control" placeholder="1" @bind-value="MealTable.ElementAt(local_j)[5]" /></td>
-                                <td style="text-align:center;width:5%"><button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromMeal(foodId)"><span><i class="fa-solid fa-trash-can"></i></span></button></td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @if(MealTable.Count() == 0)
+                            {
+                                <tr>
+                                    <td colspan="5">
+                                        <ol class="breadcrumb mb-4">
+                                            <li class="breadcrumb-item active">Please add a food item!</li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                            }
+                            @{
+                                Console.WriteLine(MealTable.Count());
+                            }
+                            @for (int j = 0; j < MealTable.Count(); j++)
+                            {
+                                var local_j = j;
+                                var foodId = MealTable.ElementAt(j)[0];
+                                <tr>
+                                    <td style="width:50%">@MealTable.ElementAt(local_j)[1]</td>
+                                    <td style="width:20%">@MealTable.ElementAt(local_j)[2]</td>
+                                    <td style="width:20%">@MealTable.ElementAt(local_j)[3]</td>
+                                    <td style="width:5%"><input type="text" class="form-control" placeholder="1" @bind-value="MealTable.ElementAt(local_j)[5]" /></td>
+                                    <td style="text-align:center;width:5%"><button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromMeal(foodId)"><span><i class="fa-solid fa-trash-can"></i></span></button></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
                 <div class="row">
                     <hr style="width:97%; margin-left:1.5%; margin-bottom:0.5rem"/>
                     <div class="col-auto" style="width:40%">
@@ -151,34 +153,36 @@
         <div class="col-sm">
             <div>
                 <h3>View and Remove Meals:</h3>
-                <table class="table table-striped table-light table-hover">
-                    <thead>
-                        <tr>
-                            <th style="width:auto">Meal Name:</th>
-                            <th style="width:auto">Total Calories:</th>
-                            <th style="width:auto">Total Volume:</th>
-                            <th style="width:auto">Health Index:</th>
-                            <th style="width:auto"></th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach (var userMeal in UserMealTable)
-                        {
+                <div style="overflow:auto; height:calc(100vh - 10rem)">
+                    <table class="table table-striped table-light table-hover">
+                        <thead>
                             <tr>
-                                <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:auto;">@userMeal[1]</td>
-                                <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:auto;">@userMeal[2]kcal</td>
-                                <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:auto;">@userMeal[3]g</td>
-                                <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:auto;">@userMeal[4]</td>
-                                <td style="width:auto">
-                                    <button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromUserMeals(userMeal[0],UserMealTable.IndexOf(userMeal))"><span><i class="fa-solid fa-trash-can"></i></span></button>
-                                    <button class="btn btn-warning btn-sm" type="button" style="margin-top:2px" @onclick="() => EditUserMeal(userMeal[0],UserMealTable.IndexOf(userMeal))" disabled="@disableEdit"><span><i class="fa-solid fa-pen-to-square"></i></span></button>
-                                </td>
+                                <th style="width:auto">Meal Name:</th>
+                                <th style="width:auto">Total Calories:</th>
+                                <th style="width:auto">Total Volume:</th>
+                                <th style="width:auto">Health Index:</th>
+                                <th style="width:auto"></th>
                             </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var userMeal in UserMealTable)
+                            {
+                                <tr>
+                                    <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:auto;">@userMeal[1]</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:auto;">@userMeal[2]kcal</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:auto;">@userMeal[3]g</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMeal[0]" style="cursor:pointer; width:auto;">@userMeal[4]</td>
+                                    <td style="width:auto">
+                                        <button class="btn btn-danger btn-sm" type="button" @onclick="() => RemoveFoodFromUserMeals(userMeal[0],UserMealTable.IndexOf(userMeal))"><span><i class="fa-solid fa-trash-can"></i></span></button>
+                                        <button class="btn btn-warning btn-sm" type="button" style="margin-top:2px" @onclick="() => EditUserMeal(userMeal[0],UserMealTable.IndexOf(userMeal))" disabled="@disableEdit"><span><i class="fa-solid fa-pen-to-square"></i></span></button>
+                                    </td>
+                                </tr>
                             
-                        }
-                    </tbody>
-                </table>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
