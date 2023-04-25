@@ -1,6 +1,6 @@
 ﻿@page "/viewmeals"
 @page "/viewmeals/{mealid:int}"
-
+@using health_index_app.Client.Components
 @using health_index_app.Shared.Models;
 
 <div class="container-fluid">
@@ -25,7 +25,7 @@
                         <img class="spinner-grow" style="width: 15rem; height: 15rem; color: #C9EFC7; animation-duration:1.5s;" src="logo-color.png" alt="..." role="status" />
                     </div>
                 }
-                else if (userMealFoodDTO.Meal != null)
+                else if (userMealFoodDTO.Food != null && userMealFoodDTO.Meal != null && userMealFoodDTO.UserMealDTO != null && userMealFoodDTO.MealFood != null)
                 {
                     <div class="row">
                         <div class="container text-center">
@@ -61,18 +61,7 @@
                             </div>
                         </div>
                     </div>
-                    //foreach (var food in userMealFoodDTO.MealFood)
-                    //{
-                    //    <div class="card" style="width: 18rem;">
-                    //        <img src="healthy-eating-index.png" class="card-img-top" alt="...">
-                    //        <div class="card-body">
-                    //            <h5 class="card-title">@food.FoodId</h5>
-                    //            <p class="card-text">@food.Amount</p>
-                    //            <p class="card-text">@userMealFoodDTO.Food.Where(f => f.Id == food.FoodId).FirstOrDefault().FoodName</p>
-                    //            <a href="#" class="btn btn-primary">Go somewhere</a>
-                    //        </div>
-                    //    </div>
-                    //}
+
                     @for (int index = 0; index < userMealFoodDTO.MealFood.Count; index += numCols)
                     {
                         <div class="row justify-content-center">
@@ -80,26 +69,174 @@
                             {
                                 if (index + col < userMealFoodDTO.MealFood.Count)
                                 {
-                                    <div class="col-sm-@(12/(numCols+1))">
+                                    Food food = @userMealFoodDTO.Food.Where(f => f.Id == @userMealFoodDTO.MealFood[index + col].FoodId).FirstOrDefault();
+                                    <div class="col-sm-@(12/(numCols+1))" >
                                         <div class="card">
                                             <img src="healthy-eating-index.png" class="card-img-top" alt="...">
-                                            <div class="card-body">
+                                            <div class="card-body text-center">
                                                 <h5 class="card-title">@userMealFoodDTO.MealFood[index + col].FoodId</h5>
                                                 <p class="card-text">@userMealFoodDTO.MealFood[index + col].Amount</p>
-                                                <p class="card-text">@userMealFoodDTO.Food.Where(f => f.Id == @userMealFoodDTO.MealFood[index + col].FoodId).FirstOrDefault().FoodName</p>
-                                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                                <p class="card-text">@food.FoodName</p>
+                                                <a data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMealFoodDTO.MealFood[index + col].FoodId" class="btn btn-primary">More Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="portfolio-modal modal fade" id="portfolioModal-@userMealFoodDTO.MealFood[index + col].FoodId" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
+                                        <div class="modal-dialog modal-xl">
+                                            <div class="modal-content">
+                                                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                                                <div class="modal-body text-center pb-5">
+                                                    <div class="container">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-lg-8">
+                                                                <!-- Portfolio Modal - Title-->
+                                                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">@food.FoodName</h2>
+                                                                <!-- Icon Divider-->
+                                                                <div class="divider-custom">
+                                                                    <div class="divider-custom-line"></div>
+                                                                    <div class="divider-custom-icon"><i class="fa-solid fa-utensils fa-lg"></i></div>
+                                                                    <div class="divider-custom-line"></div>
+                                                                </div>
+                                                                <!-- Portfolio Modal - Image-->
+                                                                <!-- <img class="img-fluid rounded mb-5 w-25" src="logo-no-background.png" alt="..." /> -->
+                                                                <!-- Portfolio Modal - Text-->
+                                                                <table class="table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col"><i class="fa-solid fa-hashtag"></i></th>
+                                                                            <th scope="col"><i class="fa-solid fa-wheat-awn"></i></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th scope="row">Food Type</th>
+                                                                            <td>@food.FoodType</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row">Brand Name</th>
+                                                                            <td>@food.BrandName</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row">Serving Description</th>
+                                                                            <td colspan="2">@food.ServingDescription</td>
+                                                                        </tr>                                                                    
+                                                                        <tr>
+                                                                            <th scope="row">Metric Serving Amount</th>
+                                                                            <td colspan="2">@food.MetricServingAmount@food.MetricServingUnit.Trim()</td>
+
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Number of Units</th>
+
+                                                                            <td colspan="2">@food.NumberOfUnits</td>
+
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Measurement Description</th>
+                                                                            <td colspan="2">@food.MeasurementDescription</td>
+
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Calories</th>
+                                                                            <td colspan="2">@food.Calories</td>
+
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">CarboHydrate</th>
+                                                                            <td colspan="2">@food.CarboHydrate</td>
+
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Protein</th>
+                                                                            <td colspan="2">@food.Protein</td>
+
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Fat</th>
+                                                                            <td colspan="2">@food.Fat</td>
+
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Polyunsaturated Fat</th>
+                                                                            <td colspan="2">@food.PolyunsaturatedFat</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Monounsaturated Fat</th>
+                                                                            <td colspan="2">@food.MonounsaturatedFat</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Cholesterol</th>
+                                                                            <td colspan="2">@food.Cholesterol</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Sodium</th>
+                                                                            <td colspan="2">@food.Sodium</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Potassium</th>
+                                                                            <td colspan="2">@food.Potassium</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Fiber</th>
+                                                                            <td colspan="2">@food.Fiber</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Sugar</th>
+                                                                            <td colspan="2">@food.Sugar</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Added Sugar</th>
+                                                                            <td colspan="2">@food.AddedSugar</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Vitamin A</th>
+                                                                            <td colspan="2">@food.VitaminA</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Vitamin C</th>
+                                                                            <td colspan="2">@food.VitaminC</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Vitamin D</th>
+                                                                            <td colspan="2">@food.VitaminD</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Calcium</th>
+                                                                            <td colspan="2">@food.Calcium</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Iron</th>
+                                                                            <td colspan="2">@food.Iron</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <button class="btn btn-primary" data-bs-dismiss="modal">
+                                                                    <i class="fas fa-xmark fa-fw"></i>
+                                                                    Close Window
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 }
                             }
                         </div>
-                        }
                     }
+                } 
+                else
+                {
+                    <h1>Nothing to see</h1>
+                }
             </div>
         </div>
     </div>
-</div>
-@code {
 
-}
+    <div style="color:white">
+        <FooterHii />
+    </div>
+</div>
+

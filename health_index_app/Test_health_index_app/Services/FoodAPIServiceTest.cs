@@ -225,14 +225,14 @@ namespace Test_health_index_app.Services
         }
 
         [Test]
-        [TestCase(0000)]
-        [TestCase(1000)]
-        [TestCase(1001)]
-        [TestCase(100 - 001)]
-        [TestCase(1234567)]
-        [TestCase(7654321)]
-        [TestCase(7654321 - 1234567)]
-        public async Task ReadFood_Success(int foodId)
+        [TestCase(0000, 0000)]
+        [TestCase(1000, 1000)]
+        [TestCase(1001, 1001)]
+        [TestCase(100 - 001, 100 - 001)]
+        [TestCase(1234567, 1234567)]
+        [TestCase(7654321, 7654321)]
+        [TestCase(7654321 - 1234567, 7654321 - 1234567)]
+        public async Task ReadFood_Success(int foodId, int servingId)
         {
             health_index_app.Shared.Models.Food food = new health_index_app.Shared.Models.Food()
             {
@@ -241,7 +241,7 @@ namespace Test_health_index_app.Services
                 FoodType = "Brand",
                 BrandName = "In-N-Out",
                 FoodURL = "https://www.fatsecret.com/calories-nutrition/in-n-out/double-double-burger",
-                ServingId = 66486,
+                ServingId = servingId,
                 ServingDescription = "1 burger",
                 ServingURL = "https://www.fatsecret.com/calories-nutrition/in-n-out/double-double-burger",
                 MetricServingAmount = 330,
@@ -268,7 +268,7 @@ namespace Test_health_index_app.Services
 
             var mockHttp = new MockHttpMessageHandler();
             string testResponse = JsonConvert.SerializeObject(food);
-            mockHttp.When($"https://localhost:7005/food/read?FoodId={foodId}")
+            mockHttp.When($"https://localhost:7005/food/read?FoodId={foodId}&ServingId={servingId}")
                     .Respond("application/json", testResponse);
 
             var client = mockHttp.ToHttpClient();
@@ -276,10 +276,11 @@ namespace Test_health_index_app.Services
             var foodAPIService = new FoodAPIServices(client);
 
             //Act
-            var result = await foodAPIService.ReadFood(foodId);
+            var result = await foodAPIService.ReadFood(foodId, servingId);
 
             //Assert
             Assert.That(result.Id, Is.EqualTo(foodId));
+            Assert.That(result.ServingId, Is.EqualTo(servingId));
         }
 
         [Test]

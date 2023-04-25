@@ -109,6 +109,7 @@ namespace health_index_app.Client.Services
                 food.MetricServingAmount = Convert.ToDouble(serving.Metric_Serving_Amount);
                 food.MetricServingUnit = serving.Metric_Serving_Unit ??= "";
                 food.MeasurementDescription = serving.Measurement_Description ??= "";
+                food.NumberOfUnits = Convert.ToDouble(serving.Number_Of_Units);
 
                 food.Calories = Convert.ToDouble(serving.Calories);
                 food.Calcium = Convert.ToDouble(serving.Calcium);
