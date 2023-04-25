@@ -3,6 +3,16 @@
 @using health_index_app.Client.Components
 @using health_index_app.Shared.Models;
 
+<style>
+    .card:hover {
+        background-color: @color;
+    }
+
+    .hovertext:before {
+        background-color: @color;
+    }
+</style>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-2 d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="padding:0px; height:calc(100vh - 3.5rem); position: -webkit-sticky; position: sticky; top:3.5rem;">
@@ -18,19 +28,19 @@
         </div>
 
         <div class="col-10">
-            <div>
+            <div class="my-3 mx-5">
                 @if (MealId == 0 && userMealFoodDTO.Meal == null)
                 {
                     <div class="container d-flex align-items-center flex-column mt-5">
-                        <img style="width: 15rem; height: 15rem; color: #C9EFC7; animation-duration:1.5s;" src="logo-color.png" alt="..." role="status" />
+                        <img class="w-50" style="color: #C9EFC7;" src="logo-no-background.png" alt="..." role="status" />
                     </div>
                 }
                 else if (userMealFoodDTO.Food != null && userMealFoodDTO.Meal != null && userMealFoodDTO.UserMealDTO != null && userMealFoodDTO.MealFood != null)
                 {
-                    <div class="row">
-                        <div class="container text-center">
+                    <div class="row rounded" style="background-color:#078976;">
+                        <div class="container text-center mt-3">
                             <!-- Portfolio Modal - Title-->
-                            <h5 class="portfolio-modal-title text-secondary text-uppercase mb-0">@userMealFoodDTO.UserMealDTO.Name @userMealFoodDTO.UserMealDTO.MealId</h5>
+                            <h5 class="portfolio-modal-title text-secondary text-uppercase text-light display-4">@userMealFoodDTO.UserMealDTO.Name</h5>
                             <!-- Icon Divider-->
                             @{
                                 if (Convert.ToDouble(userMealFoodDTO.Meal.HealthIndex) >= 7)
@@ -40,12 +50,13 @@
                                 else
                                     color = "#dc3545";
                             }
-                            <div class="divider-custom">
+
+                            <div class="divider-custom hovertext" data-hover="Health Index: @userMealFoodDTO.Meal.HealthIndex">
                                 <div class="divider-custom-line" style="background-color:@color"></div>
                                 <div class="divider-custom-icon">
                                     @{
                                         int j = 1;
-                                        while (j < Convert.ToDouble(userMealFoodDTO.Meal.HealthIndex))
+                                        while (j <= Convert.ToDouble(userMealFoodDTO.Meal.HealthIndex))
                                         {
                                             <span><i class="fa-solid fa-star" style="color:@color"></i></span>
                                             j++;
@@ -56,7 +67,6 @@
                                         }
                                     }
                                 </div>
-
                                 <div class="divider-custom-line" style="background-color:@color"></div>
                             </div>
                         </div>
@@ -64,14 +74,15 @@
 
                     @for (int index = 0; index < userMealFoodDTO.MealFood.Count; index += numCols)
                     {
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center pt-3">
                             @for (int col = 0; col < numCols; col++)
                             {
                                 if (index + col < userMealFoodDTO.MealFood.Count)
                                 {
                                     Food food = @userMealFoodDTO.Food.Where(f => f.Id == @userMealFoodDTO.MealFood[index + col].FoodId).FirstOrDefault() ?? new Food();
-                                    <div class="col-sm-@(12/(numCols+1))">
-                                        <div class="card">
+
+                                    <div class="col-sm-@(12/numCols)">
+                                        <div class="card shadow">
                                             <img src="healthy-eating-index.png" class="card-img-top" alt="...">
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">@userMealFoodDTO.MealFood[index + col].FoodId</h5>
@@ -135,7 +146,7 @@
                                                                         <tr>
                                                                             <th scope="row">Number of Units</th>
 
-                                                                            <td colspan="2">@food.NumberOfUnits</td>
+                                                                            <td colspan="2">@food.NumberOfUnits unit(s)</td>
 
                                                                         </tr>                                                                        
                                                                         <tr>
@@ -252,7 +263,7 @@
         </div>
     </div>
 
-    <div style="color:white">
+    <div>
         <FooterHii />
     </div>
 </div>
