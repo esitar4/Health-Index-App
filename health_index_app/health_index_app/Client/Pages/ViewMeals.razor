@@ -98,10 +98,16 @@
                                                                     <div class="divider-custom-icon"><i class="fa-solid fa-utensils fa-lg"></i></div>
                                                                     <div class="divider-custom-line"></div>
                                                                 </div>
+                                                                <div class="divider-custom">
+                                                                    <div class="divider-custom-line"></div>
+                                                                    <div class="divider-custom-icon"><a href="@food.FoodURL" target="_blank" class="btn btn-primary">More Food Details</a>
+                                                                    <a href="@food.ServingURL" target="_blank" class="btn btn-primary">More Serving Details</a></div>
+                                                                    <div class="divider-custom-line"></div>
+                                                                </div>
                                                                 <!-- Portfolio Modal - Image-->
                                                                 <!-- <img class="img-fluid rounded mb-5 w-25" src="logo-no-background.png" alt="..." /> -->
                                                                 <!-- Portfolio Modal - Text-->
-                                                                <table class="table">
+                                                                <table class="table table-striped">
                                                                     <thead>
                                                                         <tr>
                                                                             <th scope="col"><i class="fa-solid fa-hashtag"></i></th>
@@ -111,19 +117,19 @@
                                                                     <tbody>
                                                                         <tr>
                                                                             <th scope="row">Food Type</th>
-                                                                            <td>@food.FoodType</td>
+                                                                            <td>@(food.FoodType != string.Empty ? food.FoodType : "-")</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <th scope="row">Brand Name</th>
-                                                                            <td>@food.BrandName</td>
+                                                                            <td>@(food.BrandName != string.Empty ? food.BrandName : "-")</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <th scope="row">Serving Description</th>
-                                                                            <td colspan="2">@food.ServingDescription</td>
+                                                                            <td colspan="2">@(food.ServingDescription != string.Empty ? food.ServingDescription : "-")</td>
                                                                         </tr>                                                                    
                                                                         <tr>
                                                                             <th scope="row">Metric Serving Amount</th>
-                                                                            <td colspan="2">@food.MetricServingAmount@food.MetricServingUnit.Trim()</td>
+                                                                            <td colspan="2">@food.MetricServingAmount @(food.MetricServingUnit != string.Empty ? food.MetricServingUnit : "Unknown Unit")</td>
 
                                                                         </tr>                                                                        
                                                                         <tr>
@@ -134,80 +140,84 @@
                                                                         </tr>                                                                        
                                                                         <tr>
                                                                             <th scope="row">Measurement Description</th>
-                                                                            <td colspan="2">@food.MeasurementDescription</td>
+                                                                            <td colspan="2">@(food.MeasurementDescription != string.Empty ? food.MeasurementDescription : "-")</td>
 
                                                                         </tr>                                                                        
                                                                         <tr>
                                                                             <th scope="row">Calories</th>
-                                                                            <td colspan="2">@food.Calories</td>
+                                                                            <td colspan="2">@(food.Calories != null ? food.Calories + " kcal" : "-")</td>
 
                                                                         </tr>                                                                        
                                                                         <tr>
                                                                             <th scope="row">CarboHydrate</th>
-                                                                            <td colspan="2">@food.CarboHydrate</td>
+                                                                            <td colspan="2">@(food.CarboHydrate != null ? food.CarboHydrate + " g" : "-")</td>
 
                                                                         </tr>                                                                        
                                                                         <tr>
                                                                             <th scope="row">Protein</th>
-                                                                            <td colspan="2">@food.Protein</td>
+                                                                            <td colspan="2">@(food.Protein != null ? food.Protein + " g" : "-")</td>
 
                                                                         </tr>                                                                        
                                                                         <tr>
                                                                             <th scope="row">Fat</th>
-                                                                            <td colspan="2">@food.Fat</td>
+                                                                            <td colspan="2">@(food.Fat != null ? food.Fat + " g" : "-")</td>
 
-                                                                        </tr>                                                                        
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row">Saturated Fat</th>
+                                                                            <td colspan="2">@(food.SaturatedFat != null ? food.SaturatedFat + " g" : "-")</td>
+                                                                        </tr>
                                                                         <tr>
                                                                             <th scope="row">Polyunsaturated Fat</th>
-                                                                            <td colspan="2">@food.PolyunsaturatedFat</td>
+                                                                            <td colspan="2">@(food.PolyunsaturatedFat != null ? food.PolyunsaturatedFat + " g" : "-")</td>
                                                                         </tr>                                                                        
                                                                         <tr>
                                                                             <th scope="row">Monounsaturated Fat</th>
-                                                                            <td colspan="2">@food.MonounsaturatedFat</td>
-                                                                        </tr>                                                                        
+                                                                            <td colspan="2">@(food.MonounsaturatedFat != null ? food.MonounsaturatedFat.ToString() + " g" : "-" )</td>
+                                                                        </tr>
                                                                         <tr>
                                                                             <th scope="row">Cholesterol</th>
-                                                                            <td colspan="2">@food.Cholesterol</td>
+                                                                            <td colspan="2">@(food.Cholesterol != null ? food.Cholesterol + " mg" : "-")</td>
                                                                         </tr>                                                                        
                                                                         <tr>
                                                                             <th scope="row">Sodium</th>
-                                                                            <td colspan="2">@food.Sodium</td>
+                                                                            <td colspan="2">@(food.Sodium != null ? food.Sodium + " mg" : "-")</td>
                                                                         </tr>                                                                        
                                                                         <tr>
                                                                             <th scope="row">Potassium</th>
-                                                                            <td colspan="2">@food.Potassium</td>
+                                                                            <td colspan="2">@(food.Potassium != null ? food.Potassium + " mg" : "-")</td>
                                                                         </tr>                                                                        
                                                                         <tr>
                                                                             <th scope="row">Fiber</th>
-                                                                            <td colspan="2">@food.Fiber</td>
+                                                                            <td colspan="2">@(food.Fiber != null ? food.Fiber + " g" : "-")</td>
                                                                         </tr>                                                                        
                                                                         <tr>
                                                                             <th scope="row">Sugar</th>
-                                                                            <td colspan="2">@food.Sugar</td>
+                                                                            <td colspan="2">@(food.Sugar != null ? food.Sugar + " g" : "-")</td>
                                                                         </tr>                                                                        
                                                                         <tr>
                                                                             <th scope="row">Added Sugar</th>
-                                                                            <td colspan="2">@food.AddedSugar</td>
+                                                                            <td colspan="2">@(food.AddedSugar != null ? food.AddedSugar + " g" : "-")</td>
                                                                         </tr>                                                                        
                                                                         <tr>
                                                                             <th scope="row">Vitamin A</th>
-                                                                            <td colspan="2">@food.VitaminA</td>
+                                                                            <td colspan="2">@(food.VitaminA != null ? food.VitaminA + " μg" : "-")</td>
                                                                         </tr>                                                                        
                                                                         <tr>
                                                                             <th scope="row">Vitamin C</th>
-                                                                            <td colspan="2">@food.VitaminC</td>
+                                                                            <td colspan="2">@(food.VitaminC != null ? food.VitaminC + " μg" : "-")</td>
                                                                         </tr>                                                                        
                                                                         <tr>
                                                                             <th scope="row">Vitamin D</th>
-                                                                            <td colspan="2">@food.VitaminD</td>
+                                                                            <td colspan="2">@(food.VitaminD != null ? food.VitaminD + " μg" : "-")</td>
                                                                         </tr>                                                                        
                                                                         <tr>
                                                                             <th scope="row">Calcium</th>
-                                                                            <td colspan="2">@food.Calcium</td>
+                                                                            <td colspan="2">@(food.Calcium != null ? food.Calcium + " mg" : "-")</td>
                                                                         </tr>                                                                        
                                                                         <tr>
                                                                             <th scope="row">Iron</th>
-                                                                            <td colspan="2">@food.Iron</td>
+                                                                            <td colspan="2">@(food.Iron != null ? food.Iron + " mg" : "-")</td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
