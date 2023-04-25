@@ -15,7 +15,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2 d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="padding:0px; height:calc(100vh - 3.5rem); position: -webkit-sticky; position: sticky; top:3.5rem;">
+        <div class="col-2 d-flex flex-column align-items-stretch flex-shrink-0 bg-white mt-5" style="padding:0px; height:calc(85vh - 3.5rem); position: sticky; top:3.5rem; z-index:10">
             <div class="list-group list-group-flush border-bottom scrollarea">
                 <a class="text-light bg-dark d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
                     <span class="fs-5 fw-semibold"><i class="fa-solid fa-bowl-food"></i> View Meals </span>
@@ -26,6 +26,11 @@
                 {
                     <a @onclick="() => showMealDetail(userMeal.MealId)" class="list-group-item list-group-item-action py-3 lh-tight @activeListItem[userMeal.MealId]">@userMeal.Name</a>
                 }
+            </div>
+            <div class="list-group list-group-flush border-bottom scrollarea">
+                <a class="text-light bg-dark d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+                    <span class="fs-5 fw-semibold">Total Meals: @UserMeals.Count </span>
+                </a>
             </div>
         </div>
 
