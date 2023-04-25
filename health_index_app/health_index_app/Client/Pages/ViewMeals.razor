@@ -69,8 +69,8 @@
                             {
                                 if (index + col < userMealFoodDTO.MealFood.Count)
                                 {
-                                    Food food = @userMealFoodDTO.Food.Where(f => f.Id == @userMealFoodDTO.MealFood[index + col].FoodId).FirstOrDefault();
-                                    <div class="col-sm-@(12/(numCols+1))" >
+                                    Food food = @userMealFoodDTO.Food.Where(f => f.Id == @userMealFoodDTO.MealFood[index + col].FoodId).FirstOrDefault() ?? new Food();
+                                    <div class="col-sm-@(12/(numCols+1))">
                                         <div class="card">
                                             <img src="healthy-eating-index.png" class="card-img-top" alt="...">
                                             <div class="card-body text-center">
