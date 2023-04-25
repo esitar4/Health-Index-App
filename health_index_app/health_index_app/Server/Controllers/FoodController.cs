@@ -27,7 +27,7 @@ namespace health_index_app.Server.Controllers
         public async Task<ActionResult<Food>> CreateFood([FromBody] Food food)
         {
             // Check whether object exists in table
-            if (_context.Foods.Any(f => f.Id == food.Id))
+            if (_context.Foods.Any(f => f.Id == food.Id && f.ServingId == food.ServingId))
                 return Ok(food);
 
             _context.Foods.Add(food);

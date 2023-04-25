@@ -280,7 +280,7 @@ namespace health_index_app.Client.Pages
                     totalCalories += Convert.ToInt32(food.Calories)*foodAmount;
                     totalGrams += Convert.ToInt32(food.MetricServingAmount)*foodAmount;
 
-                    mealFood = await MealFoodAPIServices.CreateMealFood(new MealFood { MealId = meal.Id, FoodId = food.Id, Amount = foodAmount });
+                    mealFood = await MealFoodAPIServices.CreateMealFood(new MealFood { MealId = meal.Id, FoodId = food.Id, ServingId = food.ServingId, Amount = foodAmount });
                 }
                 userMealDTO = await UserMealsAPIServices.CreateUserMeal(new UserMealDTO() { MealId = meal.Id, Name = MealName != "" ? MealName : "Unnamed Meal" });
 

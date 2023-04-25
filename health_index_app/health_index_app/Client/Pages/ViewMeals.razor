@@ -20,6 +20,8 @@
                 <a class="text-light bg-dark d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
                     <span class="fs-5 fw-semibold"><i class="fa-solid fa-bowl-food"></i> View Meals </span>
                 </a>
+            </div>
+            <div class="list-group list-group-flush border-bottom scrollarea" style="overflow:auto">
                 @foreach(var userMeal in UserMeals)
                 {
                     <a @onclick="() => showMealDetail(userMeal.MealId)" class="list-group-item list-group-item-action py-3 lh-tight @activeListItem[userMeal.MealId]">@userMeal.Name</a>
@@ -82,14 +84,16 @@
                                     Food food = @userMealFoodDTO.Food.Where(f => f.Id == @userMealFoodDTO.MealFood[index + col].FoodId).FirstOrDefault() ?? new Food();
 
                                     <div class="col-sm-@(12/numCols)">
-                                        <div class="card shadow">
+                                        <div class="card shadow h-100">
                                             <img src="healthy-eating-index.png" class="card-img-top" alt="...">
-                                            <div class="card-body text-center">
+                                            <div class="card-body text-center d-flex flex-column">
                                                 <h5 class="card-title mb-3">@food.FoodName</h5>
-                                                <p class="card-text">Serving(s): @userMealFoodDTO.MealFood[index + col].Amount</p>
-                                                <p class="card-text">Total Calories: @(food.Calories * userMealFoodDTO.MealFood[index + col].Amount) kcal</p>
-                                                <p class="card-text">Total Portion: @(food.MetricServingAmount * userMealFoodDTO.MealFood[index + col].Amount) @(food.MetricServingUnit != string.Empty ? food.MetricServingUnit : "Unknown Unit")</p>
-                                                <a data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMealFoodDTO.MealFood[index + col].FoodId" class="btn btn-primary">More Details</a>
+                                                <div class="mt-auto">
+                                                    <p class="card-text">Serving(s): @userMealFoodDTO.MealFood[index + col].Amount</p>
+                                                    <p class="card-text">Total Calories: @(food.Calories * userMealFoodDTO.MealFood[index + col].Amount) kcal</p>
+                                                    <p class="card-text">Total Portion: @(food.MetricServingAmount * userMealFoodDTO.MealFood[index + col].Amount) @(food.MetricServingUnit != string.Empty ? food.MetricServingUnit : "Unknown Unit")</p>
+                                                    <a data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMealFoodDTO.MealFood[index + col].FoodId" class="btn btn-primary">More Details</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -263,9 +267,6 @@
             </div>
         </div>
     </div>
-
-    <div>
-        <FooterHii />
-    </div>
 </div>
+<FooterHii />
 
