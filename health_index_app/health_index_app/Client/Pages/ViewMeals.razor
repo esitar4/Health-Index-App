@@ -41,7 +41,7 @@
         @*Checkbox Hack*@
         <input type="checkbox" id="toggle" style="display:none" checked>
 
-        <div class="col-1 d-flex flex-column align-items-stretch flex-shrink-0 bg-white mt-5 sidebarmenu" style="padding:0px; position: fixed; top:3.5rem; z-index:10" @onclick="onClickChangeNav">
+        <div class="col-1 d-flex flex-column align-items-stretch flex-shrink-0 bg-white mt-5 sidebarmenu" style="padding:0px; position: fixed; top:3.5rem; z-index:10">
             <div class="list-group list-group-flush border-bottom scrollarea">
                 <a class="text-light bg-dark d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
                     <span class="fs-5 fw-semibold w-100">
@@ -49,7 +49,7 @@
                     </span>
                     <span class="fs-5 fw-semibold" >
                         <label for="toggle">
-                            <i class="fa-solid fa-angles-left btn btn-danger" style="cursor:pointer;"></i>
+                            <i class="fa-solid fa-angles-left btn btn-danger" style="cursor:pointer;" @onclick="onClickChangeNav"></i>
                         </label>
                     </span>
                 </a>
