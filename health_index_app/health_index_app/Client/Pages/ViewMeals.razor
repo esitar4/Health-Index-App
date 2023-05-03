@@ -15,15 +15,15 @@
     .sidebarmenu {
         visibility:hidden;
         height: 0px;
-        transition:height 1.2s;
+        transition:width 0.5s, height 0.5s;
         transition-timing-function: ease-out;
-        min-width: 20vw;
-        width: auto;
+        min-width:150px;
     }
 
     #toggle:checked + .sidebarmenu {
         visibility:visible;
         height: calc(85vh - 10rem); 
+        width: 20vw;
     }
 
 </style>
