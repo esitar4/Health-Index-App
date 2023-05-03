@@ -35,7 +35,7 @@ namespace health_index_app.Client.Pages
         private UserMealFoodDTO userMealFoodDTO { get; set; } = new();
         private int numCols = 4;
 
-        private int onClickNav = 2;
+        private string onClickNav = "hidden";
 
         protected override async Task OnInitializedAsync()
         {
@@ -99,13 +99,13 @@ namespace health_index_app.Client.Pages
 
         private void onClickChangeNav()
         {
-            if (onClickNav == 2)
+            if (onClickNav == "hidden")
             {
-                onClickNav = 0;
+                onClickNav = "visible";
             } 
             else
             {
-                onClickNav = 2;
+                onClickNav = "hidden";
             }
         }
 
