@@ -30,9 +30,11 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-auto list-group list-group-flush mt-5" style="position: fixed; top:3.5rem; z-index:9; visibility:@onClickNav;">
+        <div class="col-auto list-group list-group-flush mt-5" style="position: fixed; top:3.5rem; right:3rem; z-index:9; visibility:@onClickNav;">
             <a class="text-light bg-dark d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none">
-                <span class="fs-5 fw-semibold"><i class="fa-solid fa-bowl-food"> : @UserMeals.Count </i></span>
+                <span class="fs-5 fw-semibold"><i class="fa-solid fa-bowl-food">
+
+                </i></span>
                 <label for="toggle">
                     <span class="fs-5 fw-semibold px-3" style="padding-right:0rem!important;">
                         <i class="fa-solid fa-angles-down btn btn-danger" style="cursor:pointer;" @onclick="() => onClickChangeNav(false)"></i>
@@ -44,7 +46,7 @@
         @*Checkbox Hack*@
         <input type="checkbox" id="toggle" style="display:none" checked>
 
-        <div class="col-1 d-flex flex-column align-items-stretch flex-shrink-0 bg-white mt-5 sidebarmenu" style="padding:0px; position: fixed; top:3.5rem; z-index:10">
+        <div class="col-1 d-flex flex-column align-items-stretch flex-shrink-0 bg-white mt-5 sidebarmenu" style="padding:0px; position: fixed; top:3.5rem; right:3rem; z-index:10">
             <div class="list-group list-group-flush border-bottom scrollarea">
                 <a class="text-light bg-dark d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
                     <span class="fs-5 fw-semibold w-100">
