@@ -97,9 +97,9 @@ namespace health_index_app.Client.Pages
             StateHasChanged();
         }
 
-        private void onClickChangeNav()
+        private void onClickChangeNav(bool visable)
         {
-            if (onClickNav == "hidden")
+            if (visable)
             {
                 onClickNav = "visible";
             } 
