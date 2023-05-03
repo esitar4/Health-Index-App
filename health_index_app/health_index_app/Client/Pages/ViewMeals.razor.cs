@@ -34,6 +34,9 @@ namespace health_index_app.Client.Pages
         private Meal CurMeal { get; set; } = null!;
         private UserMealFoodDTO userMealFoodDTO { get; set; } = new();
         private int numCols = 4;
+
+        private int onClickNav = 2;
+
         protected override async Task OnInitializedAsync()
         {
             var UserAuth = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User.Identity;
@@ -92,6 +95,18 @@ namespace health_index_app.Client.Pages
             }
 
             StateHasChanged();
+        }
+
+        private void onClickChangeNav()
+        {
+            if (onClickNav == 2)
+            {
+                onClickNav = 0;
+            } 
+            else
+            {
+                onClickNav = 2;
+            }
         }
 
     }

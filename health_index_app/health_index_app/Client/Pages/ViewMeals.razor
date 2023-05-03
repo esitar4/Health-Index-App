@@ -11,30 +11,60 @@
     .hovertext:before {
         background-color: @color;
     }
+
+    .x {
+        visibility:hidden;
+        height: 0px;
+        transition: width 1s, height 1s;
+        transition-timing-function: ease-out;
+    }
+
+    #toggle:checked + .x {
+        visibility:visible;
+        width:16%;
+        height: calc(85vh - 10rem);
+    }
+
 </style>
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2 d-flex flex-column align-items-stretch flex-shrink-0 bg-white mt-5" style="padding:0px; height:calc(85vh - 3.5rem); position: sticky; top:3.5rem; z-index:10">
+        <label for="toggle" class="col-auto list-group list-group-flush mt-5 y" style="position: fixed; top:3.5rem; z-index:9;">
+            <a class="text-light bg-dark d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none">
+                <span class="fs-5 fw-semibold"><i class="fa-solid fa-bowl-food"> : @UserMeals.Count</i></span>
+            </a>
+        </label>
+        
+        <input type="checkbox" id="toggle" style="display:none">
+
+        <div class="col-1 d-flex flex-column align-items-stretch flex-shrink-0 bg-white mt-5 x" style="padding:0px; position: fixed; top:3.5rem; z-index:10">
             <div class="list-group list-group-flush border-bottom scrollarea">
                 <a class="text-light bg-dark d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-                    <span class="fs-5 fw-semibold"><i class="fa-solid fa-bowl-food"></i> View Meals </span>
+                    <span class="fs-5 fw-semibold col-10">
+                        <i class="fa-solid fa-bowl-food"></i> View Meals
+                    </span>
+                    <span class="fs-5 fw-semibold col-2">
+                        <label for="toggle">
+                            <i class="fa-solid fa-angles-left btn btn-danger" style="cursor:pointer;"></i>
+                        </label>
+                    </span>
                 </a>
             </div>
-            <div class="list-group list-group-flush border-bottom scrollarea" style="overflow:auto">
-                @foreach(var userMeal in UserMeals)
+            <div class="list-group list-group-flush border-bottom scrollarea h-100" style="overflow:auto">
+                @foreach (var userMeal in UserMeals)
                 {
                     <a @onclick="() => showMealDetail(userMeal.MealId)" class="list-group-item list-group-item-action py-3 lh-tight @activeListItem[userMeal.MealId]">@userMeal.Name</a>
                 }
             </div>
-            <div class="list-group list-group-flush border-bottom scrollarea">
-                <a class="text-light bg-dark d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+            <div class="list-group list-group-flush scrollarea">
+                <a class="text-light bg-dark d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none">
                     <span class="fs-5 fw-semibold">Total Meals: @UserMeals.Count </span>
                 </a>
             </div>
         </div>
 
-        <div class="col-10">
+
+        <div class="col-12">
             <div class="my-3 mx-5">
                 @if (MealId == 0 && userMealFoodDTO.Meal == null)
                 {
