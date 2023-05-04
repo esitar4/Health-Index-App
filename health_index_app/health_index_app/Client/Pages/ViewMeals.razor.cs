@@ -48,6 +48,7 @@ namespace health_index_app.Client.Pages
                 if (MealId != 0) 
                 {
                     userMealFoodDTO.Meal = await MealAPIService.ReadMeal(MealId);
+                    onClickNavIconAnimation = "";
                 }
                 
                 UserMeals = await UserMealsAPIService.GetAllUserMealIdsToMealNames();
