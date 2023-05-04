@@ -27,7 +27,9 @@ namespace health_index_app.Client.Pages
         public int MealId { get; set; }
         public bool MealIdCheck { get; set; } = true;
 
+        private string searchMealName = string.Empty;
         List<UserMealDTO> UserMeals { get; set; } = new();
+        List<UserMealDTO> FilteredUserMeals => UserMeals.Where(um => um.Name.ToLower().Contains(searchMealName.ToLower())).ToList();
 
         private Dictionary<int, string> activeListItem = new Dictionary<int, string>();
         private string color = "#000";

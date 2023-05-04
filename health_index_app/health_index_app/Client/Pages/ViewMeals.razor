@@ -52,20 +52,21 @@
                     </span>
                     <span class="fs-5 fw-semibold" >
                         <label for="toggle">
-                            <i class="fa-solid fa-angles-left btn btn-danger" style="cursor:pointer;"></i>
+                            <i class="fa-solid fa-angles-left btn btn-danger" style="cursor:pointer;" @onclick="onClickChangeNav"></i>
                         </label>
                     </span>
                 </a>
             </div>
             <div class="list-group list-group-flush border-bottom scrollarea h-100" style="overflow:auto">
-                @foreach (var userMeal in UserMeals)
+                <a class="list-group-item list-group-item-action py-3 lh-tight"><input type="text" maxlength="25" style="width:100%" placeholder="Enter a meal name..." @bind-value="searchMealName" @bind-value:event="oninput" /></a>
+                @foreach (var userMeal in FilteredUserMeals)
                 {
                     <a @onclick="() => showMealDetail(userMeal.MealId)" class="list-group-item list-group-item-action py-3 lh-tight @activeListItem[userMeal.MealId]">@userMeal.Name</a>
                 }
             </div>
             <div class="list-group list-group-flush scrollarea">
                 <a class="text-light d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none" style="background-color:#073b4c">
-                    <span class="fs-5 fw-semibold">Total Meals: @UserMeals.Count </span>
+                    <span class="fs-5 fw-semibold">Total Meals: @FilteredUserMeals.Count </span>
                 </a>
             </div>
         </div>
