@@ -31,31 +31,28 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-auto list-group list-group-flush" style="position: fixed; bottom:3.5rem; right:3.5rem; z-index:9; visibility:@onClickNav; display: inline-block; border-radius: 50%;">
-            <a class="text-light bg-dark d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none">
-                <span class="fs-5 fw-semibold"><i class="fa-solid fa-bowl-food">
-
-                </i></span>
-                <label for="toggle">
-                    <span class="fs-5 fw-semibold px-3" style="padding-right:0rem!important;">
-                        <i class="fa-solid fa-angles-down btn btn-danger" style="cursor:pointer;" @onclick="() => onClickChangeNav(false)"></i>
+        <div class="col-auto list-group list-group-flush" style="position: fixed; bottom:3.5rem; right:3.5rem; z-index:9;">
+            <label for="toggle" class="rounded-circle @onClickNavIconAnimation">
+                <a class="text-light d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none btn justify-content-center rounded-circle shadow" style="background-color:@onClickNav;" @onclick="onClickChangeNav">
+                    <span class="fs-5 fw-semibold text-light">
+                        <i class="fa-solid fa-bowl-food fa-xl"></i>
                     </span>
-                </label>
-            </a>
+                </a>
+            </label>
         </div>
         
         @*Checkbox Hack*@
-        <input type="checkbox" id="toggle" style="display:none" checked>
+        <input type="checkbox" id="toggle" style="display:none">
 
-        <div class="col-1 d-flex flex-column align-items-stretch flex-shrink-0 bg-white sidebarmenu" style="padding:0px; position: fixed; bottom:7rem; right:3.5rem; z-index:10">
+        <div class="col-1 d-flex flex-column align-items-stretch flex-shrink-0 bg-white sidebarmenu" style="padding:0px; position: fixed; bottom:7.5rem; right:3.5rem; z-index:10">
             <div class="list-group list-group-flush border-bottom scrollarea">
-                <a class="text-light bg-dark d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+                <a class="text-light d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom" style="background-color:#073b4c">
                     <span class="fs-5 fw-semibold w-100">
                         <i class="fa-solid fa-bowl-food"></i> View Meals
                     </span>
                     <span class="fs-5 fw-semibold" >
                         <label for="toggle">
-                            <i class="fa-solid fa-angles-left btn btn-danger" style="cursor:pointer;" @onclick="() => onClickChangeNav(true)"></i>
+                            <i class="fa-solid fa-angles-left btn btn-danger" style="cursor:pointer;"></i>
                         </label>
                     </span>
                 </a>
@@ -67,7 +64,7 @@
                 }
             </div>
             <div class="list-group list-group-flush scrollarea">
-                <a class="text-light bg-dark d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none">
+                <a class="text-light d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none" style="background-color:#073b4c">
                     <span class="fs-5 fw-semibold">Total Meals: @UserMeals.Count </span>
                 </a>
             </div>

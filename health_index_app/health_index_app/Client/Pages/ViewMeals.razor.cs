@@ -35,7 +35,8 @@ namespace health_index_app.Client.Pages
         private UserMealFoodDTO userMealFoodDTO { get; set; } = new();
         private int numCols = 4;
 
-        private string onClickNav = "hidden";
+        private string onClickNav = "#073b4c";
+        private string onClickNavIconAnimation = "fa-beat";
 
         protected override async Task OnInitializedAsync()
         {
@@ -97,15 +98,16 @@ namespace health_index_app.Client.Pages
             StateHasChanged();
         }
 
-        private void onClickChangeNav(bool visable)
+        private void onClickChangeNav()
         {
-            if (visable)
+            onClickNavIconAnimation = "";
+            if (onClickNav == "#078976")
             {
-                onClickNav = "visible";
+                onClickNav = "#073b4c";
             } 
             else
             {
-                onClickNav = "hidden";
+                onClickNav = "#078976";
             }
         }
 
