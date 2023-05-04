@@ -118,27 +118,53 @@
     position: relative;
 }
 
-    .hovertext:before {
-        content: attr(data-hover);
-        visibility: hidden;
-        opacity: 0;
-        width: max-content;
-        color: #000;
-        text-align: center;
-        border-radius: 5px;
-        padding: 5px 0;
-        transition: opacity 0.3s ease-in-out;
-        position: absolute;
-        z-index: 10;
-        top: 50%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
-        padding: 10px 10px;
-        font-size: 18px;
-    }
+.hovertext:before {
+    content: attr(data-hover);
+    visibility: hidden;
+    opacity: 0;
+    width: max-content;
+    color: #000;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 0;
+    transition: opacity 0.3s ease-in-out;
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 10px;
+    font-size: 18px;
+}
 
 .hovertext:hover:before {
+    opacity: 1;
+    visibility: visible;
+}
+
+.hovertextbutton {
+    position: relative;
+}
+
+.hovertextbutton:before {
+    content: attr(data-hover);
+    visibility: hidden;
+    opacity: 0;
+    width: max-content;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px 10px;
+    transition: opacity 0.3s ease-in-out;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 110%;
+}
+
+.hovertextbutton:hover:before {
     opacity: 1;
     visibility: visible;
 }

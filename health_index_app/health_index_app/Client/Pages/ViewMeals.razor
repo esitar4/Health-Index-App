@@ -52,7 +52,7 @@
                     </span>
                     <span class="fs-5 fw-semibold" >
                         <label for="toggle">
-                            <i class="fa-solid fa-angles-left btn btn-danger" style="cursor:pointer;" @onclick="onClickChangeNav"></i>
+                            <i class="fa-solid fa-xmark btn btn-danger" style="cursor:pointer;" @onclick="onClickChangeNav"></i>
                         </label>
                     </span>
                 </a>
@@ -113,6 +113,10 @@
                                     }
                                 </div>
                                 <div class="divider-custom-line" style="background-color:@color"></div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="btn btn-warning hovertextbutton" data-hover="Edit"><i class="fa-solid fa-pen-to-square"></i></div>
+                                <div class="btn btn-danger hovertextbutton" data-hover="Delete"><i class="fa-solid fa-trash"></i></div>
                             </div>
                         </div>
                     </div>
