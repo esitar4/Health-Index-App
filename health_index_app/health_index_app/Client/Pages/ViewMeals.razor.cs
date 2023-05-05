@@ -10,18 +10,19 @@ namespace health_index_app.Client.Pages
     partial class ViewMeals
     {
         [Inject]
-        public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+        protected AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Inject]
-        IMealAPIServices MealAPIService { get; set; }
+        protected IMealAPIServices MealAPIService { get; set; }
         [Inject]
-        IUserMealsAPIServices UserMealsAPIService { get; set; }
+        protected IUserMealsAPIServices UserMealsAPIService { get; set; }
         [Inject]
-        IMealFoodAPIServices MealFoodAPIService { get; set; }
+        protected IMealFoodAPIServices MealFoodAPIService { get; set; }
         [Inject]
-        IFoodAPIServices FoodAPIService { get; set; }
+        protected IFoodAPIServices FoodAPIService { get; set; }
         [Inject]
-        ILocalStorageService LocalStorageService { get; set; }
-
+        protected ILocalStorageService LocalStorageService { get; set; }
+        [Inject]
+        protected ToastService ToastService { get; set; } = new();
 
         [Parameter]
         public int MealId { get; set; }
@@ -101,7 +102,7 @@ namespace health_index_app.Client.Pages
             StateHasChanged();
         }
 
-        private void onClickChangeNav()
+        private void OnClickChangeNav()
         {
             onClickNavIconAnimation = "";
             if (onClickNav == "#078976")
@@ -112,6 +113,27 @@ namespace health_index_app.Client.Pages
             {
                 onClickNav = "#078976";
             }
+        }
+
+        private async Task DeleteMeal(UserMealDTO userMeal)
+        {
+            bool res = await UserMealsAPIService.DeleteUserMeal(userMeal.MealId);
+            UserMeals = await UserMealsAPIService.GetAllUserMealIdsToMealNames();
+            await LocalStorageService.RemoveItemAsync(userMeal.MealId.ToString());
+
+            
+
+            if (res)
+            {
+                ToastService.ShowToast($"{userMeal.Name} was successfully deleted!", ToastLevel.Success, 3000);
+                userMealFoodDTO.Meal = null!;
+            }
+            else
+            {
+                ToastService.ShowToast($"{userMeal.Name} deleted unsuccessfully!", ToastLevel.Error, 3000);
+            }
+
+            StateHasChanged();
         }
 
     }

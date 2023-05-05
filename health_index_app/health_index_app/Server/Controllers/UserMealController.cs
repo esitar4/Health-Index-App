@@ -64,10 +64,13 @@ namespace health_index_app.Server.Controllers
         [Route("read")]
         public async Task<ActionResult<UserMealDTO>> ReadUserMeal(int mealId)
         {
-            UserMeal userMeal = await _context.UserMeals.Where(um => um.MealId == mealId).FirstOrDefaultAsync();
+            var user = await _userManager.GetUserAsync(User);
+            var userId = user.Id;
+
+            UserMeal userMeal = await _context.UserMeals.Where(um => um.UserId == userId && um.MealId == mealId).FirstOrDefaultAsync();
 
             if (userMeal == null)
-                return NotFound();
+                return NotFound(new UserMealDTO());
 
             UserMealDTO userMealDTO = new UserMealDTO
             {
