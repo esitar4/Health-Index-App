@@ -431,6 +431,9 @@ namespace health_index_app.Server.Data
 
             builder.Entity<Food>().HasKey(f => new { f.Id, f.ServingId });
             //builder.Entity<MealFood>().HasOne(mf => mf.Food).WithMany(mf => mf.MealFood).HasForeignKey(mf => new { mf.FoodId, mf.ServingId });
+            builder.Entity<UserMeal>().HasIndex(um => new {um.UserId, um.MealId}).IsUnique();
+            builder.Entity<MealFood>().HasIndex(mf => new {mf.MealId, mf.FoodId}).IsUnique();
+
             base.OnModelCreating(builder);
         }
 
