@@ -31,6 +31,13 @@
 
 <div class="container-fluid">
     <div class="row">
+        <div class="col-auto list-group list-group-flush" style="position: fixed; bottom:7.75rem; right:3.5rem; z-index:8;">
+            <label for="toggle" style="@onClickHide;">
+                <a class="text-light d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none btn justify-content-center shadow" style="background-color:@onClickNav;">
+                    Click the button to start
+                </a>
+            </label>
+        </div>
         <div class="col-auto list-group list-group-flush" style="position: fixed; bottom:3.5rem; right:3.5rem; z-index:9;">
             <label for="toggle" class="rounded-circle @onClickNavIconAnimation">
                 <a class="text-light d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none btn justify-content-center rounded-circle shadow" style="background-color:@onClickNav;" @onclick="OnClickChangeNav">
@@ -301,7 +308,7 @@
                 } 
                 else if (MealId != 0 && !MealIdCheck)
                 {
-                    <h1>Meal Does not Exist!</h1>
+                    <h1>Meal Does Not Exist!</h1>
                 }
                 else
                 {

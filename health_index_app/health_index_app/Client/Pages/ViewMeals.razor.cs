@@ -36,10 +36,11 @@ namespace health_index_app.Client.Pages
         private string color = "#000";
         private Meal CurMeal { get; set; } = null!;
         private UserMealFoodDTO userMealFoodDTO { get; set; } = new();
-        private int numCols = 4;
+        private int numCols = 6;
 
         private string onClickNav = "#073b4c";
         private string onClickNavIconAnimation = "fa-beat";
+        private string onClickHide = "";
 
         protected override async Task OnInitializedAsync()
         {
@@ -105,6 +106,7 @@ namespace health_index_app.Client.Pages
         private void OnClickChangeNav()
         {
             onClickNavIconAnimation = "";
+            onClickHide = "display:none";
             if (onClickNav == "#078976")
             {
                 onClickNav = "#073b4c";
