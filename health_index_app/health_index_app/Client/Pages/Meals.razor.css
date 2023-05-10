@@ -25,6 +25,9 @@
 .bg-False {
     color: white;
     background-color: #078976;
+    --bs-table-bg: #078976;
+    --bs-table-hover-bg: #073b4c;
+    --bs-table-hover-color: white;
 }
 
 table {

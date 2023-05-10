@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using health_index_app.Server.Data;
 
@@ -11,9 +12,10 @@ using health_index_app.Server.Data;
 namespace health_index_app.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230424015033_UpdateMealFoodSeedData")]
+    partial class UpdateMealFoodSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -249,15 +251,15 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "98a78878-aca7-4a0f-b264-02a678d2ea06",
+                            ConcurrencyStamp = "426ac449-e79a-4993-9bcb-0271d931f311",
                             Email = "eric@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ERIC@COGNIZANT.COM",
                             NormalizedUserName = "ERIC@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFMcywwRSlLKzIhCxSMtYEfuiWh9CM6/fper56YAC+ohFdHO7UL64CFoJfLw77KfQg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECvLHTRz6+/FeFxIBciOELlA8N7K2Hqu6tbY/wDmGhtCjq+AH1N1R1d0DkhlS5jOVA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3ce14e7d-9491-4a7e-ba32-9a9fae5e0a17",
+                            SecurityStamp = "c635eec3-d72c-4426-939f-554d94be1460",
                             TwoFactorEnabled = false,
                             UserName = "eric@cognizant.com"
                         },
@@ -265,15 +267,15 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "ad4faee2-b1ff-4c19-bc85-2400fc2e9787",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fad96655-bef8-434f-b0eb-43ad327d0a45",
+                            ConcurrencyStamp = "65d52ad1-392f-4a70-8fd4-e0f0faca2679",
                             Email = "ravid@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "RAVID@COGNIZANT.COM",
                             NormalizedUserName = "RAVID@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBmKuLDlUAq6YuU8PChQVhZnSPMA4XcXVXYznaIoYXZc13Jzev4NkdVZDg1wOAVtRw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOYR9HSM2ere4661iKtZ6ibWcC/AYaRgp9w1PP2CAVyOMUxKQVBd7Ia11M56d0Jqtg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8c3d05e4-5cce-458e-b098-fb5dd73b02ea",
+                            SecurityStamp = "582bee3d-3b4d-4ad1-af98-a8d2141181c4",
                             TwoFactorEnabled = false,
                             UserName = "ravid@cognizant.com"
                         },
@@ -281,15 +283,15 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "3f2b23ed-0959-45a4-9499-8b1ee1f0f4d9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3162b90f-ccb8-453c-9a92-d8a2bc2409d7",
+                            ConcurrencyStamp = "62f87937-d0b9-44c4-a19e-bd676babd7eb",
                             Email = "edward@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "EDWARD@COGNIZANT.COM",
                             NormalizedUserName = "EDWARD@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEN6iSCMQd39yGcQtCvHoqY0Kzo6O/9COImcua69U9fFsnQCMj2p9q6JutiFQ9FIfg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFO/hcP2aQud2A1an5PKj4xZq+Po9l9J4SsP4+QCjm6qzPPSqWsJHHNE19PFndq7Qg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d54000f7-9541-4bab-b495-a4c0bc954927",
+                            SecurityStamp = "bc5e1d58-a570-4977-86a9-1bbc1feedcfd",
                             TwoFactorEnabled = false,
                             UserName = "edward@cognizant.com"
                         },
@@ -297,15 +299,15 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "e03b81e4-c2be-4a64-b26d-0782511cfbc4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e641f298-1b93-46b0-b26c-639056f2f297",
+                            ConcurrencyStamp = "9a000eb8-165c-4342-aea6-2ed4b7ec4c0a",
                             Email = "jessica@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "JESSICA@COGNIZANT.COM",
                             NormalizedUserName = "JESSICA@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEB23n806c1gnHXiUfdOrt1AnTuF8fF5XAHc06HZpsb0mbRzuMJa/BNy4D3ZxVi70YA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENy2RQdmnFXTiSHXdoDCITFqhUpjETQXxPOBl41g9tj6GAgw2fDXmezz61xBNXSymw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "17179565-93da-4152-b049-78a34e5749a8",
+                            SecurityStamp = "7eedbbc0-bb8a-4003-93b5-83ab4db1d17b",
                             TwoFactorEnabled = false,
                             UserName = "jessica@cognizant.com"
                         },
@@ -313,16 +315,16 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "3aee0927-28c9-4308-92cc-296bf325521b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "23e6bd11-9fb6-47ae-9ff4-ba9de4d9542b",
+                            ConcurrencyStamp = "442825d8-4994-4187-b2e4-ada18987881d",
                             Email = "charles@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "CHARLES@COGNIZANT.COM",
                             NormalizedUserName = "CHARLES@COGNIZANT.COM",
                             ParentId = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEDUG3GprCyg+FQihHjj+j/Pb+NuLuuvAYm9ImV9v+149clj1PZhKHzp7+Zhhc0vXg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJkUYO8GC+AahJjLw/XSwb5a8pXmgv6h+GhjiZP81I/4CD6au81LzxzuvHYO5fVv9w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6624f992-f118-48ea-92fe-cccfc512d2d4",
+                            SecurityStamp = "9bd46b0d-86c0-499c-a627-918d6d2d7e8a",
                             TwoFactorEnabled = false,
                             UserName = "charles@cognizant.com"
                         },
@@ -330,16 +332,16 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "5ac8f00d-f3bb-4c96-8570-6f8997cf2ae5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ef3cc75c-6f8a-4393-af33-c67c107204d3",
+                            ConcurrencyStamp = "abd77adf-4337-45fb-b180-47123278eb4b",
                             Email = "scott@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "SCOTT@COGNIZANT.COM",
                             NormalizedUserName = "SCOTT@COGNIZANT.COM",
                             ParentId = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
-                            PasswordHash = "AQAAAAEAACcQAAAAEC249MqpifcJYiiF84bS3tD8hVE+vxDdSfVfCOc2rgcXr/B1QG227cKNBVZzdrdr7g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGxBSGRU4g7Am5iKZSilXt8CcZYYWEK6yKBfLIOEDEAsYVG0qrvv9VUMNer7XAJ7rw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0e5a9c02-a3f1-4ab7-a52d-19a9ddc40984",
+                            SecurityStamp = "69e9df30-4f09-4be7-ae44-89510e905c72",
                             TwoFactorEnabled = false,
                             UserName = "scott@cognizant.com"
                         });
@@ -369,8 +371,7 @@ namespace health_index_app.Server.Migrations
 
                     b.HasIndex("MealId");
 
-                    b.HasIndex("UserId", "MealId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserMeals");
 
@@ -559,7 +560,7 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "serving",
                             MetricServingAmount = 330.0,
                             MetricServingUnit = "g",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 0.0,
                             Potassium = 0.0,
                             Protein = 37.0,
@@ -590,7 +591,7 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "serving",
                             MetricServingAmount = 85.0,
                             MetricServingUnit = "g",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 0.0,
                             Potassium = 0.0,
                             Protein = 1.0,
@@ -621,7 +622,7 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "serving",
                             MetricServingAmount = 12.0,
                             MetricServingUnit = "oz",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 0.0,
                             Potassium = 0.0,
                             Protein = 2.0,
@@ -652,7 +653,7 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "small  (2-1/2\" dia)",
                             MetricServingAmount = 106.0,
                             MetricServingUnit = "g",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 0.055,
                             Potassium = 113.0,
                             Protein = 0.27000000000000002,
@@ -683,7 +684,7 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "serving",
                             MetricServingAmount = 170.0,
                             MetricServingUnit = "g",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 1.0,
                             Potassium = 0.0,
                             Protein = 10.0,
@@ -714,7 +715,7 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "serving",
                             MetricServingAmount = 50.0,
                             MetricServingUnit = "g",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 0.0,
                             Potassium = 0.0,
                             Protein = 4.0,
@@ -745,7 +746,7 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "serving",
                             MetricServingAmount = 101.0,
                             MetricServingUnit = "g",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 3.0,
                             Potassium = 380.0,
                             Protein = 8.0,
@@ -776,7 +777,7 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "serving",
                             MetricServingAmount = 75.0,
                             MetricServingUnit = "g",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 0.0,
                             Potassium = 0.0,
                             Protein = 2.0,
@@ -807,7 +808,7 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "serving",
                             MetricServingAmount = 180.0,
                             MetricServingUnit = "g",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 0.0,
                             Potassium = 0.0,
                             Protein = 3.0,
@@ -892,10 +893,9 @@ namespace health_index_app.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FoodId", "ServingId");
+                    b.HasIndex("MealId");
 
-                    b.HasIndex("MealId", "FoodId")
-                        .IsUnique();
+                    b.HasIndex("FoodId", "ServingId");
 
                     b.ToTable("MealFoods");
 
@@ -1060,7 +1060,7 @@ namespace health_index_app.Server.Migrations
                         new
                         {
                             Id = "adf3001d-64d3-4dfb-b93f-3ad2503167e7",
-                            ConcurrencyStamp = "cd4de5d1-e104-4121-83a4-5ffe4c2ca2af",
+                            ConcurrencyStamp = "b909518e-222c-441e-8ebf-a6c8276a1a4e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

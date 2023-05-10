@@ -1,0 +1,319 @@
+﻿@page "/viewmeals"
+@page "/viewmeals/{mealid:int}"
+@using health_index_app.Client.Components
+@using health_index_app.Shared.Models;
+
+<style>
+    .card:hover {
+        background-color: @color;
+    }
+
+    .hovertext:before {
+        background-color: @color;
+    }
+
+    .sidebarmenu {
+        visibility:hidden;
+        height: 10rem;
+        transition:width 0.5s, height 0.5s, bottom 0.5s;
+        transition-timing-function: ease-out;
+        min-width:150px;
+        bottom:100%;
+    }
+
+    #toggle:checked + .sidebarmenu {
+        visibility:visible;
+        height: calc(85vh - 10rem); 
+        width: 20vw;
+    }
+
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-auto list-group list-group-flush" style="position: fixed; bottom:3.5rem; right:3.5rem; z-index:9;">
+            <label for="toggle" class="rounded-circle @onClickNavIconAnimation">
+                <a class="text-light d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none btn justify-content-center rounded-circle shadow" style="background-color:@onClickNav;" @onclick="OnClickChangeNav">
+                    <span class="fs-5 fw-semibold text-light">
+                        <i class="fa-solid fa-bowl-food fa-xl"></i>
+                    </span>
+                </a>
+            </label>
+        </div>
+        
+        @*Checkbox Hack*@
+        <input type="checkbox" id="toggle" style="display:none">
+
+        <div class="col-1 d-flex flex-column align-items-stretch flex-shrink-0 bg-white sidebarmenu" style="padding:0px; position: fixed; bottom:7.75rem; right:3.5rem; z-index:10">
+            <div class="list-group list-group-flush border-bottom scrollarea">
+                <a class="text-light d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom" style="background-color:#073b4c">
+                    <span class="fs-5 fw-semibold w-100">
+                        <i class="fa-solid fa-bowl-food"></i> View Meals
+                    </span>
+                    <span class="fs-5 fw-semibold" >
+                        <label for="toggle">
+                            <i class="fa-solid fa-xmark btn btn-danger" style="cursor:pointer;" @onclick="OnClickChangeNav"></i>
+                        </label>
+                    </span>
+                </a>
+            </div>
+            <div class="list-group list-group-flush border-bottom scrollarea h-100" style="overflow:auto">
+                <a class="list-group-item list-group-item-action py-3 lh-tight"><input type="text" maxlength="25" style="width:100%" placeholder="Enter a meal name..." @bind-value="searchMealName" @bind-value:event="oninput" /></a>
+                @foreach (var userMeal in FilteredUserMeals)
+                {
+                    <a @onclick="() => showMealDetail(userMeal.MealId)" class="list-group-item list-group-item-action py-3 lh-tight @activeListItem[userMeal.MealId]">@userMeal.Name</a>
+                }
+            </div>
+            <div class="list-group list-group-flush scrollarea">
+                <a class="text-light d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none" style="background-color:#073b4c">
+                    <span class="fs-5 fw-semibold">Total Meals: @FilteredUserMeals.Count </span>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="my-3 mx-5">
+                @if (MealId == 0 && userMealFoodDTO.Meal == null)
+                {
+                    <div class="container d-flex align-items-center flex-column mt-5">
+                        <img class="w-50" style="color: #C9EFC7;" src="logo-no-background.png" alt="..." role="status" />
+                        <span class="text-center display-3 mt-5">Click the Rice Bowl to Start!</span>
+                    </div>
+                }
+                else if (userMealFoodDTO.Food != null && userMealFoodDTO.Meal != null && userMealFoodDTO.UserMealDTO != null && userMealFoodDTO.MealFood != null)
+                {
+                    <div class="row rounded" style="background-color:#078976;">
+                        <div class="container text-center mt-3">
+                            <!-- Portfolio Modal - Title-->
+                            <h5 class="portfolio-modal-title text-secondary text-uppercase text-light display-4">@userMealFoodDTO.UserMealDTO.Name</h5>
+                            <!-- Icon Divider-->
+                            @{
+                                if (Convert.ToDouble(userMealFoodDTO.Meal.HealthIndex) >= 7)
+                                    color = "#bee69d";
+                                else if (Convert.ToDouble(userMealFoodDTO.Meal.HealthIndex) >= 4)
+                                    color = "#ffc107";
+                                else
+                                    color = "#dc3545";
+                            }
+
+                            <div class="divider-custom hovertext" data-hover="Health Index: @userMealFoodDTO.Meal.HealthIndex">
+                                <div class="divider-custom-line" style="background-color:@color"></div>
+                                <div class="divider-custom-icon">
+                                    @{
+                                        int j = 1;
+                                        while (j <= Convert.ToDouble(userMealFoodDTO.Meal.HealthIndex))
+                                        {
+                                            <span><i class="fa-solid fa-star" style="color:@color"></i></span>
+                                            j++;
+                                        }
+                                        if ((Convert.ToDouble(userMealFoodDTO.Meal.HealthIndex) - j + 1) >= 0.5)
+                                        {
+                                            <span><i class="fa-solid fa-star-half" style="color:@color"></i></span>
+                                        }
+                                    }
+                                </div>
+                                <div class="divider-custom-line" style="background-color:@color"></div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="btn btn-warning hovertextbutton" data-hover="Edit"><i class="fa-solid fa-pen-to-square"></i></div>
+                                <div class="btn btn-danger hovertextbutton" data-hover="Delete" @onclick="() => DeleteMeal(userMealFoodDTO.UserMealDTO)"><i class="fa-solid fa-trash"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @for (int index = 0; index < userMealFoodDTO.MealFood.Count; index += numCols)
+                    {
+                        <div class="row justify-content-center pt-3">
+                            @for (int col = 0; col < numCols; col++)
+                            {
+                                if (index + col < userMealFoodDTO.MealFood.Count)
+                                {
+                                    Food food = @userMealFoodDTO.Food.Where(f => f.Id == @userMealFoodDTO.MealFood[index + col].FoodId).FirstOrDefault() ?? new Food();
+
+                                    <div class="col-sm-@(12/numCols)">
+                                        <div class="card shadow h-100">
+                                            <img src="healthy-eating-index.png" class="card-img-top" alt="...">
+                                            <div class="card-body text-center d-flex flex-column">
+                                                <h5 class="card-title mb-3">@food.FoodName</h5>
+                                                <div class="mt-auto">
+                                                    <p class="card-text">Serving(s): @userMealFoodDTO.MealFood[index + col].Amount</p>
+                                                    <p class="card-text">Total Calories: @(food.Calories * userMealFoodDTO.MealFood[index + col].Amount) kcal</p>
+                                                    <p class="card-text">Total Portion: @(food.MetricServingAmount * userMealFoodDTO.MealFood[index + col].Amount) @(food.MetricServingUnit != string.Empty ? food.MetricServingUnit : "Unknown Unit")</p>
+                                                    <a data-bs-toggle="modal" data-bs-target="#portfolioModal-@userMealFoodDTO.MealFood[index + col].FoodId" class="btn btn-primary">More Details</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="portfolio-modal modal fade" id="portfolioModal-@userMealFoodDTO.MealFood[index + col].FoodId" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
+                                        <div class="modal-dialog modal-xl">
+                                            <div class="modal-content">
+                                                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                                                <div class="modal-body text-center pb-5">
+                                                    <div class="container">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-lg-8">
+                                                                <!-- Portfolio Modal - Title-->
+                                                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">@food.FoodName</h2>
+                                                                <!-- Icon Divider-->
+                                                                <div class="divider-custom">
+                                                                    <div class="divider-custom-line"></div>
+                                                                    <div class="divider-custom-icon"><i class="fa-solid fa-utensils fa-lg"></i></div>
+                                                                    <div class="divider-custom-line"></div>
+                                                                </div>
+                                                                <div class="divider-custom">
+                                                                    <div class="divider-custom-line"></div>
+                                                                    <div class="divider-custom-icon"><a href="@food.FoodURL" target="_blank" class="btn btn-primary">More Food Details</a>
+                                                                    <a href="@food.ServingURL" target="_blank" class="btn btn-primary">More Serving Details</a></div>
+                                                                    <div class="divider-custom-line"></div>
+                                                                </div>
+                                                                <!-- Portfolio Modal - Image-->
+                                                                <!-- <img class="img-fluid rounded mb-5 w-25" src="logo-no-background.png" alt="..." /> -->
+                                                                <!-- Portfolio Modal - Text-->
+                                                                <table class="table table-striped">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col"><i class="fa-solid fa-hashtag"></i></th>
+                                                                            <th scope="col"><i class="fa-solid fa-wheat-awn"></i></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th scope="row">Food Type</th>
+                                                                            <td>@(food.FoodType != string.Empty ? food.FoodType : "-")</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row">Brand Name</th>
+                                                                            <td>@(food.BrandName != string.Empty ? food.BrandName : "-")</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row">Serving Description</th>
+                                                                            <td colspan="2">@(food.ServingDescription != string.Empty ? food.ServingDescription : "-")</td>
+                                                                        </tr>                                                                    
+                                                                        <tr>
+                                                                            <th scope="row">Metric Serving Amount</th>
+                                                                            <td colspan="2">@food.MetricServingAmount @(food.MetricServingUnit != string.Empty ? food.MetricServingUnit : "Unknown Unit")</td>
+
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Number of Units</th>
+
+                                                                            <td colspan="2">@food.NumberOfUnits unit(s)</td>
+
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Measurement Description</th>
+                                                                            <td colspan="2">@(food.MeasurementDescription != string.Empty ? food.MeasurementDescription : "-")</td>
+
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Calories</th>
+                                                                            <td colspan="2">@(food.Calories != null ? food.Calories + " kcal" : "-")</td>
+
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">CarboHydrate</th>
+                                                                            <td colspan="2">@(food.CarboHydrate != null ? food.CarboHydrate + " g" : "-")</td>
+
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Protein</th>
+                                                                            <td colspan="2">@(food.Protein != null ? food.Protein + " g" : "-")</td>
+
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Fat</th>
+                                                                            <td colspan="2">@(food.Fat != null ? food.Fat + " g" : "-")</td>
+
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row">Saturated Fat</th>
+                                                                            <td colspan="2">@(food.SaturatedFat != null ? food.SaturatedFat + " g" : "-")</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row">Polyunsaturated Fat</th>
+                                                                            <td colspan="2">@(food.PolyunsaturatedFat != null ? food.PolyunsaturatedFat + " g" : "-")</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Monounsaturated Fat</th>
+                                                                            <td colspan="2">@(food.MonounsaturatedFat != null ? food.MonounsaturatedFat.ToString() + " g" : "-" )</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row">Cholesterol</th>
+                                                                            <td colspan="2">@(food.Cholesterol != null ? food.Cholesterol + " mg" : "-")</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Sodium</th>
+                                                                            <td colspan="2">@(food.Sodium != null ? food.Sodium + " mg" : "-")</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Potassium</th>
+                                                                            <td colspan="2">@(food.Potassium != null ? food.Potassium + " mg" : "-")</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Fiber</th>
+                                                                            <td colspan="2">@(food.Fiber != null ? food.Fiber + " g" : "-")</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Sugar</th>
+                                                                            <td colspan="2">@(food.Sugar != null ? food.Sugar + " g" : "-")</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Added Sugar</th>
+                                                                            <td colspan="2">@(food.AddedSugar != null ? food.AddedSugar + " g" : "-")</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Vitamin A</th>
+                                                                            <td colspan="2">@(food.VitaminA != null ? food.VitaminA + " μg" : "-")</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Vitamin C</th>
+                                                                            <td colspan="2">@(food.VitaminC != null ? food.VitaminC + " μg" : "-")</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Vitamin D</th>
+                                                                            <td colspan="2">@(food.VitaminD != null ? food.VitaminD + " μg" : "-")</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Calcium</th>
+                                                                            <td colspan="2">@(food.Calcium != null ? food.Calcium + " mg" : "-")</td>
+                                                                        </tr>                                                                        
+                                                                        <tr>
+                                                                            <th scope="row">Iron</th>
+                                                                            <td colspan="2">@(food.Iron != null ? food.Iron + " mg" : "-")</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <button class="btn btn-primary" data-bs-dismiss="modal">
+                                                                    <i class="fas fa-xmark fa-fw"></i>
+                                                                    Close Window
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                } 
+                else if (MealId != 0 && !MealIdCheck)
+                {
+                    <h1>Meal Does Not Exist!</h1>
+                }
+                else
+                {
+                    <div class="container d-flex align-items-center flex-column mt-5">
+                        <div style="font-size:36px"><p class="authorizing">Fetching Meal...</p></div>
+                        <img class="spinner-border" style="width: 15rem; height: 15rem; color: #C9EFC7; animation-duration:1.5s;" src="logo-color.png" alt="..." role="status" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<FooterHii />
+

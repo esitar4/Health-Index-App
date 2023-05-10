@@ -100,7 +100,7 @@ namespace health_index_app.Server.Controllers
         public async Task<ActionResult<List<ChildFoodDTO>>> GetFoodList(int mealId)
         {
             List<ChildFoodDTO> foodList = await (from mf in _context.MealFoods
-                                                 join f in _context.Foods on mf.FoodId equals f.Id
+                                                 join f in _context.Foods on new { FoodId = mf.FoodId, ServingId = mf.ServingId } equals new { FoodId = f.Id, ServingId = f.ServingId }
                                                  where mf.MealId == mealId
                                                  select new ChildFoodDTO
                                                  {

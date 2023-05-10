@@ -76,12 +76,16 @@ namespace health_index_app.Client.Services
             try
             {
                 var response = await _client.PostAsJsonAsync("usermeal/delete", mealId);
+                if (response.IsSuccessStatusCode)
+                    return true;
+                else
+                    return false;
             }
             catch
             {
                 throw new Exception("Unable to delete UserMeal, UserMeal not found");
             }
-            return true;
+            
         }
 
         public async Task<List<int>> GetAllUserMealId()

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using health_index_app.Server.Data;
 
@@ -11,9 +12,10 @@ using health_index_app.Server.Data;
 namespace health_index_app.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230418045923_SeedData")]
+    partial class SeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -249,15 +251,15 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "98a78878-aca7-4a0f-b264-02a678d2ea06",
+                            ConcurrencyStamp = "1aa1c5e3-389f-47ab-8147-d13b66db7c93",
                             Email = "eric@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ERIC@COGNIZANT.COM",
                             NormalizedUserName = "ERIC@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFMcywwRSlLKzIhCxSMtYEfuiWh9CM6/fper56YAC+ohFdHO7UL64CFoJfLw77KfQg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPV2YPekwE+lHoVXlxiavgu8tGjXmF0ZIwREM0/QgoJ+/YizpB5/XTShKCAz3fNODA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3ce14e7d-9491-4a7e-ba32-9a9fae5e0a17",
+                            SecurityStamp = "f49cbc04-3b23-401e-b3fd-368b0e0557a8",
                             TwoFactorEnabled = false,
                             UserName = "eric@cognizant.com"
                         },
@@ -265,15 +267,15 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "ad4faee2-b1ff-4c19-bc85-2400fc2e9787",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fad96655-bef8-434f-b0eb-43ad327d0a45",
+                            ConcurrencyStamp = "d45dac2b-8d68-4ba0-b14a-b48f0a43417e",
                             Email = "ravid@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "RAVID@COGNIZANT.COM",
                             NormalizedUserName = "RAVID@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBmKuLDlUAq6YuU8PChQVhZnSPMA4XcXVXYznaIoYXZc13Jzev4NkdVZDg1wOAVtRw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEH6kqaKe+K3ml2rX70eB20d9YF3vjfObLpQGX9RovshCfOBgR9bT0w/TD6lxKqcwDw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8c3d05e4-5cce-458e-b098-fb5dd73b02ea",
+                            SecurityStamp = "febc06cf-0551-4eda-a2c2-17a5777f3bf2",
                             TwoFactorEnabled = false,
                             UserName = "ravid@cognizant.com"
                         },
@@ -281,15 +283,15 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "3f2b23ed-0959-45a4-9499-8b1ee1f0f4d9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3162b90f-ccb8-453c-9a92-d8a2bc2409d7",
+                            ConcurrencyStamp = "922a9cdf-a7ab-4f13-98c2-1ad9025610d5",
                             Email = "edward@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "EDWARD@COGNIZANT.COM",
                             NormalizedUserName = "EDWARD@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEN6iSCMQd39yGcQtCvHoqY0Kzo6O/9COImcua69U9fFsnQCMj2p9q6JutiFQ9FIfg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENFtJ+Gb0beSEJx8o3oJ59gaTKHXFkEqW0Sefw2wOvyQuil+zi9/DqUFG+Uc+GMTgA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d54000f7-9541-4bab-b495-a4c0bc954927",
+                            SecurityStamp = "a7d01c79-a89b-4321-b7a9-abd9637e745e",
                             TwoFactorEnabled = false,
                             UserName = "edward@cognizant.com"
                         },
@@ -297,15 +299,15 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "e03b81e4-c2be-4a64-b26d-0782511cfbc4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e641f298-1b93-46b0-b26c-639056f2f297",
+                            ConcurrencyStamp = "5589dcf6-b510-4f47-a47c-377dfd32573c",
                             Email = "jessica@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "JESSICA@COGNIZANT.COM",
                             NormalizedUserName = "JESSICA@COGNIZANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEB23n806c1gnHXiUfdOrt1AnTuF8fF5XAHc06HZpsb0mbRzuMJa/BNy4D3ZxVi70YA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEORkn1sU5PmFaRCfYTQ0VC+zNrHT09OD0TYn358pXoONUDqhMyp6yQY/3AVGF4yAMg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "17179565-93da-4152-b049-78a34e5749a8",
+                            SecurityStamp = "5469d0b0-eba5-401f-aced-bd8093886a63",
                             TwoFactorEnabled = false,
                             UserName = "jessica@cognizant.com"
                         },
@@ -313,16 +315,16 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "3aee0927-28c9-4308-92cc-296bf325521b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "23e6bd11-9fb6-47ae-9ff4-ba9de4d9542b",
+                            ConcurrencyStamp = "b5c3d6a4-c23f-4f21-82cb-803d3bfb3ba7",
                             Email = "charles@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "CHARLES@COGNIZANT.COM",
                             NormalizedUserName = "CHARLES@COGNIZANT.COM",
                             ParentId = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEDUG3GprCyg+FQihHjj+j/Pb+NuLuuvAYm9ImV9v+149clj1PZhKHzp7+Zhhc0vXg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHrFJG0ScDi8GaB5mm7Y20AaMz1AU8mYMtiVWxjdA53PZYYX8vWMQFrZ8ZFdbhMaiA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6624f992-f118-48ea-92fe-cccfc512d2d4",
+                            SecurityStamp = "8244416d-c9b9-49c8-b60b-7c42be34d6d0",
                             TwoFactorEnabled = false,
                             UserName = "charles@cognizant.com"
                         },
@@ -330,16 +332,16 @@ namespace health_index_app.Server.Migrations
                         {
                             Id = "5ac8f00d-f3bb-4c96-8570-6f8997cf2ae5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ef3cc75c-6f8a-4393-af33-c67c107204d3",
+                            ConcurrencyStamp = "657e6221-d8c7-4323-a379-5866b4889dd4",
                             Email = "scott@cognizant.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "SCOTT@COGNIZANT.COM",
                             NormalizedUserName = "SCOTT@COGNIZANT.COM",
                             ParentId = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9",
-                            PasswordHash = "AQAAAAEAACcQAAAAEC249MqpifcJYiiF84bS3tD8hVE+vxDdSfVfCOc2rgcXr/B1QG227cKNBVZzdrdr7g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENm03/EkSnz+OtVmewU6XlO0Bp8wJxaQT/xsxJtFbDvTxJb3nx+xbdr+r8yiR8/AkA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0e5a9c02-a3f1-4ab7-a52d-19a9ddc40984",
+                            SecurityStamp = "a3bc775c-097f-45e0-8bd8-85a9bd205546",
                             TwoFactorEnabled = false,
                             UserName = "scott@cognizant.com"
                         });
@@ -369,8 +371,7 @@ namespace health_index_app.Server.Migrations
 
                     b.HasIndex("MealId");
 
-                    b.HasIndex("UserId", "MealId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserMeals");
 
@@ -436,9 +437,6 @@ namespace health_index_app.Server.Migrations
             modelBuilder.Entity("health_index_app.Shared.Models.Food", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ServingId")
                         .HasColumnType("int");
 
                     b.Property<double?>("AddedSugar")
@@ -514,6 +512,9 @@ namespace health_index_app.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ServingId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ServingURL")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -533,10 +534,7 @@ namespace health_index_app.Server.Migrations
                     b.Property<double?>("VitaminD")
                         .HasColumnType("float");
 
-                    b.HasKey("Id", "ServingId");
-
-                    b.HasIndex("Id", "ServingId")
-                        .IsUnique();
+                    b.HasKey("Id");
 
                     b.ToTable("Foods");
 
@@ -544,7 +542,6 @@ namespace health_index_app.Server.Migrations
                         new
                         {
                             Id = 26547,
-                            ServingId = 66486,
                             BrandName = "In-N-Out",
                             Calcium = 0.0,
                             Calories = 670.0,
@@ -559,12 +556,13 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "serving",
                             MetricServingAmount = 330.0,
                             MetricServingUnit = "g",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 0.0,
                             Potassium = 0.0,
                             Protein = 37.0,
                             SaturatedFat = 17.0,
                             ServingDescription = "1 burger",
+                            ServingId = 66486,
                             ServingURL = "https://www.fatsecret.com/calories-nutrition/in-n-out/double-double-burger",
                             Sodium = 1520.0,
                             Sugar = 10.0,
@@ -575,7 +573,6 @@ namespace health_index_app.Server.Migrations
                         new
                         {
                             Id = 31818,
-                            ServingId = 101820,
                             BrandName = "Dole",
                             Calcium = 0.0,
                             Calories = 15.0,
@@ -590,12 +587,13 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "serving",
                             MetricServingAmount = 85.0,
                             MetricServingUnit = "g",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 0.0,
                             Potassium = 0.0,
                             Protein = 1.0,
                             SaturatedFat = 0.0,
                             ServingDescription = "1 1/2 cups",
+                            ServingId = 101820,
                             ServingURL = "https://www.fatsecret.com/calories-nutrition/dole/classic-iceberg-salad",
                             Sodium = 15.0,
                             Sugar = 2.0,
@@ -606,7 +604,6 @@ namespace health_index_app.Server.Migrations
                         new
                         {
                             Id = 251811,
-                            ServingId = 289802,
                             BrandName = "Coors",
                             Calcium = 0.0,
                             Calories = 164.0,
@@ -621,12 +618,13 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "serving",
                             MetricServingAmount = 12.0,
                             MetricServingUnit = "oz",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 0.0,
                             Potassium = 0.0,
                             Protein = 2.0,
                             SaturatedFat = 0.0,
                             ServingDescription = "1 bottle",
+                            ServingId = 289802,
                             ServingURL = "https://www.fatsecret.com/calories-nutrition/coors/blue-moon-beer",
                             Sodium = 8.0,
                             Sugar = 0.0,
@@ -637,7 +635,6 @@ namespace health_index_app.Server.Migrations
                         new
                         {
                             Id = 568586,
-                            ServingId = 591920,
                             BrandName = "",
                             Calcium = 6.0,
                             Calories = 56.0,
@@ -652,12 +649,13 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "small  (2-1/2\" dia)",
                             MetricServingAmount = 106.0,
                             MetricServingUnit = "g",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 0.055,
                             Potassium = 113.0,
                             Protein = 0.27000000000000002,
                             SaturatedFat = 0.029000000000000001,
                             ServingDescription = "1 small (2-1/2\" dia)",
+                            ServingId = 591920,
                             ServingURL = "https://www.fatsecret.com/calories-nutrition/generic/apples-golden-delicious",
                             Sodium = 1.0,
                             Sugar = 11.01,
@@ -668,7 +666,6 @@ namespace health_index_app.Server.Migrations
                         new
                         {
                             Id = 2861015,
-                            ServingId = 2787144,
                             BrandName = "Annie Chun's",
                             Calcium = 0.0,
                             Calories = 280.0,
@@ -683,12 +680,13 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "serving",
                             MetricServingAmount = 170.0,
                             MetricServingUnit = "g",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 1.0,
                             Potassium = 0.0,
                             Protein = 10.0,
                             SaturatedFat = 0.0,
                             ServingDescription = "1 bowl",
+                            ServingId = 2787144,
                             ServingURL = "https://www.fatsecret.com/calories-nutrition/annie-chuns/vietnamese-pho",
                             Sodium = 1030.0,
                             Sugar = 4.0,
@@ -699,7 +697,6 @@ namespace health_index_app.Server.Migrations
                         new
                         {
                             Id = 9771793,
-                            ServingId = 9336939,
                             BrandName = "Suraj",
                             Calcium = 0.0,
                             Calories = 140.0,
@@ -714,12 +711,13 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "serving",
                             MetricServingAmount = 50.0,
                             MetricServingUnit = "g",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 0.0,
                             Potassium = 0.0,
                             Protein = 4.0,
                             SaturatedFat = 0.5,
                             ServingDescription = "1/2 naan",
+                            ServingId = 9336939,
                             ServingURL = "https://www.fatsecret.com/calories-nutrition/suraj/naan",
                             Sodium = 320.0,
                             Sugar = 2.0,
@@ -730,7 +728,6 @@ namespace health_index_app.Server.Migrations
                         new
                         {
                             Id = 41321916,
-                            ServingId = 36059775,
                             BrandName = "Nong Shim",
                             Calcium = 20.0,
                             Calories = 450.0,
@@ -745,12 +742,13 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "serving",
                             MetricServingAmount = 101.0,
                             MetricServingUnit = "g",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 3.0,
                             Potassium = 380.0,
                             Protein = 8.0,
                             SaturatedFat = 7.0,
                             ServingDescription = "1 container",
+                            ServingId = 36059775,
                             ServingURL = "https://www.fatsecret.com/calories-nutrition/nong-shim/tonkotsu-ramen",
                             Sodium = 1550.0,
                             Sugar = 5.0,
@@ -761,7 +759,6 @@ namespace health_index_app.Server.Migrations
                         new
                         {
                             Id = 91707,
-                            ServingId = 132185,
                             BrandName = "Wylwood",
                             Calcium = 0.0,
                             Calories = 30.0,
@@ -776,12 +773,13 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "serving",
                             MetricServingAmount = 75.0,
                             MetricServingUnit = "g",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 0.0,
                             Potassium = 0.0,
                             Protein = 2.0,
                             SaturatedFat = 0.0,
                             ServingDescription = "3/4 cup",
+                            ServingId = 132185,
                             ServingURL = "https://www.fatsecret.com/calories-nutrition/wylwood/stir-fry-vegetables",
                             Sodium = 15.0,
                             Sugar = 3.0,
@@ -792,7 +790,6 @@ namespace health_index_app.Server.Migrations
                         new
                         {
                             Id = 1921249,
-                            ServingId = 1886238,
                             BrandName = "Assi",
                             Calcium = 0.0,
                             Calories = 123.0,
@@ -807,12 +804,13 @@ namespace health_index_app.Server.Migrations
                             MeasurementDescription = "serving",
                             MetricServingAmount = 180.0,
                             MetricServingUnit = "g",
-                            NumberOfUnits = 1.0,
+                            NumberOfUnits = 0.0,
                             PolyunsaturatedFat = 0.0,
                             Potassium = 0.0,
                             Protein = 3.0,
                             SaturatedFat = 2.0,
                             ServingDescription = "1 serving",
+                            ServingId = 1886238,
                             ServingURL = "https://www.fatsecret.com/calories-nutrition/assi/curry",
                             Sodium = 802.0,
                             Sugar = 6.0,
@@ -887,15 +885,11 @@ namespace health_index_app.Server.Migrations
                     b.Property<int>("MealId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ServingId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("FoodId", "ServingId");
+                    b.HasIndex("FoodId");
 
-                    b.HasIndex("MealId", "FoodId")
-                        .IsUnique();
+                    b.HasIndex("MealId");
 
                     b.ToTable("MealFoods");
 
@@ -905,128 +899,112 @@ namespace health_index_app.Server.Migrations
                             Id = 1,
                             Amount = 1.0,
                             FoodId = 26547,
-                            MealId = 10001,
-                            ServingId = 66486
+                            MealId = 10001
                         },
                         new
                         {
                             Id = 2,
                             Amount = 1.0,
                             FoodId = 31818,
-                            MealId = 10001,
-                            ServingId = 101820
+                            MealId = 10001
                         },
                         new
                         {
                             Id = 3,
                             Amount = 1.0,
                             FoodId = 251811,
-                            MealId = 10001,
-                            ServingId = 289802
+                            MealId = 10001
                         },
                         new
                         {
                             Id = 4,
                             Amount = 1.0,
                             FoodId = 41321916,
-                            MealId = 10002,
-                            ServingId = 36059775
+                            MealId = 10002
                         },
                         new
                         {
                             Id = 5,
                             Amount = 2.0,
                             FoodId = 26547,
-                            MealId = 10002,
-                            ServingId = 66486
+                            MealId = 10002
                         },
                         new
                         {
                             Id = 6,
                             Amount = 1.0,
                             FoodId = 91707,
-                            MealId = 10003,
-                            ServingId = 132185
+                            MealId = 10003
                         },
                         new
                         {
                             Id = 7,
                             Amount = 1.0,
                             FoodId = 1921249,
-                            MealId = 10003,
-                            ServingId = 1886238
+                            MealId = 10003
                         },
                         new
                         {
                             Id = 8,
                             Amount = 1.0,
                             FoodId = 568586,
-                            MealId = 10003,
-                            ServingId = 591920
+                            MealId = 10003
                         },
                         new
                         {
                             Id = 9,
                             Amount = 1.0,
                             FoodId = 91707,
-                            MealId = 10004,
-                            ServingId = 132185
+                            MealId = 10004
                         },
                         new
                         {
                             Id = 10,
                             Amount = 1.0,
                             FoodId = 31818,
-                            MealId = 10004,
-                            ServingId = 101820
+                            MealId = 10004
                         },
                         new
                         {
                             Id = 11,
                             Amount = 1.0,
                             FoodId = 568586,
-                            MealId = 10004,
-                            ServingId = 591920
+                            MealId = 10004
                         },
                         new
                         {
                             Id = 12,
                             Amount = 1.0,
                             FoodId = 9771793,
-                            MealId = 10004,
-                            ServingId = 9336939
+                            MealId = 10004
                         },
                         new
                         {
                             Id = 13,
                             Amount = 10.0,
                             FoodId = 251811,
-                            MealId = 10005,
-                            ServingId = 289802
+                            MealId = 10005
                         },
                         new
                         {
                             Id = 14,
                             Amount = 1.0,
                             FoodId = 2861015,
-                            MealId = 10005,
-                            ServingId = 2787144
+                            MealId = 10005
                         },
                         new
                         {
                             Id = 15,
                             Amount = 2.0,
                             FoodId = 91707,
-                            MealId = 10006,
-                            ServingId = 132185
+                            MealId = 10006
                         },
                         new
                         {
                             Id = 16,
                             Amount = 1.0,
                             FoodId = 1921249,
-                            MealId = 10006,
-                            ServingId = 1886238
+                            MealId = 10006
                         });
                 });
 
@@ -1060,7 +1038,7 @@ namespace health_index_app.Server.Migrations
                         new
                         {
                             Id = "adf3001d-64d3-4dfb-b93f-3ad2503167e7",
-                            ConcurrencyStamp = "cd4de5d1-e104-4121-83a4-5ffe4c2ca2af",
+                            ConcurrencyStamp = "bec5f1b1-3338-46af-8ab3-784d2c36d626",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -1213,15 +1191,15 @@ namespace health_index_app.Server.Migrations
 
             modelBuilder.Entity("health_index_app.Shared.Models.MealFood", b =>
                 {
-                    b.HasOne("health_index_app.Shared.Models.Meal", "Meal")
+                    b.HasOne("health_index_app.Shared.Models.Food", "Food")
                         .WithMany()
-                        .HasForeignKey("MealId")
+                        .HasForeignKey("FoodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("health_index_app.Shared.Models.Food", "Food")
+                    b.HasOne("health_index_app.Shared.Models.Meal", "Meal")
                         .WithMany()
-                        .HasForeignKey("FoodId", "ServingId")
+                        .HasForeignKey("MealId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
