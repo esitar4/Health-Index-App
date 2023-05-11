@@ -123,24 +123,24 @@
                     <div class="row card text-center mt-1" style="background-color:white;">
                         <span>Total Nutrition Stats</span>
                         <div class="row mt-1" style="margin-right:0; margin-left:0;padding-right:0;padding-left:0;">
-                            <div class="col card">CarboHydrate: @Math.Round((double) userMealFoodDTO.MealStats.TotalCarboHydrate, 2) g</div>
-                            <div class="col card">Sodium: @Math.Round((double) userMealFoodDTO.MealStats.TotalSodium, 2) mg</div>
-                            <div class="col card">Sugar: @Math.Round((double) userMealFoodDTO.MealStats.TotalSugar, 2) g</div>
-                            <div class="col card">Fat: @Math.Round((double) userMealFoodDTO.MealStats.TotalFat, 2) g</div>
-                            <div class="col card">Calories: @Math.Round((double) userMealFoodDTO.MealStats.TotalCalories, 2) kcal</div>
+                            <div class="col-xl card">CarboHydrate: @Math.Round((double) userMealFoodDTO.MealStats.TotalCarboHydrate, 2) g</div>
+                            <div class="col-xl card">Sodium: @Math.Round((double) userMealFoodDTO.MealStats.TotalSodium, 2) mg</div>
+                            <div class="col-xl card">Sugar: @Math.Round((double) userMealFoodDTO.MealStats.TotalSugar, 2) g</div>
+                            <div class="col-xl card">Fat: @Math.Round((double) userMealFoodDTO.MealStats.TotalFat, 2) g</div>
+                            <div class="col-xl card">Calories: @Math.Round((double) userMealFoodDTO.MealStats.TotalCalories, 2) kcal</div>
                         </div>
                     </div>
                     
                     @for (int index = 0; index < userMealFoodDTO.MealFood.Count; index += numCols)
                     {
-                        <div class="row justify-content-center pt-3">
+                        <div class="row row-cols-md-@(12/numCols) justify-content-center pt-3">
                             @for (int col = 0; col < numCols; col++)
                             {
                                 if (index + col < userMealFoodDTO.MealFood.Count)
                                 {
                                     Food food = @userMealFoodDTO.Food.Where(f => f.Id == @userMealFoodDTO.MealFood[index + col].FoodId).FirstOrDefault() ?? new Food();
 
-                                    <div class="col-sm-@(12/numCols)">
+                                    <div class="col-xl-@(12/numCols)">
                                         <div class="card shadow h-100">
                                             <img src="healthy-eating-index.png" class="card-img-top" alt="...">
                                             <div class="card-body text-center d-flex flex-column">
