@@ -8,6 +8,7 @@ namespace health_index_app.Shared.DTObjects
         public Meal Meal { get; set; }
         public List<MealFood> MealFood { get; set; }
         public List<Food> Food { get; set; }
+        public MealStatsDTO MealStats { get; set; }
 
 
     }
