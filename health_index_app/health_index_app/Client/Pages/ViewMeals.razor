@@ -80,7 +80,7 @@
                         <span class="text-center display-3 mt-5">Click the Rice Bowl to Start!</span>
                     </div>
                 }
-                else if (userMealFoodDTO.Food != null && userMealFoodDTO.Meal != null && userMealFoodDTO.UserMealDTO != null && userMealFoodDTO.MealFood != null)
+                else if (userMealFoodDTO.Food != null && userMealFoodDTO.Meal != null && userMealFoodDTO.UserMealDTO != null && userMealFoodDTO.MealFood != null && userMealFoodDTO.MealStats != null)
                 {
                     <div class="row rounded" style="background-color:#078976;">
                         <div class="container text-center mt-3">
@@ -120,7 +120,17 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="row card text-center mt-1" style="background-color:white;">
+                        <span>Total Nutrition Stats</span>
+                        <div class="row mt-1" style="margin-right:0; margin-left:0;padding-right:0;padding-left:0;">
+                            <div class="col card">CarboHydrate: @Math.Round((double) userMealFoodDTO.MealStats.TotalCarboHydrate, 2) g</div>
+                            <div class="col card">Sodium: @Math.Round((double) userMealFoodDTO.MealStats.TotalSodium, 2) mg</div>
+                            <div class="col card">Sugar: @Math.Round((double) userMealFoodDTO.MealStats.TotalSugar, 2) g</div>
+                            <div class="col card">Fat: @Math.Round((double) userMealFoodDTO.MealStats.TotalFat, 2) g</div>
+                            <div class="col card">Calories: @Math.Round((double) userMealFoodDTO.MealStats.TotalCalories, 2) kcal</div>
+                        </div>
+                    </div>
+                    
                     @for (int index = 0; index < userMealFoodDTO.MealFood.Count; index += numCols)
                     {
                         <div class="row justify-content-center pt-3">

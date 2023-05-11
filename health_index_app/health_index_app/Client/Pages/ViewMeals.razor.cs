@@ -97,6 +97,19 @@ namespace health_index_app.Client.Pages
                 }
                 userMealFoodDTO.Food = tempFoodList;
 
+                MealStatsDTO tempMealStats = new MealStatsDTO();
+                foreach (var food in userMealFoodDTO.Food)
+                {
+                    double amount = userMealFoodDTO.MealFood.Where(mf => mf.MealId == mealId && mf.FoodId == food.Id).FirstOrDefault().Amount;
+                    Console.WriteLine(amount);
+                    tempMealStats.TotalCarboHydrate += (food.CarboHydrate ?? 0) * amount;
+                    tempMealStats.TotalSodium += (food.Sodium ?? 0) * amount;
+                    tempMealStats.TotalFat += (food.Fat ?? 0) * amount;
+                    tempMealStats.TotalCalories += (food.Calories ?? 0) * amount;
+                    tempMealStats.TotalSugar += (food.Sugar ?? 0) * amount;
+                }
+                userMealFoodDTO.MealStats = tempMealStats;
+
                 await LocalStorageService.SetItemAsync(mealId.ToString(), userMealFoodDTO);
             }
 
