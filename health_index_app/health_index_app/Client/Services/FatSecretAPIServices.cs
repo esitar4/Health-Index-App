@@ -5,8 +5,8 @@ namespace health_index_app.Client.Services
 {
     public interface IFatSecretAPIServices
     {
-        Task<GetFoodResponse> FoodGetAsync(int foodId);
-        Task<FoodsSearchResponse> FoodsSearchAsync(string searchExpression);
+        Task<GetFoodResponse> FoodGetAsync(int foodId, bool includeSubCategory = false);
+        Task<FoodsSearchResponse> FoodsSearchAsync(string searchExpression, int maxResults = 10);
     }
 
     public class FatSecretAPIServices : IFatSecretAPIServices 
@@ -18,12 +18,12 @@ namespace health_index_app.Client.Services
             _client = client;
         }
 
-        public async Task<FoodsSearchResponse> FoodsSearchAsync(string searchExpression)
+        public async Task<FoodsSearchResponse> FoodsSearchAsync(string searchExpression, int maxResults = 10)
         {
             FoodsSearchResponse response;
             try
             {
-                var url = $"/api/fatsecret/foodsearch?searchExpression={searchExpression}";
+                var url = $"/api/fatsecret/foodsearch?searchExpression={searchExpression}&maxResult={maxResults}";
                 response = await _client.GetFromJsonAsync<FoodsSearchResponse>(url);
             } catch
             {
@@ -35,12 +35,12 @@ namespace health_index_app.Client.Services
             return response;
         }
 
-        public async Task<GetFoodResponse> FoodGetAsync(int foodId)
+        public async Task<GetFoodResponse> FoodGetAsync(int foodId, bool includeSubCategory = false)
         {
             GetFoodResponse response;
             try
             {
-                var url = $"/api/fatsecret/foodget?foodId={foodId}";
+                var url = $"/api/fatsecret/foodget?foodId={foodId}&includeSubCategory={includeSubCategory}";
                 response = await _client.GetFromJsonAsync<GetFoodResponse>(url);
             } catch
             {

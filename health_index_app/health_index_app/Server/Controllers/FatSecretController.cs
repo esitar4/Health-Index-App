@@ -27,16 +27,16 @@ namespace health_index_app.Server.Controllers
         [Route("foodsearch")]
         public async Task<FatSecretResponse> Get(string searchExpression, int maxResults = 10)
         {
-            var request = new FoodsSearchRequest { SearchExpression = searchExpression, MaxResults = maxResults };
+            var request = new FoodsSearchRequest { SearchExpression = searchExpression, MaxResults = maxResults};
 
             return await _fatSecretClient.FoodsSearchAsync(request);
         }
 
         [HttpGet]
         [Route("foodget")]
-        public async Task<FatSecretResponse> Get(string foodId)
+        public async Task<FatSecretResponse> Get(string foodId, bool includeSubCategory)
         {
-            var request = new FoodGetV2Request { FoodId = Convert.ToInt32(foodId) };
+            var request = new FoodGetV2Request { FoodId = Convert.ToInt32(foodId), IncludeSubCategory = includeSubCategory };
 
             return await _fatSecretClient.FoodGetAsync(request);
         }

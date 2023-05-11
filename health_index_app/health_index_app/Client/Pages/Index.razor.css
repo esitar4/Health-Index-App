@@ -10839,7 +10839,7 @@ html {
 }
 @media (min-width: 992px) {
   .page-section .page-section-heading {
-    font-size: 3rem;
+    font-size: min(3em, 3.5vw);
     line-height: 2.5rem;
   }
 }

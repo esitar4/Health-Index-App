@@ -12,6 +12,7 @@
         public string Brand_Name { get; set; }
         public string Food_Type { get; set; }
         public string Food_Url { get; set; }
+        public Food_Sub_Categories Food_Sub_Categories { get; set; }
         public Servings Servings { get; set; }
 
         public override string ToString()
@@ -24,6 +25,11 @@
             s += $"Food_Url:{Food_Url},\n";
             return s;
         }
+    }
+
+    public class Food_Sub_Categories
+    {
+        public List<string> Food_Sub_Category { get; set; }
     }
 
     public class Servings
