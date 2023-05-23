@@ -26,8 +26,8 @@ namespace health_index_app.Server.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //Admin
-            string AdminUserId = Guid.NewGuid().ToString();
-            string AdminRoleId = Guid.NewGuid().ToString();
+            string AdminUserId = "93513a22-cecd-4bdc-ae16-c0dd5c95e4e9";
+            string AdminRoleId = "adf3001d-64d3-4dfb-b93f-3ad2503167e7";
             var hasher = new PasswordHasher<IdentityUser>();
 
             builder.Entity<IdentityRole>().HasData(new IdentityRole { Id = AdminRoleId, Name = "Admin", NormalizedName = "ADMIN"});
@@ -45,7 +45,7 @@ namespace health_index_app.Server.Data
 
 
             // Users
-            List<string> userIds = new List<string>() { Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString() };
+            List<string> userIds = new List<string>() { "ad4faee2-b1ff-4c19-bc85-2400fc2e9787", "3f2b23ed-0959-45a4-9499-8b1ee1f0f4d9", "e03b81e4-c2be-4a64-b26d-0782511cfbc4", "3aee0927-28c9-4308-92cc-296bf325521b", "5ac8f00d-f3bb-4c96-8570-6f8997cf2ae5" };
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
                 Id = userIds[0],
@@ -117,7 +117,7 @@ namespace health_index_app.Server.Data
                     ServingURL = "https://www.fatsecret.com/calories-nutrition/in-n-out/double-double-burger",
                     MetricServingAmount = 330,
                     MetricServingUnit = "g",
-                    NumberOfUnits = 0,
+                    NumberOfUnits = 1,
                     MeasurementDescription = "serving",
                     Calories = 670,
                     CarboHydrate = 39,
@@ -148,7 +148,7 @@ namespace health_index_app.Server.Data
                     ServingURL = "https://www.fatsecret.com/calories-nutrition/dole/classic-iceberg-salad",
                     MetricServingAmount = 85,
                     MetricServingUnit = "g",
-                    NumberOfUnits = 0,
+                    NumberOfUnits = 1,
                     MeasurementDescription = "serving",
                     Calories = 15,
                     CarboHydrate = 4,
@@ -179,7 +179,7 @@ namespace health_index_app.Server.Data
                     ServingURL = "https://www.fatsecret.com/calories-nutrition/coors/blue-moon-beer",
                     MetricServingAmount = 12,
                     MetricServingUnit = "oz",
-                    NumberOfUnits = 0,
+                    NumberOfUnits = 1,
                     MeasurementDescription = "serving",
                     Calories = 164,
                     CarboHydrate = 13,
@@ -209,7 +209,7 @@ namespace health_index_app.Server.Data
                     ServingURL = "https://www.fatsecret.com/calories-nutrition/generic/apples-golden-delicious",
                     MetricServingAmount = 106,
                     MetricServingUnit = "g",
-                    NumberOfUnits = 0,
+                    NumberOfUnits = 1,
                     MeasurementDescription = "small  (2-1/2\" dia)",
                     Calories = 56,
                     CarboHydrate = 14.64,
@@ -240,7 +240,7 @@ namespace health_index_app.Server.Data
                     ServingURL = "https://www.fatsecret.com/calories-nutrition/annie-chuns/vietnamese-pho",
                     MetricServingAmount = 170,
                     MetricServingUnit = "g",
-                    NumberOfUnits = 0,
+                    NumberOfUnits = 1,
                     MeasurementDescription = "serving",
                     Calories = 280,
                     CarboHydrate = 59,
@@ -271,7 +271,7 @@ namespace health_index_app.Server.Data
                     ServingURL = "https://www.fatsecret.com/calories-nutrition/suraj/naan",
                     MetricServingAmount = 50,
                     MetricServingUnit = "g",
-                    NumberOfUnits = 0,
+                    NumberOfUnits = 1,
                     MeasurementDescription = "serving",
                     Calories = 140,
                     CarboHydrate = 24,
@@ -302,7 +302,7 @@ namespace health_index_app.Server.Data
                     ServingURL = "https://www.fatsecret.com/calories-nutrition/nong-shim/tonkotsu-ramen",
                     MetricServingAmount = 101,
                     MetricServingUnit = "g",
-                    NumberOfUnits = 0,
+                    NumberOfUnits = 1,
                     MeasurementDescription = "serving",
                     Calories = 450,
                     CarboHydrate = 64,
@@ -333,7 +333,7 @@ namespace health_index_app.Server.Data
                     ServingURL = "https://www.fatsecret.com/calories-nutrition/wylwood/stir-fry-vegetables",
                     MetricServingAmount = 75,
                     MetricServingUnit = "g",
-                    NumberOfUnits = 0,
+                    NumberOfUnits = 1,
                     MeasurementDescription = "serving",
                     Calories = 30,
                     CarboHydrate = 6,
@@ -364,7 +364,7 @@ namespace health_index_app.Server.Data
                     ServingURL = "https://www.fatsecret.com/calories-nutrition/assi/curry",
                     MetricServingAmount = 180,
                     MetricServingUnit = "g",
-                    NumberOfUnits = 0,
+                    NumberOfUnits = 1,
                     MeasurementDescription = "serving",
                     Calories = 123,
                     CarboHydrate = 15,
@@ -394,28 +394,28 @@ namespace health_index_app.Server.Data
                 new Meal { Id = 10006, HealthIndex = 6}
             );
 
-            builder.Entity<MealFood>().HasData( 
-                new MealFood { Id = 1, MealId = 10001, FoodId = 26547, Amount = 1},
-                new MealFood { Id = 2, MealId = 10001, FoodId = 31818, Amount = 1},
-                new MealFood { Id = 3, MealId = 10001, FoodId = 251811, Amount = 1},
+            builder.Entity<MealFood>().HasData(
+                new MealFood { Id = 1, MealId = 10001, FoodId = 26547, ServingId = 66486, Amount = 1 },
+                new MealFood { Id = 2, MealId = 10001, FoodId = 31818, ServingId = 101820, Amount = 1 },
+                new MealFood { Id = 3, MealId = 10001, FoodId = 251811, ServingId = 289802, Amount = 1 },
 
-                new MealFood { Id = 4, MealId = 10002, FoodId = 41321916, Amount = 1},
-                new MealFood { Id = 5, MealId = 10002, FoodId = 26547, Amount = 2},
+                new MealFood { Id = 4, MealId = 10002, FoodId = 41321916, ServingId = 36059775, Amount = 1 },
+                new MealFood { Id = 5, MealId = 10002, FoodId = 26547, ServingId = 66486, Amount = 2 },
 
-                new MealFood { Id = 6, MealId = 10003, FoodId = 91707, Amount = 1},
-                new MealFood { Id = 7, MealId = 10003, FoodId = 1921249, Amount = 1},
-                new MealFood { Id = 8, MealId = 10003, FoodId = 568586, Amount = 1},
+                new MealFood { Id = 6, MealId = 10003, FoodId = 91707, ServingId = 132185, Amount = 1 },
+                new MealFood { Id = 7, MealId = 10003, FoodId = 1921249, ServingId = 1886238, Amount = 1 },
+                new MealFood { Id = 8, MealId = 10003, FoodId = 568586, ServingId = 591920, Amount = 1 },
 
-                new MealFood { Id = 9, MealId = 10004, FoodId = 91707, Amount = 1},
-                new MealFood { Id = 10, MealId = 10004, FoodId = 31818, Amount = 1},
-                new MealFood { Id = 11, MealId = 10004, FoodId = 568586, Amount = 1},
-                new MealFood { Id = 12, MealId = 10004, FoodId = 9771793, Amount = 1},
+                new MealFood { Id = 9, MealId = 10004, FoodId = 91707, ServingId = 132185, Amount = 1 },
+                new MealFood { Id = 10, MealId = 10004, FoodId = 31818, ServingId = 101820, Amount = 1 },
+                new MealFood { Id = 11, MealId = 10004, FoodId = 568586, ServingId = 591920, Amount = 1 },
+                new MealFood { Id = 12, MealId = 10004, FoodId = 9771793, ServingId = 9336939, Amount = 1 },
 
-                new MealFood { Id = 13, MealId = 10005, FoodId = 251811, Amount = 10},
-                new MealFood { Id = 14, MealId = 10005, FoodId = 2861015, Amount = 1},
+                new MealFood { Id = 13, MealId = 10005, FoodId = 251811, ServingId = 289802, Amount = 10 },
+                new MealFood { Id = 14, MealId = 10005, FoodId = 2861015, ServingId = 2787144, Amount = 1 },
 
-                new MealFood { Id = 15, MealId = 10006, FoodId = 91707, Amount = 2},
-                new MealFood { Id = 16, MealId = 10006, FoodId = 1921249, Amount = 1}
+                new MealFood { Id = 15, MealId = 10006, FoodId = 91707, ServingId = 132185, Amount = 2 },
+                new MealFood { Id = 16, MealId = 10006, FoodId = 1921249, ServingId = 1886238, Amount = 1 }
             );
 
             builder.Entity<UserMeal>().HasData(
@@ -429,6 +429,10 @@ namespace health_index_app.Server.Data
                 new UserMeal { Id = 8, UserId = userIds[4], MealId = 10006, Name = "Rocket" }
             );
 
+            builder.Entity<Food>().HasKey(f => new { f.Id, f.ServingId });
+            //builder.Entity<MealFood>().HasOne(mf => mf.Food).WithMany(mf => mf.MealFood).HasForeignKey(mf => new { mf.FoodId, mf.ServingId });
+            builder.Entity<UserMeal>().HasIndex(um => new {um.UserId, um.MealId}).IsUnique();
+            builder.Entity<MealFood>().HasIndex(mf => new {mf.MealId, mf.FoodId}).IsUnique();
 
             base.OnModelCreating(builder);
         }

@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 
 namespace health_index_app.Client.Services
 {
-    public interface IMealsAPIServices
+    public interface IMealAPIServices
     {
         Task<Meal> CreateMeal(Meal meal);
         Task<Meal> ReadMeal(int mealId);
@@ -12,7 +12,7 @@ namespace health_index_app.Client.Services
         
     }
 
-    public class MealAPIServices : IMealsAPIServices
+    public class MealAPIServices : IMealAPIServices
     {
         private readonly HttpClient _client;
 

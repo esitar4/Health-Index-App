@@ -1,20 +1,26 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace health_index_app.Shared.Models
 {
+    [Index(nameof(Id), nameof(ServingId), IsUnique = true)]
     public class Food
     {
-        [Key]
+        [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         //use food_id from fatsecret api
         public int Id { get; set; }
+
         [Required]
         public string FoodName { get; set; } = "";
         public string FoodType { get; set; } = "";
         public string BrandName { get; set; } = "";
         [Required]
         public string FoodURL { get; set; } = "";
+
+        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ServingId { get; set; }
         [Required]
         public string ServingDescription { get; set; } = "";

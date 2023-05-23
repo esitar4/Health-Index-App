@@ -26,7 +26,7 @@ namespace health_index_app.Client.Pages
         [Inject]
         protected IMealFoodAPIServices MealFoodAPIServices { get; set; }
         [Inject]
-        protected IMealsAPIServices MealAPIServices { get; set; }
+        protected IMealAPIServices MealAPIServices { get; set; }
         [Inject]
         protected IUserMealsAPIServices UserMealsAPIServices { get; set; }
         [Inject]
@@ -236,7 +236,7 @@ namespace health_index_app.Client.Pages
                 Dictionary<Food, double> foods = new();
                 foreach (var mealFood in mealFoods)
                 {
-                    var food = await FoodAPIServices.ReadFood(mealFood.FoodId);
+                    var food = await FoodAPIServices.ReadFood(mealFood.FoodId, mealFood.ServingId);
                     totalCalories += Convert.ToInt32(food.Calories)*mealFood.Amount;
                     totalGrams += Convert.ToInt32(food.MetricServingAmount)*mealFood.Amount;
                     var foodCount = mealFood.Amount;
@@ -253,7 +253,7 @@ namespace health_index_app.Client.Pages
         {
             if (mealName != "")
             {
-                Meal meal = await MealAPIServices.CreateMeal(new Meal());
+                Meal meal = await MealAPIServices.CreateMeal(new Meal() { HealthIndex = healthIndex});
 
                 MealFood mealFood; UserMealDTO userMealDTO;
 
@@ -280,7 +280,7 @@ namespace health_index_app.Client.Pages
                     totalCalories += Convert.ToInt32(food.Calories)*foodAmount;
                     totalGrams += Convert.ToInt32(food.MetricServingAmount)*foodAmount;
 
-                    mealFood = await MealFoodAPIServices.CreateMealFood(new MealFood { MealId = meal.Id, FoodId = food.Id, Amount = foodAmount });
+                    mealFood = await MealFoodAPIServices.CreateMealFood(new MealFood { MealId = meal.Id, FoodId = food.Id, ServingId = food.ServingId, Amount = foodAmount });
                 }
                 userMealDTO = await UserMealsAPIServices.CreateUserMeal(new UserMealDTO() { MealId = meal.Id, Name = MealName != "" ? MealName : "Unnamed Meal" });
 
