@@ -4,6 +4,8 @@ using health_index_app.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Blazored.LocalStorage;
+using health_index_app.Shared.PexelsAPI;
+using PexelsDotNetSDK.Api;
 
 namespace health_index_app.Client.Pages
 {
@@ -149,6 +151,18 @@ namespace health_index_app.Client.Pages
             }
 
             StateHasChanged();
+        }
+
+        private async Task<string> SearchFoodImage(string searchExpression)
+        {
+            //var result = await PexelsAPIClient.searchImage(searchExpression);
+            var pexelsClient = new PexelsClient("ymYbt0oDXezqVvURIKu4YPPIQnHC2WkrcKerJV39NxomWTYYhP4nerAf");
+
+            var result = await pexelsClient.SearchPhotosAsync(searchExpression, pageSize: 1);
+            var ret = result.photos.FirstOrDefault().url;
+            var result1 = await pexelsClient.SearchPhotosAsync("apple", pageSize: 1);
+
+            return ret;
         }
 
     }
