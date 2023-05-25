@@ -2,6 +2,8 @@
 @page "/viewmeals/{mealid:int}"
 @using health_index_app.Client.Components
 @using health_index_app.Shared.Models;
+@using health_index_app.Shared.PexelsAPI;
+@using Blazored.LocalStorage;
 
 <style>
     .card:hover {
@@ -142,7 +144,18 @@
 
                                     <div class="col-xl-@(12/numCols)">
                                         <div class="card shadow h-100">
-                                            <img src="healthy-eating-index.png" class="card-img-top" alt="...">
+                                            @*<img src="healthy-eating-index.png" class="card-img-top" alt="...">*@
+                                            @*
+                                            <img src=@PexelsAPIClient.searchImage(food.FoodName) class="card-img-top" alt="...">
+                                            <img src="https://www.pexels.com/photo/fruits-and-gift-on-golden-tray-7249196/" class="card-img-top" alt="...">
+                                            <div> 
+                                               @SearchFoodImage(food.FoodName) 
+                                            </div>
+                                            *@
+                                            @if (urls.ContainsKey(food.Id))
+                                            {
+                                                <img src=@urls[food.Id] class="card-img-top" alt="..." height=200 width=200>
+                                            }
                                             <div class="card-body text-center d-flex flex-column">
                                                 <h5 class="card-title mb-3">@food.FoodName</h5>
                                                 <div class="mt-auto">
