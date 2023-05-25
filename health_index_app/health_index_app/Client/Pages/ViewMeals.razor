@@ -152,7 +152,10 @@
                                                @SearchFoodImage(food.FoodName) 
                                             </div>
                                             *@
-                                            <img src=@urls[food.Id] class="card-img-top" alt="...">
+                                            @if (urls.ContainsKey(food.Id))
+                                            {
+                                                <img src=@urls[food.Id] class="card-img-top" alt="...">
+                                            }
                                             <div class="card-body text-center d-flex flex-column">
                                                 <h5 class="card-title mb-3">@food.FoodName</h5>
                                                 <div class="mt-auto">

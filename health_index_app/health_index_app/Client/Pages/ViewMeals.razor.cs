@@ -104,11 +104,12 @@ namespace health_index_app.Client.Pages
                     
                 }
                 userMealFoodDTO.Food = tempFoodList;
-
+                /*
                 foreach(var food in tempFoodList)
                 {
                     await SearchFoodImage(food);
                 }
+                */
 
                 MealStatsDTO tempMealStats = new MealStatsDTO();
                 foreach (var food in userMealFoodDTO.Food)
@@ -126,8 +127,14 @@ namespace health_index_app.Client.Pages
                 await LocalStorageService.SetItemAsync(mealId.ToString(), userMealFoodDTO);
             }
 
-            foreach(var food in userMealFoodDTO.Food)
+            /*Make checks for localstorage items -> bugfix*/
+            foreach (var food in userMealFoodDTO.Food)
             {
+                if (!(await LocalStorageService.ContainKeyAsync(food.Id.ToString())))
+                {
+                    var foodImageUrl = await SearchFoodImage(food);
+                    await LocalStorageService.SetItemAsync(food.Id.ToString(), foodImageUrl);
+                }
                 urls[food.Id] = await LocalStorageService.GetItemAsync<string>(food.Id.ToString());
             }
 
@@ -182,14 +189,15 @@ namespace health_index_app.Client.Pages
             return ret;
         }*/
 
-        private async Task SearchFoodImage(Food food)
+        private async Task<string> SearchFoodImage(Food food)
         {
             //var result = await PexelsAPIClient.searchImage(searchExpression);
             
 
             var result = await pexelsClient.SearchPhotosAsync(food.FoodName, pageSize: 1);
             var ret = result.photos.FirstOrDefault().source.original;
-            await LocalStorageService.SetItemAsync(food.Id.ToString(), ret);
+            // await LocalStorageService.SetItemAsync(food.Id.ToString(), ret);
+            return ret;
         }
 
     }
