@@ -136,6 +136,7 @@ namespace health_index_app.Client.Pages
                     await LocalStorageService.SetItemAsync(food.Id.ToString(), foodImageUrl);
                 }
                 urls[food.Id] = await LocalStorageService.GetItemAsync<string>(food.Id.ToString());
+                StateHasChanged();
             }
 
             StateHasChanged();
