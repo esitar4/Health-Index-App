@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Drawing.Text;
 using health_index_app.Client.Components;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace health_index_app.Client.Pages
 {
@@ -86,6 +87,14 @@ namespace health_index_app.Client.Pages
             int i = 0;
             foreach (var food in json.Foods.Food) { UserFoodSearch(i++, food); }
             searching = false;
+        }
+
+        private async Task EnterSearchForFood(KeyboardEventArgs e)
+        {
+            if (e.Code == "Enter")
+            {
+                await SearchForFood();
+            }
         }
 
         private async Task GetFood(string foodId)
