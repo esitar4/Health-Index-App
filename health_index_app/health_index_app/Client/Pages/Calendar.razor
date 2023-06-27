@@ -1,0 +1,157 @@
+﻿@page "/calendar"
+@using health_index_app.Client.Components
+@using health_index_app.Shared.Models;
+@using health_index_app.Shared.PexelsAPI;
+@using Blazored.LocalStorage;
+
+<style>
+    .card:hover {
+        background-color: @color;
+    }
+
+    .hovertext:before {
+        background-color: @color;
+    }
+
+    .sidebarmenu {
+        visibility:hidden;
+        height: 10rem;
+        transition:width 0.5s, height 0.5s, bottom 0.5s;
+        transition-timing-function: ease-out;
+        min-width:150px;
+        bottom:100%;
+    }
+
+    #toggle:checked + .sidebarmenu {
+        visibility:visible;
+        height: calc(85vh - 10rem); 
+        width: 20vw;
+    }
+
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-auto list-group list-group-flush" style="position: fixed; bottom:3.5rem; right:3.5rem; z-index:9;">
+            <label for="toggle" class="rounded-circle @onClickNavIconAnimation">
+                <a class="text-light d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none btn justify-content-center rounded-circle shadow" style="background-color:@onClickNav;" @onclick="OnClickChangeNav">
+                    <span class="fs-5 fw-semibold text-light">
+                        <i class="fa-solid fa-bowl-food fa-xl"></i>
+                    </span>
+                </a>
+            </label>
+        </div>
+        
+        @*Checkbox Hack*@
+        <input type="checkbox" id="toggle" style="display:none">
+
+        <div class="col-1 d-flex flex-column align-items-stretch flex-shrink-0 bg-white sidebarmenu" style="padding:0px; position: fixed; bottom:7.75rem; right:3.5rem; z-index:10">
+            <div class="list-group list-group-flush border-bottom scrollarea">
+                <a class="text-light d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom" style="background-color:#073b4c">
+                    <span class="fs-5 fw-semibold w-100">
+                        <i class="fa-solid fa-bowl-food"></i> View Meals
+                    </span>
+                    <span class="fs-5 fw-semibold" >
+                        <label for="toggle">
+                            <i class="fa-solid fa-xmark btn btn-danger" style="cursor:pointer;" @onclick="OnClickChangeNav"></i>
+                        </label>
+                    </span>
+                </a>
+            </div>
+            <div class="list-group list-group-flush border-bottom scrollarea h-100" style="overflow:auto">
+                <a class="list-group-item list-group-item-action py-3 lh-tight"><input type="text" maxlength="25" style="width:100%" placeholder="Enter a meal name..." @bind-value="searchMealName" @bind-value:event="oninput" /></a>
+                @foreach (var userMeal in FilteredUserMeals)
+                {
+                    <a id="draggable-@userMeal.Name" draggable="true" ondragstart="drag(event)" class="list-group-item list-group-item-action py-3 lh-tight @activeListItem[userMeal.MealId]">@userMeal.Name</a>
+                }
+            </div>
+            <div class="list-group list-group-flush scrollarea">
+                <a class="text-light d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none" style="background-color:#073b4c">
+                    <span class="fs-5 fw-semibold">Total Meals: @FilteredUserMeals.Count </span>
+                </a>
+            </div>
+        </div>
+
+        <style>
+            .header {
+                text-align: center;
+                width: 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+            }
+            .grid-parent {
+                display: grid;
+                grid-template-columns: 10% 90%;
+                grid-template-rows: 15% 1fr 1fr 1fr 1fr 1fr;
+                height: 9em;
+                width: 1fr;
+            }
+            .day {
+                grid-area: 1 / 1 / span 1 / span 1;
+                text-align: left;
+                border-right: 1px solid #000000;
+                border-bottom: 1px solid #000000;
+            }
+            .meal-1 {
+                grid-area: 2 / 1 / span 1 / span 2;
+            }
+            .meal-2 {
+                grid-area: 3 / 1 / span 1 / span 2;
+            }
+
+            .meal-3 {
+                grid-area: 4 / 1 / span 1 / span 2;
+            }
+
+            .meal-4 {
+                grid-area: 5 / 1 / span 1 / span 2;
+            }
+
+            .meal-5 {
+                grid-area: 6 / 1 / span 1 / span 2;
+            }
+            table, th, td {
+                border: 1px solid #000000;
+            }
+
+        </style>
+
+        <table class="table">
+            <thead class="header">
+                <tr>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    for (int i = 0; i <= 4; i++)
+                    {
+                        <tr>
+                            @{
+                                for (int j = 1; j <= 7; j++) {
+                                    int day = i * 7 + j;
+                                    <td>
+                                        <div class="grid-parent" id="day-@day" ondrop="drop(event, @day), " ondragover="allowDrop(event)">
+                                        <div class="day">@day</div>
+                                        @{for(int k = 1; k <= 5; k++) {
+                                        }}
+                                        </div>
+                                    </td>
+                                    if (day == 31)
+                                    {
+                                        break;
+                                    }
+                                }}
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<FooterHii />
+
