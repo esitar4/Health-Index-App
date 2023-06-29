@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\Calendar.js" />
     <None Include="wwwroot\lib\fullcalendar\dist\index.global.js" />
     <None Include="wwwroot\lib\fullcalendar\dist\index.global.min.js" />
     <None Include="wwwroot\lib\fullcalendar\LICENSE.md" />

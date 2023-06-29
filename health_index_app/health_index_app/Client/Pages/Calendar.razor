@@ -58,11 +58,11 @@
                     </span>
                 </a>
             </div>
-            <div class="list-group list-group-flush border-bottom scrollarea h-100" style="overflow:auto">
-                <a class="list-group-item list-group-item-action py-3 lh-tight"><input type="text" maxlength="25" style="width:100%" placeholder="Enter a meal name..." @bind-value="searchMealName" @bind-value:event="oninput" /></a>
+            <div class="list-group list-group-flush border-bottom scrollarea h-100" ondragover="allowDrop(event)" ondrop="dropDelete(event)" style="overflow:auto">
+                <a class="list-group-item list-group-item-action py-3 lh-tight" ><input type="text" maxlength="25" style="width:100%" placeholder="Enter a meal name..." @bind-value="searchMealName" @bind-value:event="oninput" /></a>
                 @foreach (var userMeal in FilteredUserMeals)
                 {
-                    <a id="draggable-@userMeal.Name" draggable="true" ondragstart="drag(event)" class="list-group-item list-group-item-action py-3 lh-tight @activeListItem[userMeal.MealId]">@userMeal.Name</a>
+                    <a id="menu-draggable-@userMeal.Name" draggable="true" ondragstart="drag(event)" class="list-group-item list-group-item-action py-3 lh-tight @activeListItem[userMeal.MealId]">@userMeal.Name</a>
                 }
             </div>
             <div class="list-group list-group-flush scrollarea">
@@ -92,21 +92,26 @@
             }
             .meal-1 {
                 grid-area: 2 / 1 / span 1 / span 2;
+                height: 1em;
             }
             .meal-2 {
                 grid-area: 3 / 1 / span 1 / span 2;
+                height: 1em;
             }
 
             .meal-3 {
                 grid-area: 4 / 1 / span 1 / span 2;
+                height: 1em;
             }
 
             .meal-4 {
                 grid-area: 5 / 1 / span 1 / span 2;
+                height: 1em;
             }
 
             .meal-5 {
                 grid-area: 6 / 1 / span 1 / span 2;
+                height: 1em;
             }
             table, th, td {
                 border: 1px solid #000000;
@@ -135,10 +140,14 @@
                                 for (int j = 1; j <= 7; j++) {
                                     int day = i * 7 + j;
                                     <td>
-                                        <div class="grid-parent" id="day-@day" ondrop="drop(event, @day), " ondragover="allowDrop(event)">
+                                        <div class="grid-parent" id="day-@day" ondrop="drop(event, this, @day)" ondragover="allowDrop(event)">
                                         <div class="day">@day</div>
-                                        @{for(int k = 1; k <= 5; k++) {
-                                        }}
+                                            @{
+                                                /*for(int k = 1; k <= 5; k++)
+                                                {
+                                                    <div id="@day-@k" class="meal-@k" ></div>
+                                                }*/
+                                            }
                                         </div>
                                     </td>
                                     if (day == 31)
