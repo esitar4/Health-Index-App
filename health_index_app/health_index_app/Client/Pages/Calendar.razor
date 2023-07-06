@@ -73,9 +73,12 @@
         </div>
 
         <style>
+            table {
+                table-layout: fixed;
+                width: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            }
             .header {
                 text-align: center;
-                width: 1fr 1fr 1fr 1fr 1fr 1fr 1fr
             }
             .grid-parent {
                 display: grid;
@@ -86,7 +89,7 @@
             }
             .day {
                 grid-area: 1 / 1 / span 1 / span 1;
-                text-align: left;
+                text-align: center;
                 border-right: 1px solid #000000;
                 border-bottom: 1px solid #000000;
             }
@@ -115,6 +118,11 @@
             }
             table, th, td {
                 border: 1px solid #000000;
+            }
+
+            .hide {
+                transition: 0.01s;
+                transform: translateX(-9999px);
             }
 
         </style>
