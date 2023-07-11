@@ -82,7 +82,7 @@
             }
             .grid-parent {
                 display: grid;
-                grid-template-columns: 10% 90%;
+                grid-template-columns: 20% 80%;
                 grid-template-rows: 15% 1fr 1fr 1fr 1fr 1fr;
                 height: 9em;
                 width: 1fr;
@@ -125,6 +125,10 @@
                 transform: translateX(-9999px);
             }
 
+            .hover {
+                background-color: rgba(255, 0, 0, 0.25)!important;
+            }
+
         </style>
 
         <table class="table">
@@ -147,8 +151,9 @@
                             @{
                                 for (int j = 1; j <= 7; j++) {
                                     int day = i * 7 + j;
+                                    string zeroDay = Math.Floor(Math.Log10(day) + 1) == 2 ? day.ToString() : 0 + day.ToString();
                                     <td>
-                                        <div class="grid-parent" id="day-@day" ondrop="drop(event, this, @day)" ondragover="allowDrop(event)">
+                                        <div class="grid-parent" id="day-@zeroDay" ondrop="drop(event, this)" ondragover="dragEnter(event, this)" ondragleave="dragLeave(event, this)">
                                         <div class="day">@day</div>
                                             @{
                                                 /*for(int k = 1; k <= 5; k++)
