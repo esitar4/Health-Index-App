@@ -36,40 +36,84 @@ function drop(ev) {
 }
 */
 
-function dropHere(ev, el) {
+function dropHere(ev) {
     alert("dropHere");
     ev.preventDefault();
-    console.log(el);
-    var numMeals = el.parentElement.childNodes.length - 1;
 
-    if (numMeals > 5) {
-        return;
-    }
-
+    var el = ev.target;
     var oldID = ev.dataTransfer.getData("text/html");
     var element = document.getElementById(oldID);
 
-    var elemDiv = document.createElement('div');
+    var numMeals = el.parentElement.parentElement.childNodes.length - 1;
 
-    elemDiv.className = "meal-" + numMeals; elemDiv.id = "day-" + el.id.splice(-2) + "-" + elemDiv.className;
+    console.log("numMeals: " + numMeals);
+    console.log("element.parentElement.parentElement.id: " + element.parentElement.parentElement.id);
+    console.log("el.parentElement.parentElement.id: " + el.parentElement.parentElement.id);
+    if (numMeals == 5 && element.parentElement.parentElement.id != el.parentElement.parentElement.id) {
+        return;
+    }
+    
+    var currElement = element;
+    var nextDiv; var tempNextDiv;
 
-    for (var i = numMeals; i >= el.id.slice(-2); i--) {
-        thisElement = document.getElementById(oldID);
-        prevElement = document.getElementById(oldID.splice(0,-2))
+    var day = el.id.slice(-2);
+    var mealNumberTarget = el.parentElement.id.slice(-1);
+
+    console.log(element);
+    console.log(el);
+    console.log(el.parentElement);
+    console.log("element.id: " + element.id + " el.id: " + el.id);
+
+    if (element.parentElement.parentElement.id != el.parentElement.parentElement.id) {
+        var elemDiv = document.createElement('div');
+
+        elemDiv.className = "meal-" + (numMeals + 1); elemDiv.id = "day-" + day + "-" + elemDiv.className;
+        el.parentElement.parentElement.appendChild(elemDiv);
+        nextDiv = elemDiv;
+
+    } else {
+        nextDiv = element.parentElement;
+        element.parentElement.removeChild(element);
+        console.log(element);
+        numMeals -= 1;
     }
 
-    el.appendChild(elemDiv);
+    var i;
+    for (i = numMeals; i > mealNumberTarget; i--) {
+        console.log("i: " + i);
+
+        currElement = document.getElementById("day-" + day + "-meal-" + i).firstChild;
+
+        console.log("Moving");
+        console.log("currElement.id: " + currElement.id);
+        console.log(currElement);
+        console.log("to");
+        console.log(nextDiv);
+        console.log("nextDiv.id: " + nextDiv.id);
+
+        tempNextDiv = currElement.parentElement;
+        nextDiv.appendChild(currElement);
+        nextDiv = tempNextDiv;
+    }
+
+    console.log(el);
+    console.log(el.parentElement);
+    document.getElementById("day-" + day + "-meal-" + (i+1)).appendChild(element);
+    console.log(element);
+    console.log(element.parentElement);
 }
 
 function drop(ev, el) {
+    console.log("drop");
     ev.preventDefault();
     el.parentElement.classList.remove("hover");
 
     var oldID = ev.dataTransfer.getData("text/html");
     var element = document.getElementById(oldID);
+    var numMeals = el.childNodes.length - 1;
 
-    console.log("element.parentElement.id: " + element.parentElement.parentElement.id + " el.id: " + el.id)
-    if (element.parentElement.parentElement.id == el.id) {
+    //console.log("element.parentElement.id: " + element.parentElement.parentElement.id + " el.id: " + el.id)
+    if (numMeals == 5 || element.parentElement.parentElement.id == el.id) {
         return;
     }
 
@@ -85,7 +129,7 @@ function drop(ev, el) {
         element = element.cloneNode(true);
     } else {
         oldDivID = element.parentElement.id;
-        console.log(element);
+        //console.log(element);
         numMealsEv = element.parentElement.parentElement.childNodes.length -1;
     }
 
@@ -97,12 +141,12 @@ function drop(ev, el) {
 
     var elemDiv = document.createElement('div');
 
-    console.log("numMealsEl: " + numMealsEl + " numMealsEv: " + numMealsEv);
+    //console.log("numMealsEl: " + numMealsEl + " numMealsEv: " + numMealsEv);
     
     elemDiv.className = "meal-" + numMealsEl ; elemDiv.id = "day-" + day + "-" + elemDiv.className;
     elemDiv.appendChild(element);
 
-    console.log("OldDivID: " + oldDivID);
+    //console.log("OldDivID: " + oldDivID);
     if (numMealsEv != oldDivID.slice(-1)) {
         var NextDivID = oldDivID.slice(0, oldDivID.length - 1) + (Number(oldDivID.slice(-1)) + 1);
         var moved = false;
