@@ -58,6 +58,8 @@ function dropHere(ev) {
 
     var day = el.id.slice(-2);
     var mealNumberTarget = el.parentElement.id.slice(-1);
+    var direction;
+    var j;
 
     console.log(element);
     console.log(el);
@@ -70,8 +72,21 @@ function dropHere(ev) {
         elemDiv.className = "meal-" + (numMeals + 1); elemDiv.id = "day-" + day + "-" + elemDiv.className;
         el.parentElement.parentElement.appendChild(elemDiv);
         nextDiv = elemDiv;
+        j = numMeals;
+        direction = -1;
 
+        if (!element.parentElement.parentElement.id.includes("menu")) {
+            element.parentElement.parentElement.removeChild(element.parentElement);
+        }
     } else {
+        if (el.parentElement.id.slice(-1) < element.parentElement.id.slice(-1)) {
+            direction = -1;
+            j = Number(element.parentElement.id.slice(-1)) - 1;
+        } else {
+            direction = 1;
+            j = Number(element.parentElement.id.slice(-1)) + 1;
+        }
+
         nextDiv = element.parentElement;
         element.parentElement.removeChild(element);
         console.log(element);
@@ -79,8 +94,10 @@ function dropHere(ev) {
     }
 
     var i;
-    for (i = numMeals; i > mealNumberTarget; i--) {
+    for (i = j; i != mealNumberTarget && direction == -1 || direction == 1 && i < Number(mealNumberTarget) + 1; i += direction) {
         console.log("i: " + i);
+        console.log("mealNumberTarget: " + mealNumberTarget)
+        console.log("direction: " + direction);
 
         currElement = document.getElementById("day-" + day + "-meal-" + i).firstChild;
 
@@ -96,9 +113,14 @@ function dropHere(ev) {
         nextDiv = tempNextDiv;
     }
 
+    console.log("i: " + i);
     console.log(el);
     console.log(el.parentElement);
-    document.getElementById("day-" + day + "-meal-" + (i+1)).appendChild(element);
+    if (direction == -1) {
+        document.getElementById("day-" + day + "-meal-" + (i + 1)).appendChild(element);
+    } else {
+        document.getElementById("day-" + day + "-meal-" + (i - 1)).appendChild(element);
+    }
     console.log(element);
     console.log(element.parentElement);
 }
