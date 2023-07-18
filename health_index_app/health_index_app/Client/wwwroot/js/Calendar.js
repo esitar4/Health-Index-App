@@ -37,7 +37,7 @@ function drop(ev) {
 */
 
 function dropHere(ev) {
-    alert("dropHere");
+    //alert("dropHere");
     ev.preventDefault();
 
     var el = ev.target;
@@ -46,9 +46,9 @@ function dropHere(ev) {
 
     var numMeals = el.parentElement.parentElement.childNodes.length - 1;
 
-    console.log("numMeals: " + numMeals);
-    console.log("element.parentElement.parentElement.id: " + element.parentElement.parentElement.id);
-    console.log("el.parentElement.parentElement.id: " + el.parentElement.parentElement.id);
+    //console.log("numMeals: " + numMeals);
+    //console.log("element.parentElement.parentElement.id: " + element.parentElement.parentElement.id);
+    //console.log("el.parentElement.parentElement.id: " + el.parentElement.parentElement.id);
     if (numMeals == 5 && element.parentElement.parentElement.id != el.parentElement.parentElement.id) {
         return;
     }
@@ -61,10 +61,10 @@ function dropHere(ev) {
     var direction;
     var j;
 
-    console.log(element);
-    console.log(el);
-    console.log(el.parentElement);
-    console.log("element.id: " + element.id + " el.id: " + el.id);
+    //console.log(element);
+    //console.log(el);
+    //console.log(el.parentElement);
+    //console.log("element.id: " + element.id + " el.id: " + el.id);
 
     if (element.parentElement.parentElement.id != el.parentElement.parentElement.id) {
         var elemDiv = document.createElement('div');
@@ -75,6 +75,7 @@ function dropHere(ev) {
         j = numMeals;
         direction = -1;
 
+        //console.log("element.parentElement.parentElement.id: " + element.parentElement.parentElement.id);
         if (!element.parentElement.parentElement.id.includes("menu")) {
             element.parentElement.parentElement.removeChild(element.parentElement);
         }
@@ -93,20 +94,20 @@ function dropHere(ev) {
         numMeals -= 1;
     }
 
-    var i;
-    for (i = j; i != mealNumberTarget && direction == -1 || direction == 1 && i < Number(mealNumberTarget) + 1; i += direction) {
-        console.log("i: " + i);
-        console.log("mealNumberTarget: " + mealNumberTarget)
-        console.log("direction: " + direction);
+    var i = j;
+    for (i; i != mealNumberTarget && direction == -1 || direction == 1 && i < Number(mealNumberTarget) + 1; i += direction) {
+        //console.log("i: " + i);
+        //console.log("mealNumberTarget: " + mealNumberTarget)
+        //console.log("direction: " + direction);
 
         currElement = document.getElementById("day-" + day + "-meal-" + i).firstChild;
 
-        console.log("Moving");
-        console.log("currElement.id: " + currElement.id);
-        console.log(currElement);
-        console.log("to");
-        console.log(nextDiv);
-        console.log("nextDiv.id: " + nextDiv.id);
+        //console.log("Moving");
+        //console.log("currElement.id: " + currElement.id);
+        //console.log(currElement);
+        //console.log("to");
+        //console.log(nextDiv);
+        //console.log("nextDiv.id: " + nextDiv.id);
 
         tempNextDiv = currElement.parentElement;
         nextDiv.appendChild(currElement);
@@ -198,5 +199,8 @@ function drop(ev, el) {
 function dropDelete(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text/html");
+    var element = document.getElementById(data);
+
+    element.parentElement.parentElement.removeChild(element.parentElement);
     document.getElementById(data).remove();
 }

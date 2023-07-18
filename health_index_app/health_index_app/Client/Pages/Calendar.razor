@@ -88,10 +88,9 @@
                 width: 1fr;
             }
             .day {
-                grid-area: 1 / 1 / span 1 / span 1;
+                grid-area: 1 / 1 / span 1 / span 2;
                 text-align: center;
-                border-right: 1px solid #000000;
-                border-bottom: 1px solid #000000;
+                padding-right: 80%;
             }
             .meal-1 {
                 grid-area: 2 / 1 / span 1 / span 2;
@@ -154,7 +153,7 @@
                                     string zeroDay = Math.Floor(Math.Log10(day) + 1) == 2 ? day.ToString() : 0 + day.ToString();
                                     <td>
                                         <div class="grid-parent" id="day-@zeroDay" ondrop="drop(event, this)" ondragover="dragEnter(event, this)" ondragleave="dragLeave(event, this)">
-                                        <div class="day">@day</div>
+                                            <div class="day"><a style="border-right:1px black solid; border-bottom:1px black solid; padding-right: 0.25em; padding-left: 0.25em;">@day</a></div>
                                             @{
                                                 /*for(int k = 1; k <= 5; k++)
                                                 {
