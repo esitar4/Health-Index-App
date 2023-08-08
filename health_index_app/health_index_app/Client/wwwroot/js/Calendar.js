@@ -36,97 +36,136 @@ function drop(ev) {
 }
 */
 
-function dropHere(ev) {
+function drop(ev) {
     //alert("dropHere");
     ev.preventDefault();
 
     var el = ev.target;
+    console.log("nodeName: " + el.nodeName);
+    el = el.nodeName == "DIV" ? el : el.parentElement;
     var oldID = ev.dataTransfer.getData("text/html");
     var element = document.getElementById(oldID);
 
-    var numMeals = el.parentElement.parentElement.childNodes.length - 1;
+    console.log("base element:");
+    console.log(element);
+    console.log("target element:");
+    console.log(el);
+
+    var numMeals = Number(el.parentElement.dataset.nummeals);
+    console.log("numMeals: " + numMeals);
 
     //console.log("numMeals: " + numMeals);
     //console.log("element.parentElement.parentElement.id: " + element.parentElement.parentElement.id);
     //console.log("el.parentElement.parentElement.id: " + el.parentElement.parentElement.id);
-    if (numMeals == 5 && element.parentElement.parentElement.id != el.parentElement.parentElement.id) {
+    if (el.parentElement.numMeals == "5" && element.parentElement.parentElement.id != el.parentElement.id) {
         return;
     }
     
     var currElement = element;
     var nextDiv; var tempNextDiv;
 
-    var day = el.id.slice(-2);
-    var mealNumberTarget = el.parentElement.id.slice(-1);
+    var day = el.parentElement.id.slice(-2);
+    var mealNumberTarget = Number(el.id.slice(-1));
     var direction;
     var j;
+    var draggedPast;
 
-    //console.log(element);
-    //console.log(el);
     //console.log(el.parentElement);
     //console.log("element.id: " + element.id + " el.id: " + el.id);
 
-    if (element.parentElement.parentElement.id != el.parentElement.parentElement.id) {
-        var elemDiv = document.createElement('div');
-
-        elemDiv.className = "meal-" + (numMeals + 1); elemDiv.id = "day-" + day + "-" + elemDiv.className;
-        el.parentElement.parentElement.appendChild(elemDiv);
-        nextDiv = elemDiv;
+    if (numMeals >= mealNumberTarget) {
         j = numMeals;
+    } else {
+        j = mealNumberTarget;
+        mealNumberTarget = numMeals;
+    }
+
+    if (element.parentElement.parentElement.id != el.parentElement.id) {
         direction = -1;
 
+        el.parentElement.dataset.nummeals = numMeals + 1;
+
+        nextDiv = document.getElementById("day-" + day + "-meal-" + el.parentElement.dataset.nummeals);
+
+        
+        element.parentElement.parentElement.dataset.nummeals = Number(element.parentElement.parentElement.dataset.nummeals) - 1;
+
+        collapser(currElement, nextDiv, Number(element.parentElement.parentElement.dataset.nummeals) + 1, Number(element.parentElement.id.slice(-1)), element.parentElement.parentElement.id.slice(-2), 1);
+
+        
+
         //console.log("element.parentElement.parentElement.id: " + element.parentElement.parentElement.id);
-        if (!element.parentElement.parentElement.id.includes("menu")) {
-            element.parentElement.parentElement.removeChild(element.parentElement);
-        }
     } else {
-        if (el.parentElement.id.slice(-1) < element.parentElement.id.slice(-1)) {
+        if (el.id.slice(-1) == element.parentElement.id.slice(-1)) {
+            return;
+        }
+        if (el.id.slice(-1) < element.parentElement.id.slice(-1)) {
             direction = -1;
             j = Number(element.parentElement.id.slice(-1)) - 1;
         } else {
             direction = 1;
             j = Number(element.parentElement.id.slice(-1)) + 1;
+            draggedPast = mealNumberTarget;
         }
 
-        nextDiv = element.parentElement;
+        nextDiv = document.getElementById("day-" + day + "-meal-" + (j - direction));
         element.parentElement.removeChild(element);
-        console.log(element);
-        numMeals -= 1;
+        //console.log(element);
     }
 
     var i = j;
-    for (i; i != mealNumberTarget && direction == -1 || direction == 1 && i < Number(mealNumberTarget) + 1; i += direction) {
-        //console.log("i: " + i);
-        //console.log("mealNumberTarget: " + mealNumberTarget)
-        //console.log("direction: " + direction);
-
-        currElement = document.getElementById("day-" + day + "-meal-" + i).firstChild;
-
-        //console.log("Moving");
-        //console.log("currElement.id: " + currElement.id);
-        //console.log(currElement);
-        //console.log("to");
-        //console.log(nextDiv);
-        //console.log("nextDiv.id: " + nextDiv.id);
-
-        tempNextDiv = currElement.parentElement;
-        nextDiv.appendChild(currElement);
-        nextDiv = tempNextDiv;
-    }
+    i = collapser(currElement, nextDiv, mealNumberTarget, i, day, direction);
 
     console.log("i: " + i);
     console.log(el);
     console.log(el.parentElement);
-    if (direction == -1) {
-        document.getElementById("day-" + day + "-meal-" + (i + 1)).appendChild(element);
-    } else {
-        document.getElementById("day-" + day + "-meal-" + (i - 1)).appendChild(element);
+
+    if (oldID.includes("menu-draggable")) {
+        element = element.cloneNode(true);
+        element.classList.remove("py-3");
+        element.id = element.textContent + "-" + day;
     }
+
+    var placement;
+    if (direction == -1) {
+        placement = document.getElementById("day-" + day + "-meal-" + (i +1));
+        placement.appendChild(element);
+    } else {
+        document.getElementById("day-" + day + "-meal-" + draggedPast).appendChild(element);
+    }
+
     console.log(element);
     console.log(element.parentElement);
 }
 
-function drop(ev, el) {
+function collapser(currElement, nextDiv, mealNumberTarget, i, day, direction) {
+    for (i; i > mealNumberTarget && direction == -1 || direction == 1 && i <= mealNumberTarget; i += direction) {
+        console.log("changed");
+        console.log("i: " + i);
+        console.log("mealNumberTarget: " + mealNumberTarget)
+        console.log("direction: " + direction);
+
+        currDiv = document.getElementById("day-" + day + "-meal-" + i);
+        currElement = currDiv.firstChild != null ? currDiv.firstChild : currElement;
+        console.log("Moving");
+        console.log("currElement.id: " + currDiv.id);
+        console.log(currDiv);
+        console.log("to");
+        console.log(nextDiv);
+        console.log("nextDiv.id: " + nextDiv.id);
+
+        tempNextDiv = currElement.parentElement;
+
+        if (currDiv.firstChild != null) {
+            nextDiv.appendChild(currElement);
+        }
+        nextDiv = tempNextDiv;
+    }
+
+    return i;
+}
+
+function dropOld(ev, el) {
     console.log("drop");
     ev.preventDefault();
     el.parentElement.classList.remove("hover");
