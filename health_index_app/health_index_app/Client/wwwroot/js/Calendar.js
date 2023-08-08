@@ -4,6 +4,8 @@
 
 function drag(ev) {
     ev.dataTransfer.setData("text/html", ev.target.id);
+
+    hide(ev.target);
 }
 
 function dragEnter(ev, el) {
@@ -16,7 +18,7 @@ function dragLeave(ev, el) {
     el.parentElement.classList.remove("hover");
 }
 
-function startDrag(ev) {
+/*function startDrag(ev) {
     ev.dataTransfer.setData("text/html", ev.target.id);
     let element = ev.target;
 
@@ -27,7 +29,16 @@ function endDrag(ev) {
     let element = ev.srcElement;
 
     element.classList.remove('hide');
+}*/
+
+function hide(element) {
+    element.classList.add('hide');
 }
+
+function unhide(element) {
+    element.classList.remove('hide');
+}
+
 /*
 function drop(ev) {
     ev.preventDefault();
@@ -119,6 +130,8 @@ function drop(ev) {
     console.log("i: " + i);
     console.log(el);
     console.log(el.parentElement);
+
+    unhide(element);
 
     if (oldID.includes("menu-draggable")) {
         element = element.cloneNode(true);
