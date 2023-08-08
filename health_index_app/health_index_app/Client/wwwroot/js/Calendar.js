@@ -8,15 +8,25 @@ function drag(ev) {
     hide(ev.target);
 }
 
+var dragSrcEl = null;
+
 function dragEnter(ev, el) {
     ev.preventDefault();
-    el.parentElement.classList.add("hover");
+    if (dragSrcEl != null && dragSrcEl != el) {
+        unhover(dragSrcEl);
+    }
+    dragSrcEl = el;
+    hover(el);
 }
 
-function dragLeave(ev, el) {
+/*function dragLeave(ev, el) {
     ev.preventDefault();
-    el.parentElement.classList.remove("hover");
-}
+    console.log("el.parentElement: ");
+    console.log(el);
+    if (dragSrcEl != el) {
+        unhover(el);
+    }
+}*/
 
 /*function startDrag(ev) {
     ev.dataTransfer.setData("text/html", ev.target.id);
@@ -30,6 +40,18 @@ function endDrag(ev) {
 
     element.classList.remove('hide');
 }*/
+
+
+
+function hover(element) {
+    element.classList.add("hover");
+}
+
+function unhover(element) {
+
+    element.classList.remove("hover");
+
+}
 
 function hide(element) {
     element.classList.add('hide');
@@ -57,6 +79,7 @@ function drop(ev) {
     var oldID = ev.dataTransfer.getData("text/html");
     var element = document.getElementById(oldID);
     unhide(element);
+    unhover(el.parentElement);
 
     /*console.log("base element:");
     console.log(element);
@@ -67,8 +90,8 @@ function drop(ev) {
     /*console.log("numMeals: " + numMeals);*/
 
     //console.log("numMeals: " + numMeals);
-    console.log("element.parentElement.parentElement.id: " + element.parentElement.parentElement.id);
-    console.log("el.parentElement.id: " + el.parentElement.id);
+    /*console.log("element.parentElement.parentElement.id: " + element.parentElement.parentElement.id);
+    console.log("el.parentElement.id: " + el.parentElement.id);*/
     if (el.parentElement.dataset.nummeals == "5" && element.parentElement.parentElement.id != el.parentElement.id) {
         return;
     }
