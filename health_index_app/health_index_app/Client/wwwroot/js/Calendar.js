@@ -52,23 +52,24 @@ function drop(ev) {
     ev.preventDefault();
 
     var el = ev.target;
-    console.log("nodeName: " + el.nodeName);
+    /*console.log("nodeName: " + el.nodeName);*/
     el = el.nodeName == "DIV" ? el : el.parentElement;
     var oldID = ev.dataTransfer.getData("text/html");
     var element = document.getElementById(oldID);
+    unhide(element);
 
-    console.log("base element:");
+    /*console.log("base element:");
     console.log(element);
     console.log("target element:");
-    console.log(el);
+    console.log(el);*/
 
     var numMeals = Number(el.parentElement.dataset.nummeals);
-    console.log("numMeals: " + numMeals);
+    /*console.log("numMeals: " + numMeals);*/
 
     //console.log("numMeals: " + numMeals);
-    //console.log("element.parentElement.parentElement.id: " + element.parentElement.parentElement.id);
-    //console.log("el.parentElement.parentElement.id: " + el.parentElement.parentElement.id);
-    if (el.parentElement.numMeals == "5" && element.parentElement.parentElement.id != el.parentElement.id) {
+    console.log("element.parentElement.parentElement.id: " + element.parentElement.parentElement.id);
+    console.log("el.parentElement.id: " + el.parentElement.id);
+    if (el.parentElement.dataset.nummeals == "5" && element.parentElement.parentElement.id != el.parentElement.id) {
         return;
     }
     
@@ -127,11 +128,9 @@ function drop(ev) {
     var i = j;
     i = collapser(currElement, nextDiv, mealNumberTarget, i, day, direction);
 
-    console.log("i: " + i);
+    /*console.log("i: " + i);
     console.log(el);
-    console.log(el.parentElement);
-
-    unhide(element);
+    console.log(el.parentElement);*/
 
     if (oldID.includes("menu-draggable")) {
         element = element.cloneNode(true);
@@ -147,25 +146,25 @@ function drop(ev) {
         document.getElementById("day-" + day + "-meal-" + draggedPast).appendChild(element);
     }
 
-    console.log(element);
-    console.log(element.parentElement);
+    /*console.log(element);
+    console.log(element.parentElement);*/
 }
 
 function collapser(currElement, nextDiv, mealNumberTarget, i, day, direction) {
     for (i; i > mealNumberTarget && direction == -1 || direction == 1 && i <= mealNumberTarget; i += direction) {
-        console.log("changed");
+        /*console.log("changed");
         console.log("i: " + i);
         console.log("mealNumberTarget: " + mealNumberTarget)
-        console.log("direction: " + direction);
+        console.log("direction: " + direction);*/
 
         currDiv = document.getElementById("day-" + day + "-meal-" + i);
         currElement = currDiv.firstChild != null ? currDiv.firstChild : currElement;
-        console.log("Moving");
+        /*console.log("Moving");
         console.log("currElement.id: " + currDiv.id);
         console.log(currDiv);
         console.log("to");
         console.log(nextDiv);
-        console.log("nextDiv.id: " + nextDiv.id);
+        console.log("nextDiv.id: " + nextDiv.id);*/
 
         tempNextDiv = currElement.parentElement;
 
