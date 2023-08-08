@@ -9,14 +9,25 @@ function drag(ev) {
 }
 
 var dragSrcEl = null;
+var dragSrcChild = null;
 
 function dragEnter(ev, el) {
     ev.preventDefault();
-    if (dragSrcEl != null && dragSrcEl != el) {
+    if (dragSrcEl != null && dragSrcEl != el || ev.target.nodeName == "A") {
         unhover(dragSrcEl);
     }
+
+    if (dragSrcChild != null && dragSrcChild != el) {
+        ununderline(dragSrcChild);
+    }
     dragSrcEl = el;
-    hover(el);
+
+    if (ev.target.nodeName == "A") {
+        dragSrcChild = ev.target;
+        underline(ev.target);
+    } else {
+        hover(el);
+    }
 }
 
 /*function dragLeave(ev, el) {
@@ -48,9 +59,29 @@ function hover(element) {
 }
 
 function unhover(element) {
-
     element.classList.remove("hover");
+}
 
+function underline(element) {
+    console.log(element.childNodes.length)
+    if (element.childNodes.length == 1) {
+        var Underline = document.createElement("div");
+        Underline.classList.add("hover-underline");
+
+        /*var el = document.getElementById(Underline, element.id.slice(0, -1) + (Number(element.id.slice(-1)) + 1));
+
+        element.parentElement.insertBefore(Underline, el);*/
+
+        element.appendChild(Underline);
+
+        
+    }
+}
+
+function ununderline(element) {
+    if (element.childNodes.length == 2) {
+        element.removeChild(element.childNodes[1]);
+    }
 }
 
 function hide(element) {
@@ -80,6 +111,10 @@ function drop(ev) {
     var element = document.getElementById(oldID);
     unhide(element);
     unhover(el.parentElement);
+    if (el.hasChildNodes()) {
+        unhover(el.firstChild);
+        ununderline(el.firstChild);
+    }
 
     /*console.log("base element:");
     console.log(element);
@@ -121,13 +156,10 @@ function drop(ev) {
         el.parentElement.dataset.nummeals = numMeals + 1;
 
         nextDiv = document.getElementById("day-" + day + "-meal-" + el.parentElement.dataset.nummeals);
-
         
         element.parentElement.parentElement.dataset.nummeals = Number(element.parentElement.parentElement.dataset.nummeals) - 1;
 
         collapser(currElement, nextDiv, Number(element.parentElement.parentElement.dataset.nummeals) + 1, Number(element.parentElement.id.slice(-1)), element.parentElement.parentElement.id.slice(-2), 1);
-
-        
 
         //console.log("element.parentElement.parentElement.id: " + element.parentElement.parentElement.id);
     } else {
