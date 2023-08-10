@@ -1,4 +1,4 @@
-﻿function allowDrop(ev, el) {
+﻿function allowDrop(ev) {
     ev.preventDefault();
 }
 
@@ -12,8 +12,8 @@ var dragSrcChild = null;
 
 function dragEnter(ev, el) {
     ev.preventDefault();
-    console.log(ev.target);
-
+    ev.stopPropagation();
+    console.log("entering");
     if (dragSrcChild != null && dragSrcChild.dataset.underlined == "true" && dragSrcChild != el) {
         ununderline(dragSrcChild);
     }
@@ -28,14 +28,14 @@ function dragEnter(ev, el) {
     }
 }
 
-/*function dragLeave(ev, el) {
+function dragLeave(ev, el) {
+    console.log("leaving");
     ev.preventDefault();
-    console.log("el.parentElement: ");
-    console.log(el);
-    if (dragSrcEl != el) {
-        unhover(el);
-    }
-}*/
+    ev.stopPropagation();
+    /*if (dragSrcChild != null && dragSrcChild.dataset.underlined == "true" && dragSrcChild != el) {
+        ununderline(dragSrcChild);
+    }*/
+}
 
 /*function startDrag(ev) {
     ev.dataTransfer.setData("text/html", ev.target.id);
@@ -69,8 +69,8 @@ function underline(element) {
 }
 
 function ununderline(element) {
-        element.removeChild(element.childNodes[element.childNodes.length - 1]);
-        element.dataset.underlined = "false";
+    element.removeChild(element.childNodes[element.childNodes.length - 1]);
+    element.dataset.underlined = "false";
 }
 
 function hide(element) {
@@ -149,7 +149,7 @@ function drop(ev) {
         
         element.parentElement.parentElement.dataset.nummeals = Number(element.parentElement.parentElement.dataset.nummeals) - 1;
 
-        collapser(currElement, nextDiv, Number(element.parentElement.parentElement.dataset.nummeals) + 1, Number(element.parentElement.id.slice(-1)), element.parentElement.parentElement.id.slice(-2), 1);
+        collapser(currElement, Number(element.parentElement.parentElement.dataset.nummeals) + 1, Number(element.parentElement.id.slice(-1)), element.parentElement.parentElement.id.slice(-2), 1);
 
         //console.log("element.parentElement.parentElement.id: " + element.parentElement.parentElement.id);
     } else {
@@ -171,7 +171,7 @@ function drop(ev) {
     }
 
     var i = j;
-    i = collapser(currElement, nextDiv, mealNumberTarget, i, day, direction);
+    i = collapser(currElement, mealNumberTarget, i, day, direction);
 
     /*console.log("i: " + i);
     console.log(el);
@@ -195,7 +195,9 @@ function drop(ev) {
     console.log(element.parentElement);*/
 }
 
-function collapser(currElement, nextDiv, mealNumberTarget, i, day, direction) {
+function collapser(currElement, mealNumberTarget, i, day, direction) {
+    var nextDiv = null;
+
     for (i; i > mealNumberTarget && direction == -1 || direction == 1 && i <= mealNumberTarget; i += direction) {
         /*console.log("changed");
         console.log("i: " + i);
@@ -213,7 +215,7 @@ function collapser(currElement, nextDiv, mealNumberTarget, i, day, direction) {
 
         tempNextDiv = currElement.parentElement;
 
-        if (currDiv.firstChild != null) {
+        if (currDiv.firstChild != null && nextDiv != null) {
             nextDiv.appendChild(currElement);
         }
         nextDiv = tempNextDiv;
@@ -222,7 +224,7 @@ function collapser(currElement, nextDiv, mealNumberTarget, i, day, direction) {
     return i;
 }
 
-function dropOld(ev, el) {
+/*function dropOld(ev, el) {
     console.log("drop");
     ev.preventDefault();
     el.parentElement.classList.remove("hover");
@@ -290,13 +292,23 @@ function dropOld(ev, el) {
     }
 
     el.appendChild(elemDiv);
-}
+}*/
 
 function dropDelete(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text/html");
     var element = document.getElementById(data);
 
-    element.parentElement.parentElement.removeChild(element.parentElement);
-    document.getElementById(data).remove();
+    console.log(element);
+
+
+    var day = element.parentElement.parentElement.id.slice(-2);
+
+    element.parentElement.parentElement.dataset.nummeals = Number(element.parentElement.parentElement.dataset.nummeals) - 1;
+
+    console.log("day: " + day);
+
+    collapser(element, Number(element.parentElement.parentElement.dataset.nummeals) + 1, Number(element.parentElement.id.slice(-1)), element.parentElement.parentElement.id.slice(-2), 1);
+
+    element.remove();
 }

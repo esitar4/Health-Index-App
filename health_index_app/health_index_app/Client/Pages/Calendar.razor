@@ -58,7 +58,7 @@
                     </span>
                 </a>
             </div>
-            <div class="list-group list-group-flush border-bottom scrollarea h-100" ondragover="allowDrop(event)" ondrop="dropDelete(event)" style="overflow:auto">
+            <div class="list-group list-group-flush border-bottom scrollarea h-100" ondragover="allowDrop(event)" ondrop="dropDelete(event, this)" style="overflow:auto">
                 <a class="list-group-item list-group-item-action py-3 lh-tight" ><input type="text" maxlength="25" style="width:100%" placeholder="Enter a meal name..." @bind-value="searchMealName" @bind-value:event="oninput" /></a>
                 @foreach (var userMeal in FilteredUserMeals)
                 {
@@ -169,11 +169,11 @@
                                     string zeroDay = Math.Floor(Math.Log10(day) + 1) == 2 ? day.ToString() : 0 + day.ToString();
                                     <td>
                                         <div class="grid-parent" id="day-@zeroDay" data-nummeals="0">
-                                            <div class="day" data-underlined="false" ondrop="drop(event)" ondragover="dragEnter(event, this)"><a style="border-right:1px black solid; border-bottom:1px black solid; padding-right: 0.25em; padding-left: 0.25em;">@day</a></div>
+                                            <div class="day" data-underlined="false" ondrop="drop(event)" ondragenter="dragEnter(event, this)" ondragleave="dragLeave(event)" ondragover="allowDrop(event)"><a style="border-right:1px black solid; border-bottom:1px black solid; padding-right: 0.25em; padding-left: 0.25em;">@day</a></div>
                                             @{
                                                 for(int k = 1; k <= 5; k++)
                                                 {
-                                                    <div id="day-@zeroDay-meal-@k" class="meal-@k" data-underlined="false" ondrop="drop(event)" ondragover="dragEnter(event, this)"></div>
+                                                    <div id="day-@zeroDay-meal-@k" class="meal-@k" data-underlined="false" ondrop="drop(event)" ondragenter="dragEnter(event, this)" ondragleave="dragLeave(event)" ondragover="allowDrop(event)"></div>
                                                 }
                                             }
                                         </div>
