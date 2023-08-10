@@ -8,25 +8,23 @@ function drag(ev) {
     hide(ev.target);
 }
 
-var dragSrcEl = null;
 var dragSrcChild = null;
 
 function dragEnter(ev, el) {
     ev.preventDefault();
-    if (dragSrcEl != null && dragSrcEl != el || ev.target.nodeName == "A") {
-        unhover(dragSrcEl);
-    }
+    console.log(ev.target);
 
-    if (dragSrcChild != null && dragSrcChild != el) {
+    if (dragSrcChild != null && dragSrcChild.dataset.underlined == "true" && dragSrcChild != el) {
         ununderline(dragSrcChild);
     }
-    dragSrcEl = el;
 
-    if (ev.target.nodeName == "A") {
-        dragSrcChild = ev.target;
-        underline(ev.target);
-    } else {
-        hover(el);
+    if (ev.target.dataset.underlined == "false" || ev.target.parentElement.dataset.underlined == "false") {
+        dragSrcChild = ev.target.nodeName == "DIV" ? ev.target : ev.target.parentElement;
+        if (dragSrcChild.id.slice(-1) > dragSrcChild.parentElement.dataset.nummeals) {
+            dragSrcChild = document.getElementById(dragSrcChild.id.slice(0, -1) + (Number(dragSrcChild.parentElement.dataset.nummeals) + 1));
+        }
+
+        underline(dragSrcChild);
     }
 }
 
@@ -63,25 +61,16 @@ function unhover(element) {
 }
 
 function underline(element) {
-    console.log(element.childNodes.length)
-    if (element.childNodes.length == 1) {
-        var Underline = document.createElement("div");
-        Underline.classList.add("hover-underline");
+    var Underline = document.createElement("div");
+    Underline.classList.add("hover-underline");
 
-        /*var el = document.getElementById(Underline, element.id.slice(0, -1) + (Number(element.id.slice(-1)) + 1));
-
-        element.parentElement.insertBefore(Underline, el);*/
-
-        element.appendChild(Underline);
-
-        
-    }
+    element.appendChild(Underline);
+    element.dataset.underlined = "true";
 }
 
 function ununderline(element) {
-    if (element.childNodes.length == 2) {
-        element.removeChild(element.childNodes[1]);
-    }
+        element.removeChild(element.childNodes[element.childNodes.length - 1]);
+        element.dataset.underlined = "false";
 }
 
 function hide(element) {
@@ -110,10 +99,11 @@ function drop(ev) {
     var oldID = ev.dataTransfer.getData("text/html");
     var element = document.getElementById(oldID);
     unhide(element);
-    unhover(el.parentElement);
-    if (el.hasChildNodes()) {
-        unhover(el.firstChild);
-        ununderline(el.firstChild);
+
+    if (el.id.slice(-1) > el.parentElement.dataset.nummeals) {
+        ununderline(document.getElementById(el.id.slice(0, -1) + (Number(el.parentElement.dataset.nummeals) + 1)));
+    } else {
+        ununderline(el);
     }
 
     /*console.log("base element:");

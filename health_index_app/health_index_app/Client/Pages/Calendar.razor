@@ -121,6 +121,7 @@
                 height: 100%;
                 pointer-events: auto;
             }
+
             table, th, td {
                 border: 1px solid #000000;
             }
@@ -167,12 +168,12 @@
                                     int day = i * 7 + j;
                                     string zeroDay = Math.Floor(Math.Log10(day) + 1) == 2 ? day.ToString() : 0 + day.ToString();
                                     <td>
-                                        <div class="grid-parent" id="day-@zeroDay" data-nummeals="0" ondragover="dragEnter(event, this)">
-                                            <div class="day" ondrop="drop(event)"><a style="border-right:1px black solid; border-bottom:1px black solid; padding-right: 0.25em; padding-left: 0.25em;">@day</a></div>
+                                        <div class="grid-parent" id="day-@zeroDay" data-nummeals="0">
+                                            <div class="day" data-underlined="false" ondrop="drop(event)" ondragover="dragEnter(event, this)"><a style="border-right:1px black solid; border-bottom:1px black solid; padding-right: 0.25em; padding-left: 0.25em;">@day</a></div>
                                             @{
                                                 for(int k = 1; k <= 5; k++)
                                                 {
-                                                    <div id="day-@zeroDay-meal-@k" class="meal-@k" ondrop="drop(event)"></div>
+                                                    <div id="day-@zeroDay-meal-@k" class="meal-@k" data-underlined="false" ondrop="drop(event)" ondragover="dragEnter(event, this)"></div>
                                                 }
                                             }
                                         </div>
